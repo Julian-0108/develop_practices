@@ -1,0 +1,46 @@
+<div class="content grid-container" role="main">
+
+  <div class="login-wrapper grid-item" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="box">
+      <mat-card-header>
+        <mat-card-subtitle>Generar</mat-card-subtitle>
+      </mat-card-header>
+
+      <form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate>
+
+        <div>
+          <mat-card-content>
+
+            <div class="container select">
+              <mat-form-field class="full-width"style="width: 70%;">
+                <mat-label>Seleccionar sede...</mat-label>
+                <mat-select formControlName="sede">
+                  <mat-option *ngIf="sedes?.length == 0" disabled><i>No hay sedes disponibles</i></mat-option>
+                  <mat-option *ngFor="let sede of sedes" [value]="sede">
+                    {{sede}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+          </mat-card-content>
+
+          <mat-card-actions>
+            <button type="submit" mat-flat-button class="btn-block generate-btn mat-elevation-z6" style="width: 50%;">Generar</button>
+          </mat-card-actions>
+        </div>
+
+        <div class="container qr">
+          <qrcode id="helo" [qrdata]="qrData" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
+          <qrcode id="helo" [qrdata]="qrData" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
+          <qrcode id="helo" [qrdata]="qrData" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
+        </div>
+
+
+      </form>
+
+    </mat-card>
+
+  </div>
+
+</div>

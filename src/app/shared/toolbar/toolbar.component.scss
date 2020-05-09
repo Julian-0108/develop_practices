@@ -1,0 +1,33 @@
+.mat-toolbar {
+  height: 47px;
+  font-size: 15px;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  background-color: #c4382f;
+  color: white;
+}
+
+.mat-toolbar-row {
+  height: 40px;
+}
+
+.icon {
+  padding: 0 14px;
+  transform: scale(0.9);
+}
+
+img {
+  width: 43px;
+  height: 43px;
+  cursor: pointer;
+}
+
+.menu {
+  background-color: transparent;
+  color: transparent;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
