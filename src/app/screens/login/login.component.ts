@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import Swal from 'sweetalert2';
 
 const Toast = Swal.mixin({
@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
           });
           this.loading = false;
         } else {
-          if (error.status == 401) {
+          if (error.status == 401 || 400) {
             Toast.fire({
               icon: 'error',
               title: "Credenciales inválidas"

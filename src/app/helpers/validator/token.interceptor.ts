@@ -1,10 +1,10 @@
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
-import { AuthService } from 'src/app/services/auth.service';
-
-const AUTH_PREFIX = "Bearer";
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +12,35 @@ const AUTH_PREFIX = "Bearer";
 
 export class TokenInterceptor implements HttpInterceptor {
 
-  constructor(public auth: AuthService) {}
+  constructor(
+    public auth: AuthService,
+    private router: Router
+  ) { }
 
-  intercept(request: HttpRequest<any>, next: HttpHandler,): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler, ): Observable<HttpEvent<any>> {
 
     let authData = JSON.parse(localStorage.getItem('authData'))
+
+    let request = req;
+
     if (authData) {
-      request = request.clone({
+      request = req.clone({
         setHeaders: {
-          Authorization: `${AUTH_PREFIX} ${this.auth.getToken()}`
+          'access-token': `${authData.token}`
         }
       });
     }
-    return next.handle(request);
+    return next.handle(request).pipe(
+      catchError((err: HttpErrorResponse) => {
+
+        if (err.status === 401) {
+          this.router.navigateByUrl('/login');
+        }
+
+        return throwError(err);
+
+      })
+    );
 
   }
 

@@ -20,6 +20,8 @@
 
       </mat-card-content>
       <button mat-flat-button class="btn-block mat-elevation-z6">Ingresar</button>
+
+      <mat-progress-bar mode="indeterminate" *ngIf="loading" color="warn"></mat-progress-bar>
     </form>
   </mat-card>
 

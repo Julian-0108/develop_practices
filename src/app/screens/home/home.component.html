@@ -1,12 +1,68 @@
 <div class="content grid-container" role="main">
 
+  <div class="login-wrapper grid-item">
+    <mat-card class="box">
+      <mat-card-header>
+        <mat-card-title>Generar</mat-card-title>
+        <mat-card-subtitle>Copiar cada código individual y pegarlo en el documento que desea imprimir</mat-card-subtitle>
+      </mat-card-header>
+
+      <form class="form" (ngSubmit)="onSubmit(form)" novalidate>
+
+        <div>
+          <mat-card-content>
+
+            <mat-form-field class="full-width">
+              <mat-label>Seleccionar sede...</mat-label>
+              <mat-select [(ngModel)]="selectedVenue" [ngModelOptions]="{standalone: true}">
+                <mat-option *ngFor="let venue of venues" [value]="venue.nombre">
+                  {{venue.nombre}}
+                </mat-option>
+                <mat-option *ngIf="venues?.length == 0" disabled><i>No hay sedes disponibles</i></mat-option>
+              </mat-select>
+            </mat-form-field>
+
+           </mat-card-content>
+           <mat-card-actions>
+
+             <button [disabled]="selectedVenue == ''" type="submit" mat-flat-button class="btn-block mat-elevation-z6">Generar</button>
+           </mat-card-actions>
+        </div>
+
+        <div class="qr-container grid-item" *ngIf="selectedVenue == 'Sede Bogota'">
+          <p class="qr-info" *ngIf="showQrInfo">{{nameMicrosites}} Entrada</p>
+          <qrcode [scale]="1" [margin]="1" [qrdata]="qrHormiguero" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+          <p lass="qr-info" *ngIf="showQrInfo">{{nameMicrosites}} Salida</p>
+          <qrcode [scale]="1" [margin]="1" [qrdata]="qrHormigueroS" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+        </div>
+
+        <!-- <div class="qr-container grid-item">
+          <p lass="qr-info">Oficina Piso 5 - Entrada</p>
+          <qrcode [qrdata]="qrPiso5Entrada" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+          <p lass="qr-info">Oficina Piso 5 - Salida</p>
+          <qrcode [qrdata]="qrPiso5Salida" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+        </div> -->
+
+
+
+      </form>
+
+    </mat-card>
+
+  </div>
+
+</div>
+
+<!-- <div class="content grid-container" role="main">
+
   <div class="login-wrapper grid-item" fxLayout="row" fxLayoutAlign="center center">
     <mat-card class="box">
       <mat-card-header>
-        <mat-card-subtitle>Generar</mat-card-subtitle>
+        <mat-card-title>Generar</mat-card-title>
+        <mat-card-subtitle>Copiar cada código individual y pegarlo en el documento que desea imprimir</mat-card-subtitle>
       </mat-card-header>
 
-      <form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate>
+      <form class="form">
 
         <div>
           <mat-card-content>
@@ -14,7 +70,7 @@
             <div class="container select">
               <mat-form-field class="full-width"style="width: 70%;">
                 <mat-label>Seleccionar sede...</mat-label>
-                <mat-select formControlName="sede">
+                <mat-select >
                   <mat-option *ngIf="sedes?.length == 0" disabled><i>No hay sedes disponibles</i></mat-option>
                   <mat-option *ngFor="let sede of sedes" [value]="sede">
                     {{sede}}
@@ -26,14 +82,36 @@
           </mat-card-content>
 
           <mat-card-actions>
-            <button type="submit" mat-flat-button class="btn-block generate-btn mat-elevation-z6" style="width: 50%;">Generar</button>
+            <button type="submit" (ngClick)="onSubmit()" mat-flat-button class="btn-block generate-btn mat-elevation-z6" style="width: 50%;">Generar</button>
           </mat-card-actions>
         </div>
 
         <div class="container qr">
-          <qrcode id="helo" [qrdata]="qrData" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
-          <qrcode id="helo" [qrdata]="qrData" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
-          <qrcode id="helo" [qrdata]="qrData" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
+          <p>Hormiguero - Entrada</p>
+          <qrcode id="helo" [qrdata]="qrHormigueroEntrada" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
+          <p>Hormiguero - Salida</p>
+          <qrcode id="helo" [qrdata]="qrHormigueroSalida" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
+        </div>
+
+        <div class="container qr">
+          <p>Piso 5 - Entrada</p>
+          <qrcode id="helo" [qrdata]="qrPiso5Entrada" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
+          <p>Piso 5 - Salida</p>
+          <qrcode id="helo" [qrdata]="qrPiso5Salida" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
+        </div>
+
+        <div class="container qr">
+          <p>Piso 6 - Entrada</p>
+          <qrcode id="helo" [qrdata]="qrPiso6Entrada" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
+          <p>Piso 6 - Salida</p>
+          <qrcode id="helo" [qrdata]="qrPiso6Salida" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
+        </div>
+
+        <div class="container qr">
+          <p>Piso 11 - Entrada</p>
+          <qrcode id="helo" [qrdata]="qrPiso11Entrada" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
+          <p>Piso 11 - Salida</p>
+          <qrcode id="helo" [qrdata]="qrPiso11Salida" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
         </div>
 
 
@@ -43,4 +121,4 @@
 
   </div>
 
-</div>
+</div> -->

@@ -17,7 +17,8 @@ import {
   MatGridListModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
-  MatDialogRef
+  MatDialogRef,
+  MatBadgeModule
 
 } from "@angular/material";
 
@@ -37,7 +38,8 @@ import {
     MatExpansionModule,
     MatGridListModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatBadgeModule
   ],
   exports: [
     MatToolbarModule,
@@ -54,7 +56,8 @@ import {
     MatExpansionModule,
     MatGridListModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatBadgeModule
   ],
   providers: [
     {

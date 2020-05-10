@@ -6,6 +6,10 @@
   text-align: center;
 }
 
+.qrcode qrcode {
+  image-rendering: pixelated;
+}
+
 .btn-block {
   background-color: #c4382f;
   color: white;
@@ -15,24 +19,21 @@
 .login-wrapper {
   height: 100vh;
 }
-.positronx {
-  text-decoration: none;
-  color: #ffffff;
-}
+
 .box {
-  position: relative;
-  top: 0;
-  opacity: 1;
-  float: left;
-  padding: 60px 50px 40px 50px;
+  top: 80px;
+  margin: auto;
+  padding-bottom: 30px;
   width: 100%;
-  background: #fff;
+  padding: 60px 50px 40px 50px;
   border-radius: 10px;
+  z-index: 5;
+  opacity: 1;
+  max-width: 650px;
+  position: relative;
   transform: scale(1);
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
-  z-index: 5;
-  max-width: 500px;
 }
 .box.back {
   transform: scale(0.95);
@@ -58,7 +59,6 @@
 }
 .login-wrapper .form {
   min-width: 100%;
-  max-width: 300px;
   width: 100%;
 }
 .login-wrapper .full-width,
@@ -72,9 +72,17 @@
   font-weight: 700;
 }
 .login-wrapper mat-card-header mat-card-title {
-  font-size: 30px;
+  font-size: 20px;
   margin: 0;
 }
+
+.login-wrapper mat-card-subtitle {
+  padding-top: 10px;
+  font-size: 14px;
+  font-weight: 300;
+  margin: 0;
+}
+
 .login-wrapper .mat-card {
   padding: 40px 70px 50px;
 }
@@ -91,6 +99,7 @@ mat-card-actions {
   text-align: center;
 }
 
-.qr {
+.qr-container {
   display: flex;
 }
+
