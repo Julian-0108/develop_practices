@@ -19,7 +19,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   hideNavbar() {
-    return this.router.url !== '/login';
+    return this.router.url === '/home';
   }
 
 }

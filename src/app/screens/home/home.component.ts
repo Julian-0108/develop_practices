@@ -10,7 +10,7 @@ import { VenuesService } from 'src/app/services/venues/venues.service';
 })
 export class HomeComponent implements OnInit {
 
-  selectedVenue: string ='';
+  selectedVenue: string = '';
 
 
   showQrInfo = false;
