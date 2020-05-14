@@ -31,14 +31,14 @@ export class LoginComponent implements OnInit {
   loading: boolean;
   submitted = false;
   returnUrl: string;
-  error = '';
 
-  constructor(
+  constructor (
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService
-  ) { }
+  ){
+  }
 
   ngOnInit() {
     this.form = this.fb.group({

@@ -7,43 +7,78 @@
         <mat-card-subtitle>Copiar cada código individual y pegarlo en el documento que desea imprimir</mat-card-subtitle>
       </mat-card-header>
 
-      <form class="form" (ngSubmit)="onSubmit(form)" novalidate>
+      <form class="form">
 
         <div>
           <mat-card-content>
 
+            <!-- Sede Select -->
             <mat-form-field class="full-width">
               <mat-label>Seleccionar sede...</mat-label>
-              <mat-select [(ngModel)]="selectedVenue" [ngModelOptions]="{standalone: true}">
-                <mat-option *ngFor="let venue of venues" [value]="venue.nombre">
+              <mat-select [(value)]="selected" [(ngModel)]="selected" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange($event)">
+                <mat-option *ngFor="let venue of venues;" [value]="venue._id">
                   {{venue.nombre}}
                 </mat-option>
                 <mat-option *ngIf="venues?.length == 0" disabled><i>No hay sedes disponibles</i></mat-option>
               </mat-select>
             </mat-form-field>
+            <p><i>You selected: {{selected}}</i></p>
 
-           </mat-card-content>
-           <mat-card-actions>
+            <!-- Oficina Select -->
+            <mat-form-field class="full-width">
+              <mat-label>Seleccionar oficina...</mat-label>
+              <mat-select [(value)]="selectedOffice" [disabled]="disabled" >
+                <mat-option *ngFor="let office of offices; index as i" [value]="office._id">
+                  Oficina Piso {{office.piso}}
+                </mat-option>
+                <mat-option *ngIf="offices?.length == 0" disabled><i>No hay oficinas disponibles</i></mat-option>
+              </mat-select>
+            </mat-form-field>
+            <p><i>You selected: {{selectedOffice}}</i></p>
 
-             <button [disabled]="selectedVenue == ''" type="submit" mat-flat-button class="btn-block mat-elevation-z6">Generar</button>
-           </mat-card-actions>
+            <!-- Micrositio Select -->
+            <!-- <mat-form-field class="full-width">
+              <mat-label>Seleccionar micrositio...</mat-label>
+              <mat-select [(value)]="selectedMicrosite">
+                <mat-option *ngFor="let microsite of microsites; index as i" [value]="microsite.nombre">
+                  {{microsite.nombre}}
+                </mat-option>
+                <mat-option *ngIf="microsites?.length == 0" disabled><i>No hay micrositios disponibles</i></mat-option>
+              </mat-select>
+            </mat-form-field>
+            <p><i>You selected: {{selectedMicrosite}}</i></p> -->
+          </mat-card-content>
+
+          <mat-card-actions>
+            <button (click)="onSubmit()" mat-flat-button class="btn-block mat-elevation-z6" style="width: 35%;">Generar</button>
+          </mat-card-actions>
         </div>
 
-        <div class="qr-container grid-item" *ngIf="selectedVenue == 'Sede Bogota'">
-          <p class="qr-info" *ngIf="showQrInfo">{{nameMicrosites}} Entrada</p>
+        <div class="qr-container grid-item" *ngIf="selectedVenue == 'Sede Banco de Occidente'">
+
+          <div class="qr-info" *ngIf="showQrInfo">
+            <img src="../../../assets/images/Logo-seti.png" alt="logo seti">
+            <p >{{nameMicrosites}} Entrada</p>
+          </div>
+
           <qrcode [scale]="1" [margin]="1" [qrdata]="qrHormiguero" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
-          <p lass="qr-info" *ngIf="showQrInfo">{{nameMicrosites}} Salida</p>
+
+          <div class="qr-info" *ngIf="showQrInfo">
+            <img src="../../../assets/images/Logo-seti.png" alt="logo seti">
+            <p >{{nameMicrosites}} Salida</p>
+          </div>
+
           <qrcode [scale]="1" [margin]="1" [qrdata]="qrHormigueroS" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+
         </div>
 
-        <!-- <div class="qr-container grid-item">
-          <p lass="qr-info">Oficina Piso 5 - Entrada</p>
-          <qrcode [qrdata]="qrPiso5Entrada" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
-          <p lass="qr-info">Oficina Piso 5 - Salida</p>
-          <qrcode [qrdata]="qrPiso5Salida" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
-        </div> -->
+        <div class="qr-container grid-item" *ngIf="selectedVenue == 'Sede Trade Center'">
+          <p class="qr-info" *ngIf="showQrInfo">Disponible pronto</p>
+        </div>
 
-
+        <div class="qr-container grid-item" *ngIf="selectedVenue == 'Sede Centro Empresa'">
+          <p class="qr-info" *ngIf="showQrInfo">Disponible pronto</p>
+        </div>
 
       </form>
 

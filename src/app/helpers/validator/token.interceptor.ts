@@ -19,7 +19,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler, ): Observable<HttpEvent<any>> {
 
-    let authData = JSON.parse(localStorage.getItem('authData'))
+    let authData = JSON.parse(localStorage.getItem('authData') || '{}')
 
     let request = req;
 
