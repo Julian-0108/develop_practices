@@ -28,7 +28,6 @@ img {
 .box {
   top: 80px;
   margin: auto;
-  padding-bottom: 30px;
   width: 100%;
   padding: 60px 50px 40px 50px;
   border-radius: 10px;
@@ -102,6 +101,10 @@ img {
 
 mat-card-actions {
   text-align: center;
+}
+
+mat-card {
+   margin-bottom: 30px;
 }
 
 .qr-container {

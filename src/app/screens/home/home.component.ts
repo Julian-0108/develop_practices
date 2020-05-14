@@ -5,116 +5,122 @@ import { OfficeService } from 'src/app/services/office/office.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
-	selector: 'app-home',
-	templateUrl: './home.component.html',
-	styleUrls: ['./home.component.scss']
+   selector: 'app-home',
+   templateUrl: './home.component.html',
+   styleUrls: ['./home.component.scss']
 })
 
 export class HomeComponent implements OnInit {
 
-  disabled: boolean = true
+   disabled: boolean = true
+   loading: boolean = false
 
-  selected = null;
-  selectedOffice = null;
-  selectedMicrosite = null;
+   selected = null;
+   selectedOffice: string = '';
+   selectedMicrosite: string = '';
 
-  selectedVenue: string = '';
+   selectedVenue: string = '';
 
-  showQrInfo = false;
+   showQrInfo = false;
 
-	qrHormiguero: any = null;
-	qrHormigueroS: any = null;
+   qrHormiguero: any = null;
+   qrHormigueroS: any = null;
 
-  microsites: any[] = []
-  offices: any[] = [];
-  venues: any[] = [];
+   microsites: any[] = []
+   offices: any[] = [];
+   venues: any[] = [];
 
-  resultNameMicrosites: any[] = [];
-  resultMicrosites: any[] = [];
-  resultVenues: any[] = [];
-  resultOffices: any[] = [];
+   resultNameMicrosites: any[] = [];
+   resultMicrosites: any[] = [];
+   resultVenues: any[] = [];
+   resultOffices: any[] = [];
 
-  nameMicrosites: any[] = [];
-  idMicrosites: any;
-  idVenues: any[] = [];
+   nameMicrosites: any[] = [];
+   idMicrosites: any;
+   idVenues: any[] = [];
 
-	constructor (
-		private micrositesService: MicrositesService,
-    private venuesService: VenuesService,
-    private officeService:  OfficeService,
-    private fb: FormBuilder,
-    // public form: FormGroup
-	) {}
+   constructor(
+      private micrositesService: MicrositesService,
+      private venuesService: VenuesService,
+      private officeService: OfficeService,
+      private fb: FormBuilder,
+      // public form: FormGroup
+   ) {}
 
-	ngOnInit() {
-    this.getVenues();
-    this.getMicrosites();
-    this.getOffices();
+   ngOnInit() {
+      this.getVenues();
+   }
 
-    // this.form = this.fb.group({
-    //   venue: '',
-    //   office: '',
-    // })
+   onChangeMicrosite(value: any) {
+      this.idMicrosites = value;
+   }
 
-  }
-
-	onSubmit() {
-
-
-    // this.idMicrosites = this.resultMicrosites[0].id;
-    // this.showQrInfo = true;
-    // this.qrHormiguero = `${this.idMicrosites}` + ':entrada'
-    // this.qrHormigueroS = `${this.idMicrosites}` + ':salida'
-    // console.log(this.qrHormiguero);
-    // console.log(this.qrHormigueroS);
-  }
-
-  onChange(value: any) {
-    console.log(value);
-  }
-
-	getVenues() {
-		this.venuesService.getVenueList().subscribe((data: any) => {
-      this.venues = data;
-      this.resultVenues = this.venues
-        .map(
-          (venues) => (venues['_id'])
-        );
-      console.log({venues: this.resultVenues});
-		});
-  }
-
-  getOffices() {
-    this.officeService.getOfficeList().subscribe((data: any) => {
-      this.offices = data;
-
-      this.resultOffices = this.offices
-        .map(
-          (offices) => (offices['_id'])
-        );
-      console.log({offices: this.resultOffices});
-    })
-  }
-
-  getMicrosites() {
-		this.micrositesService.getMicrositeList().subscribe((data: any) => {
-      this.microsites = data;
-
-      this.resultMicrosites = this.microsites
-        .map(
-          (microsites) => (microsites['_id'])
-        );
-
+   onSubmit() {
+      this.showQrInfo = true;
+      this.loading = false;
       this.resultNameMicrosites = this.microsites
-        .map(
-          (microsites) => (microsites['nombre'])
-        );
+      .find(microsites => microsites['_id'] == this.idMicrosites).nombre;
+      console.log(this.resultNameMicrosites);
+      this.qrHormiguero = `${this.idMicrosites}` + ':entrada'
+      this.qrHormigueroS = `${this.idMicrosites}` + ':salida'
+   // console.log(this.qrHormiguero);
+   // console.log(this.qrHormigueroS);
+   }
 
-      this.idMicrosites = this.resultMicrosites[0].id;
-      this.nameMicrosites = this.resultNameMicrosites[0].name;
-      // console.log(this.nameMicrosites);
-      return this.idMicrosites, this.nameMicrosites
-		});
-  }
+   onChangeVenue(value: any) {
+
+      console.log(value);
+
+      this.officeService.getOfficeByVenueId(value).subscribe(
+         (data: any) => {
+            this.offices = data;
+
+            this.resultOffices = this.offices
+            .map(
+               (offices) => (offices['_id'])
+            );
+         console.log(this.resultOffices);
+         }
+      )
+   }
+
+   onChangeOffice(value: any) {
+
+      console.log(value);
+
+      this.micrositesService.getMicrositesByOfficeId(value).subscribe(
+         (data: any) => {
+            this.microsites = data;
+
+            this.resultMicrosites = this.microsites
+            .map(
+               (microsites) => (microsites['_id'])
+            );
+         console.log(this.resultMicrosites);
+         }
+      )
+   }
+
+   getVenues() {
+      this.venuesService.getVenueList().subscribe((data: any) => {
+         this.venues = data;
+         this.resultVenues = this.venues
+            .map(
+               (venues) => (venues['_id'])
+            );
+         console.log(this.resultVenues);
+      });
+   }
+
+   // getMicrosites() {
+   //    this.micrositesService.getMicrositeList().subscribe((data: any) => {
+   //       this.microsites = data;
+
+   //       this.resultMicrosites = this.microsites
+   //          .map(
+   //             (microsites) => (microsites['nombre'])
+   //          );
+   //    });
+   // }
 
 }

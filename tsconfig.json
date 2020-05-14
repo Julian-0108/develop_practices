@@ -16,7 +16,6 @@
     "typeRoots": [
       "node_modules/@types"
     ],
-    // "strictPropertyInitialization": false,
     "lib": [
       "es2018",
       "dom"

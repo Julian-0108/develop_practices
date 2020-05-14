@@ -1,1 +1,1 @@
-export const URL_SERVICES = "http://localhost:5000";
+export const URL_SERVICES = "http://192.168.27.27:5000";
