@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit {
    }
 
    onSubmitKit() {
-      this.myDate = formatDate(new Date(), 'yyyy-MM-dd-h:mm-a', 'en')
+      this.myDate = formatDate(new Date(), 'yyyy-MM-dd-h.mm-a', 'en')
       this.qrKit = `${this.myDate}` + ':kit';
       console.log(this.qrKit);
    }
