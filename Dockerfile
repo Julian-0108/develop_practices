@@ -3,6 +3,7 @@ FROM node:current-alpine
 WORKDIR ./
 COPY package.json ./
 RUN npm install
+RUN cd ./
 RUN npm run build:prod
 
 # STAGE 1: Run
