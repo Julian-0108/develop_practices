@@ -1,5 +1,5 @@
 # STAGE 1: Build
-FROM node:stable-alpine
+FROM node:current-alpine
 WORKDIR /
 COPY package.json ./
 RUN npm install
