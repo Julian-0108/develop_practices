@@ -1,9 +1,7 @@
 # STAGE 1: Build
 FROM node:current-alpine
 WORKDIR /
-COPY package.json ./
 RUN npm install
-COPY . .
 RUN npm run build:prod
 
 # STAGE 1: Run
