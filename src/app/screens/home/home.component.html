@@ -1,10 +1,10 @@
 <div class="content grid-container" role="main">
 
   <div class="login-wrapper grid-item">
-    <mat-card class="box">
+    <mat-card class="box" style="margin-bottom: 30px;">
       <mat-card-header>
         <mat-card-title>Generar</mat-card-title>
-        <mat-card-subtitle>Copiar cada código individual y pegarlo en el documento que desea imprimir</mat-card-subtitle>
+        <mat-card-subtitle style="padding-bottom: 15px;">Copiar cada código individual y pegarlo en el documento que desea imprimir</mat-card-subtitle>
       </mat-card-header>
 
       <form class="form">
@@ -54,8 +54,34 @@
           </mat-card-actions>
         </div>
 
-        <mat-progress-bar mode="indeterminate" *ngIf="loading" color="warn"></mat-progress-bar>
+        <div class="qr-container grid-item">
 
+          <div class="qr-info" *ngIf="showQrInfo">
+            <img src="../../../assets/images/Logo-seti.png" alt="logo seti">
+            <p>{{resultNameMicrosites}} Entrada</p>
+          </div>
+
+          <qrcode [scale]="1" [margin]="1" [qrdata]="qrHormiguero" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+
+          <div class="qr-info" *ngIf="showQrInfo">
+            <img src="../../../assets/images/Logo-seti.png" alt="logo seti">
+            <p >{{resultNameMicrosites}} Salida</p>
+          </div>
+
+          <qrcode [scale]="1" [margin]="1" [qrdata]="qrHormigueroS" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+
+        </div>
+
+        <span layout="row" ><hr flex/></span>
+
+        <mat-card-header class="kit">
+          <mat-card-title>Kit</mat-card-title>
+          <mat-card-subtitle>Generar código QR para entrega de kits</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-actions>
+          <button (click)="onSubmitKit()" mat-flat-button class="btn-block mat-elevation-z6" style="width: 35%;">Generar</button>
+        </mat-card-actions>
 
         <div class="qr-container grid-item">
 

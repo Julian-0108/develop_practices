@@ -11,6 +11,15 @@ img {
   height: 60px;
 }
 
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid rgb(212, 212, 212);
+  margin-bottom: 27px;
+  padding: 0;
+}
+
 .qrcode qrcode {
   image-rendering: pixelated;
 }
@@ -81,10 +90,11 @@ img {
 }
 
 .login-wrapper mat-card-subtitle {
-  padding-top: 10px;
-  font-size: 14px;
-  font-weight: 300;
-  margin: 0;
+   padding-bottom: 15px;
+   padding-top: 10px;
+   font-size: 14px;
+   font-weight: 300;
+   margin: 0;
 }
 
 .login-wrapper .mat-card {
@@ -104,10 +114,9 @@ mat-card-actions {
 }
 
 mat-card {
-   margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .qr-container {
   display: flex;
 }
-

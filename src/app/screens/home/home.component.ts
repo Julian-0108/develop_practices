@@ -3,6 +3,19 @@ import { MicrositesService } from 'src/app/services/microsites/microsites.servic
 import { VenuesService } from 'src/app/services/venues/venues.service';
 import { OfficeService } from 'src/app/services/office/office.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import Swal from 'sweetalert2';
+
+const TOAST = Swal.mixin({
+   toast: true,
+   position: 'top-end',
+   showConfirmButton: false,
+   timer: 1500,
+   showCloseButton:true,
+   onOpen: (Toast) => {
+       Toast.addEventListener('mouseenter', Swal.stopTimer)
+       Toast.addEventListener('mouseleave', Swal.resumeTimer)
+   }
+});
 
 @Component({
    selector: 'app-home',
@@ -59,18 +72,25 @@ export class HomeComponent implements OnInit {
       this.showQrInfo = true;
       this.loading = false;
       this.resultNameMicrosites = this.microsites
-      .find(microsites => microsites['_id'] == this.idMicrosites).nombre;
-      console.log(this.resultNameMicrosites);
+         .find(
+            microsites => microsites['_id'] == this.idMicrosites
+         ).nombre;
       this.qrHormiguero = `${this.idMicrosites}` + ':entrada'
       this.qrHormigueroS = `${this.idMicrosites}` + ':salida'
-   // console.log(this.qrHormiguero);
-   // console.log(this.qrHormigueroS);
+      // console.log(this.resultNameMicrosites);
+      // console.log(this.qrHormiguero);
+      // console.log(this.qrHormigueroS);
+   }
+
+   onSubmitKit() {
+      TOAST.fire({
+         icon: 'success',
+         title: 'Button it works!'
+      });
    }
 
    onChangeVenue(value: any) {
-
-      console.log(value);
-
+      // console.log(value);
       this.officeService.getOfficeByVenueId(value).subscribe(
          (data: any) => {
             this.offices = data;
@@ -79,15 +99,13 @@ export class HomeComponent implements OnInit {
             .map(
                (offices) => (offices['_id'])
             );
-         console.log(this.resultOffices);
+         // console.log(this.resultOffices);
          }
       )
    }
 
    onChangeOffice(value: any) {
-
-      console.log(value);
-
+      // console.log(value);
       this.micrositesService.getMicrositesByOfficeId(value).subscribe(
          (data: any) => {
             this.microsites = data;
@@ -96,7 +114,7 @@ export class HomeComponent implements OnInit {
             .map(
                (microsites) => (microsites['_id'])
             );
-         console.log(this.resultMicrosites);
+         // console.log(this.resultMicrosites);
          }
       )
    }
@@ -108,19 +126,8 @@ export class HomeComponent implements OnInit {
             .map(
                (venues) => (venues['_id'])
             );
-         console.log(this.resultVenues);
+         // console.log(this.resultVenues);
       });
    }
-
-   // getMicrosites() {
-   //    this.micrositesService.getMicrositeList().subscribe((data: any) => {
-   //       this.microsites = data;
-
-   //       this.resultMicrosites = this.microsites
-   //          .map(
-   //             (microsites) => (microsites['nombre'])
-   //          );
-   //    });
-   // }
 
 }
