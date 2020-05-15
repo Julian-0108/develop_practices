@@ -78,15 +78,13 @@ export class HomeComponent implements OnInit {
          ).nombre;
       this.qrHormiguero = `${this.idMicrosites}` + ':entrada'
       this.qrHormigueroS = `${this.idMicrosites}` + ':salida'
-      '7691871286917461976478124124:entrada'
-      '7691871286917461976478124124:salida'
       // console.log(this.resultNameMicrosites);
       // console.log(this.qrHormiguero);
       // console.log(this.qrHormigueroS);
    }
 
    onSubmitKit() {
-      this.myDate = formatDate(new Date(), 'yyyy-MM-dd', 'en')
+      this.myDate = formatDate(new Date(), 'yyyy-MM-dd-h:mm-a', 'en')
       this.qrKit = `${this.myDate}` + ':kit';
       console.log(this.qrKit);
    }
