@@ -2,7 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MicrositesService } from 'src/app/services/microsites/microsites.service';
 import { VenuesService } from 'src/app/services/venues/venues.service';
 import { OfficeService } from 'src/app/services/office/office.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
+import { formatDate } from '@angular/common';
 import Swal from 'sweetalert2';
 
 const TOAST = Swal.mixin({
@@ -38,6 +39,8 @@ export class HomeComponent implements OnInit {
 
    qrHormiguero: any = null;
    qrHormigueroS: any = null;
+   qrKit: any = null;
+   myDate: any;
 
    microsites: any[] = []
    offices: any[] = [];
@@ -56,8 +59,6 @@ export class HomeComponent implements OnInit {
       private micrositesService: MicrositesService,
       private venuesService: VenuesService,
       private officeService: OfficeService,
-      private fb: FormBuilder,
-      // public form: FormGroup
    ) {}
 
    ngOnInit() {
@@ -77,16 +78,17 @@ export class HomeComponent implements OnInit {
          ).nombre;
       this.qrHormiguero = `${this.idMicrosites}` + ':entrada'
       this.qrHormigueroS = `${this.idMicrosites}` + ':salida'
+      '7691871286917461976478124124:entrada'
+      '7691871286917461976478124124:salida'
       // console.log(this.resultNameMicrosites);
       // console.log(this.qrHormiguero);
       // console.log(this.qrHormigueroS);
    }
 
    onSubmitKit() {
-      TOAST.fire({
-         icon: 'success',
-         title: 'Button it works!'
-      });
+      this.myDate = formatDate(new Date(), 'yyyy-MM-dd', 'en')
+      this.qrKit = `${this.myDate}` + ':kit';
+      console.log(this.qrKit);
    }
 
    onChangeVenue(value: any) {
