@@ -1,12 +1,12 @@
 # STAGE 1: Build
 FROM node:current-alpine
-WORKDIR ./
+WORKDIR /projects/app-ingresos
 COPY package.json ./
 RUN npm install
-RUN cd ./
+COPY . .
 RUN npm run build:prod
 
-# STAGE 1: Run
+# STAGE 2: Run
 FROM nginx:stable-alpine
 COPY nginx.conf /etc/nginx/nginx.conf
 WORKDIR /usr/share/nginx/html
