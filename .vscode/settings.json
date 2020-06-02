@@ -6,6 +6,5 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "node_modules": true
-},
-"python.pythonPath": "C:\\Users\\yulianchavarriaga\\AppData\\Local\\Programs\\Python\\Python37\\python.exe"
+  }
 }
