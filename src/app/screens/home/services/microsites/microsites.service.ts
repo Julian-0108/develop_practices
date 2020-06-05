@@ -1,8 +1,8 @@
-import { map, catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { URL_SERVICES } from '../../config/config';
+import { URL_SERVICES } from 'src/app/config/config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from 'src/app/screens/login/services/auth/auth.service';
 
 const headers = new HttpHeaders({
    'Content-Type': 'application/json',
@@ -13,7 +13,7 @@ const headers = new HttpHeaders({
 
 export class MicrositesService {
 
-   constructor(private http: HttpClient, private authService: AuthService) { }
+   constructor(private http: HttpClient) { }
 
    // GET Microsites list from DB
    getMicrositeList() {

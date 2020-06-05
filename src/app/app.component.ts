@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'sars-ui-web';
+
+  title = 'SARS-UI-Web';
+
 }

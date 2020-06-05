@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { URL_SERVICES } from 'src/app/config/config';
 import { map } from 'rxjs/operators';
-import { AuthService } from "../auth/auth.service";
+import { AuthService } from "src/app/screens/login/services/auth/auth.service";
 
 const headers = new HttpHeaders({
   'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ export class VenuesService {
   constructor(
     private http: HttpClient,
     private authService: AuthService
-  ) {}
+  ) { }
 
   // GET Venues list from DB
   getVenueList() {
