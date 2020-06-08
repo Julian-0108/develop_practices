@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
   selected = null;
   selectedOffice: string = '';
   selectedMicrosite: string = '';
+
   selectedVenue: string = '';
 
   showQrInfo = false;
@@ -49,14 +50,15 @@ export class HomeComponent implements OnInit {
   resultVenues: any[] = [];
   resultOffices: any[] = [];
 
+  nameSites: any[] = [];
   idSites: any;
   idVenues: any[] = [];
 
   constructor(
+    private sitesService: SitesService,
     private venuesService: VenuesService,
     private officeService: OfficeService,
-    private sitesService: SitesService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getVenues();
@@ -81,7 +83,7 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmitKit() {
-    this.myDate = formatDate(new Date(), 'yyyy-MM-dd-h:mm-a', 'en')
+    this.myDate = formatDate(new Date(), 'yyyy-MM-dd-h.mm-a', 'en')
     this.qrKit = `${this.myDate}` + ':kit';
     // console.log(this.qrKit);
   }

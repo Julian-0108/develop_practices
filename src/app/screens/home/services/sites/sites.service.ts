@@ -2,7 +2,6 @@ import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { URL_SERVICES } from 'src/app/config/config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthService } from 'src/app/screens/login/services/auth/auth.service';
 
 const headers = new HttpHeaders({
    'Content-Type': 'application/json',
