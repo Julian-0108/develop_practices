@@ -1,25 +1,32 @@
 <div class="content grid-container" role="main">
-
   <div class="login-wrapper grid-item">
     <mat-card class="box" style="margin-bottom: 30px;">
       <mat-card-header>
         <mat-card-title>Generar</mat-card-title>
-        <mat-card-subtitle style="padding-bottom: 15px;">Copiar cada código individual y pegarlo en el documento que desea imprimir</mat-card-subtitle>
+        <mat-card-subtitle style="padding-bottom: 15px;"
+          >Copiar cada código individual y pegarlo en el documento que desea
+          imprimir</mat-card-subtitle
+        >
       </mat-card-header>
 
       <form class="form">
-
         <div>
           <mat-card-content>
-
             <!-- Sede Select -->
             <mat-form-field class="full-width">
               <mat-label>Seleccionar sede...</mat-label>
-              <mat-select [(value)]="selected" [(ngModel)]="selected" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChangeVenue($event)">
-                <mat-option *ngFor="let venue of venues;" [value]="venue._id">
-                  {{venue.nombre}}
+              <mat-select
+                [(value)]="selected"
+                [(ngModel)]="selected"
+                [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onChangeVenue($event)"
+              >
+                <mat-option *ngFor="let venue of venues" [value]="venue._id">
+                  {{ venue.nombre }}
                 </mat-option>
-                <mat-option *ngIf="venues?.length == 0" disabled><i>No hay sedes disponibles</i></mat-option>
+                <mat-option *ngIf="venues?.length == 0" disabled
+                  ><i>No hay sedes disponibles</i></mat-option
+                >
               </mat-select>
             </mat-form-field>
             <!-- <p><i>You selected: {{selected}}</i></p> -->
@@ -27,11 +34,21 @@
             <!-- Oficina Select -->
             <mat-form-field class="full-width">
               <mat-label>Seleccionar oficina...</mat-label>
-              <mat-select [(value)]="selectedOffice" [(ngModel)]="selectedOffice" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChangeOffice($event)">
-                <mat-option *ngFor="let office of offices; index as i" [value]="office._id">
-                  Oficina Piso {{office.piso}}
+              <mat-select
+                [(value)]="selectedOffice"
+                [(ngModel)]="selectedOffice"
+                [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onChangeOffice($event)"
+              >
+                <mat-option
+                  *ngFor="let office of offices; index as i"
+                  [value]="office._id"
+                >
+                  Oficina Piso {{ office.piso }}
                 </mat-option>
-                <mat-option *ngIf="offices?.length == 0" disabled><i>No hay oficinas disponibles</i></mat-option>
+                <mat-option *ngIf="offices?.length == 0" disabled
+                  ><i>No hay oficinas disponibles</i></mat-option
+                >
               </mat-select>
             </mat-form-field>
             <!-- <p><i>You selected: {{selectedOffice}}</i></p> -->
@@ -39,130 +56,100 @@
             <!-- Micrositio Select -->
             <mat-form-field class="full-width">
               <mat-label>Seleccionar micrositio...</mat-label>
-              <mat-select [(value)]="selectedMicrosite" [(ngModel)]="selectedMicrosite" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChangeMicrosite($event)">
-                <mat-option *ngFor="let microsite of microsites; index as i" [value]="microsite._id">
-                  {{microsite.nombre}}
+              <mat-select
+                [(value)]="selectedMicrosite"
+                [(ngModel)]="selectedMicrosite"
+                [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onChangeMicrosite($event)"
+              >
+                <mat-option
+                  *ngFor="let microsite of sites; index as i"
+                  [value]="microsite._id"
+                >
+                  {{ microsite.nombre }}
                 </mat-option>
-                <mat-option *ngIf="microsites?.length == 0" disabled><i>No hay micrositios disponibles</i></mat-option>
+                <mat-option *ngIf="sites?.length == 0" disabled
+                  ><i>No hay micrositios disponibles</i></mat-option
+                >
               </mat-select>
             </mat-form-field>
             <!-- <p><i>You selected: {{selectedMicrosite}}</i></p> -->
           </mat-card-content>
 
           <mat-card-actions>
-            <button [disabled]="!selectedMicrosite" (click)="onSubmit()" mat-flat-button class="btn-block mat-elevation-z6" style="width: 35%;">Generar</button>
+            <button
+              [disabled]="!selectedMicrosite"
+              (click)="onSubmit()"
+              mat-flat-button
+              class="btn-block mat-elevation-z6"
+              style="width: 35%;"
+            >
+              Generar
+            </button>
           </mat-card-actions>
         </div>
 
         <div class="qr-container grid-item">
-
           <div class="qr-info" *ngIf="showQrInfo">
-            <img src="../../../assets/images/Logo-seti.png" alt="logo seti">
-            <p>{{resultNameMicrosites}} Entrada</p>
+            <img src="../../../assets/images/Logo-seti.png" alt="logo seti" />
+            <p>{{ resultNameSites }} Entrada</p>
           </div>
 
-          <qrcode [scale]="1" [margin]="1" [qrdata]="qrHormiguero" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+          <qrcode
+            [scale]="1"
+            [margin]="1"
+            [qrdata]="qrHormiguero"
+            [width]="256"
+            [errorCorrectionLevel]="'M'"
+          ></qrcode>
 
           <div class="qr-info" *ngIf="showQrInfo">
-            <img src="../../../assets/images/Logo-seti.png" alt="logo seti">
-            <p >{{resultNameMicrosites}} Salida</p>
+            <img src="../../../assets/images/Logo-seti.png" alt="logo seti" />
+            <p>{{ resultNameSites }} Salida</p>
           </div>
 
-          <qrcode [scale]="1" [margin]="1" [qrdata]="qrHormigueroS" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
-
+          <qrcode
+            [scale]="1"
+            [margin]="1"
+            [qrdata]="qrHormigueroS"
+            [width]="256"
+            [errorCorrectionLevel]="'M'"
+          ></qrcode>
         </div>
 
-        <span layout="row" ><hr flex/></span>
+        <span layout="row"><hr flex /></span>
 
         <mat-card-header class="kit">
           <mat-card-title>Kit</mat-card-title>
-          <mat-card-subtitle>Generar código QR para entrega de kit de salud</mat-card-subtitle>
+          <mat-card-subtitle
+            >Generar código QR para entrega de kit de salud</mat-card-subtitle
+          >
         </mat-card-header>
 
         <mat-card-actions>
-          <button (click)="onSubmitKit()" mat-flat-button class="btn-block mat-elevation-z6" style="width: 35%;">Generar</button>
+          <button
+            type="button"
+            (click)="onSubmitKit()"
+            mat-flat-button
+            class="btn-block mat-elevation-z6"
+            style="width: 35%;"
+          >
+            Generar
+          </button>
         </mat-card-actions>
 
         <div class="qr-container grid-item">
-
-          <qrcode style="margin: auto;" [scale]="1" [margin]="1" [qrdata]="qrKit" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
-
+          <qrcode
+            style="margin: auto;"
+            [scale]="1"
+            [margin]="1"
+            [qrdata]="qrKit"
+            [width]="256"
+            [errorCorrectionLevel]="'M'"
+          ></qrcode>
         </div>
-
       </form>
-
     </mat-card>
-
   </div>
-
 </div>
 
-<!-- <div class="content grid-container" role="main">
-
-  <div class="login-wrapper grid-item" fxLayout="row" fxLayoutAlign="center center">
-    <mat-card class="box">
-      <mat-card-header>
-        <mat-card-title>Generar</mat-card-title>
-        <mat-card-subtitle>Copiar cada código individual y pegarlo en el documento que desea imprimir</mat-card-subtitle>
-      </mat-card-header>
-
-      <form class="form">
-
-        <div>
-          <mat-card-content>
-
-            <div class="container select">
-              <mat-form-field class="full-width"style="width: 70%;">
-                <mat-label>Seleccionar sede...</mat-label>
-                <mat-select >
-                  <mat-option *ngIf="sedes?.length == 0" disabled><i>No hay sedes disponibles</i></mat-option>
-                  <mat-option *ngFor="let sede of sedes" [value]="sede">
-                    {{sede}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-          </mat-card-content>
-
-          <mat-card-actions>
-            <button type="submit" (ngClick)="onSubmit()" mat-flat-button class="btn-block generate-btn mat-elevation-z6" style="width: 50%;">Generar</button>
-          </mat-card-actions>
-        </div>
-
-        <div class="container qr">
-          <p>Hormiguero - Entrada</p>
-          <qrcode id="helo" [qrdata]="qrHormigueroEntrada" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
-          <p>Hormiguero - Salida</p>
-          <qrcode id="helo" [qrdata]="qrHormigueroSalida" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
-        </div>
-
-        <div class="container qr">
-          <p>Piso 5 - Entrada</p>
-          <qrcode id="helo" [qrdata]="qrPiso5Entrada" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
-          <p>Piso 5 - Salida</p>
-          <qrcode id="helo" [qrdata]="qrPiso5Salida" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
-        </div>
-
-        <div class="container qr">
-          <p>Piso 6 - Entrada</p>
-          <qrcode id="helo" [qrdata]="qrPiso6Entrada" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
-          <p>Piso 6 - Salida</p>
-          <qrcode id="helo" [qrdata]="qrPiso6Salida" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
-        </div>
-
-        <div class="container qr">
-          <p>Piso 11 - Entrada</p>
-          <qrcode id="helo" [qrdata]="qrPiso11Entrada" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
-          <p>Piso 11 - Salida</p>
-          <qrcode id="helo" [qrdata]="qrPiso11Salida" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
-        </div>
-
-
-      </form>
-
-    </mat-card>
-
-  </div>
-
-</div> -->

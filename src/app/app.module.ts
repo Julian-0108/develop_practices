@@ -1,51 +1,29 @@
+// @Angular Imports
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { QRCodeModule } from 'angularx-qrcode';
-import { NgxPrintModule } from 'ngx-print';
 
+// Componentes Imports
 import { AppComponent } from './app.component';
-import { ToolbarComponent } from "./shared/toolbar/toolbar.component";
-import { LoginComponent } from './screens/login/login.component';
-import { HomeComponent } from './screens/home/home.component';
-import { MaterialModule } from './material.module';
-import { UserModels } from './models/user.models';
-import { TokenInterceptor } from './helpers/validator/token.interceptor';
-import { AuthGuard } from './helpers/guards/auth.guard';
+
+// Custom Imports
+import { LoginModule } from "./screens/login/login.module";
+import { SharedModule } from "./shared/shared.module";
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ToolbarComponent,
-    LoginComponent,
-    HomeComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    FlexLayoutModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    QRCodeModule,
-    NgxPrintModule,
-    HttpClientModule
+
+    LoginModule,
+    SharedModule
   ],
-  providers: [
-    UserModels,
-    AuthGuard,
-		{
-			provide: HTTP_INTERCEPTORS,
-			useClass: TokenInterceptor,
-			multi: true
-		},
-  ],
-  bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

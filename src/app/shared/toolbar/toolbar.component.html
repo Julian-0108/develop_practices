@@ -1,16 +1,24 @@
-<mat-toolbar class="mat-toolbar mat-elevation-z7" *ngIf="hideNavbar()">
+<mat-toolbar class="mat-toolbar mat-elevation-z7">
   <img routerLink="/home" src="../../../assets/images/logoSetiBlanco.png" alt="seti logo">
   <div style="width: 15px;"></div>
   <span>Movimientos</span>
   <span class="spacer"></span>
-  <button mat-icon-button aria-label="icon-button settings">
+
+  <!-- [matMenuTriggerFor]="settingsMenu" -->
+  <button mat-icon-button aria-label="settings button with a menu">
     <mat-icon>settings</mat-icon>
   </button>
-  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="icon-button with a menu">
+  <!-- <mat-menu #settingsMenu="matMenu">
+    <button mat-menu-item >
+      <mat-slide-toggle>Dark mode</mat-slide-toggle>
+    </button>
+  </mat-menu> -->
+
+  <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="profile button with a menu">
     <mat-icon>person</mat-icon>
   </button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item>
+  <mat-menu #profileMenu="matMenu">
+    <button mat-menu-item disabled>
       <mat-icon>person_outline</mat-icon>
       <span>Perfil</span>
     </button>
