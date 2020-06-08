@@ -1,4 +1,4 @@
-// Angular Imports
+// @Angular Imports
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -12,6 +12,9 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 // Material Imports
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [ToolbarComponent],
@@ -21,11 +24,13 @@ import { MatButtonModule } from '@angular/material/button';
     FlexLayoutModule,
     FlexModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatSlideToggleModule
   ],
   exports: [
     ToolbarComponent
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  ]
 })
-export class ToolbarModule { }
+export class SharedModule { }

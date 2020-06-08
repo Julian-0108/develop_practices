@@ -9,17 +9,13 @@ import { Router } from '@angular/router';
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor() { }
 
   ngOnInit() {
   }
 
   logout() {
     localStorage.removeItem('authData');
-  }
-
-  hideNavbar() {
-    return this.router.url === '/home';
   }
 
 }

@@ -1,4 +1,4 @@
-// Angular Imports
+// @Angular Imports
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -7,7 +7,7 @@ import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './login.component';
 
 // Angular Module Imports
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
@@ -32,6 +32,7 @@ import { UserModels } from 'src/app/screens/login/models/user.models';
     HttpClientModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+    FormsModule,
 
     MatInputModule,
     MatFormFieldModule,
@@ -49,7 +50,6 @@ import { UserModels } from 'src/app/screens/login/models/user.models';
       useClass: TokenInterceptor,
       multi: true
     },
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  ]
 })
 export class LoginModule { }

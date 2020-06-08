@@ -11,20 +11,20 @@ const headers = new HttpHeaders({
 
 @Injectable({ providedIn: 'root' })
 
-export class MicrositesService {
+export class SitesService {
 
    constructor(private http: HttpClient) { }
 
-   // GET Microsites list from DB
+   // GET Sites list from DB
    getMicrositeList() {
-      let url = URL_SERVICES + '/microsites';
+      let url = URL_SERVICES + '/sites';
       return this.http.get(url, { headers, observe: 'response' }).pipe(map(resp => resp.body));
    }
 
-   // GET Microsites by Office ID
-   getMicrositesByOfficeId(body: string) {
+   // GET Sites by Office ID
+   getSitesByOfficeId(body: string) {
       const BODY = JSON.stringify({ "idOficina": body });
-      let url = URL_SERVICES + "/microsites";
+      let url = URL_SERVICES + "/sites";
       return this.http
          .post(url, BODY, { headers })
          .pipe(map(resp => resp));

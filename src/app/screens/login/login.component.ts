@@ -25,7 +25,10 @@ const TOAST = Swal.mixin({
 })
 export class LoginComponent implements OnInit {
 
-  public isLoading: boolean = false;
+  loginFormGroup!: FormGroup;
+
+  hide = true;
+  isLoading: boolean = false;
   submitted = false;
   returnUrl: string = '';
 
@@ -33,15 +36,17 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    public loginFormGroup: FormGroup
   ) {}
 
   ngOnInit(): void {
     this.loginFormGroup = this.fb.group({
-      email: ['', Validators.email],
+      username: ['', Validators.email],
       password: ['', Validators.required]
     });
   }
+
+  get emailInput() { return this.loginFormGroup.get('username'); }
+  get passwordInput() { return this.loginFormGroup.get('password'); }
 
   onSubmit() {
     let loginFormControls = this.loginFormGroup.controls;
@@ -56,7 +61,7 @@ export class LoginComponent implements OnInit {
       this.isLoading = false;
     } else {
       this.authService.login(loginFormControls.username.value, loginFormControls.password.value).pipe(first()).subscribe(() => {
-        this.router.navigateByUrl('/home')
+        this.router.navigate(['/home']);
         TOAST.close();
       }, (error: { error: { message: any; }; status: number; message: any; }) => {
         if (error.error instanceof ErrorEvent) {
