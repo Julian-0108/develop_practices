@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { URL_SERVICES } from "../../config/config";
+import { apiUrl } from "src/environments/environment.prod";
 
 const headers = new HttpHeaders({
 	"Content-Type": "application/json",
@@ -18,7 +18,7 @@ export class AuthService {
 	public token: any = '';
 
 	login(username: string, password: string) {
-		let url = URL_SERVICES + this.resource;
+		let url = apiUrl + this.resource;
 		let body = JSON.stringify({ username, password });
 		return this.http.post<any>(url, body, { headers }).pipe(map(user => {
 			localStorage.setItem('authData', JSON.stringify(user));
