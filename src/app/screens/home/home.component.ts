@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
   resultVenues: any[] = [];
   resultOffices: any[] = [];
 
-  idSites: string = '';
+  idSites: any;
 
   constructor(
     private venuesService: VenuesService,

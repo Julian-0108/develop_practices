@@ -22,7 +22,7 @@
       <mat-icon>person_outline</mat-icon>
       <span>Perfil</span>
     </button>
-    <button routerLink="/login" (click)="logout()" mat-menu-item>
+    <button [routerLink]="['/login']" (click)="logout()" mat-menu-item>
       <mat-icon>arrow_forward</mat-icon>
       <span>Salir</span>
     </button>

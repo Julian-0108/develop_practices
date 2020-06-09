@@ -39,7 +39,7 @@
                 (ngModelChange)="onChangeOffice($event)"
               >
                 <mat-option
-                  *ngFor="let office of offices; index as i"
+                  *ngFor="let office of offices"
                   [value]="office._id"
                 >
                   Oficina Piso {{ office.piso }}
@@ -50,7 +50,7 @@
               </mat-select>
             </mat-form-field>
 
-            <!-- Micrositio Select -->
+            <!-- Sitio Select -->
             <mat-form-field class="full-width">
               <mat-label>Seleccionar micrositio...</mat-label>
               <mat-select
@@ -60,7 +60,7 @@
                 (ngModelChange)="onChangeSite($event)"
               >
                 <mat-option
-                  *ngFor="let microsite of sites; index as i"
+                  *ngFor="let microsite of sites"
                   [value]="microsite._id"
                 >
                   {{ microsite.nombre }}

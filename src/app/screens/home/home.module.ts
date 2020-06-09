@@ -12,12 +12,12 @@ import { HomeComponent } from './home.component';
 // Material Imports
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-
-// Custom Imports
-import { QRCodeModule } from 'angularx-qrcode';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+
+// Custom Imports
+import { QRCodeModule } from 'angularx-qrcode';
 import { AuthGuard } from 'src/app/helpers/guards/auth.guard';
 
 
