@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { CanActivate } from '@angular/router';
-import { AuthService } from '../../screens/login/services/auth/auth.service';
+import { AuthService } from 'src/app/screens/login/services/auth/auth.service';
 import Swal from 'sweetalert2';
 
 const TOAST = Swal.mixin({

@@ -3,10 +3,9 @@
     <mat-card class="box" style="margin-bottom: 30px;">
       <mat-card-header>
         <mat-card-title>Generar</mat-card-title>
-        <mat-card-subtitle style="padding-bottom: 15px;"
-          >Copiar cada código individual y pegarlo en el documento que desea
-          imprimir</mat-card-subtitle
-        >
+        <mat-card-subtitle style="padding-bottom: 15px;">
+          Copiar cada código individual y pegarlo en el documento que desea imprimir
+        </mat-card-subtitle>
       </mat-card-header>
 
       <form class="form">
@@ -16,20 +15,19 @@
             <mat-form-field class="full-width">
               <mat-label>Seleccionar sede...</mat-label>
               <mat-select
-                [(value)]="selected"
-                [(ngModel)]="selected"
+                [(value)]="selectedVenue"
+                [(ngModel)]="selectedVenue"
                 [ngModelOptions]="{ standalone: true }"
                 (ngModelChange)="onChangeVenue($event)"
               >
                 <mat-option *ngFor="let venue of venues" [value]="venue._id">
                   {{ venue.nombre }}
                 </mat-option>
-                <mat-option *ngIf="venues?.length == 0" disabled
-                  ><i>No hay sedes disponibles</i></mat-option
-                >
+                <mat-option *ngIf="venues?.length == 0" disabled>
+                  <i>No hay sedes disponibles</i>
+                </mat-option>
               </mat-select>
             </mat-form-field>
-            <!-- <p><i>You selected: {{selected}}</i></p> -->
 
             <!-- Oficina Select -->
             <mat-form-field class="full-width">
@@ -46,12 +44,11 @@
                 >
                   Oficina Piso {{ office.piso }}
                 </mat-option>
-                <mat-option *ngIf="offices?.length == 0" disabled
-                  ><i>No hay oficinas disponibles</i></mat-option
-                >
+                <mat-option *ngIf="offices?.length == 0" disabled>
+                  <i>No hay oficinas disponibles</i>
+                </mat-option>
               </mat-select>
             </mat-form-field>
-            <!-- <p><i>You selected: {{selectedOffice}}</i></p> -->
 
             <!-- Micrositio Select -->
             <mat-form-field class="full-width">
@@ -60,7 +57,7 @@
                 [(value)]="selectedMicrosite"
                 [(ngModel)]="selectedMicrosite"
                 [ngModelOptions]="{ standalone: true }"
-                (ngModelChange)="onChangeMicrosite($event)"
+                (ngModelChange)="onChangeSite($event)"
               >
                 <mat-option
                   *ngFor="let microsite of sites; index as i"
@@ -68,12 +65,11 @@
                 >
                   {{ microsite.nombre }}
                 </mat-option>
-                <mat-option *ngIf="sites?.length == 0" disabled
-                  ><i>No hay micrositios disponibles</i></mat-option
-                >
+                <mat-option *ngIf="sites?.length == 0" disabled>
+                  <i>No hay micrositios disponibles</i>
+                </mat-option>
               </mat-select>
             </mat-form-field>
-            <!-- <p><i>You selected: {{selectedMicrosite}}</i></p> -->
           </mat-card-content>
 
           <mat-card-actions>
@@ -121,9 +117,9 @@
 
         <mat-card-header class="kit">
           <mat-card-title>Kit</mat-card-title>
-          <mat-card-subtitle
-            >Generar código QR para entrega de kit de salud</mat-card-subtitle
-          >
+          <mat-card-subtitle>
+            Generar código QR para entrega de kit de salud
+          </mat-card-subtitle>
         </mat-card-header>
 
         <mat-card-actions>
