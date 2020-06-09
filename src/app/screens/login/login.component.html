@@ -26,6 +26,8 @@
           <mat-error>Usuario es obligatorio</mat-error>
         </mat-form-field>
 
+        <div style="height: 20px;"></div>
+
         <!-- <mat-icon>person_outline</mat-icon> -->
         <mat-form-field class="full-width">
           <input
@@ -36,13 +38,16 @@
             formControlName="password"
             required
           />
-          <mat-icon matSuffix (click)="hide = !hide">
+          <mat-icon matSuffix (click)="hide = !hide" style="cursor: pointer;">
             {{ hide ? "visibility_off" : "visibility" }}
           </mat-icon>
           <mat-hint>Ingresa tu contraseña</mat-hint>
           <mat-error>Contraseña es obligatoria</mat-error>
         </mat-form-field>
       </mat-card-content>
+
+      <div style="height: 20px;"></div>
+
       <button mat-flat-button class="btn-block mat-elevation-z6">
         Ingresar
       </button>
