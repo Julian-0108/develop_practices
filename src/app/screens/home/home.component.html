@@ -1,35 +1,35 @@
 <div class="content grid-container" role="main">
-  <div class="login-wrapper grid-item">
+  <div class="home-wrapper grid-item">
     <mat-card class="box" style="margin-bottom: 30px;">
       <mat-card-header>
         <mat-card-title>Generar</mat-card-title>
-        <mat-card-subtitle style="padding-bottom: 15px;"
-          >Copiar cada código individual y pegarlo en el documento que desea
-          imprimir</mat-card-subtitle
-        >
+        <mat-card-subtitle style="padding-bottom: 15px;">
+          Copiar cada código individual y pegarlo en el documento que desea imprimir
+        </mat-card-subtitle>
       </mat-card-header>
 
       <form class="form">
         <div>
           <mat-card-content>
+
             <!-- Sede Select -->
             <mat-form-field class="full-width">
               <mat-label>Seleccionar sede...</mat-label>
               <mat-select
-                [(value)]="selected"
-                [(ngModel)]="selected"
+                #venue
+                [(value)]="selectedVenue"
+                [(ngModel)]="selectedVenue"
                 [ngModelOptions]="{ standalone: true }"
                 (ngModelChange)="onChangeVenue($event)"
               >
                 <mat-option *ngFor="let venue of venues" [value]="venue._id">
                   {{ venue.nombre }}
                 </mat-option>
-                <mat-option *ngIf="venues?.length == 0" disabled
-                  ><i>No hay sedes disponibles</i></mat-option
-                >
+                <mat-option *ngIf="venues?.length == 0" disabled>
+                  <i>No hay sedes disponibles</i>
+                </mat-option>
               </mat-select>
             </mat-form-field>
-            <!-- <p><i>You selected: {{selected}}</i></p> -->
 
             <!-- Oficina Select -->
             <mat-form-field class="full-width">
@@ -41,44 +41,42 @@
                 (ngModelChange)="onChangeOffice($event)"
               >
                 <mat-option
-                  *ngFor="let office of offices; index as i"
+                  *ngFor="let office of offices"
                   [value]="office._id"
                 >
                   Oficina Piso {{ office.piso }}
                 </mat-option>
-                <mat-option *ngIf="offices?.length == 0" disabled
-                  ><i>No hay oficinas disponibles</i></mat-option
+                <mat-option *ngIf="offices?.length == 0" disabled>
+                  <i>No hay oficinas disponibles</i>
+                </mat-option
                 >
               </mat-select>
             </mat-form-field>
-            <!-- <p><i>You selected: {{selectedOffice}}</i></p> -->
 
-            <!-- Micrositio Select -->
+            <!-- Sitio Select -->
             <mat-form-field class="full-width">
-              <mat-label>Seleccionar micrositio...</mat-label>
+              <mat-label>Seleccionar sitio...</mat-label>
               <mat-select
-                [(value)]="selectedMicrosite"
-                [(ngModel)]="selectedMicrosite"
+                [(value)]="selectedSite"
+                [(ngModel)]="selectedSite"
                 [ngModelOptions]="{ standalone: true }"
-                (ngModelChange)="onChangeMicrosite($event)"
+                (ngModelChange)="onChangeSite($event)"
               >
-                <mat-option
-                  *ngFor="let microsite of sites; index as i"
-                  [value]="microsite._id"
-                >
-                  {{ microsite.nombre }}
+                <mat-option *ngFor="let site of sites" [value]="site._id">
+                  {{ site.nombre }}
                 </mat-option>
-                <mat-option *ngIf="sites?.length == 0" disabled
-                  ><i>No hay micrositios disponibles</i></mat-option
+                <mat-option *ngIf="sites?.length == 0" disabled>
+                  <i>No hay sitios disponibles</i>
+                </mat-option
                 >
               </mat-select>
             </mat-form-field>
-            <!-- <p><i>You selected: {{selectedMicrosite}}</i></p> -->
+            <!-- <p><i>You selected: {{selectedSite}}</i></p> -->
           </mat-card-content>
 
           <mat-card-actions>
             <button
-              [disabled]="!selectedMicrosite"
+              [disabled]="!selectedSite"
               (click)="onSubmit()"
               mat-flat-button
               class="btn-block mat-elevation-z6"

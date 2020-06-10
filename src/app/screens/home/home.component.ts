@@ -28,10 +28,9 @@ export class HomeComponent implements OnInit {
   disabled: boolean = true
   loading: boolean = false
 
-  selected = null;
-  selectedOffice: string = '';
-  selectedMicrosite: string = '';
   selectedVenue: string = '';
+  selectedOffice: string = '';
+  selectedSite: string = '';
 
   showQrInfo = false;
 
@@ -44,13 +43,12 @@ export class HomeComponent implements OnInit {
   offices: any[] = [];
   venues: any[] = [];
 
-  resultNameSites: any[] = [];
-  resultSites: any[] = [];
   resultVenues: any[] = [];
   resultOffices: any[] = [];
+  resultSites: any[] = [];
+  resultNameSites: any[] = [];
 
   idSites: any;
-  idVenues: any[] = [];
 
   constructor(
     private venuesService: VenuesService,
@@ -62,17 +60,11 @@ export class HomeComponent implements OnInit {
     this.getVenues();
   }
 
-  onChangeMicrosite(value: any) {
-    this.idSites = value;
-  }
-
   onSubmit() {
     this.showQrInfo = true;
     this.loading = false;
     this.resultNameSites = this.sites
-      .find(
-        sites => sites['_id'] == this.idSites
-      ).nombre;
+      .find(sites => sites['_id'] == this.idSites).nombre;
     this.qrHormiguero = `${this.idSites}` + ':entrada'
     this.qrHormigueroS = `${this.idSites}` + ':salida'
     // console.log(this.resultNameSites);
@@ -80,10 +72,15 @@ export class HomeComponent implements OnInit {
     // console.log(this.qrHormigueroS);
   }
 
-  onSubmitKit() {
-    this.myDate = formatDate(new Date(), 'yyyy-MM-dd-h:mm-a', 'en')
-    this.qrKit = `${this.myDate}` + ':kit';
-    // console.log(this.qrKit);
+  getVenues() {
+    this.venuesService.getVenueList().subscribe((data: any) => {
+      this.venues = data;
+      this.resultVenues = this.venues
+        .map(
+          (venues) => (venues['_id'])
+        );
+      // console.log(this.resultVenues);
+    });
   }
 
   onChangeVenue(value: any) {
@@ -102,7 +99,7 @@ export class HomeComponent implements OnInit {
   }
 
   onChangeOffice(value: any) {
-    // console.log(value);
+    console.log(value);
     this.sitesService.getSitesByOfficeId(value).subscribe(
       (data: any) => {
         this.sites = data;
@@ -111,20 +108,19 @@ export class HomeComponent implements OnInit {
           .map(
             (sites) => (sites['_id'])
           );
-        // console.log(this.resultSites);
+        console.log(this.resultSites);
       }
     )
   }
 
-  getVenues() {
-    this.venuesService.getVenueList().subscribe((data: any) => {
-      this.venues = data;
-      this.resultVenues = this.venues
-        .map(
-          (venues) => (venues['_id'])
-        );
-      // console.log(this.resultVenues);
-    });
+  onChangeSite(value: any) {
+    this.idSites = value;
+  }
+
+  onSubmitKit() {
+    this.myDate = formatDate(new Date(), 'yyyy-MM-dd-h:mm-a', 'en')
+    this.qrKit = `${this.myDate}` + ':kit';
+    // console.log(this.qrKit);
   }
 
 }
