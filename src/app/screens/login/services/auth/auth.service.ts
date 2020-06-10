@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { URL_SERVICES } from "../../../../config/config";
+import { API_URL } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 
@@ -15,7 +15,7 @@ export class AuthService {
   ) { }
 
   login(username: string, password: string) {
-    let resourceUrl = URL_SERVICES + this.resource;
+    let resourceUrl = API_URL + this.resource;
     let body = JSON.stringify({ username, password });
     let headers: HttpHeaders = new HttpHeaders({
       "Content-Type": "application/json",
