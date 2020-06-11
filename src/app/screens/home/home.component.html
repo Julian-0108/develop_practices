@@ -1,5 +1,5 @@
 <div class="content grid-container" role="main">
-  <div class="login-wrapper grid-item">
+  <div class="home-wrapper grid-item">
     <mat-card class="box" style="margin-bottom: 30px;">
       <mat-card-header>
         <mat-card-title>Generar</mat-card-title>
@@ -11,6 +11,7 @@
       <form class="form">
         <div>
           <mat-card-content>
+
             <!-- Sede Select -->
             <mat-form-field class="full-width">
               <mat-label>Seleccionar sede...</mat-label>
@@ -52,29 +53,28 @@
 
             <!-- Sitio Select -->
             <mat-form-field class="full-width">
-              <mat-label>Seleccionar micrositio...</mat-label>
+              <mat-label>Seleccionar sitio...</mat-label>
               <mat-select
-                [(value)]="selectedMicrosite"
-                [(ngModel)]="selectedMicrosite"
+                [(value)]="selectedSite"
+                [(ngModel)]="selectedSite"
                 [ngModelOptions]="{ standalone: true }"
                 (ngModelChange)="onChangeSite($event)"
               >
-                <mat-option
-                  *ngFor="let microsite of sites"
-                  [value]="microsite._id"
-                >
-                  {{ microsite.nombre }}
+                <mat-option *ngFor="let site of sites" [value]="site._id">
+                  {{ site.nombre }}
                 </mat-option>
                 <mat-option *ngIf="sites?.length == 0" disabled>
-                  <i>No hay micrositios disponibles</i>
-                </mat-option>
+                  <i>No hay sitios disponibles</i>
+                </mat-option
+                >
               </mat-select>
             </mat-form-field>
+            <!-- <p><i>You selected: {{selectedSite}}</i></p> -->
           </mat-card-content>
 
           <mat-card-actions>
             <button
-              [disabled]="!selectedMicrosite"
+              [disabled]="!selectedSite"
               (click)="onSubmit()"
               mat-flat-button
               class="btn-block mat-elevation-z6"

@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
 
   selectedVenue: string = '';
   selectedOffice: string = '';
-  selectedMicrosite: string = '';
+  selectedSite: string = '';
 
   qrHormiguero: string = '';
   qrHormigueroS: string = '';
@@ -42,10 +42,10 @@ export class HomeComponent implements OnInit {
   offices: any[] = [];
   sites: any[] = [];
 
-  resultNameSites: any[] = [];
-  resultSites: any[] = [];
   resultVenues: any[] = [];
   resultOffices: any[] = [];
+  resultSites: any[] = [];
+  resultNameSites: any[] = [];
 
   idSites: any;
 
@@ -57,10 +57,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.getVenues();
-  }
-
-  onChangeSite(value: string) {
-    this.idSites = value;
   }
 
   onSubmit() {
@@ -75,10 +71,15 @@ export class HomeComponent implements OnInit {
     // console.log(this.qrHormigueroS);
   }
 
-  onSubmitKit() {
-    this.myDate = formatDate(new Date(), 'yyyy-MM-dd-h:mm-a', 'en')
-    this.qrKit = `${this.myDate}` + ':kit';
-    // console.log(this.qrKit);
+  getVenues() {
+    this.venuesService.getVenueList().subscribe((data: any) => {
+      this.venues = data;
+      this.resultVenues = this.venues
+        .map(
+          (venues) => (venues['_id'])
+        );
+      // console.log(this.resultVenues);
+    });
   }
 
   onChangeVenue(value: string) {
@@ -96,7 +97,7 @@ export class HomeComponent implements OnInit {
     )
   }
 
-  onChangeOffice(value: string) {
+  onChangeOffice(value: any) {
     console.log(value);
     this.sitesService.getSitesByOfficeId(value).subscribe(
       (data: any) => {
@@ -111,15 +112,14 @@ export class HomeComponent implements OnInit {
     )
   }
 
-  getVenues() {
-    this.venuesService.getVenueList().subscribe((data: any) => {
-      this.venues = data;
-      this.resultVenues = this.venues
-        .map(
-          (venues) => (venues['_id'])
-        );
-      // console.log(this.resultVenues);
-    });
+  onChangeSite(value: any) {
+    this.idSites = value;
+  }
+
+  onSubmitKit() {
+    this.myDate = formatDate(new Date(), 'yyyy-MM-dd-h:mm-a', 'en')
+    this.qrKit = `${this.myDate}` + ':kit';
+    // console.log(this.qrKit);
   }
 
 }

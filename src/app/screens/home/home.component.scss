@@ -30,7 +30,7 @@ hr {
   border-radius: 20px;
 }
 
-.login-wrapper {
+.home-wrapper {
   height: 100vh;
 }
 
@@ -70,26 +70,26 @@ hr {
   -ms-transform: scale(0.95);
   z-index: -1;
 }
-.login-wrapper .form {
+.home-wrapper .form {
   min-width: 100%;
   width: 100%;
 }
-.login-wrapper .full-width,
-.login-wrapper .btn-block {
+.home-wrapper .full-width,
+.home-wrapper .btn-block {
   width: 100%;
 }
-.login-wrapper mat-card-header {
+.home-wrapper mat-card-header {
   text-align: center;
   width: 100%;
   display: block;
   font-weight: 700;
 }
-.login-wrapper mat-card-header mat-card-title {
+.home-wrapper mat-card-header mat-card-title {
   font-size: 20px;
   margin: 0;
 }
 
-.login-wrapper mat-card-subtitle {
+.home-wrapper mat-card-subtitle {
    padding-bottom: 15px;
    padding-top: 10px;
    font-size: 14px;
@@ -97,15 +97,15 @@ hr {
    margin: 0;
 }
 
-.login-wrapper .mat-card {
+.home-wrapper .mat-card {
   padding: 40px 70px 50px;
 }
-.login-wrapper .mat-stroked-button {
+.home-wrapper .mat-stroked-button {
   border: 1px solid currentColor;
   line-height: 54px;
   background: #fff7fa;
 }
-.login-wrapper .mat-form-field-appearance-legacy .mat-form-field-infix {
+.home-wrapper .mat-form-field-appearance-legacy .mat-form-field-infix {
   padding: 0.8375em 0;
 }
 

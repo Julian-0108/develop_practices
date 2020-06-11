@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [ToolbarComponent],
@@ -23,11 +24,13 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     RouterModule,
     FlexLayoutModule,
     FlexModule,
+
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
     MatToolbarModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatTooltipModule
   ],
   exports: [
     ToolbarComponent
