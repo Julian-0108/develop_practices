@@ -83,7 +83,7 @@ export class HomeComponent implements OnInit {
   }
 
   onChangeVenue(value: string) {
-    console.log(value);
+    // console.log(value);
     this.officeService.getOfficeByVenueId(value).subscribe(
       (data: any) => {
         this.offices = data;
@@ -92,13 +92,13 @@ export class HomeComponent implements OnInit {
           .map(
             (offices) => (offices['_id'])
           );
-        console.log(this.resultOffices);
+        // console.log(this.resultOffices);
       }
     )
   }
 
   onChangeOffice(value: any) {
-    console.log(value);
+    // console.log(value);
     this.sitesService.getSitesByOfficeId(value).subscribe(
       (data: any) => {
         this.sites = data;
@@ -107,7 +107,7 @@ export class HomeComponent implements OnInit {
           .map(
             (sites) => (sites['_id'])
           );
-        console.log(this.resultSites);
+        // console.log(this.resultSites);
       }
     )
   }
