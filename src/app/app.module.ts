@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 // Custom Imports
 import { LoginModule } from "./screens/login/login.module";
 import { SharedModule } from "./shared/shared.module";
+import { AuthGuard } from './helpers/guards/auth.guard';
 
 @NgModule({
   declarations: [

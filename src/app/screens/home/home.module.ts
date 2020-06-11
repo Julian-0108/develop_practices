@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // Custom Imports
 import { QRCodeModule } from 'angularx-qrcode';
@@ -33,6 +34,7 @@ import { AuthGuard } from 'src/app/helpers/guards/auth.guard';
     MatCardModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
 
     QRCodeModule
   ],

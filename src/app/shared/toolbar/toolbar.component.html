@@ -4,27 +4,75 @@
   <span>Movimientos</span>
   <span class="spacer"></span>
 
-  <!-- [matMenuTriggerFor]="settingsMenu" -->
-  <button mat-icon-button aria-label="settings button with a menu">
-    <mat-icon>settings</mat-icon>
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="menu"
+    matTooltip="Reportes"
+    aria-label="Example icon-button with a menu"
+  >
+    <mat-icon>event_note</mat-icon>
   </button>
-  <!-- <mat-menu #settingsMenu="matMenu">
-    <button mat-menu-item >
-      <mat-slide-toggle>Dark mode</mat-slide-toggle>
-    </button>
-  </mat-menu> -->
+  <mat-menu #menu="matMenu">
 
-  <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="profile button with a menu">
-    <mat-icon>person</mat-icon>
+    <!-- movements button -->
+    <button mat-menu-item>
+      <mat-icon>directions_run</mat-icon>
+      <span>Movimientos</span>
+    </button>
+
+    <!-- temp button -->
+    <button mat-menu-item>
+      <mat-icon
+        class="temp-icon"
+        matSuffix
+        fontSet="fas"
+        fontIcon="fa-thermometer-three-quarters"
+      >
+      </mat-icon>
+      <span>Temperatura</span>
+    </button>
+
+    <!-- kit button -->
+    <button mat-menu-item>
+      <mat-icon
+        class="kit-icon"
+        matSuffix
+        fontSet="fas"
+        fontIcon="fa-medkit"
+      >
+      </mat-icon>
+      <span>Kit de salud</span>
+    </button>
+
+  </mat-menu>
+
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="profileMenu"
+    matTooltip="Más opciones"
+    aria-label="profile button with a menu">
+    <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #profileMenu="matMenu">
+
+    <!-- profile button -->
     <button mat-menu-item disabled>
       <mat-icon>person_outline</mat-icon>
-      <span>Perfil</span>
+      <span>Perfil - (dev)</span>
     </button>
-    <button routerLink="/login" (click)="logout()" mat-menu-item>
+
+    <!-- settings button -->
+    <button mat-menu-item disabled>
+      <mat-icon>settings</mat-icon>
+      <span>Ajustes - (dev)</span>
+    </button>
+
+    <!-- logout button -->
+    <button mat-menu-item routerLink="/login" (click)="logout()">
       <mat-icon>arrow_forward</mat-icon>
       <span>Salir</span>
     </button>
+
   </mat-menu>
+
 </mat-toolbar>
