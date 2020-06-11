@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs/operators';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/screens/login/services/auth/auth.service';
 import Swal from 'sweetalert2';
 
@@ -36,7 +35,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loginFormGroup = this.fb.group({
@@ -57,10 +56,13 @@ export class LoginComponent implements OnInit {
       })
       this.isLoading = false;
     } else {
-      this.authService.login(loginFormControls.username.value, loginFormControls.password.value).subscribe(() => {
+      this.authService.login(
+        loginFormControls.username.value,
+        loginFormControls.password.value
+      ).subscribe(() => {
         this.router.navigate(['/home']);
         TOAST.close();
-      }, (error: { error: { message: any; }; status: number; message: any; }) => {
+      }, (error) => {
         if (error.error instanceof ErrorEvent) {
           TOAST.fire({
             icon: 'error',

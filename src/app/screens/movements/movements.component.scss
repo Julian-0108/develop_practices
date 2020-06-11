@@ -5,11 +5,16 @@
   margin-bottom: 30px;
 }
 
+.subtitle {
+  text-align: center;
+}
+
 table[mat-table] {
   padding: 30px 50px;
 }
 
 table {
+  border-radius: 10px;
   width: 100%;
 }
 
@@ -20,4 +25,9 @@ table {
 
 td, th {
   width: 25%;
+}
+
+mat-card {
+  margin-bottom: 20px;
+  padding: 30px 50px;
 }
