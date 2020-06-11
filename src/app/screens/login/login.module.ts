@@ -16,13 +16,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 
 // Custom Imports
 import { TokenInterceptor } from 'src/app/helpers/validation/token.interceptor';
 import { UserModels } from 'src/app/screens/login/models/user.models';
-
 @NgModule({
   declarations: [
     LoginComponent
@@ -38,7 +37,7 @@ import { UserModels } from 'src/app/screens/login/models/user.models';
     MatFormFieldModule,
     MatIconModule,
     MatButtonModule,
-    MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatCardModule,
 
     LoginRoutingModule

@@ -45,9 +45,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  get emailInput() { return this.loginFormGroup.get('username'); }
-  get passwordInput() { return this.loginFormGroup.get('password'); }
-
   onSubmit() {
     let loginFormControls = this.loginFormGroup.controls;
 
@@ -60,7 +57,7 @@ export class LoginComponent implements OnInit {
       })
       this.isLoading = false;
     } else {
-      this.authService.login(loginFormControls.username.value, loginFormControls.password.value).pipe(first()).subscribe(() => {
+      this.authService.login(loginFormControls.username.value, loginFormControls.password.value).subscribe(() => {
         this.router.navigate(['/home']);
         TOAST.close();
       }, (error: { error: { message: any; }; status: number; message: any; }) => {
