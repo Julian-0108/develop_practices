@@ -15,13 +15,13 @@
   <mat-menu #menu="matMenu">
 
     <!-- movements button -->
-    <button mat-menu-item>
+    <button mat-menu-item [routerLink]="['/movements']">
       <mat-icon>directions_run</mat-icon>
       <span>Movimientos</span>
     </button>
 
     <!-- temp button -->
-    <button mat-menu-item>
+    <button mat-menu-item [routerLink]="['/temperature']">
       <mat-icon
         class="temp-icon"
         matSuffix
@@ -33,7 +33,7 @@
     </button>
 
     <!-- kit button -->
-    <button mat-menu-item>
+    <button mat-menu-item [routerLink]="['/kits']">
       <mat-icon
         class="kit-icon"
         matSuffix

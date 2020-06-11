@@ -8,12 +8,12 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
 
-  title = 'SARS-UI-Web';
+  title = 'sars-ui-Web';
 
   constructor(private router: Router) {}
 
   hideNavbar() {
-    return this.router.url === '/home';
+    return this.router.url !== '/login';
   }
 
 }
