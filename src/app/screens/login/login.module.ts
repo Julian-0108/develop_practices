@@ -43,7 +43,6 @@ import { UserModels } from 'src/app/screens/login/models/user.models';
     LoginRoutingModule
   ],
   providers: [
-    UserModels,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

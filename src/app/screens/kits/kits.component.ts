@@ -4,14 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { KitsService } from './services/kits.service';
 import { map } from 'rxjs/operators';
-
-
-export interface KitsData {
-  cedula: string;
-  nombre: string;
-  entregado: string;
-  fecha: string;
-}
+import { KitsModels } from './models/kits.models';
 
 @Component({
   selector: 'app-kits',
@@ -22,10 +15,10 @@ export class KitsComponent implements OnInit {
 
   isLoadingResults = true;
   displayedColumns: string[] = [
-    'cedula', 'nombre', 'entregado', 'fecha'
+    'nombre', 'cedula', 'entregado', 'fecha'
   ];
 
-  dataSource!: MatTableDataSource<KitsData>;
+  dataSource!: MatTableDataSource<KitsModels>;
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
   @ViewChild(MatSort, { static: true, read: MatSort }) sort!: MatSort

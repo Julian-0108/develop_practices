@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { API_URL } from 'src/environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const headers = new HttpHeaders({
   'Content-Type': 'application/json',
@@ -10,14 +10,13 @@ const headers = new HttpHeaders({
 @Injectable({
   providedIn: 'root'
 })
-export class MovementsService {
+export class TemperatureService {
 
   constructor(private http: HttpClient) { }
 
-  // GET movements list from DB
-  getMovementsList() {
-    let url = API_URL + '/movements/getAll';
+  // GET temperature list from DB
+  getTemperatureList() {
+    let url = API_URL + '/temperature/temperaturas';
     return this.http.get(url, { headers });
   }
-
 }

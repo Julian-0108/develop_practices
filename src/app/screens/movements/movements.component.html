@@ -1,49 +1,48 @@
 <div class="container" fxLayout="row" fxLayoutAlign="center center">
 
-  <!-- <mat-card mat-card class=" mat-elevation-z6">
-
-    <mat-card-subtitle class="subtitle">
-      <h2><strong>Movimientos</strong></h2>
-    </mat-card-subtitle>
-
-    <mat-card-content> -->
-
-      <div class="filter" fxLayoutAlign="center center">
-        <mat-form-field style="margin-bottom: 20px;">
-          <mat-label>Filtrar</mat-label>
-          <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Mia">
-        </mat-form-field>
-      </div>
-
-    <!-- </mat-card-content>
-  </mat-card> -->
-
+  <div class="filter" fxLayoutAlign="center center">
+    <mat-form-field style="margin-bottom: 20px;">
+      <mat-label>Filtrar</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Mia">
+    </mat-form-field>
+  </div>
 
   <div class="mat-elevation-z7">
+
+    <div class="loading-shade" *ngIf="isLoadingResults">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+
     <table mat-table [dataSource]="dataSource" matSort>
 
-      <!-- ID Column -->
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-        <td mat-cell *matCellDef="let row"> {{row.position}} </td>
+      <!-- Sede Column -->
+      <ng-container matColumnDef="_id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Sede </th>
+        <td mat-cell *matCellDef="let row"> {{ row._id }} </td>
       </ng-container>
 
-      <!-- Progress Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+      <!-- Micrositio Column -->
+      <ng-container matColumnDef="idMicrositio">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Micrositio </th>
+        <td mat-cell *matCellDef="let row"> {{ row.idMicrositio }} </td>
       </ng-container>
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="weight">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Weight </th>
-        <td mat-cell *matCellDef="let row"> {{ row.weight }} </td>
+      <!-- Nombre Column -->
+      <ng-container matColumnDef="cedula">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+        <td mat-cell *matCellDef="let row"> {{ row.cedula }} </td>
       </ng-container>
 
-      <!-- Color Column -->
-      <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </th>
-        <td mat-cell *matCellDef="let row"> {{ row.symbol }} </td>
+      <!-- Tipo Column -->
+      <ng-container matColumnDef="idTipo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </th>
+        <td mat-cell *matCellDef="let row"> {{ row.idTipo | titlecase }} </td>
+      </ng-container>
+
+      <!-- Fecha Column -->
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+        <td mat-cell *matCellDef="let row"> {{ row.fecha | date: 'short'}} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
