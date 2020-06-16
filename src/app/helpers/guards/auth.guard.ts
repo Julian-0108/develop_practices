@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate {
         icon: 'warning',
         title: 'Iniciar sesión primero'
       })
-      this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+      this.router.navigate(['/login']);
       return false;
     }
 

@@ -8,7 +8,7 @@
   opacity: 1;
   float: left;
   width: 100%;
-  background: #fff;
+  background: var(--light-bg);
   border-radius: 10px;
   transform: scale(1);
   -webkit-transform: scale(1);
@@ -65,7 +65,7 @@
 }
 
 .login-wrapper .mat-card {
-  padding: 25px 70px 50px;
+  padding: 25px 50px 50px;
 }
 
 .login-wrapper .mat-stroked-button {
@@ -79,8 +79,8 @@
 }
 
 .btn-block {
-  background-color: #c4382f;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--light-text);
   border-radius: 20px;
   margin: 0 auto;
 }
@@ -97,7 +97,7 @@ button[mat-flat-button] {
 .mat-spinner {
   margin: 0 auto;
   ::ng-deep circle {
-    stroke: #ffffff;
+    stroke: var(--light-text);
   }
 }
 

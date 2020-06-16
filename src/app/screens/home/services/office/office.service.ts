@@ -16,14 +16,14 @@ export class OfficeService {
 
   // GET Office list from DB
   getOfficeList() {
-    let url = API_URL + "/office";
-    return this.http.get(url, { headers });
+    let resourceUrl = API_URL + "/office";
+    return this.http.get(resourceUrl, { headers });
   }
 
   // GET Office by ID
   getOfficeByVenueId(body: string) {
     const BODY = JSON.stringify({ "idSede": body });
-    let url = API_URL + "/office/getIdSede";
-    return this.http.post(url, BODY, { headers }).pipe(map(resp => resp));
+    let resourceUrl = API_URL + "/office/getIdSede";
+    return this.http.post(resourceUrl, BODY, { headers }).pipe(map(resp => resp));
   }
 }

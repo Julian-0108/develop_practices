@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "sars-ui-web": {
+    "app-sitios-web": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/sars-ui-web",
+            "outputPath": "dist/app-sitios-web",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -25,7 +25,8 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/assets/favicon.png"
             ],
             "styles": [
               "src/styles.scss",
@@ -71,18 +72,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "sars-ui-web:build"
+            "browserTarget": "app-sitios-web:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "sars-ui-web:build:production"
+              "browserTarget": "app-sitios-web:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "sars-ui-web:build"
+            "browserTarget": "app-sitios-web:build"
           }
         },
         "test": {
@@ -120,18 +121,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "sars-ui-web:serve"
+            "devServerTarget": "app-sitios-web:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "sars-ui-web:serve:production"
+              "devServerTarget": "app-sitios-web:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "sars-ui-web",
+  "defaultProject": "app-sitios-web",
   "cli": {
     "analytics": false
   }
