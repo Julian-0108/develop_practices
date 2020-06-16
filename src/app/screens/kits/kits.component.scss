@@ -35,3 +35,29 @@ mat-card {
   margin-bottom: 20px;
   padding: 30px 50px;
 }
+
+.loading-shade {
+  position: absolute;
+  display: flex;
+  z-index: 1;
+  top: 77px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  background: rgba(41, 41, 41, 0.15);
+}
+
+.mat-row:nth-child(even){
+  background-color: rgb(247, 247, 247);
+}
+
+.mat-header-cell {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.mat-cell {
+  color: rgb(88, 88, 88);
+}

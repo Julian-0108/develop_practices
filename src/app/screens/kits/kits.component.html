@@ -1,25 +1,18 @@
 <div class="container" fxLayout="row" fxLayoutAlign="center center">
 
-  <!-- <mat-card mat-card class=" mat-elevation-z6">
-
-    <mat-card-subtitle class="subtitle">
-      <h2><strong>Movimientos</strong></h2>
-    </mat-card-subtitle>
-
-    <mat-card-content> -->
-
-      <div class="filter" fxLayoutAlign="center center">
-        <mat-form-field style="margin-bottom: 20px;">
-          <mat-label>Filtrar</mat-label>
-          <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Daniel Molina">
-        </mat-form-field>
-      </div>
-
-    <!-- </mat-card-content>
-  </mat-card> -->
-
+  <div class="filter" fxLayoutAlign="center center">
+    <mat-form-field style="margin-bottom: 20px;">
+      <mat-label>Filtrar</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Daniel Molina">
+    </mat-form-field>
+  </div>
 
   <div class="mat-elevation-z7">
+
+    <div class="loading-shade" *ngIf="isLoadingResults">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+
     <table mat-table [dataSource]="dataSource" matSort>
 
       <!-- ID Column -->

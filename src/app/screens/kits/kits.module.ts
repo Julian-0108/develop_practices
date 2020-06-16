@@ -11,6 +11,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 registerLocaleData(localeCo, 'es-Co');
 
@@ -25,7 +26,8 @@ registerLocaleData(localeCo, 'es-Co');
     MatPaginatorModule,
     MatInputModule,
     MatSortModule,
-    MatCardModule
+    MatCardModule,
+    MatProgressSpinnerModule
   ],
 })
 export class KitsModule { }

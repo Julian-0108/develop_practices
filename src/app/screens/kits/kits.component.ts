@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { KitsService } from './services/kits.service';
+import { map } from 'rxjs/operators';
 
 
 export interface KitsData {
@@ -18,23 +20,9 @@ export interface KitsData {
 })
 export class KitsComponent implements OnInit {
 
+  isLoadingResults = true;
   displayedColumns: string[] = [
     'cedula', 'nombre', 'entregado', 'fecha'
-  ];
-
-  TABLE_DATA: KitsData[] = [
-    {
-      cedula: "1037668390",
-      nombre: "UPEGUI BORJA MATEO",
-      entregado: "SI",
-      fecha: "2020-05-15T18:27:33.422Z"
-    },
-    {
-      cedula: "8063471",
-      nombre: "VASQUEZ GIRALDO DONCEY",
-      entregado: "SI",
-      fecha: "2020-05-16T18:34:49.553Z"
-    }
   ];
 
   dataSource!: MatTableDataSource<KitsData>;
@@ -42,16 +30,22 @@ export class KitsComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
   @ViewChild(MatSort, { static: true, read: MatSort }) sort!: MatSort
 
-  constructor() {
-    this.dataSource = new MatTableDataSource(this.TABLE_DATA);
-  }
+  constructor(
+    private kitService: KitsService
+  ) {}
 
   ngOnInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.getKits();
   }
 
-  // getKits
+  getKits() {
+    this.kitService.getKitsList().subscribe((response: any) => {
+      this.dataSource = new MatTableDataSource(response);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.isLoadingResults = false;
+    });
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
