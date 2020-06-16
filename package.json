@@ -1,5 +1,5 @@
 {
-  "name": "sars-ui-web",
+  "name": "app-sitios-web",
   "version": "0.1.2",
   "scripts": {
     "ng": "ng",
