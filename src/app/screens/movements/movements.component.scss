@@ -1,8 +1,13 @@
 .container {
   position: relative;
   top: 80px;
-  margin: 0 50px;
-  margin-bottom: 30px;
+  margin: 0 100px;
+  margin-bottom: 50px;
+}
+
+.filter {
+  width: 70%;
+  margin: 0 auto;
 }
 
 .subtitle {
@@ -14,7 +19,6 @@ table[mat-table] {
 }
 
 table {
-  border-radius: 10px;
   width: 100%;
 }
 
