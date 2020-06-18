@@ -24,7 +24,7 @@ export class TemperatureComponent implements OnInit {
   @ViewChild(MatSort, { static: true, read: MatSort }) sort!: MatSort
 
   constructor(
-    private temperatureService: TemperatureService
+    private _temperatureService: TemperatureService
   ) {}
 
   ngOnInit(): void {
@@ -32,9 +32,8 @@ export class TemperatureComponent implements OnInit {
   }
 
   getMovements() {
-    this.temperatureService.getTemperatureList().subscribe((response: any) => {
+    this._temperatureService.getTemperatureList().subscribe((response: any) => {
       this.dataSource = new MatTableDataSource(response);
-      console.log(this.dataSource);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.isLoadingResults = false;

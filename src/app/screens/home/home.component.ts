@@ -50,9 +50,9 @@ export class HomeComponent implements OnInit {
   idSites: any;
 
   constructor(
-    private venuesService: VenuesService,
-    private officeService: OfficeService,
-    private sitesService: SitesService,
+    private _venuesService: VenuesService,
+    private _officeService: OfficeService,
+    private _sitesService: SitesService,
   ) {}
 
   ngOnInit() {
@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
   }
 
   getVenues() {
-    this.venuesService.getVenueList().subscribe((data: any) => {
+    this._venuesService.getVenueList().subscribe((data: any) => {
       this.venues = data;
       this.resultVenues = this.venues
         .map(
@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit {
 
   onChangeVenue(value: string) {
     // console.log(value);
-    this.officeService.getOfficeByVenueId(value).subscribe(
+    this._officeService.getOfficeByVenueId(value).subscribe(
       (data: any) => {
         this.offices = data;
 
@@ -99,7 +99,7 @@ export class HomeComponent implements OnInit {
 
   onChangeOffice(value: any) {
     // console.log(value);
-    this.sitesService.getSitesByOfficeId(value).subscribe(
+    this._sitesService.getSitesByOfficeId(value).subscribe(
       (data: any) => {
         this.sites = data;
 

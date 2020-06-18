@@ -1,5 +1,5 @@
 // @Angular Imports
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Component Imports
@@ -21,7 +21,8 @@ import { MatCardModule } from '@angular/material/card';
 
 // Custom Imports
 import { TokenInterceptor } from 'src/app/helpers/validation/token.interceptor';
-import { UserModels } from 'src/app/screens/login/models/user.models';
+import { NOTYF, notyfFactory } from 'src/app/shared/utils/notyf.token';
+
 @NgModule({
   declarations: [
     LoginComponent
@@ -47,6 +48,10 @@ import { UserModels } from 'src/app/screens/login/models/user.models';
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
+    },
+    {
+      provide: NOTYF,
+      useFactory: notyfFactory
     },
   ]
 })
