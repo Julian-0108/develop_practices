@@ -6,6 +6,6 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "e2e": true,
-    "node_modules": false
+    "node_modules": true
   }
 }

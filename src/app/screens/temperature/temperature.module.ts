@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpErrorInterceptor } from 'src/app/helpers/errors/http-error.interceptor';
 
 
 @NgModule({
@@ -17,6 +19,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   imports: [
     CommonModule,
     TemperatureRoutingModule,
+    HttpClientModule,
 
     MatTableModule,
     MatFormFieldModule,
@@ -25,6 +28,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSortModule,
     MatCardModule,
     MatProgressSpinnerModule
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
   ]
 })
 export class TemperatureModule { }

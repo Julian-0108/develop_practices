@@ -1,15 +1,14 @@
 // @Angular Imports
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 // Component Imports
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './login.component';
 
-// Angular Module Imports
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 // Material Imports
 import { MatInputModule } from '@angular/material/input';
@@ -21,7 +20,7 @@ import { MatCardModule } from '@angular/material/card';
 
 // Custom Imports
 import { TokenInterceptor } from 'src/app/helpers/validation/token.interceptor';
-import { NOTYF, notyfFactory } from 'src/app/shared/utils/notyf.token';
+// import { NOTYF, notyfFactory } from 'src/app/shared/utils/notyf.token';
 
 @NgModule({
   declarations: [
@@ -49,10 +48,10 @@ import { NOTYF, notyfFactory } from 'src/app/shared/utils/notyf.token';
       useClass: TokenInterceptor,
       multi: true
     },
-    {
-      provide: NOTYF,
-      useFactory: notyfFactory
-    },
+    // {
+    //   provide: NOTYF,
+    //   useFactory: notyfFactory
+    // },
   ]
 })
 export class LoginModule { }
