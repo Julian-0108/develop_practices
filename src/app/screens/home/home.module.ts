@@ -19,6 +19,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 // Custom Imports
 import { QRCodeModule } from 'angularx-qrcode';
 import { AuthGuard } from 'src/app/helpers/guards/auth.guard';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpErrorInterceptor } from 'src/app/helpers/errors/http-error.interceptor';
 
 
 @NgModule({
@@ -28,6 +30,7 @@ import { AuthGuard } from 'src/app/helpers/guards/auth.guard';
     HomeRoutingModule,
     FlexLayoutModule,
     FormsModule,
+    HttpClientModule,
 
     MatIconModule,
     MatButtonModule,
@@ -38,6 +41,13 @@ import { AuthGuard } from 'src/app/helpers/guards/auth.guard';
 
     QRCodeModule
   ],
-  providers: [AuthGuard]
+  providers: [
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
+  ]
 })
 export class HomeModule { }

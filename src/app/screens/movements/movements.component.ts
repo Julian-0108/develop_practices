@@ -24,7 +24,7 @@ export class MovementsComponent implements OnInit {
   @ViewChild(MatSort, { static: true, read: MatSort }) sort!: MatSort
 
   constructor(
-    private movementsService: MovementsService
+    private _movementsService: MovementsService
   ) {}
 
   ngOnInit(): void {
@@ -32,9 +32,8 @@ export class MovementsComponent implements OnInit {
   }
 
   getMovements() {
-    this.movementsService.getMovementsList().subscribe((response: any) => {
+    this._movementsService.getMovementsList().subscribe((response: any) => {
       this.dataSource = new MatTableDataSource(response);
-      console.log(this.dataSource);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.isLoadingResults = false;

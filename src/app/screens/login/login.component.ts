@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService,
+    private _authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -51,12 +51,12 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
     if (this.loginFormGroup.invalid) {
       TOAST.fire({
-        icon: "error",
+        icon: "info",
         title: "Todos los campos son obligatorios"
       })
       this.isLoading = false;
     } else {
-      this.authService.login(
+      this._authService.login(
         loginFormControls.username.value,
         loginFormControls.password.value
       ).subscribe(() => {

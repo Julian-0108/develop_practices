@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/screens/login/services/auth/auth.service';
 import { Router } from '@angular/router';
+import { version } from "../../../../package.json";
 
 @Component({
   selector: 'app-toolbar',
@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
+
+  public version = version;
 
   constructor(private router: Router) { }
 

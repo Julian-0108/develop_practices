@@ -14,6 +14,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpErrorInterceptor } from 'src/app/helpers/errors/http-error.interceptor';
 
 registerLocaleData(localeCo, 'es-Co');
 
@@ -22,6 +24,7 @@ registerLocaleData(localeCo, 'es-Co');
   imports: [
     CommonModule,
     KitsRoutingModule,
+    HttpClientModule,
 
     MatTableModule,
     MatFormFieldModule,
@@ -31,5 +34,12 @@ registerLocaleData(localeCo, 'es-Co');
     MatCardModule,
     MatProgressSpinnerModule
   ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
+  ]
 })
 export class KitsModule { }
