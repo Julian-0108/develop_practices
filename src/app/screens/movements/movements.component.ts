@@ -15,7 +15,7 @@ export class MovementsComponent implements OnInit {
 
   isLoadingResults = true;
   displayedColumns: string[] = [
-    'cedula', 'idTipo', 'idMicrositio', '_id', 'fecha'
+    /*'nombre',*/ 'cedula', 'idTipo', 'idMicrositio', '_id', 'fecha'
   ];
 
   dataSource!: MatTableDataSource<MovementsModels>;
@@ -37,6 +37,9 @@ export class MovementsComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.isLoadingResults = false;
+      console.log(this.dataSource);
+      let name = this.dataSource['data'][0]['user_info'];
+      console.log(name);
     });
   }
 
