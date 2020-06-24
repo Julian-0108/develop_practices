@@ -37,9 +37,8 @@ export class MovementsComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.isLoadingResults = false;
-      console.log(this.dataSource);
-      let name = this.dataSource['data'][0]['user_info'];
-      console.log(name);
+      console.log(this.dataSource['data'])
+      this.dataSource['data'] = response;
     });
   }
 
