@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'sars-ui-web'`, () => {
+  it(`should have as title 'app-sitios-web'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('sars-ui-web');
+    expect(app.title).toEqual('app-sitios-web');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('sars-ui-web app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('app-sitios-web app is running!');
   });
 });
