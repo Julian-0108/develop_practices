@@ -15,7 +15,7 @@ export class TemperatureComponent implements OnInit {
 
   isLoadingResults = true;
   displayedColumns: string[] = [
-    'nombre', 'cedula', 'temperatura', 'fecha'
+    'nombre', 'cedula', 'temperatura', 'fecha','observaciones'
   ];
 
   dataSource!: MatTableDataSource<TemperatureModels>;

@@ -18,13 +18,13 @@
       <!-- Sede Column -->
       <ng-container matColumnDef="_id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Sede </th>
-        <td mat-cell *matCellDef="let row"> {{ row._id }} </td>
+        <td mat-cell *matCellDef="let row"> {{ row.info_sede[0].nombre }} </td>
       </ng-container>
 
       <!-- Micrositio Column -->
       <ng-container matColumnDef="idMicrositio">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Micrositio </th>
-        <td mat-cell *matCellDef="let row"> {{ row.idMicrositio }} </td>
+        <td mat-cell *matCellDef="let row"> {{ row.sede[0].nombre }} </td>
       </ng-container>
 
       <!-- Nombre Column -->
@@ -42,7 +42,7 @@
       <!-- Fecha Column -->
       <ng-container matColumnDef="fecha">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
-        <td mat-cell *matCellDef="let row"> {{ row.user_info.nombre | date: 'short'}} </td>
+        <td mat-cell *matCellDef="let row"> {{ row.fecha | date: 'short'}} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
