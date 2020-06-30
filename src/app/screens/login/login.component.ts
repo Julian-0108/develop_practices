@@ -3,20 +3,19 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/screens/login/services/auth/auth.service';
 import Swal from 'sweetalert2';
-
+ 
 const TOAST = Swal.mixin({
   toast: true,
   position: 'top-end',
   showConfirmButton: false,
   timer: 4000,
   showCloseButton: true,
-
-  onOpen: (Toast) => {
-    Toast.addEventListener('mouseenter', Swal.stopTimer)
-    Toast.addEventListener('mouseleave', Swal.resumeTimer)
+  onOpen: (TOAST) => {
+    TOAST.addEventListener('mouseenter', Swal.stopTimer)
+    TOAST.addEventListener('mouseleave', Swal.resumeTimer)
   }
 });
-
+ 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

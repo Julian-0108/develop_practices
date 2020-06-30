@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: true
+  production: false
 };
 
 export const API_URL = 'https://sitios.setiaws.com';
