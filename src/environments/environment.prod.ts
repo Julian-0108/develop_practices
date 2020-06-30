@@ -2,4 +2,4 @@ export const environment = {
   production: true
 };
 
-export const apiUrl = 'https://sitios.setiaws.com';
+export const API_URL = 'https://sitios.setiaws.com';

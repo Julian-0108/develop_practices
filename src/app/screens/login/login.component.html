@@ -1,9 +1,21 @@
 <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="box mat-elevation-z7">
 
-  <mat-card class="box">
+    <div fxLayoutAlign="center center">
+      <img src="../../../assets/images/Logo-seti.png" style="width: 140px;" alt="logo-seti">
+    </div>
+
+    <div style="height: 20px;"></div>
+
     <mat-card-header>
-      <mat-card-subtitle>Iniciar Sesión</mat-card-subtitle>
+      <mat-card-subtitle>
+        <h1><strong>Iniciar Sesión</strong></h1>
+      </mat-card-subtitle>
     </mat-card-header>
+
+    <mat-card-subtitle fxLayoutAlign="center center">
+      Inicia sesión para generar QR's y acceder a los reportes diarios.
+    </mat-card-subtitle>
 
     <form
       class="form"
@@ -12,24 +24,26 @@
       (ngSubmit)="onSubmit()"
     >
       <mat-card-content>
-        <!-- <mat-icon>person_outline</mat-icon> -->
-        <mat-form-field class="full-width">
+
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Email</mat-label>
           <input
             matInput
             type="text"
-            placeholder="Usuario"
+            placeholder="Email"
             (keyup.enter)="onSubmit()"
             formControlName="username"
             required
           />
+          <mat-icon matSuffix >mail_outline</mat-icon>
           <mat-hint>Ingresa tu correo electrónico</mat-hint>
-          <mat-error>Usuario es obligatorio</mat-error>
+          <mat-error>Email es obligatorio</mat-error>
         </mat-form-field>
 
         <div style="height: 20px;"></div>
 
-        <!-- <mat-icon>person_outline</mat-icon> -->
-        <mat-form-field class="full-width">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Contraseña</mat-label>
           <input
             matInput
             placeholder="Contraseña"
@@ -48,14 +62,23 @@
 
       <div style="height: 20px;"></div>
 
-      <button mat-flat-button class="btn-block mat-elevation-z6">
-        Ingresar
-      </button>
+      <button
+        mat-flat-button
+        class="btn-block mat-elevation-z6"
+        style="width: 60%;"
+        fxLayoutAlign="center center"
+      >
 
-      <mat-progress-bar mode="indeterminate" *ngIf="isLoading" color="warn">
-      </mat-progress-bar>
+        <span *ngIf="!isLoading; else loading">
+          Ingresar
+        </span>
+
+        <ng-template #loading style="height: 50px;">
+          <mat-spinner diameter="14"></mat-spinner>
+        </ng-template>
+
+      </button>
     </form>
 
   </mat-card>
-
 </div>

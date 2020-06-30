@@ -1,15 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './screens/home/home.component';
-import { LoginComponent } from './screens/login/login.component';
-import { AuthGuard } from './helpers/guards/auth.guard';
-
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
-  { path: 'login', component: LoginComponent },
-  { path: '**', redirectTo: 'home' }
+  { path: '', pathMatch: 'full', redirectTo: 'home'},
+  { path: 'login', loadChildren: () => import('./screens/login/login.module').then(m => m.LoginModule) },
+  { path: 'home', loadChildren: () => import('./screens/home/home.module').then(m => m.HomeModule) },
+  { path: 'movements', loadChildren: () => import('./screens/movements/movements.module').then(m => m.MovementsModule) },
+  { path: 'temperature', loadChildren: () => import('./screens/temperature/temperature.module').then(m => m.TemperatureModule) },
+  { path: 'kits', loadChildren: () => import('./screens/kits/kits.module').then(m => m.KitsModule) }
 ];
 
 @NgModule({

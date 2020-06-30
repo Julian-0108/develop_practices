@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
+import { version } from "../../../../package.json";
 
 @Component({
   selector: 'app-toolbar',
@@ -9,7 +9,9 @@ import { Router } from '@angular/router';
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  public version = version;
+
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
@@ -18,8 +20,8 @@ export class ToolbarComponent implements OnInit {
     localStorage.removeItem('authData');
   }
 
-  hideNavbar() {
-    return this.router.url === '/home';
+  hideQrIcon() {
+    return this.router.url !== '/home';
   }
 
 }

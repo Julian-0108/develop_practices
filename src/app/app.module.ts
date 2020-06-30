@@ -1,51 +1,75 @@
+// @Angular Imports
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  NgModule,
+  InjectionToken,
+  Injector,
+  Injectable,
+  Inject,
+  ErrorHandler
+} from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { QRCodeModule } from 'angularx-qrcode';
-import { NgxPrintModule } from 'ngx-print';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+// Componentes Imports
 import { AppComponent } from './app.component';
-import { ToolbarComponent } from "./shared/toolbar/toolbar.component";
-import { LoginComponent } from './screens/login/login.component';
-import { HomeComponent } from './screens/home/home.component';
-import { MaterialModule } from './material.module';
-import { UserModels } from './models/user.models';
-import { TokenInterceptor } from './helpers/validator/token.interceptor';
-import { AuthGuard } from './helpers/guards/auth.guard';
+
+// Custom Imports
+import Rollbar from 'rollbar';
+import { LoginModule } from "./screens/login/login.module";
+import { SharedModule } from "./shared/shared.module";
+import { HttpErrorInterceptor, RollbarService } from 'src/app/helpers/errors/http-error.interceptor';
+
+const rollbarConfig = {
+  accessToken: 'c8aa20b1c1d441acb8ad79db3a4a3052',
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+};
+
+@Injectable()
+export class RollbarErrorHandler implements ErrorHandler {
+  constructor(@Inject(RollbarService) private rollbar: Rollbar) {}
+
+  handleError(err:any) : void {
+    this.rollbar.error(err.originalError || err);
+  }
+}
+
+export function rollbarFactory() {
+  return new Rollbar(rollbarConfig);
+}
+
+
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ToolbarComponent,
-    LoginComponent,
-    HomeComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    FlexLayoutModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    QRCodeModule,
-    NgxPrintModule,
-    HttpClientModule
+    HttpClientModule,
+
+    LoginModule,
+    SharedModule
   ],
   providers: [
-    UserModels,
-    AuthGuard,
-		{
-			provide: HTTP_INTERCEPTORS,
-			useClass: TokenInterceptor,
-			multi: true
-		},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    },
+    {
+      provide: ErrorHandler,
+      useClass: RollbarErrorHandler
+    },
+    {
+      provide: RollbarService,
+      useFactory: rollbarFactory
+    }
   ],
-  bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

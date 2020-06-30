@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs/operators';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/screens/login/services/auth/auth.service';
 import Swal from 'sweetalert2';
-import { AuthService } from 'src/app/services/auth/auth.service';
  
 const TOAST = Swal.mixin({
   toast: true,
@@ -11,10 +10,9 @@ const TOAST = Swal.mixin({
   showConfirmButton: false,
   timer: 4000,
   showCloseButton: true,
- 
-  onOpen: (Toast) => {
-    Toast.addEventListener('mouseenter', Swal.stopTimer)
-    Toast.addEventListener('mouseleave', Swal.resumeTimer)
+  onOpen: (TOAST) => {
+    TOAST.addEventListener('mouseenter', Swal.stopTimer)
+    TOAST.addEventListener('mouseleave', Swal.resumeTimer)
   }
 });
  
@@ -24,46 +22,46 @@ const TOAST = Swal.mixin({
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
- 
+
   loginFormGroup!: FormGroup;
- 
+
   hide = true;
   isLoading: boolean = false;
   submitted = false;
   returnUrl: string = '';
- 
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService,
-  ) {}
- 
+    private _authService: AuthService,
+  ) { }
+
   ngOnInit(): void {
     this.loginFormGroup = this.fb.group({
       username: ['', Validators.email],
       password: ['', Validators.required]
     });
   }
- 
-  get emailInput() { return this.loginFormGroup.get('username'); }
-  get passwordInput() { return this.loginFormGroup.get('password'); }
- 
+
   onSubmit() {
     let loginFormControls = this.loginFormGroup.controls;
- 
+
     this.isLoading = true;
     this.submitted = true;
     if (this.loginFormGroup.invalid) {
       TOAST.fire({
-        icon: "error",
+        icon: "info",
         title: "Todos los campos son obligatorios"
       })
       this.isLoading = false;
     } else {
-      this.authService.login(loginFormControls.username.value, loginFormControls.password.value).pipe(first()).subscribe(() => {
+      this._authService.login(
+        loginFormControls.username.value,
+        loginFormControls.password.value
+      ).subscribe(() => {
         this.router.navigate(['/home']);
         TOAST.close();
-      }, (error: { error: { message: any; }; status: number; message: any; }) => {
+      }, (error) => {
         if (error.error instanceof ErrorEvent) {
           TOAST.fire({
             icon: 'error',
@@ -88,5 +86,6 @@ export class LoginComponent implements OnInit {
       });
     }
   }
- 
+
 }
+
