@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
 
-  title = 'sars-ui-Web';
+  title = 'app-sitios-web';
 
   constructor(private router: Router) {}
 
