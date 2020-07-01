@@ -7,7 +7,7 @@ COPY . .
 RUN npm run build:prod
 
 # STAGE 2: Run
-FROM nginx:stable-
+FROM nginx:stable-alpine
 RUN apk add tzdata
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /projects/app-ingresos/dist/app-sitios-web /usr/share/nginx/html
