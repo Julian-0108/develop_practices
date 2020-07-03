@@ -79,7 +79,10 @@
       <mat-icon>settings</mat-icon>
       <span>Ajustes - (dev)</span>
     </button>
-    <button [routerLink]="['/login']" (click)="logout()" mat-menu-item>
+
+    <mat-divider></mat-divider>
+
+    <button mat-menu-item [routerLink]="['/login']" (click)="logout()">
       <mat-icon>arrow_forward</mat-icon>
       <span>Salir</span>
     </button>
