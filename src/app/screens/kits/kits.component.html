@@ -3,7 +3,7 @@
   <div class="filter" fxLayoutAlign="center center">
     <mat-form-field style="margin-bottom: 20px;">
       <mat-label>Filtrar</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Daniel Molina">
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar por nombre, cedula, fecha...">
     </mat-form-field>
   </div>
 
@@ -36,7 +36,7 @@
       <!-- Fecha Column -->
       <ng-container matColumnDef="fecha">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
-        <td mat-cell *matCellDef="let row"> {{ row.fecha | date:'short':'UTC' }} </td>
+        <td mat-cell *matCellDef="let row"> {{ row.fecha | date:'short':'-0500' }} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
