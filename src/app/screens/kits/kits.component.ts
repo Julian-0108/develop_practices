@@ -34,6 +34,21 @@ export class KitsComponent implements OnInit {
   getKits() {
     this.kitService.getKitsList().subscribe((response: any) => {
       this.dataSource = new MatTableDataSource(response);
+      this.dataSource.filterPredicate = (order: KitsModels, filter: string) => {
+        const transformedFilter = filter.trim().toLowerCase();
+        const listAsFlatString = (obj: any): string => {
+          let returnVal = '';
+          Object.values(obj).forEach((val) => {
+            if (typeof val !== 'object') {
+              returnVal = returnVal + ' ' + val;
+            } else if (val !== null) {
+              returnVal = returnVal + ' ' + listAsFlatString(val);
+            }
+          });
+          return returnVal.trim().toLowerCase();
+        };
+        return listAsFlatString(order).includes(transformedFilter);
+      };
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.isLoadingResults = false;

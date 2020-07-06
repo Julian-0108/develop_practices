@@ -15,7 +15,7 @@ export class MovementsComponent implements OnInit {
 
   isLoadingResults = true;
   displayedColumns: string[] = [
-    /*'nombre',*/ 'cedula', 'idTipo', 'idMicrositio', '_id', 'fecha'
+    'nombre', 'micrositio', 'idTipo', 'sede', 'fecha'
   ];
 
   dataSource!: MatTableDataSource<MovementsModels>;
@@ -34,11 +34,25 @@ export class MovementsComponent implements OnInit {
   getMovements() {
     this._movementsService.getMovementsList().subscribe((response: any) => {
       this.dataSource = new MatTableDataSource(response);
+      this.dataSource.filterPredicate = (order: MovementsModels, filter: string) => {
+        const transformedFilter = filter.trim().toLowerCase();
+        const listAsFlatString = (obj: any): string => {
+          let returnVal = '';
+          Object.values(obj).forEach((val) => {
+            if (typeof val !== 'object') {
+              returnVal = returnVal + ' ' + val;
+            } else if (val !== null) {
+              returnVal = returnVal + ' ' + listAsFlatString(val);
+            }
+          });
+          return returnVal.trim().toLowerCase();
+        };
+        return listAsFlatString(order).includes(transformedFilter);
+      };
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.isLoadingResults = false;
       console.log(this.dataSource['data'])
-      this.dataSource['data'] = response;
     });
   }
 
