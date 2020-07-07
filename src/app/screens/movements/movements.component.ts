@@ -15,13 +15,13 @@ export class MovementsComponent implements OnInit {
 
   isLoadingResults = true;
   displayedColumns: string[] = [
-    'nombre', 'micrositio', 'idTipo', 'sede', 'fecha'
+    'nombre', 'idTipo', 'micrositio', 'sede', 'fecha'
   ];
 
   dataSource!: MatTableDataSource<MovementsModels>;
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
-  @ViewChild(MatSort, { static: true, read: MatSort }) sort!: MatSort
+  @ViewChild(MatSort) sort!: MatSort
 
   constructor(
     private _movementsService: MovementsService
