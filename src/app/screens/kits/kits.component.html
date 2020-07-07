@@ -29,14 +29,14 @@
 
       <!-- Recibido Column -->
       <ng-container matColumnDef="entregado">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Recibido </th>
+        <th mat-header-cell *matHeaderCellDef> Recibido </th>
         <td mat-cell *matCellDef="let row"> {{ row.entregado | titlecase }} </td>
       </ng-container>
 
       <!-- Fecha Column -->
       <ng-container matColumnDef="fecha">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
-        <td mat-cell *matCellDef="let row"> {{ row.fecha | date:'short':'UTC' }} </td>
+        <td mat-cell *matCellDef="let row"> {{ row.fecha }} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
