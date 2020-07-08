@@ -4,6 +4,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table'
 import { MovementsModels } from './models/movements.models';
 import { MovementsService } from './services/movements.service';
+import { map } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-movements',
@@ -15,56 +17,54 @@ export class MovementsComponent implements OnInit {
 
   isLoadingResults = true;
   displayedColumns: string[] = [
-    'nombre', 'idTipo', 'micrositio', 'sede', 'fecha'
+    'nombre', 'tipo', 'micrositio', 'sede', 'fecha'
   ];
-
-  dataSource!: MatTableDataSource<MovementsModels>;
+  dataSource!: MatTableDataSource<Object>;
+  datePipe = new DatePipe('es-CO');
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
-  @ViewChild(MatSort) sort!: MatSort
+  @ViewChild(MatSort, { static: true, read: MatSort }) sort!: MatSort
 
   constructor(
     private _movementsService: MovementsService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.getMovements();
-  }
 
-  getMovements() {
-    this._movementsService.getMovementsList().subscribe((response: any) => {
-      this.dataSource = new MatTableDataSource(response);
-      this.dataSource.filterPredicate = (order: MovementsModels, filter: string) => {
-        const transformedFilter = filter.trim().toLowerCase();
-        const listAsFlatString = (obj: any): string => {
-          let returnVal = '';
-          Object.values(obj).forEach((val) => {
-            if (typeof val !== 'object') {
-              returnVal = returnVal + ' ' + val;
-            } else if (val !== null) {
-              returnVal = returnVal + ' ' + listAsFlatString(val);
-            }
-          });
-          return returnVal.trim().toLowerCase();
-        };
-        return listAsFlatString(order).includes(transformedFilter);
-      };
+    this._movementsService.getMovementsList()
+    .pipe(
+      map((res: any) => {
+        return res.map((item: any) => {
+          let filtered = {
+            'nombre': item.user_info[0].nombre,
+            'tipo': item.idTipo,
+            'micrositio': item.objOficina.nombre,
+            'sede': item.info_sede[0].nombre,
+            'fecha': new Date(item.fecha),
+          };
+          return filtered;
+        })
+      })
+    ).subscribe((data: Array<any>) => {
+      this.dataSource = new MatTableDataSource(data.reverse());
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.isLoadingResults = false;
-      console.log(this.dataSource['data'])
+      this.dataSource.filterPredicate = (data: any, filter: string): boolean => {
+        return data.nombre.trim().toLowerCase().indexOf(filter) != -1 || data.tipo.trim().toLowerCase().indexOf(filter) != -1 || data.micrositio.trim().toLowerCase().indexOf(filter) != -1 || data.sede.trim().toLowerCase().indexOf(filter) != -1 || this.datePipe.transform(data.fecha, 'dd/MM/yyyy HH:mm', 'UTC')?.indexOf(filter) != -1;
+      }
     });
+
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
+    const filterValue: String = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
-
 }
 
 

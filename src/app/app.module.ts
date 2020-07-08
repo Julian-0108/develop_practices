@@ -6,7 +6,8 @@ import {
   Injector,
   Injectable,
   Inject,
-  ErrorHandler
+  ErrorHandler,
+  LOCALE_ID
 } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,11 +16,14 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // Componentes Imports
 import { AppComponent } from './app.component';
 
+import localeEsCo from '@angular/common/locales/es-CO';
+
 // Custom Imports
 import Rollbar from 'rollbar';
 import { LoginModule } from "./screens/login/login.module";
 import { SharedModule } from "./shared/shared.module";
 import { HttpErrorInterceptor, RollbarService } from 'src/app/helpers/errors/http-error.interceptor';
+import { registerLocaleData } from '@angular/common';
 
 const rollbarConfig = {
   accessToken: 'c8aa20b1c1d441acb8ad79db3a4a3052',
@@ -40,7 +44,7 @@ export function rollbarFactory() {
   return new Rollbar(rollbarConfig);
 }
 
-
+registerLocaleData(localeEsCo, 'es-CO');
 
 @NgModule({
   declarations: [
@@ -68,6 +72,10 @@ export function rollbarFactory() {
     {
       provide: RollbarService,
       useFactory: rollbarFactory
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: 'es-CO'
     }
   ],
   bootstrap: [AppComponent]
