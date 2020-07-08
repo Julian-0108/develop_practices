@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { KitsService } from './services/kits.service';
 import { map } from 'rxjs/operators';
 import { KitsModels } from './models/kits.models';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-kits',
@@ -19,6 +20,7 @@ export class KitsComponent implements OnInit {
   ];
 
   dataSource!: MatTableDataSource<KitsModels>;
+  datePipe = new DatePipe('es-CO');
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
   @ViewChild(MatSort, { static: true, read: MatSort }) sort!: MatSort
@@ -28,32 +30,32 @@ export class KitsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getKits();
-  }
 
-  getKits() {
-    this.kitService.getKitsList().subscribe((response: any) => {
-      this.dataSource = new MatTableDataSource(response);
-      this.dataSource.filterPredicate = (order: KitsModels, filter: string) => {
-        const transformedFilter = filter.trim().toLowerCase();
-        const listAsFlatString = (obj: any): string => {
-          let returnVal = '';
-          Object.values(obj).forEach((val) => {
-            if (typeof val !== 'object') {
-              returnVal = returnVal + ' ' + val;
-            } else if (val !== null) {
-              returnVal = returnVal + ' ' + listAsFlatString(val);
-            }
-          });
-          return returnVal.trim().toLowerCase();
-        };
-        return listAsFlatString(order).includes(transformedFilter);
-      };
+    this.kitService.getKitsList()
+    .pipe(
+      map((res: any) => {
+        return res.map((item: any) => {
+          let filtered = {
+            'nombre': item.nombre,
+            'cedula': item.cedula,
+            'entregado': item.entregado,
+            'fecha': new Date(item.fecha),
+          };
+          return filtered;
+        })
+      })
+    ).subscribe((data: Array<any>) => {
+      this.dataSource = new MatTableDataSource(data.reverse());
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.isLoadingResults = false;
+      this.dataSource.filterPredicate = (data: any, filter: string): boolean => {
+        return data.nombre.trim().toLowerCase().indexOf(filter) != -1 || data.cedula.trim().toLowerCase().indexOf(filter) != -1 || data.entregado.trim().toLowerCase().indexOf(filter) != -1 ||this.datePipe.transform(data.fecha, 'dd/MM/yyyy HH:mm', 'UTC')?.indexOf(filter) != -1;
+      }
     });
+
   }
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

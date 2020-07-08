@@ -41,6 +41,18 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.email],
       password: ['', Validators.required]
     });
+    this.ifTokenExists();
+  }
+
+    // Temporary fix when there's an existing token
+  ifTokenExists() {
+    if ('authData' in localStorage) {
+      this.router.navigate(['/home'])
+      TOAST.fire({
+        icon: "info",
+        title: "Ya existe una sesión iniciada"
+      })
+    }
   }
 
   onSubmit() {

@@ -17,13 +17,13 @@
 
       <!-- Nombre Column -->
       <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef> Nombre </th>
-        <td mat-cell *matCellDef="let row"> {{ row.user_info[0].nombre | titlecase }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+        <td mat-cell *matCellDef="let row"> {{ row.nombre | titlecase }} </td>
       </ng-container>
 
       <!-- Cedula Column -->
       <ng-container matColumnDef="cedula">
-        <th mat-header-cell *matHeaderCellDef> Cedula </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cedula </th>
         <td mat-cell *matCellDef="let row"> {{ row.cedula }} </td>
       </ng-container>
 
@@ -33,17 +33,18 @@
         <td mat-cell *matCellDef="let row"> {{ row.temperatura }}°C </td>
       </ng-container>
 
-      <!-- Observaciones Column -->
-      <ng-container matColumnDef="observaciones">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Observaciones </th>
-        <td mat-cell *matCellDef="let row"> {{row.observaciones}} </td>
-      </ng-container>
-
       <!-- Fecha Column -->
       <ng-container matColumnDef="fecha">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
-        <td mat-cell *matCellDef="let row"> {{ row.fecha }} </td>
+        <td mat-cell *matCellDef="let row"> {{ row.fecha | date: 'dd/MM/yyyy HH:mm': 'UTC' }} </td>
       </ng-container>
+
+      <!-- Observaciones Column -->
+      <ng-container matColumnDef="observaciones">
+        <th mat-header-cell *matHeaderCellDef> Observaciones </th>
+        <td mat-cell *matCellDef="let row"> {{ row.observaciones }} </td>
+      </ng-container>
+
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;">
