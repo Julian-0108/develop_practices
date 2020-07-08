@@ -31,9 +31,9 @@ export class AuthService {
     return !!this.getToken();
   }
 
-  getToken(): string | null {
-    let authData = JSON.parse(localStorage.getItem('authData') || '{}');
-    return authData == null ? undefined : authData.token;
+  getToken() {
+    let authData = localStorage.getItem('authData');
+    return authData == null ? undefined : authData;
   }
 
 }
