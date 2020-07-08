@@ -6,7 +6,8 @@ import {
   Injector,
   Injectable,
   Inject,
-  ErrorHandler
+  ErrorHandler,
+  LOCALE_ID
 } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -68,6 +69,10 @@ export function rollbarFactory() {
     {
       provide: RollbarService,
       useFactory: rollbarFactory
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: 'es-CO'
     }
   ],
   bootstrap: [AppComponent]
