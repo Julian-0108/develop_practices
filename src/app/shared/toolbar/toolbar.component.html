@@ -1,11 +1,9 @@
-<mat-toolbar class="mat-toolbar mat-elevation-z7">
-  <img routerLink="/home" src="../../../assets/images/logoSetiBlanco.png" alt="seti logo">
-  <div style="width: 15px;"></div>
-  <span>App Sitios Web</span>
-  &nbsp;
-  <small><p><sub>v{{version}}</sub></p></small>
+<mat-toolbar  class="mat-toolbar">
+  <img class="logo__style" src="../../../assets/images/logoSetiBlanco.png" alt="seti logo">
+  <span>Mundo Seti</span>
   <span class="spacer"></span>
 
+<div *ngIf="false">
   <button
     *ngIf="hideQrIcon()"
     mat-icon-button
@@ -13,7 +11,7 @@
     matTooltip="Generar"
     aria-label="Example icon-button with a menu"
   >
-    <mat-icon  >home</mat-icon>
+    <mat-icon>home</mat-icon>
   </button>
 
   <button
@@ -68,25 +66,13 @@
   </button>
   <mat-menu #profileMenu="matMenu">
 
-    <!-- profile button -->
-    <!-- <button mat-menu-item disabled>
-      <mat-icon>person_outline</mat-icon>
-      <span>Perfil - (dev)</span>
-    </button> -->
-
-    <!-- settings button -->
-    <!-- <button mat-menu-item disabled>
-      <mat-icon>settings</mat-icon>
-      <span>Ajustes - (dev)</span>
-    </button> -->
-
-    <!-- <mat-divider></mat-divider> -->
-
     <button mat-menu-item [routerLink]="['/login']" (click)="logout()">
       <mat-icon>arrow_forward</mat-icon>
       <span>Salir</span>
     </button>
 
   </mat-menu>
+</div>
 
 </mat-toolbar>
+
