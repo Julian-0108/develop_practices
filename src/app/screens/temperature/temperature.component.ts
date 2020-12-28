@@ -47,7 +47,6 @@ export class TemperatureComponent implements OnInit {
         })
       })
     ).subscribe((data: Array<any>) => {
-      console.log(data);
       this.dataSource = new MatTableDataSource(data.reverse());
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

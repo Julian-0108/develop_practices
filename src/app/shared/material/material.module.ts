@@ -22,10 +22,19 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatTableModule } from '@angular/material/table';
 import { FlexModule } from '@angular/flex-layout';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatSelectModule } from '@angular/material/select';
 
 
 
 const materialComponents = [
+    MatPaginatorModule,
+    MatSortModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
     MatIconModule,
     MatButtonModule,
     MatProgressSpinnerModule,
@@ -37,6 +46,7 @@ const materialComponents = [
     MatSnackBarModule,
     FlexModule,
     FlexLayoutModule,
+    MatSelectModule,
     MatCardModule,
     MatGridListModule,
     MatFormFieldModule,
@@ -48,7 +58,7 @@ const materialComponents = [
     MatSliderModule,
     MatTableModule,
     ReactiveFormsModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
 ];
 
 @NgModule({
