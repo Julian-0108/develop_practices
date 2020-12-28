@@ -8,7 +8,7 @@ import { version } from "../../../../package.json";
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-
+  public title: string = 'Mundo Seti';
   public version = version;
 
   constructor(private router: Router) { }
