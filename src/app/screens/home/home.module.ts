@@ -21,24 +21,14 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { AuthGuard } from 'src/app/helpers/guards/auth.guard';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpErrorInterceptor } from 'src/app/helpers/errors/http-error.interceptor';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
   declarations: [HomeComponent],
   imports: [
-    CommonModule,
     HomeRoutingModule,
-    FlexLayoutModule,
-    FormsModule,
-    HttpClientModule,
-
-    MatIconModule,
-    MatButtonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatProgressSpinnerModule,
-
+    SharedModule,
     QRCodeModule
   ],
   providers: [
