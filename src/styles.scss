@@ -2,19 +2,16 @@
 
 :root {
     // rojo seti: #c4382f
-    --primary-color: #c4382f;
+    --primary-color: #DE1920;
     --light-text: white;
     --light-bg: white;
     --dark-text: rgb(41, 41, 41);
 }
 
-html,
 body {
-    height: 100%;
-}
-
-body {
+    padding: 0;
     margin: 0;
+    height: 100%;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     background-color: rgb(243, 243, 243);
 }

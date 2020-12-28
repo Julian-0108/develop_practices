@@ -1,9 +1,6 @@
-// @Angular Imports
 import { BrowserModule } from '@angular/platform-browser';
 import {
   NgModule,
-  InjectionToken,
-  Injector,
   Injectable,
   Inject,
   ErrorHandler,
@@ -11,7 +8,7 @@ import {
 } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // Componentes Imports
 import { AppComponent } from './app.component';
@@ -20,10 +17,10 @@ import localeEsCo from '@angular/common/locales/es-CO';
 
 // Custom Imports
 import Rollbar from 'rollbar';
-import { LoginModule } from "./screens/login/login.module";
 import { SharedModule } from "./shared/shared.module";
 import { HttpErrorInterceptor, RollbarService } from 'src/app/helpers/errors/http-error.interceptor';
 import { registerLocaleData } from '@angular/common';
+import { TokenInterceptor } from './helpers/validation/token.interceptor';
 
 const rollbarConfig = {
   accessToken: 'c8aa20b1c1d441acb8ad79db3a4a3052',
@@ -48,18 +45,20 @@ registerLocaleData(localeEsCo, 'es-CO');
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule,
-
-    LoginModule,
     SharedModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,

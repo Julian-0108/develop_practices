@@ -1,31 +1,27 @@
-<mat-toolbar class="mat-toolbar mat-elevation-z7">
-    <img routerLink="/home" src="../../../assets/images/logoSetiBlanco.png" alt="seti logo">
-    <div style="width: 15px;"></div>
-    <span>App Sitios Web</span> &nbsp;
-    <small><p><sub>v{{version}}</sub></p></small>
+<mat-toolbar class="mat-toolbar">
+    <img class="logo__style" src="../../../assets/images/logoSetiBlanco.png" alt="seti logo">
+    <span>Mundo Seti</span>
     <span class="spacer"></span>
 
-    <button *ngIf="hideQrIcon()" mat-icon-button [routerLink]="['/home']" matTooltip="Generar código QR" aria-label="Example icon-button with a menu">
+    <div *ngIf="false">
+        <button *ngIf="hideQrIcon()" mat-icon-button [routerLink]="['/home']" matTooltip="Generar" aria-label="Example icon-button with a menu">
     <mat-icon>home</mat-icon>
   </button>
 
-    <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Reportes" aria-label="Example icon-button with a menu">
+        <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Reportes" aria-label="Example icon-button with a menu">
     <mat-icon>event_note</mat-icon>
   </button>
 
-    <mat-menu #menu="matMenu">
-        <button mat-menu-item [routerLink]="['/generateqr']">
-      <mat-icon>qr_code_2</mat-icon>
-      <span>Generar código QR</span>
-    </button>
-        <!-- movements button -->
-        <button mat-menu-item [routerLink]="['/movements']">
+        <mat-menu #menu="matMenu">
+
+            <!-- movements button -->
+            <button mat-menu-item [routerLink]="['/movements']">
       <mat-icon>directions_run</mat-icon>
       <span>Movimientos</span>
     </button>
 
-        <!-- temp button -->
-        <button mat-menu-item [routerLink]="['/temperature']">
+            <!-- temp button -->
+            <button mat-menu-item [routerLink]="['/temperature']">
       <mat-icon
         class="temp-icon"
         matSuffix
@@ -36,8 +32,8 @@
       <span>Temperatura</span>
     </button>
 
-        <!-- kit button -->
-        <button mat-menu-item [routerLink]="['/kits']">
+            <!-- kit button -->
+            <button mat-menu-item [routerLink]="['/kits']">
       <mat-icon
         class="kit-icon"
         matSuffix
@@ -48,32 +44,19 @@
       <span>Kit de salud</span>
     </button>
 
-    </mat-menu>
+        </mat-menu>
 
-    <button mat-icon-button [matMenuTriggerFor]="profileMenu" matTooltip="Más opciones" aria-label="profile button with a menu">
+        <button mat-icon-button [matMenuTriggerFor]="profileMenu" matTooltip="Más opciones" aria-label="profile button with a menu">
     <mat-icon>more_vert</mat-icon>
   </button>
-    <mat-menu #profileMenu="matMenu">
+        <mat-menu #profileMenu="matMenu">
 
-        <!-- profile button -->
-        <!-- <button mat-menu-item disabled>
-      <mat-icon>person_outline</mat-icon>
-      <span>Perfil - (dev)</span>
-    </button> -->
-
-        <!-- settings button -->
-        <!-- <button mat-menu-item disabled>
-      <mat-icon>settings</mat-icon>
-      <span>Ajustes - (dev)</span>
-    </button> -->
-
-        <!-- <mat-divider></mat-divider> -->
-
-        <button mat-menu-item [routerLink]="['/login']" (click)="logout()">
+            <button mat-menu-item [routerLink]="['/login']" (click)="logout()">
       <mat-icon>arrow_forward</mat-icon>
       <span>Salir</span>
     </button>
 
-    </mat-menu>
+        </mat-menu>
+    </div>
 
 </mat-toolbar>
