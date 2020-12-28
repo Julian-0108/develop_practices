@@ -9,7 +9,7 @@
     </div>
     <p #cardsHTML class="text">Lorem ipsum, dolor sit amet Maxime, consequuntur assumenda</p>
     <div class="cards">
-        <mat-card *ngFor="let card of cards; index as i">
+        <mat-card *ngFor="let card of cards; index as i" class="ripple">
             <img mat-card-image [src]="card.img">
             <mat-card-content>
                 <mat-card-title>{{card.tittle}}</mat-card-title>

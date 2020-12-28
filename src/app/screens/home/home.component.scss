@@ -47,6 +47,7 @@
     background-color: #de1920;
     color: white;
     border-radius: 20px;
+    padding: 0 2em;
 }
 
 .cards {
@@ -64,6 +65,20 @@
     margin: 1em auto;
 }
 
-// .mat-card:not([class*=mat-elevation-z]) {
-//     box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 1), 0 1px 1px 0 rgba(0, 0, 0, 1), 0 1px 3px 0 rgba(0, 0, 0, 1);
-// }
+.ripple {
+    background-position: center;
+    transition: background 0.8s;
+}
+
+.ripple:hover {
+    background: #e8bdc2 radial-gradient(circle, transparent 1%, #eab1b9 1%) center/10000%;
+}
+
+
+/*
+.ripple:active {
+    background-color: #c57578;
+    background-size: 100%;
+    transition: background 0s;
+}
+*/

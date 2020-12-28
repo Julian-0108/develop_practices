@@ -13,12 +13,12 @@ export class HomeComponent implements OnInit {
   constructor() { 
     this.cards = [
       {
-        img: '../../../assets/images/Logo-seti.png',
+        img: '../../../assets/images/Grupo 361.png',
         tittle: 'Sitios Seti',
         description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime, consequuntur assumenda'
       },
       {
-        img: '../../../assets/images/Logo-seti.png',
+        img: '../../../assets/images/Grupo 362.png',
         tittle: 'Perfilamiento',
         description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime, consequuntur assumenda'
       }
