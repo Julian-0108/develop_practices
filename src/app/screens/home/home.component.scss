@@ -1,122 +1,84 @@
-.content {
-  position: relative;
+.component {
+    background-image: url('../../../assets/images/fondo-bicubic.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
-.select {
-  text-align: center;
+.description {
+    height: 100vh;
+    display: flex;
+    justify-content: space-evenly;
 }
 
-img {
-  width: 60px;
-  height: 60px;
+.description img {
+    display: flex;
+    align-self: center;
+    object-fit: cover;
+    width: 45em;
+    height: 35em;
+    border-radius: 60% 100% 100% 60% / 80% 80% 80% 80%;
 }
 
-hr {
-  display: block;
-  height: 1px;
-  border: 0;
-  border-top: 1px solid rgb(212, 212, 212);
-  margin-bottom: 27px;
-  padding: 0;
+.description__content {
+    width: 50%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.qrcode qrcode {
-  image-rendering: pixelated;
+.description__content--tittle {
+    text-align: center;
+    line-height: normal;
+    font-size: 3em;
+    color: #de1920;
 }
 
-.btn-block {
-  background-color: var(--primary-color);
-  color: white;
-  border-radius: 20px;
+.description__content--text {
+    text-align: center;
+    line-height: normal;
+    font-size: 1.7em;
+    color: #707070;
+    margin: 2em 0;
 }
 
-.home-wrapper {
-  height: 100vh;
+.button {
+    background-color: #de1920;
+    color: white;
+    border-radius: 20px;
+    padding: 0 2em;
 }
 
-.box {
-  top: 80px;
-  margin: auto;
-  width: 100%;
-  padding: 60px 50px 40px 50px;
-  border-radius: 10px;
-  z-index: 5;
-  opacity: 1;
-  max-width: 650px;
-  position: relative;
-  transform: scale(1);
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-}
-.box.back {
-  transform: scale(0.95);
-  -webkit-transform: scale(0.95);
-  -ms-transform: scale(0.95);
-  top: -20px;
-  opacity: 0.8;
-  z-index: -1;
-}
-.box:before {
-  content: "";
-  width: 100%;
-  height: 30px;
-  border-radius: 10px;
-  position: absolute;
-  top: -10px;
-  background: rgba(255, 255, 255, 0.6);
-  left: 0;
-  transform: scale(0.95);
-  -webkit-transform: scale(0.95);
-  -ms-transform: scale(0.95);
-  z-index: -1;
-}
-.home-wrapper .form {
-  min-width: 100%;
-  width: 100%;
-}
-.home-wrapper .full-width,
-.home-wrapper .btn-block {
-  width: 100%;
-}
-.home-wrapper mat-card-header {
-  text-align: center;
-  width: 100%;
-  display: block;
-  font-weight: 700;
-}
-.home-wrapper mat-card-header mat-card-title {
-  font-size: 20px;
-  margin: 0;
+.cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-.home-wrapper mat-card-subtitle {
-   padding-bottom: 15px;
-   padding-top: 10px;
-   font-size: 14px;
-   font-weight: 300;
-   margin: 0;
+.text {
+    max-width: 700px;
+    line-height: normal;
+    font-size: 1.7em;
+    color: #707070;
+    text-align: center;
+    margin: 1em auto;
 }
 
-.home-wrapper .mat-card {
-  padding: 40px 70px 50px;
-}
-.home-wrapper .mat-stroked-button {
-  border: 1px solid currentColor;
-  line-height: 54px;
-  background: #fff7fa;
-}
-.home-wrapper .mat-form-field-appearance-legacy .mat-form-field-infix {
-  padding: 0.8375em 0;
+.ripple {
+    background-position: center;
+    transition: background 0.8s;
 }
 
-mat-card-actions {
-  text-align: center;
+.ripple:hover {
+    background: #e8bdc2 radial-gradient(circle, transparent 1%, #eab1b9 1%) center/10000%;
 }
 
-mat-card {
-  margin-bottom: 30px;
-}
 
-.qr-container {
-  display: flex;
+/*
+.ripple:active {
+    background-color: #c57578;
+    background-size: 100%;
+    transition: background 0s;
 }
+*/
