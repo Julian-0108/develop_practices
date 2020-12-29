@@ -3,21 +3,20 @@ import { Location } from '@angular/common';
 import { Title } from "@angular/platform-browser";
 
 @Component({
-  selector: 'app-notfound',
-  templateUrl: './notfound.component.html',
-  styleUrls: ['./notfound.component.scss']
+  selector: 'app-error',
+  templateUrl: './error.component.html',
+  styleUrls: ['./error.component.scss']
 })
-export class NotfoundComponent implements OnInit {
+export class ErrorComponent implements OnInit {
 
   constructor(
     private _location: Location,
     private _title: Title
   ) {
-    this._title.setTitle('Mundo SETI - página no encontrada');
-   }
+    this._title.setTitle('Mundo SETI - Error inesperado');
+  }
 
   ngOnInit(): void {
-
   }
 
   onBack(): void {

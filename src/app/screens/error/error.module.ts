@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { NotfoundRoutingModule } from './notfound-routing.module';
-import { NotfoundComponent } from './notfound.component';
+import { ErrorRoutingModule } from './error-routing.module';
+import { ErrorComponent } from './error.component';
 import { SharedModule } from '../../shared/shared.module';
 
 
 @NgModule({
-  declarations: [NotfoundComponent],
+  declarations: [ErrorComponent],
   imports: [
     CommonModule,
     SharedModule,
-    NotfoundRoutingModule
+    ErrorRoutingModule
   ]
 })
-export class NotfoundModule { }
+export class ErrorModule { }

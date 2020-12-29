@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" viewBox="0 0 1317.995 698.619">
+    <defs>
+        <style>
+            .cls-2{fill:none;stroke:#3a4a54;stroke-linecap:round;stroke-width:27px}.cls-4{fill:#de1920}
+        </style>
+    </defs>
+    <g id="Grupo_742" transform="translate(-230.769 -135.383)">
+        <path id="Trazado_1140" fill="#fff7f8" d="M-204.366-11.912c87.258 24.638 77.608-114.285 224.26-78.516S316.938-233.639 406.2-144.377c125.191 125.191 111.969 39.642 287.237-17.588S993.9 77.39 961.7 220.466c-12.394 55.084-164.538 146.653-268.268 85.846S499.389 581.948 389.4 485.157C210.555 327.773 177.278 574.876-5.144 521.222c-189.576-67.961 11.815-121.614-199.222-253.96s-179.989-329.994 0-279.174z" transform="translate(582 305)"/>
+        <g id="Grupo_739" transform="translate(611.502 371.868)">
+            <path id="Línea_38" d="M104.937 0L0 143.664" class="cls-2" transform="translate(2.498)"/>
+            <path id="Línea_39" d="M0 0L137.418 0" class="cls-2" transform="translate(0 146.163)"/>
+            <path id="Línea_40" d="M0 0L0 188.637" class="cls-2" transform="translate(107.436)"/>
+        </g>
+        <g id="Grupo_740" transform="translate(1006.39 361.671)">
+            <path id="Línea_38-2" d="M104.937 0L0 143.664" class="cls-2" transform="translate(2.498)"/>
+            <path id="Línea_39-2" d="M0 0L137.418 0" class="cls-2" transform="translate(0 146.163)"/>
+            <path id="Línea_40-2" d="M0 0L0 188.637" class="cls-2" transform="translate(107.436)"/>
+        </g>
+        <g id="Grupo_741" transform="translate(817.081 361.312)">
+            <path id="Trazado_1141" fill="none" stroke="#de1920" stroke-width="28px" d="M.16 5.792S-6.1 153.308 59.7 152.674c29.214-.281 43.637-22.081 50.726-46.519C119.121 76.19 110.68 0 110.68 0" transform="rotate(-177 63.85 77.608)"/>
+            <path id="Rectángulo_330" d="M0 0H14.831V14.831H0z" class="cls-4" transform="rotate(34 -279.7 100.345)"/>
+            <path id="Rectángulo_331" d="M0 0H14.831V14.831H0z" class="cls-4" transform="rotate(34 -288.103 224.856)"/>
+            <path id="Rectángulo_332" d="M0 0H14.831V14.831H0z" class="cls-4" transform="rotate(34 -198.254 278.737)"/>
+            <path id="Rectángulo_333" d="M0 0H14.831V14.831H0z" class="cls-4" transform="rotate(34 -334.892 338.745)"/>
+            <path id="Rectángulo_334" d="M0 0H14.831V14.831H0z" class="cls-4" transform="rotate(34 -409.087 149.847)"/>
+            <path id="Rectángulo_335" d="M0 0H14.831V14.831H0z" class="cls-4" transform="rotate(34 -408.285 271.76)"/>
+        </g>
+    </g>
+</svg>

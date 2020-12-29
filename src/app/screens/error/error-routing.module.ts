@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { NotfoundComponent } from './notfound.component';
-import { AuthGuard } from 'src/app/helpers/guards/auth.guard';
+import { ErrorComponent } from './error.component';
 
 
 const routes: Routes = [
-  { path: '', component: NotfoundComponent }
+  { path: '', component: ErrorComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class NotfoundRoutingModule { }
+export class ErrorRoutingModule { }
