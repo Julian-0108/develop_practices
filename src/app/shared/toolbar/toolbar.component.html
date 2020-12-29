@@ -1,62 +1,55 @@
 <mat-toolbar class="mat-toolbar">
-    <img class="logo__style" src="../../../assets/images/logoSetiBlanco.png" alt="seti logo">
-    <span>Mundo Seti</span>
-    <span class="spacer"></span>
+  <img class="logo__style" src="../../../assets/images/logoSetiBlanco.png" alt="seti logo">
+  <span>Mundo Seti</span>
+  <span class="spacer"></span>
 
-    <div *ngIf="false">
-        <button *ngIf="hideQrIcon()" mat-icon-button [routerLink]="['/home']" matTooltip="Generar" aria-label="Example icon-button with a menu">
-    <mat-icon>home</mat-icon>
-  </button>
-
-        <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Reportes" aria-label="Example icon-button with a menu">
-    <mat-icon>event_note</mat-icon>
-  </button>
-
-        <mat-menu #menu="matMenu">
-
-            <!-- movements button -->
-            <button mat-menu-item [routerLink]="['/movements']">
-      <mat-icon>directions_run</mat-icon>
-      <span>Movimientos</span>
+  <div *ngIf="false">
+    <button *ngIf="hideQrIcon()" mat-icon-button [routerLink]="['/home']" matTooltip="Generar"
+      aria-label="Example icon-button with a menu">
+      <mat-icon>home</mat-icon>
     </button>
 
-            <!-- temp button -->
-            <button mat-menu-item [routerLink]="['/temperature']">
-      <mat-icon
-        class="temp-icon"
-        matSuffix
-        fontSet="fas"
-        fontIcon="fa-thermometer-three-quarters"
-      >
-      </mat-icon>
-      <span>Temperatura</span>
+    <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Reportes"
+      aria-label="Example icon-button with a menu">
+      <mat-icon>event_note</mat-icon>
     </button>
 
-            <!-- kit button -->
-            <button mat-menu-item [routerLink]="['/kits']">
-      <mat-icon
-        class="kit-icon"
-        matSuffix
-        fontSet="fas"
-        fontIcon="fa-medkit"
-      >
-      </mat-icon>
-      <span>Kit de salud</span>
+    <mat-menu #menu="matMenu">
+
+      <!-- movements button -->
+      <button mat-menu-item [routerLink]="['/movements']">
+        <mat-icon>directions_run</mat-icon>
+        <span>Movimientos</span>
+      </button>
+
+      <!-- temp button -->
+      <button mat-menu-item [routerLink]="['/temperature']">
+        <mat-icon class="temp-icon" matSuffix fontSet="fas" fontIcon="fa-thermometer-three-quarters">
+        </mat-icon>
+        <span>Temperatura</span>
+      </button>
+
+      <!-- kit button -->
+      <button mat-menu-item [routerLink]="['/kits']">
+        <mat-icon class="kit-icon" matSuffix fontSet="fas" fontIcon="fa-medkit">
+        </mat-icon>
+        <span>Kit de salud</span>
+      </button>
+
+    </mat-menu>
+
+    <button mat-icon-button [matMenuTriggerFor]="profileMenu" matTooltip="Más opciones"
+      aria-label="profile button with a menu">
+      <mat-icon>more_vert</mat-icon>
     </button>
+    <mat-menu #profileMenu="matMenu">
 
-        </mat-menu>
+      <button mat-menu-item [routerLink]="['/login']" (click)="logout()">
+        <mat-icon>arrow_forward</mat-icon>
+        <span>Salir</span>
+      </button>
 
-        <button mat-icon-button [matMenuTriggerFor]="profileMenu" matTooltip="Más opciones" aria-label="profile button with a menu">
-    <mat-icon>more_vert</mat-icon>
-  </button>
-        <mat-menu #profileMenu="matMenu">
-
-            <button mat-menu-item [routerLink]="['/login']" (click)="logout()">
-      <mat-icon>arrow_forward</mat-icon>
-      <span>Salir</span>
-    </button>
-
-        </mat-menu>
-    </div>
+    </mat-menu>
+  </div>
 
 </mat-toolbar>
