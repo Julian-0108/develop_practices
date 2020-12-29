@@ -18,9 +18,9 @@ import localeEsCo from '@angular/common/locales/es-CO';
 // Custom Imports
 import Rollbar from 'rollbar';
 import { SharedModule } from "./shared/shared.module";
-import { HttpErrorInterceptor, RollbarService } from 'src/app/helpers/errors/http-error.interceptor';
 import { registerLocaleData } from '@angular/common';
-import { TokenInterceptor } from './helpers/validation/token.interceptor';
+import { RequestInterceptor } from './helpers/interceptors/request.interceptor';
+import { ResponseInterceptor, RollbarService } from './helpers/interceptors/response.interceptor';
 
 const rollbarConfig = {
   accessToken: 'c8aa20b1c1d441acb8ad79db3a4a3052',
@@ -56,12 +56,12 @@ registerLocaleData(localeEsCo, 'es-CO');
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
+      useClass: RequestInterceptor,
       multi: true
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: HttpErrorInterceptor,
+      useClass: ResponseInterceptor,
       multi: true
     },
     {

@@ -4,10 +4,9 @@ import {
   HttpInterceptor,
   HttpHandler,
   HttpRequest,
-  HttpResponse,
   HttpErrorResponse
 } from '@angular/common/http';
-// import { RollbarService } from 'src/app/app.module';
+
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
@@ -33,12 +32,11 @@ export const RollbarService = new InjectionToken<Rollbar>('rollbar');
   providedIn: 'root'
 })
 
-export class HttpErrorInterceptor implements HttpInterceptor {
+export class ResponseInterceptor implements HttpInterceptor {
 
   constructor(private injector: Injector) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
     return next.handle(request)
       .pipe(
         retry(1),

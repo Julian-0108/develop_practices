@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/screens/login/services/auth/auth.service';
   providedIn: 'root'
 })
 
-export class TokenInterceptor implements HttpInterceptor {
+export class RequestInterceptor implements HttpInterceptor {
 
   constructor(
     public auth: AuthService,
