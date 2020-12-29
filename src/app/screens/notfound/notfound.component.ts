@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: 'app-notfound',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotfoundComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private _location: Location,
+    private _title: Title
+  ) {
+    this._title.setTitle('Mundo SETI - página no encontrada');
+   }
 
   ngOnInit(): void {
+
+  }
+
+  onBack(): void {
+    this._location.back();
   }
 
 }
