@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    margin: 0 50px;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-number {
+    margin-top: 30px;
+    text-align: center;
+
+    h1 {
+        font-size: 60px;
+
+    }
+
+    p {
+        font-size: 20px;
+        margin-top: 30px;
+        color: #707070;
+    }
+
+    .main-button {
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: 20px;
+        padding: 0 2em;
+    }
+}

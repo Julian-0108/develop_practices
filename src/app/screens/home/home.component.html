@@ -1,151 +1,21 @@
-<div class="content grid-container" role="main">
-  <div class="home-wrapper grid-item">
-    <mat-card class="box mat-elevation-z7" style="margin-bottom: 30px;">
-      <mat-card-header>
-        <mat-card-title>Generar</mat-card-title>
-        <mat-card-subtitle style="padding-bottom: 15px;">
-          Copiar cada código individual y pegarlo en el documento que desea imprimir
-        </mat-card-subtitle>
-      </mat-card-header>
-
-      <form class="form">
-        <div>
-          <mat-card-content>
-
-            <!-- Sede Select -->
-            <mat-form-field class="full-width">
-              <mat-label>Seleccionar sede...</mat-label>
-              <mat-select
-                [(value)]="selectedVenue"
-                [(ngModel)]="selectedVenue"
-                [ngModelOptions]="{ standalone: true }"
-                (ngModelChange)="onChangeVenue($event)"
-              >
-                <mat-option *ngFor="let venue of venues" [value]="venue._id">
-                  {{ venue.nombre }}
-                </mat-option>
-                <mat-option *ngIf="venues?.length == 0" disabled>
-                  <i>No hay sedes disponibles</i>
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <!-- Oficina Select -->
-            <mat-form-field class="full-width">
-              <mat-label>Seleccionar oficina...</mat-label>
-              <mat-select
-                [(value)]="selectedOffice"
-                [(ngModel)]="selectedOffice"
-                [ngModelOptions]="{ standalone: true }"
-                (ngModelChange)="onChangeOffice($event)"
-              >
-                <mat-option
-                  *ngFor="let office of offices"
-                  [value]="office._id"
-                >
-                  Oficina Piso {{ office.piso }}
-                </mat-option>
-                <mat-option *ngIf="offices?.length == 0" disabled>
-                  <i>No hay oficinas disponibles</i>
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <!-- Sitio Select -->
-            <mat-form-field class="full-width">
-              <mat-label>Seleccionar sitio...</mat-label>
-              <mat-select
-                [(value)]="selectedSite"
-                [(ngModel)]="selectedSite"
-                [ngModelOptions]="{ standalone: true }"
-                (ngModelChange)="onChangeSite($event)"
-              >
-                <mat-option *ngFor="let site of sites" [value]="site._id">
-                  {{ site.nombre }}
-                </mat-option>
-                <mat-option *ngIf="sites?.length == 0" disabled>
-                  <i>No hay sitios disponibles</i>
-                </mat-option
-                >
-              </mat-select>
-            </mat-form-field>
-            <!-- <p><i>You selected: {{selectedSite}}</i></p> -->
-          </mat-card-content>
-
-          <mat-card-actions>
-            <button
-              [disabled]="!selectedSite"
-              (click)="onSubmit()"
-              mat-flat-button
-              class="btn-block mat-elevation-z6"
-              style="width: 35%;"
-            >
-              Generar
-            </button>
-          </mat-card-actions>
+<div class="component">
+    <div class="description">
+        <img src="../../../assets/images/homeImage.png">
+        <div class="description__content">
+            <p class="description__content--tittle">Bienvenido a Mundo Seti</p>
+            <p class="description__content--text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime, consequuntur assumenda</p>
+            <button mat-button (click)="scroll()" class="button">Continuar</button>
         </div>
+    </div>
+    <p #cardsHTML class="text">Lorem ipsum, dolor sit amet Maxime, consequuntur assumenda</p>
+    <div class="cards">
+        <mat-card *ngFor="let card of cards; index as i" matRipple matRippleCentered="centered" matRippleColor="#ce536285">
+            <img mat-card-image [src]="card.img">
+            <mat-card-content>
+                <mat-card-title>{{card.tittle}}</mat-card-title>
+                <p>{{card.description}}</p>
+            </mat-card-content>
+        </mat-card>
 
-        <div class="qr-container grid-item">
-          <div class="qr-info" *ngIf="showQrInfo">
-            <img src="../../../assets/images/Logo-seti.png" alt="logo seti" />
-            <p>{{ resultNameSites }} Entrada</p>
-          </div>
-
-          <qrcode
-            [scale]="1"
-            [margin]="1"
-            [qrdata]="qrHormiguero"
-            [width]="256"
-            [errorCorrectionLevel]="'M'"
-          ></qrcode>
-
-          <div class="qr-info" *ngIf="showQrInfo">
-            <img src="../../../assets/images/Logo-seti.png" alt="logo seti" />
-            <p>{{ resultNameSites }} Salida</p>
-          </div>
-
-          <qrcode
-            [scale]="1"
-            [margin]="1"
-            [qrdata]="qrHormigueroS"
-            [width]="256"
-            [errorCorrectionLevel]="'M'"
-          ></qrcode>
-        </div>
-
-        <span layout="row"><hr flex /></span>
-
-        <mat-card-header class="kit">
-          <mat-card-title>Kit</mat-card-title>
-          <mat-card-subtitle>
-            Generar código QR para entrega de kit de salud
-          </mat-card-subtitle>
-        </mat-card-header>
-
-        <mat-card-actions>
-          <button
-            type="button"
-            (click)="onSubmitKit()"
-            mat-flat-button
-            class="btn-block mat-elevation-z6"
-            style="width: 35%;"
-          >
-            Generar
-          </button>
-        </mat-card-actions>
-
-        <div class="qr-container grid-item">
-          <qrcode
-            style="margin: auto;"
-            [scale]="1"
-            [margin]="1"
-            [qrdata]="qrKit"
-            [width]="256"
-            [errorCorrectionLevel]="'M'"
-          ></qrcode>
-        </div>
-      </form>
-    </mat-card>
-  </div>
+    </div>
 </div>
-

@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
 const routes: Routes = [
-  { path: "", pathMatch: "full", redirectTo: "home" },
+  { path: '', pathMatch: 'full', redirectTo: 'home'},
   {
     path: "login",
     loadChildren: () =>
@@ -39,6 +39,10 @@ const routes: Routes = [
         (m) => m.ProfileOptionsModule
       ),
   },
+  { path: 'generateqr', loadChildren: () => import('./screens/generateqr/generateqr.module').then(m => m.GenerateqrModule) },
+  { path: 'adminprofiles', loadChildren: () => import('./screens/adminprofiles/adminprofiles.module').then(m => m.AdminprofilesModule) },
+  { path: 'error', loadChildren: () => import('./screens/error/error.module').then(m => m.ErrorModule) },
+  { path: '**', loadChildren: () => import('./screens/notfound/notfound.module').then(m => m.NotfoundModule) },
 ];
 
 @NgModule({
