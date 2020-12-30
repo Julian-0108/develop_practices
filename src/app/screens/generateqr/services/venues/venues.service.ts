@@ -1,12 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { API_URL } from 'src/environments/environment';
-
-const headers = new HttpHeaders({
-  'Content-Type': 'application/json',
-  'Access-Control-Allow-Origin': '*',
-});
 
 @Injectable({
   providedIn: 'root'
@@ -21,13 +16,13 @@ export class VenuesService {
   // GET Venues list from DB
   getVenueList() {
     let url = API_URL + '/venues';
-    return this.http.get(url, { headers });
+    return this.http.get(url);
   }
 
   // GET Venues by ID
   getVenueById(index: number) {
     let url = API_URL + '/venues';
-    return this.http.get(url, { headers, observe: 'response' }).pipe(map(resp => resp.body));
+    return this.http.get(url, { observe: 'response' }).pipe(map(resp => resp.body));
   }
 
 }
