@@ -15,31 +15,11 @@ import { AppComponent } from './app.component';
 
 import localeEsCo from '@angular/common/locales/es-CO';
 
-// Custom Imports
-import Rollbar from 'rollbar';
 import { SharedModule } from "./shared/shared.module";
 import { registerLocaleData } from '@angular/common';
 import { RequestInterceptor } from './helpers/interceptors/request.interceptor';
-import { ResponseInterceptor, RollbarService } from './helpers/interceptors/response.interceptor';
+import { ResponseInterceptor } from './helpers/interceptors/response.interceptor';
 
-const rollbarConfig = {
-  accessToken: 'c8aa20b1c1d441acb8ad79db3a4a3052',
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-};
-
-@Injectable()
-export class RollbarErrorHandler implements ErrorHandler {
-  constructor(@Inject(RollbarService) private rollbar: Rollbar) {}
-
-  handleError(err:any) : void {
-    this.rollbar.error(err.originalError || err);
-  }
-}
-
-export function rollbarFactory() {
-  return new Rollbar(rollbarConfig);
-}
 
 registerLocaleData(localeEsCo, 'es-CO');
 
@@ -63,14 +43,6 @@ registerLocaleData(localeEsCo, 'es-CO');
       provide: HTTP_INTERCEPTORS,
       useClass: ResponseInterceptor,
       multi: true
-    },
-    {
-      provide: ErrorHandler,
-      useClass: RollbarErrorHandler
-    },
-    {
-      provide: RollbarService,
-      useFactory: rollbarFactory
     },
     {
       provide: LOCALE_ID,
