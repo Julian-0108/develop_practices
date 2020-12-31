@@ -3,14 +3,15 @@ import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 
 // Components Imports
-import { ToolbarComponent } from "./toolbar/toolbar.component";
+import { ToolbarComponent } from "@shared/components/toolbar/toolbar.component";
 
 import { MaterialModule } from "./material/material.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
+import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
-  declarations: [ToolbarComponent],
+  declarations: [ToolbarComponent, NotificationComponent],
   imports: [CommonModule, RouterModule, MaterialModule],
   exports: [
     CommonModule,

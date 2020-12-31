@@ -28,7 +28,7 @@
               aria-label="row right">keyboard_arrow_right</mat-icon>
             {{profile.profile}}
           </button>
-          <div  fxLayout="row" fxLayoutAlign="start center">
+          <div [id]="profile.id" fxLayout="row" fxLayoutAlign="start center">
             <button type="button" class="panel__level-button" *ngFor="let level of profile.levels"
               mat-button>{{level}}</button>
           </div>
