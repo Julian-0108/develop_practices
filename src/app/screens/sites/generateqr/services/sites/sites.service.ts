@@ -1,12 +1,7 @@
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { API_URL } from 'src/environments/environment';
-
-const headers = new HttpHeaders({
-  'Content-Type': 'application/json',
-  'Access-Control-Allow-Origin': '*',
-});
 
 @Injectable({ providedIn: 'root' })
 
@@ -18,7 +13,7 @@ export class SitesService {
   getSiteList() {
     let url = API_URL + '/microsites';
     return this.http.get(
-      url, { headers, observe: 'response' }
+      url, { observe: 'response' }
     ).pipe(map(resp => resp.body));
   }
 
@@ -26,7 +21,7 @@ export class SitesService {
   getSitesByOfficeId(body: string) {
     const BODY = JSON.stringify({ "idOficina": body });
     let url = API_URL + "/microsites";
-    return this.http.post(url, BODY, { headers }).pipe(map(resp => resp));
+    return this.http.post(url, BODY).pipe(map(resp => resp));
   }
 
 }

@@ -1,47 +1,50 @@
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor,
+  HttpErrorResponse,
+} from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/screens/login/services/auth/auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 
 export class RequestInterceptor implements HttpInterceptor {
+  constructor(public auth: AuthService, private router: Router) {}
 
-  constructor(
-    public auth: AuthService,
-    private router: Router
-  ) { }
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
 
-  intercept(req: HttpRequest<any>, next: HttpHandler, ): Observable<HttpEvent<any>> {
+    const headersConfig: any = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    };
 
-    let authData = JSON.parse(localStorage.getItem('authData') || '{}')
-
-    let request = req;
+    const authData = JSON.parse(localStorage.getItem('authData') || '{}');
 
     if (authData) {
-      request = req.clone({
-        setHeaders: {
-          'access-token': `${authData.token}`
-        }
-      });
+      headersConfig['access-token'] = authData.token;
     }
+
+    const request = req.clone({ setHeaders: headersConfig });
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {
-
         if (err.status === 401) {
           this.router.navigateByUrl('/login');
         }
 
         return throwError(err);
-
       })
     );
-
   }
-
 }

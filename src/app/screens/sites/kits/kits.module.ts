@@ -6,7 +6,7 @@ import localeCo from '@angular/common/locales/es-CO';
 import { KitsRoutingModule } from './kits-routing.module';
 import { KitsComponent } from './kits.component';
 
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 
 registerLocaleData(localeCo, 'es-Co');
 
