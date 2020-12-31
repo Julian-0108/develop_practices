@@ -24,7 +24,7 @@
     ],
     "paths": {
       "@app/*":["src/app/*"],
-      "@helpers/*":["src/app/helpers/*"],
+      "@core/*":["src/app/core/*"],
       "@screens/*":["src/app/screens/*"],
       "@shared/*":["src/app/shared/*"],
       "@environments/*":["src/environments/*"],

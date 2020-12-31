@@ -48,10 +48,6 @@ export class LoginComponent implements OnInit {
   ifTokenExists() {
     if ('authData' in localStorage) {
       this.router.navigate(['/home'])
-      TOAST.fire({
-        icon: "info",
-        title: "Ya existe una sesión iniciada"
-      })
     }
   }
 
