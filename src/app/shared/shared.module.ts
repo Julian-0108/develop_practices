@@ -4,6 +4,7 @@ import { HttpClientModule } from "@angular/common/http";
 
 // Components Imports
 import { ToolbarComponent } from "@shared/components/toolbar/toolbar.component";
+import { FooterComponent } from './components/footer/footer.component';
 
 import { MaterialModule } from "./material/material.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -11,7 +12,7 @@ import { RouterModule } from "@angular/router";
 import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
-  declarations: [ToolbarComponent, NotificationComponent],
+  declarations: [ToolbarComponent, NotificationComponent, FooterComponent],
   imports: [CommonModule, RouterModule, MaterialModule],
   exports: [
     CommonModule,
@@ -21,6 +22,7 @@ import { NotificationComponent } from './components/notification/notification.co
     FormsModule,
     ToolbarComponent,
     MaterialModule,
+    FooterComponent,
   ],
   providers: [],
 })

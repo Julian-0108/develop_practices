@@ -8,7 +8,8 @@ import {
 } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+
 
 // Componentes Imports
 import { AppComponent } from './app.component';
@@ -51,7 +52,8 @@ registerLocaleData(localeEsCo, 'es-CO');
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule
   ],
   providers: [
     {
