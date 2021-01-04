@@ -9,7 +9,7 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class ProfileOptionsComponent implements OnInit {
   title = 'Equipos Base';
-  x;
+  x: any;
   cardClicked = '';
   description =
     'Lorem ipsum, dolor sit amet consectetur adipisicing elit.Maxime, consequuntur assumenda';
