@@ -7,6 +7,11 @@
             <button mat-button (click)="scroll()" class="button">Continuar</button>
         </div>
     </div>
+    <div #cardsHTML class="separator">
+        <div class="separator__circle"></div>
+        <div class="separator__circle"></div>
+        <div class="separator__circle"></div>
+    </div>
     <p #cardsHTML class="text">Lorem ipsum, dolor sit amet Maxime, consequuntur assumenda</p>
     <div class="cards">
         <mat-card *ngFor="let card of cards; index as i" matRipple matRippleCentered="centered" matRippleColor="#ce536285">
