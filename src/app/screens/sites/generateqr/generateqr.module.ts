@@ -5,7 +5,7 @@ import { GenerateqrComponent } from './generateqr.component';
 
 // Custom Imports
 import { QRCodeModule } from 'angularx-qrcode';
-import { AuthGuard } from 'src/app/helpers/guards/auth.guard';
+import { AuthGuard } from '@core/guards/auth.guard';
 
 import { SharedModule } from '@shared/shared.module';
 import { GenerateqrRoutingModule } from './generateqr-routing.module';

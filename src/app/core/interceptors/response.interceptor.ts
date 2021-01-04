@@ -1,4 +1,4 @@
-import { Injectable, Injector, InjectionToken } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   HttpEvent,
   HttpInterceptor,
@@ -10,7 +10,6 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
-import Rollbar from 'rollbar';
 
 
 const TOAST = Swal.mixin({
@@ -26,15 +25,13 @@ const TOAST = Swal.mixin({
   }
 });
 
-export const RollbarService = new InjectionToken<Rollbar>('rollbar');
-
 @Injectable({
   providedIn: 'root'
 })
 
 export class ResponseInterceptor implements HttpInterceptor {
 
-  constructor(private injector: Injector) {}
+  constructor() {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request)
@@ -42,7 +39,6 @@ export class ResponseInterceptor implements HttpInterceptor {
         retry(1),
         catchError((error: HttpErrorResponse) => {
 
-          const rollbar = this.injector.get(RollbarService);
           let errorMessage = '';
           if (error.error instanceof ErrorEvent) {
             // client-side error
@@ -59,7 +55,6 @@ export class ResponseInterceptor implements HttpInterceptor {
               title: `${errorMessage}`
             });
           }
-          rollbar.error(error)
           return throwError(errorMessage);
         })
       )

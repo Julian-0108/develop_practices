@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClientModule } from "@angular/common/http";
 
 // Components Imports
@@ -24,6 +24,8 @@ import { NotificationComponent } from './components/notification/notification.co
     MaterialModule,
     FooterComponent,
   ],
-  providers: [],
+  providers: [
+    DatePipe
+  ],
 })
 export class SharedModule {}
