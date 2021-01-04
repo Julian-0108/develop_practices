@@ -1,0 +1,40 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.title {
+    color: var(--primary-color);
+    font-size: 39px;
+    line-height: 52px;
+    text-align: center;
+    margin: 15px 0;
+}
+
+.subtitle {
+    color: #929292;
+    font-size: 26;
+    line-height: 35;
+    margin: 15px 0;
+}
+
+.main {
+    width: 100%;
+}
+
+table {
+    width: 100%;
+}
+
+.botones {
+    display: flex;
+    justify-content: space-between;
+}
+
+mat-form-field {
+    margin: 0 8px 8px 0;
+}
+button {
+    margin: 0 8px 8px 0;
+}

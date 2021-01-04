@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { AdminMasterInfoModule } from './screens/profiles/admin-master-info/admin-master-info.module';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home'},
@@ -40,7 +41,8 @@ const routes: Routes = [
       ),
   },
   { path: 'generateqr', loadChildren: () => import('./screens/sites/generateqr/generateqr.module').then(m => m.GenerateqrModule) },
-  { path: 'adminprofiles', loadChildren: () => import('./screens/profiles/adminprofiles/adminprofiles.module').then(m => m.AdminprofilesModule) },
+  { path: 'admin-profiles', loadChildren: () => import('./screens/profiles/adminprofiles/adminprofiles.module').then(m => m.AdminprofilesModule) },
+  { path: 'master-info', loadChildren: () => import('./screens/profiles/admin-master-info/admin-master-info.module').then(m => m.AdminMasterInfoModule) },
   { path: 'error', loadChildren: () => import('./screens/error/error.module').then(m => m.ErrorModule) },
   { path: '**', loadChildren: () => import('./screens/notfound/notfound.module').then(m => m.NotfoundModule) },
 ];
