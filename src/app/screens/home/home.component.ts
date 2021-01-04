@@ -10,28 +10,22 @@ export class HomeComponent implements OnInit {
   @ViewChild('cardsHTML') cardsHTML : ElementRef | undefined;
   public cards: any;
 
-  constructor() { 
-    this.cards = [
-      {
-        img: '../../../assets/images/Grupo 361.png',
-        tittle: 'Sitios Seti',
-        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime, consequuntur assumenda'
-      },
-      {
-        img: '../../../assets/images/Grupo 362.png',
-        tittle: 'Perfilamiento',
-        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime, consequuntur assumenda'
-      }
-    ];
-  }
+  constructor(private homeService: HomeService) {}
 
   ngOnInit(): void {
+    this.getModules();
+  }
 
+  getModules(): void {
+    this.homeService.getModules()
+    .then( res => {
+      this.cards = res;
+    })
+    .catch(err => console.log(err))
   }
 
   scroll(){
     this.cardsHTML?.nativeElement.scrollIntoView({behavior:'smooth'});
-    /*document.getElementById('cards')?.scrollIntoView({behavior:'smooth'});*/
   }
 
 
