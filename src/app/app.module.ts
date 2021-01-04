@@ -6,6 +6,7 @@ import {
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
 // Componentes Imports
 import { AppComponent } from './app.component';
 
@@ -28,7 +29,7 @@ registerLocaleData(localeEsCo, 'es-CO');
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
     {

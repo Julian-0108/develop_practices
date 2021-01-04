@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { version } from "../../../../package.json";
+import { version } from "../../../../../package.json";
 
 @Component({
   selector: 'app-toolbar',
