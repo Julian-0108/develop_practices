@@ -8,6 +8,7 @@ export interface Master {
   description: number;
   type?: string;
   status: boolean;
+  url?: string;
   createdAt?: string;
   updatedAt?: string;
 }
