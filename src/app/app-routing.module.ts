@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { AdminMasterInfoModule } from './screens/profiles/admin-master-info/admin-master-info.module';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home'},
