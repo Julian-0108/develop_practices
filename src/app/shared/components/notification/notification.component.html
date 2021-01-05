@@ -1,1 +1,7 @@
-<p>notification works!</p>
+<div fxLayout="row" fxLayoutAlign="space-between start" >{{data.title}}
+  <button (click)="matSnackBarRef.dismiss()" mat-icon-button aria-label="close button">
+    <mat-icon>clear</mat-icon>
+  </button>
+  </div>
+<div>{{data.message}}</div>
+<!-- <button (click)="matSnackBarRef.dismiss()">{{data.action}}</button> -->

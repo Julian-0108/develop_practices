@@ -2,6 +2,7 @@
   <button *ngIf="showBackButton" class="button-back__button" (click)="onClickbuttonBack()" mat-icon-button aria-label="back button">
     <mat-icon class="button-back__icon" svgIcon="arrow_back"></mat-icon>
   </button>
+  <!-- <button (click)="ejemplo()">ejemplo</button> -->
   <div class="container" [ngStyle]="{'padding': showBackButton ? '0 0 0' : '3em 0 0'}">
     <h1 class="title">{{title}}</h1>
     <h3 class="subtitle">{{description}}</h3>
