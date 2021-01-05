@@ -1,0 +1,52 @@
+* {
+    box-sizing: border-box;
+}
+
+.component {
+    width: 100%;
+    padding: 2em 2em 4em 2em;
+}
+
+.head {
+    width: 100%;
+    display: flex;
+}
+
+.head__button {
+    background-color: transparent;
+    box-shadow: none;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.icon {
+    font-weight: 800;
+}
+
+.head__text {
+    margin: auto;
+}
+
+.head__text--tittle {
+    font-size: 2em;
+    font-weight: 600;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+.head__text--subtitle {
+    font-size: 1.8em;
+    font-weight: 500;
+    color: #bebebe;
+    text-align: center;
+}
+
+table {
+    margin: auto;
+    width: 100%;
+}
+
+.btn-add {
+    display: block;
+    margin-left: auto;
+}
