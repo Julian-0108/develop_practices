@@ -7,7 +7,7 @@
     <h3 class="subtitle">{{description}}</h3>
   </div>
 
-  <div fxLayout="row wrap" fxLayoutAlign="center center">
+  <div class="card__container" fxLayout="row wrap" fxLayoutAlign="center center">
     <mat-card [ngClass]="{'card--open': cardClicked === item.id && !item.sections}" (click)="onCardClicked(item)" fxLayout="column"
       fxLayoutAlign="start center" class="card" *ngFor="let item of items">
       <h1 class="card__title">{{item.title}}</h1>

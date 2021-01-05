@@ -35,12 +35,12 @@ body {
     background-color: #555;
 }
 
-// .button-back__button {
-//   width: 50em;
-//   height: 50em;
-// }
-
 .button-back__icon {
   transform: scale(2);
   padding: 1em 2em 0;
+}
+
+/* Mat buttons */
+mat-form-field {
+    width: 100%;
 }

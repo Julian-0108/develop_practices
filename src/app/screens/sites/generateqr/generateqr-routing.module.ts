@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { GenerateqrComponent } from './generateqr.component';
-import { AuthGuard } from 'src/app/helpers/guards/auth.guard';
+import { AuthGuard } from '@core/guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: GenerateqrComponent, canActivate: [AuthGuard] }

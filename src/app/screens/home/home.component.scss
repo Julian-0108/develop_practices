@@ -1,7 +1,9 @@
 .component {
-    background-image: url('../../../assets/images/fondo-bicubic.png');
+    background-image: url('../../../assets/images/background_home.svg') ;
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-position: center;
+    background-size: cover;
+    height: calc(100% - (45px + 30px));
 }
 
 .description {
@@ -51,6 +53,20 @@
     border-radius: 20px;
 }
 
+.separator {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.separator__circle {
+    width: 1em;
+    height: 1em;
+    border-radius: 100%;
+    background-color: #de1920;
+    margin: 0 1em;
+}
+
 .cards {
     display: flex;
     justify-content: center;
@@ -70,14 +86,18 @@
 
 mat-card {
     margin: 1em;
-    width: 15em;
+    width: 17em;
+    min-height: 25em;
     background-color: #ffffff;
     border-radius: 38px;
-    box-shadow: 0 3px 6px 0 #00000029 !important;
+    box-shadow: 3px 6px 12px 3px #00000029 !important;
     cursor: pointer;
 }
 
 mat-card img {
+    display: block;
+    margin: auto;
+    width: 15em;
     height: 15em;
 }
 
@@ -87,7 +107,7 @@ mat-card:hover {
 }
 
 mat-card-title {
-    margin: 1em 0;
+    margin: 1em 0 !important;
     color: #de1920;
     text-align: center;
 }

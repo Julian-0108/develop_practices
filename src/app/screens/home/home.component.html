@@ -7,15 +7,20 @@
             <button mat-button (click)="scroll()" class="button">Continuar</button>
         </div>
     </div>
-    <p #cardsHTML class="text">Lorem ipsum, dolor sit amet Maxime, consequuntur assumenda</p>
+    <div #cardsHTML class="separator">
+        <div class="separator__circle"></div>
+        <div class="separator__circle"></div>
+        <div class="separator__circle"></div>
+    </div>
     <div class="cards">
-        <mat-card *ngFor="let card of cards; index as i" matRipple matRippleCentered="centered" matRippleColor="#ce536285">
-            <img mat-card-image [src]="card.img">
-            <mat-card-content>
-                <mat-card-title>{{card.tittle}}</mat-card-title>
-                <p>{{card.description}}</p>
-            </mat-card-content>
-        </mat-card>
-
+        <ng-container *ngFor="let card of cards">
+            <mat-card [routerLink]="card.url" *ngIf="card.status" matRipple matRippleCentered="centered" matRippleColor="#ce536285">
+                <img mat-card-image src="../../../assets/images/Grupo 362.png">
+                <mat-card-content>
+                    <mat-card-title>{{card.name}}</mat-card-title>
+                    <p>{{card.description}}</p>
+                </mat-card-content>
+            </mat-card>
+        </ng-container>
     </div>
 </div>

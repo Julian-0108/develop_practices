@@ -1,0 +1,85 @@
+<h2 mat-mat-dialog-title> {{ data?.title }}</h2>
+<mat-dialog-content>
+    <form [formGroup]="form" novalidate>
+        <div fxLayout="row" fxLayoutGap="5px">
+            <div fxFlex="30">
+                <mat-form-field appearance="outline">
+                    <mat-label>Nombre</mat-label>
+                    <input
+                        matInput
+                        type="text"
+                        formControlName="name"
+                        placeholder="Nombre"
+                    >
+                <mat-error>Campo obligatorio</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="70">
+                <mat-form-field appearance="outline">
+                    <mat-label>Descripción</mat-label>
+                    <input
+                        matInput
+                        formControlName="description"
+                        placeholder="Descripción"
+                    >
+                    <mat-error>Campo obligatorio</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px">
+            <div fxFlex="22">
+                <mat-form-field appearance="outline">
+                    <mat-label>Fecha de creación</mat-label>
+                    <input
+                        matInput
+                        type="date"
+                        formControlName="createdAt"
+                        placeholder="Fecha de creación"
+                        readonly
+                    >
+                </mat-form-field>
+            </div>
+            <div fxFlex="22">
+                <mat-form-field appearance="outline">
+                    <mat-label>Fecha de modificación</mat-label>
+                    <input
+                        matInput
+                        type="date"
+                        formControlName="updatedAt"
+                        placeholder="Fecha de modificación"
+                        readonly
+                    >
+                </mat-form-field>
+            </div>
+            <div fxFlex="25">
+                <mat-form-field appearance="outline">
+                    <mat-label>Tipo</mat-label>
+                    <input
+                        matInput
+                        type="text"
+                        formControlName="type"
+                        placeholder="Tipo"
+                    >
+                    <mat-error>Campo obligatorio</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="25">
+                <mat-form-field appearance="outline">
+                    <mat-label>Estado</mat-label>
+                    <input
+                        matInput
+                        type="text"
+                        formControlName="status"
+                        placeholder="Estado"
+                    >
+                    <mat-error>Campo obligatorio</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onClose()">Cancelar</button>
+    <button mat-button (click)="onSubmit()">Guardar</button>
+</mat-dialog-actions>
