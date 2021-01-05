@@ -1,35 +1,40 @@
-
 <body class="background">
-  <div class="container">
+  <button *ngIf="showBackButton" class="button-back__button" (click)="onClickbuttonBack()" mat-icon-button aria-label="back button">
+    <mat-icon class="button-back__icon" svgIcon="arrow_back"></mat-icon>
+  </button>
+  <div class="container" [ngStyle]="{'padding': showBackButton ? '0 0 0' : '3em 0 0'}">
     <h1 class="title">{{title}}</h1>
     <h3 class="subtitle">{{description}}</h3>
   </div>
 
   <div fxLayout="row wrap" fxLayoutAlign="center center">
-    <mat-card [ngClass]="{'card--open': cardClicked === item.id}" (click)="cardClicked = item.id" fxLayout="column"
+    <mat-card [ngClass]="{'card--open': cardClicked === item.id && !item.sections}" (click)="onCardClicked(item)" fxLayout="column"
       fxLayoutAlign="start center" class="card" *ngFor="let item of items">
       <h1 class="card__title">{{item.title}}</h1>
 
       <div *ngIf="cardClicked === item.id" class="option__container" fxLayout="column" fxLayoutAlign="start start">
+
         <div *ngFor="let profile of item.content">
-          <button (click)="x = profile.id" [id]="profile.id" class="option" mat-button>
+          <button (click)="optionClicked = profile.id" [id]="profile.id" class="option" mat-button>
             <ng-container *ngIf="profile.levels.length !== 0">
-              <mat-icon [ngStyle]="{'display': x !== profile.id ? 'none' : 'inline'}" aria-hidden="false"
+              <mat-icon [ngStyle]="{'display': optionClicked !== profile.id ? 'none' : 'inline'}" aria-hidden="false"
                 class="option__icon" aria-label="row down">keyboard_arrow_down</mat-icon>
-              <mat-icon [ngStyle]="{'display': x === profile.id ? 'none' : 'inline'}" aria-hidden="false"
+              <mat-icon [ngStyle]="{'display': optionClicked === profile.id ? 'none' : 'inline'}" aria-hidden="false"
                 class="option__icon" aria-label="row right">keyboard_arrow_right</mat-icon>
             </ng-container>
             {{profile.profile}}
           </button>
-          <div class="pannel__level-buttons" *ngIf="x === profile.id" fxLayout="row" fxLayoutAlign="start center">
+          <div class="pannel__level-buttons" *ngIf="optionClicked === profile.id" fxLayout="row"
+            fxLayoutAlign="start center">
             <button type="button" class="panel__level-button" *ngFor="let level of profile.levels"
               mat-button>{{level}}</button>
           </div>
         </div>
       </div>
 
-
-      <img [ngClass]="{'card__image--open': cardClicked === item.id}" class="card__image" [src]="item.image" alt="">
+      <img [ngClass]="{'card__image--open': cardClicked === item.id && !item.sections}" class="card__image"
+        [src]="item.image || item.sections.image" alt="">
     </mat-card>
   </div>
+
 </body>
