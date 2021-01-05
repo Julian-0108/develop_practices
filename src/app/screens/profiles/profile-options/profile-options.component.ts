@@ -194,8 +194,10 @@ export class ProfileOptionsComponent implements OnInit {
 
   ejemplo() {
     const option = {
+      title: 'Error',
       message: 'ejemplo',
       action: 'aceptar',
+      type:'error'
     };
     this.notificationService
       .openSnackBar(option)
