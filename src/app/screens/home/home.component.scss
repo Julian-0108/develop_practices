@@ -1,7 +1,9 @@
 .component {
-    background-image: url('../../../assets/images/fondo-bicubic.png');
+    background-image: url('../../../assets/images/background_home.svg') ;
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-position: center;
+    background-size: cover;
+    height: calc(100% - (45px + 30px));
 }
 
 .description {
