@@ -16,4 +16,12 @@ export class MasterInfoService {
       .pipe( pluck('payload') )
       .toPromise();
   }
+
+  addRegisterToMaster(url: string, register: Master) {
+    return this.http.post(`${environment.API_MUNDO_SETI}/${url}`, register).toPromise();
+  }
+
+  updateRegisterToMaster(url: string, register: Master) {
+    return this.http.put(`${environment.API_MUNDO_SETI}/${url}/${register._id}`, register).toPromise();
+  }
 }

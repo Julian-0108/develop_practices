@@ -1,5 +1,5 @@
 .component {
-    background-image: url('../../../assets/images/background_home.svg') ;
+    background-image: url('../../../assets/images/background_home.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -58,6 +58,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    padding-top: 3em;
 }
 
 .separator__circle {
@@ -73,7 +74,8 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    min-height: 80vh;
+    min-height: 70vh;
+    padding-bottom: 3em;
 }
 
 .text {
@@ -116,4 +118,40 @@ mat-card-title {
 mat-card-content p {
     color: #707070;
     text-align: center;
+}
+
+@media screen and (min-width: 1450px) {
+    .description__content--tittle {
+        font-size: 5em;
+    }
+    .description__content--text {
+        font-size: 3em;
+    }
+    .button {
+        font-size: 1.8em;
+        padding: .5em 1.5em;
+        border-radius: 40px;
+    }
+    .text {
+        max-width: 1000px;
+        font-size: 2.5em;
+    }
+    .separator__circle {
+        width: 1.5em;
+        height: 1.5em;
+    }
+    mat-card {
+        width: 23em;
+        min-height: 35em;
+    }
+    mat-card img {
+        width: 20em;
+        height: 20em;
+    }
+    mat-card-title {
+        font-size: 2em;
+    }
+    mat-card-content p {
+        font-size: 1.5em;
+    }
 }
