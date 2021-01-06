@@ -5,6 +5,8 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { NotificationComponent } from '../notification.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmComponent } from '../confirm/confirm.component';
 
 interface SnackOptionsInterface {
   title: string;
@@ -18,63 +20,54 @@ interface SnackOptionsInterface {
   providedIn: 'root',
 })
 export class NotificationService {
-  constructor(private _snackBar: MatSnackBar) {}
+  constructor(private _snackBar: MatSnackBar,private _dialog: MatDialog) {}
 
-  openSimpleSnackBar(options: SnackOptionsInterface) {
-    let icon = options.type;
-    switch (icon) {
-      case 'success': {
-        icon = 'check_circle'
-        break;
-      }
-      case 'info': {
-        icon = 'notification_important'
-        break;
-      }
-      default: {
-        break;
-      }
-    }
+  /**
+   * @param params Este parámetro contiene los datos que definirán cómo se ve
+   * el snack y el contenido que tendrá (título, descripción).
+   * los tipos permitidos para el parámetro 'type' son:
+   * error
+   * success
+   * warning
+   * info
+   */
+
+  openSimpleSnackBar(params: SnackOptionsInterface) {
+    const icon = this.iconCondition(params);
     return this._snackBar.openFromComponent(NotificationComponent, {
       data: {
-        title: options.title,
-        message: options.message,
-        type: options.type,
-        icon
+        title: params.title,
+        message: params.message,
+        type: params.type,
+        icon,
       },
       duration: 3000,
-      horizontalPosition: options.horizontalPosition || 'right',
-      verticalPosition: options.verticalPosition || 'top',
-      panelClass: options.type,
+      horizontalPosition: params.horizontalPosition || 'right',
+      verticalPosition: params.verticalPosition || 'top',
+      panelClass: params.type,
     });
   }
-  openComplexSnackBar(options: SnackOptionsInterface) {
-    let icon = options.type;
-    switch (icon) {
-      case 'success': {
-        icon = 'check_circle'
-        break;
-      }
-      case 'info': {
-        icon = 'notification_important'
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-    return this._snackBar.openFromComponent(NotificationComponent, {
+  openComplexSnackBar(params: SnackOptionsInterface) {
+    const icon = this.iconCondition(params);
+    return this._dialog.open(ConfirmComponent, {
       data: {
-        title: options.title,
-        message: options.message,
-        action: options.action || 'cerrar',
-        type: options.type,
-        icon
+        title: params.title,
+        message: params.message,
+        type: params.type,
+        action: params.action,
+        icon,
       },
-      duration: 3000,
-      horizontalPosition: options.horizontalPosition || 'right',
-      verticalPosition: options.verticalPosition || 'top',
-      panelClass: options.type,
+      autoFocus: false
     });
+  }
+  iconCondition(params:SnackOptionsInterface){
+    let icon = params.type;
+    if (icon === 'success') {
+      icon = 'check_circle';
+    }
+    else if (icon === 'info') {
+      icon = 'notification_important';
+    }
+    return icon
   }
 }

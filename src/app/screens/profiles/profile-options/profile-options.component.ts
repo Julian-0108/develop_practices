@@ -198,20 +198,22 @@ export class ProfileOptionsComponent implements OnInit {
       message: 'Error message',
       type: 'success',
     };
-    this.notificationService.openSimpleSnackBar(option);
+    this.notificationService.openSimpleSnackBar(option).afterDismissed()
+    .subscribe(() => {
+      console.log('Alguna acción');
+    });;
   }
   error() {
     const option = {
-      title: 'Error',
-      message: 'Error message',
-      type: 'error',
+      title: 'Titulo del mensaje',
+      message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit',
+      type: 'info',
+      action: 'Confirmar'
     };
     this.notificationService
-      .openSimpleSnackBar(option)
-      .afterDismissed()
-      .subscribe(() => {
-        console.log('Alguna acción');
-      });
+      .openComplexSnackBar(option).afterClosed().subscribe((resp) => {
+        console.log(resp);
+      })
   }
   warning() {
     const option = {
