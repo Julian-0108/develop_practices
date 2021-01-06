@@ -36,15 +36,32 @@ body {
     background-color: #555;
 }
 
+.screen {
+    background-color: white;
+}
+
 .button-back__icon {
   transform: scale(2);
   padding: 1em 2em 0;
 }
 
-/* Mat buttons */
+/* Mat Form Field */
 mat-form-field {
     width: 100%;
 }
+
+
+/* Mat Toggle */
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+    background-color:  #d86266 !important;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background-color: var(--primary-color) !important;
+}
+
+/* Buttons */
 
 .main-button {
     background-color: var(--primary-color) !important;
@@ -59,6 +76,7 @@ mat-form-field {
     border-radius: 20px !important;
     padding: 0 2em !important;
 }
+
 .error.mat-snack-bar-container {
   background-color: #F5DDD6;
     border-left-style: solid;
