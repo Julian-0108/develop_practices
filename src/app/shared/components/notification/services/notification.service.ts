@@ -6,10 +6,10 @@ import {
 } from '@angular/material/snack-bar';
 import { NotificationComponent } from '../notification.component';
 
-interface snackOptionsInterface {
+interface SnackOptionsInterface {
   title: string;
   message: string;
-  type:string;
+  type: string;
   action?: string;
   horizontalPosition?: MatSnackBarHorizontalPosition;
   verticalPosition?: MatSnackBarVerticalPosition;
@@ -20,19 +20,61 @@ interface snackOptionsInterface {
 export class NotificationService {
   constructor(private _snackBar: MatSnackBar) {}
 
-  openSnackBar(options: snackOptionsInterface) {
+  openSimpleSnackBar(options: SnackOptionsInterface) {
+    let icon = options.type;
+    switch (icon) {
+      case 'success': {
+        icon = 'check_circle'
+        break;
+      }
+      case 'info': {
+        icon = 'notification_important'
+        break;
+      }
+      default: {
+        break;
+      }
+    }
     return this._snackBar.openFromComponent(NotificationComponent, {
       data: {
         title: options.title,
         message: options.message,
-        action: options.action || '',
-        type: options.type
+        type: options.type,
+        icon
       },
-      duration: 500000000000000,
+      duration: 3000,
       horizontalPosition: options.horizontalPosition || 'right',
       verticalPosition: options.verticalPosition || 'top',
-      panelClass: options.type
+      panelClass: options.type,
     });
-    // options.message, options.action || '',
+  }
+  openComplexSnackBar(options: SnackOptionsInterface) {
+    let icon = options.type;
+    switch (icon) {
+      case 'success': {
+        icon = 'check_circle'
+        break;
+      }
+      case 'info': {
+        icon = 'notification_important'
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    return this._snackBar.openFromComponent(NotificationComponent, {
+      data: {
+        title: options.title,
+        message: options.message,
+        action: options.action || 'cerrar',
+        type: options.type,
+        icon
+      },
+      duration: 3000,
+      horizontalPosition: options.horizontalPosition || 'right',
+      verticalPosition: options.verticalPosition || 'top',
+      panelClass: options.type,
+    });
   }
 }

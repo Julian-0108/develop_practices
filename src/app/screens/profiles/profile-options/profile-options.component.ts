@@ -188,22 +188,45 @@ export class ProfileOptionsComponent implements OnInit {
   }
 
   onClickbuttonBack() {
-    this.items = this.itemsOld
-    this.showBackButton = false ;
+    this.items = this.itemsOld;
+    this.showBackButton = false;
   }
 
-  ejemplo() {
+  success() {
+    const option = {
+      title: 'Success',
+      message: 'Error message',
+      type: 'success',
+    };
+    this.notificationService.openSimpleSnackBar(option);
+  }
+  error() {
     const option = {
       title: 'Error',
-      message: 'ejemplo',
-      action: 'aceptar',
-      type:'error'
+      message: 'Error message',
+      type: 'error',
     };
     this.notificationService
-      .openSnackBar(option)
+      .openSimpleSnackBar(option)
       .afterDismissed()
       .subscribe(() => {
-        console.log('hola');
+        console.log('Alguna acción');
       });
+  }
+  warning() {
+    const option = {
+      title: 'Warning',
+      message: 'Error message',
+      type: 'warning',
+    };
+    this.notificationService.openSimpleSnackBar(option);
+  }
+  info() {
+    const option = {
+      title: 'Info',
+      message: 'Error message',
+      type: 'info',
+    };
+    this.notificationService.openSimpleSnackBar(option);
   }
 }
