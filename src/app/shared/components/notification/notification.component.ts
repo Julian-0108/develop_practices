@@ -11,11 +11,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class NotificationComponent implements OnInit {
   constructor(
     @Inject(MAT_SNACK_BAR_DATA) public data: any,
-    public matSnackBarRef: MatSnackBarRef<NotificationComponent>,
-
-  ) {
-
-  }
+    public matSnackBarRef: MatSnackBarRef<NotificationComponent>
+  ) {}
 
   ngOnInit(): void {}
 }
