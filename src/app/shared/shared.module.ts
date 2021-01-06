@@ -10,9 +10,10 @@ import { MaterialModule } from "./material/material.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { NotificationComponent } from './components/notification/notification.component';
+import { ConfirmComponent } from './components/notification/confirm/confirm.component';
 
 @NgModule({
-  declarations: [ToolbarComponent, NotificationComponent, FooterComponent],
+  declarations: [ToolbarComponent, NotificationComponent, FooterComponent, ConfirmComponent],
   imports: [CommonModule, RouterModule, MaterialModule],
   exports: [
     CommonModule,

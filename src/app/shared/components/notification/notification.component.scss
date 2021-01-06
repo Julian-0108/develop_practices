@@ -1,1 +1,15 @@
 
+.snack__title {
+  font-size: 15px;
+  margin: 0;
+  font-weight: 500;
+}
+.snack__subtitle {
+  font-size: 12px;
+  margin: 0;
+}
+.snack__content {
+  position: absolute;
+  top: 1em;
+  display: flex;
+}

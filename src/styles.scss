@@ -10,30 +10,30 @@
 }
 
 body {
-    padding: 0;
-    margin: 0;
-    height: 100%;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    background-color: rgb(243, 243, 243);
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: rgb(243, 243, 243);
 }
 
 ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
-    border-radius: 10px;
-    background-color: #f5f5f5;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  background-color: #f5f5f5;
 }
 
 ::-webkit-scrollbar {
-    width: 6px;
-    background-color: #f5f5f5;
+  width: 6px;
+  background-color: #f5f5f5;
 }
 
 ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #555;
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #555;
 }
 
 .screen {
@@ -47,7 +47,30 @@ body {
 
 /* Mat Form Field */
 mat-form-field {
-    width: 100%;
+  width: 100%;
+}
+
+.mat-snack-bar-container {
+  height: 5em;
+  border-left-style: solid;
+  border-width: 6px;
+}
+
+.snack__button.mat-icon-button {
+  width: 24px;
+  height: 24px;
+}
+
+.snack__icon {
+  margin-right: 0.5em;
+}
+
+.snack__close-icon {
+  font-weight: bold;
+  position: absolute;
+  font-size: 16px;
+  left: 18em;
+  bottom: 8px;
 }
 
 
@@ -79,7 +102,61 @@ mat-form-field {
 
 .error.mat-snack-bar-container {
   background-color: #F5DDD6;
-    border-left-style: solid;
-    border-width: 6px;
-    border-color: #DE8C75;
+  border-color: #DE8C75;
 }
+.success.mat-snack-bar-container {
+  background-color: #deeadf;
+  border-color: #81c784;
+}
+.warning.mat-snack-bar-container {
+  background-color: #f5e8d3;
+  border-color: #ffb84b;
+}
+.info.mat-snack-bar-container {
+  background-color: #d8e6f1;
+  border-color: #62aeee;
+}
+
+.snack__close-icon--error {
+  color: #DE8C75;
+}
+.snack__close-icon--success {
+  color: #81c784;
+}
+.snack__close-icon--warning {
+  color: #ffb84b;
+}
+.snack__close-icon--info {
+  color: #62aeee;
+}
+
+.snack__icon--error {
+  color: #DE8C75;
+}
+.snack__icon--success {
+  color: #81c784;
+}
+.snack__icon--warning {
+  color: #ffb84b;
+}
+.snack__icon--info {
+  color: #62aeee;
+}
+
+.snack__title--error,
+.snack__subtitle--error {
+  color: #918581;
+}
+.snack__title--success,
+.snack__subtitle--success {
+  color: #737974;
+}
+.snack__title--warning,
+.snack__subtitle--warning {
+  color: #867f75;
+}
+.snack__title--info,
+.snack__subtitle--info {
+  color: #80888e;
+}
+

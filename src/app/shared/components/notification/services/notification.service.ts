@@ -5,11 +5,13 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { NotificationComponent } from '../notification.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmComponent } from '../confirm/confirm.component';
 
-interface snackOptionsInterface {
+interface SnackOptionsInterface {
   title: string;
   message: string;
-  type:string;
+  type: string;
   action?: string;
   horizontalPosition?: MatSnackBarHorizontalPosition;
   verticalPosition?: MatSnackBarVerticalPosition;
@@ -18,21 +20,54 @@ interface snackOptionsInterface {
   providedIn: 'root',
 })
 export class NotificationService {
-  constructor(private _snackBar: MatSnackBar) {}
+  constructor(private _snackBar: MatSnackBar,private _dialog: MatDialog) {}
 
-  openSnackBar(options: snackOptionsInterface) {
+  /**
+   * @param params Este parámetro contiene los datos que definirán cómo se ve
+   * el snack y el contenido que tendrá (título, descripción).
+   * los tipos permitidos para el parámetro 'type' son:
+   * error
+   * success
+   * warning
+   * info
+   */
+
+  openSimpleSnackBar(params: SnackOptionsInterface) {
+    const icon = this.iconCondition(params);
     return this._snackBar.openFromComponent(NotificationComponent, {
       data: {
-        title: options.title,
-        message: options.message,
-        action: options.action || '',
-        type: options.type
+        title: params.title,
+        message: params.message,
+        type: params.type,
+        icon,
       },
-      duration: 500000000000000,
-      horizontalPosition: options.horizontalPosition || 'right',
-      verticalPosition: options.verticalPosition || 'top',
-      panelClass: options.type
+      duration: 3000,
+      horizontalPosition: params.horizontalPosition || 'right',
+      verticalPosition: params.verticalPosition || 'top',
+      panelClass: params.type,
     });
-    // options.message, options.action || '',
+  }
+  openComplexSnackBar(params: SnackOptionsInterface) {
+    const icon = this.iconCondition(params);
+    return this._dialog.open(ConfirmComponent, {
+      data: {
+        title: params.title,
+        message: params.message,
+        type: params.type,
+        action: params.action,
+        icon,
+      },
+      autoFocus: false
+    });
+  }
+  iconCondition(params:SnackOptionsInterface){
+    let icon = params.type;
+    if (icon === 'success') {
+      icon = 'check_circle';
+    }
+    else if (icon === 'info') {
+      icon = 'notification_important';
+    }
+    return icon
   }
 }
