@@ -38,3 +38,11 @@ mat-form-field {
 button {
     margin: 0 8px 8px 0;
 }
+
+
+.main-button {
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 20px;
+    padding: 0 2em;
+}

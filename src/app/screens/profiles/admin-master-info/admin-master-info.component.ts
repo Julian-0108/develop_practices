@@ -1,9 +1,10 @@
-import { Component, OnInit } from "@angular/core";
-import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 import { MasterInfoService } from "./services/master-info.service";
 import { Master } from "./interfaces/master.interface";
 import { MasterInfoComponent } from "./master-info/master-info.component";
 import { Title } from "@angular/platform-browser";
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: "app-admin-master-info",
@@ -11,6 +12,7 @@ import { Title } from "@angular/platform-browser";
   styleUrls: ["./admin-master-info.component.scss"],
 })
 export class AdminMasterInfoComponent implements OnInit {
+
   public readonly displayedColumns: string[] = [
     "name",
     "description",
@@ -20,17 +22,20 @@ export class AdminMasterInfoComponent implements OnInit {
     "updatedAt",
     "actions",
   ];
+
   public readonly masters = [
     { name: "Equipos base", url: "/base-teams-categories" },
     { name: "Cursos y certificaciones", url: "courses-certifications" },
     { name: "Habilidades", url: "skills" },
     { name: "Funciones", url: "function" },
-    { name: "Modelos", url: "module" },
+    { name: "Módulos", url: "module" },
     { name: "Conocimientos especificos", url: "specific-knowledge" },
+    { name: "Nivel educativo", url: "study" },
     { name: "Herramientas de trabajo", url: "work-tool" },
   ];
+
   public masterSeleted!: string;
-  dataSource: Master[] = [];
+  dataSource!: MatTableDataSource<Master>;
   constructor(
     private title: Title,
     private masterInfoService: MasterInfoService,
@@ -44,9 +49,24 @@ export class AdminMasterInfoComponent implements OnInit {
   getDataMaster() {
     this.masterInfoService
       .getData(this.masterSeleted)
-      .then((res) => (this.dataSource = res));
+      .then((res) => (this.dataSource =  new MatTableDataSource(res)));
   }
+
+
+  addRegisterToMatTable(element: any) {
+    this.dataSource.data = [element, ...this.dataSource.data];
+  }
+
+  updateRegisterToMatTable(element: Master) {
+    const index = this.dataSource.data.findIndex((elementMaster) => elementMaster._id === element._id);
+    if (index !== -1) {
+      this.dataSource.data[index] = element;
+      this.dataSource.data = [...this.dataSource.data];
+    }
+  }
+
   openDialog(element?: Master) {
+
     const dialogRef = this.dialog.open(MasterInfoComponent, {
       width: "60%",
       data: {
@@ -54,6 +74,17 @@ export class AdminMasterInfoComponent implements OnInit {
         title: element ? 'Editar' : 'Agregar',
         url: this.masterSeleted
       },
-    });
+    }).afterClosed();
+
+    dialogRef.toPromise().then((response: any) => {
+
+      if (element && response?.data) {
+        this.updateRegisterToMatTable(response.data);
+      }
+
+      if (!element && response?.data) {
+        this.addRegisterToMatTable(response.data);
+      }
+    })
   }
 }

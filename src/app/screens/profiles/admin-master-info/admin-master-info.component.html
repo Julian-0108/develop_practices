@@ -3,16 +3,21 @@
         <h1 class="title">Administrar Maestros</h1>
     </div>
     <div class="main">
-        <div class="botones">
-            <mat-form-field appearance="fill">
-                <mat-label>Seleccionar maestra</mat-label>
-                <mat-select [(ngModel)]="masterSeleted" (selectionChange)="getDataMaster()">
-                    <mat-option *ngFor="let master of masters" [value]="master.url">
-                        {{ master.name }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <button mat-raised-button (click)="openDialog()">Añadir</button>
+        <div fxLayout="row" fxLayoutAlign="none end">
+            <div fxFlex="30">
+                <mat-form-field appearance="fill">
+                    <mat-label>Seleccionar maestra</mat-label>
+                    <mat-select [(ngModel)]="masterSeleted" (selectionChange)="getDataMaster()">
+                        <mat-option *ngFor="let master of masters" [value]="master.url">
+                            {{ master.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxFlex="50"></div>
+            <div fxFlex="20">
+                <button mat-button class="main-button" (click)="openDialog()">Añadir</button>
+            </div>
         </div>
         <div>
             <table [dataSource]="dataSource" class="mat-elevation-z8" mat-table>

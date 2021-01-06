@@ -3,6 +3,7 @@
 :root {
     // rojo seti: #c4382f
     --primary-color: #de1920;
+    --secundary-color: #e6e6e6;
     --light-text: white;
     --light-bg: white;
     --dark-text: rgb(41, 41, 41);
@@ -35,8 +36,32 @@ body {
     background-color: #555;
 }
 
+.button-back__icon {
+  transform: scale(2);
+  padding: 1em 2em 0;
+}
 
 /* Mat buttons */
 mat-form-field {
     width: 100%;
+}
+
+.main-button {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+    border-radius: 20px !important;
+    padding: 0 2em !important;
+}
+
+.secondary-button {
+    background-color: var(--secundary-color) !important;
+    color: var(--primary-color) !important;
+    border-radius: 20px !important;
+    padding: 0 2em !important;
+}
+.error.mat-snack-bar-container {
+  background-color: #F5DDD6;
+    border-left-style: solid;
+    border-width: 6px;
+    border-color: #DE8C75;
 }
