@@ -1,10 +1,10 @@
 <div>
-    <div class="header">
+    <div class="header background">
         <h1 class="title">Administrar Maestros</h1>
     </div>
     <div class="main">
-        <div fxLayout="row" fxLayoutAlign="none end">
-            <div fxFlex="30">
+        <div fxLayout="row" fxLayoutAlign="space-between end">
+            <div>
                 <mat-form-field appearance="fill">
                     <mat-label>Seleccionar maestra</mat-label>
                     <mat-select [(ngModel)]="masterSeleted" (selectionChange)="getDataMaster()">
@@ -14,48 +14,50 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div fxFlex="50"></div>
-            <div fxFlex="20">
+            <div >
                 <button mat-button class="main-button" (click)="openDialog()">Añadir</button>
             </div>
         </div>
         <div>
-            <table [dataSource]="dataSource" class="mat-elevation-z8" mat-table>
+
+        <div class="mat-elevation-z8">
+        <div fxLayout="row" fxLayoutAlign="center none">
+            <table fxFlex="100" [dataSource]="dataSource" matSort mat-table>
                 <!-- Name Column -->
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
                     <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                 </ng-container>
 
                 <!-- Description Column -->
                 <ng-container matColumnDef="description">
-                    <th mat-header-cell *matHeaderCellDef> Descripción </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
                     <td mat-cell *matCellDef="let element"> {{element.description}} </td>
                 </ng-container>
 
                 <!-- Type Column -->
                 <ng-container matColumnDef="type">
-                    <th mat-header-cell *matHeaderCellDef> Tipo </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </th>
                     <td mat-cell *matCellDef="let element"> {{element.type}} </td>
                 </ng-container>
 
 
                 <!-- CreatedAt Column -->
                 <ng-container matColumnDef="createdAt">
-                    <th mat-header-cell *matHeaderCellDef> Fecha de creación </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de creación </th>
                     <td mat-cell *matCellDef="let element"> {{element.createdAt | date: 'dd/MM/yyyy' }} </td>
                 </ng-container>
 
                 <!-- UpdatedAt Column -->
                 <ng-container matColumnDef="updatedAt">
-                    <th mat-header-cell *matHeaderCellDef> Fecha de actualización </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de actualización </th>
                     <td mat-cell *matCellDef="let element"> {{element.updatedAt | date: 'dd/MM/yyyy' }} </td>
                 </ng-container>
 
                 <!-- Status Column -->
                 <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef> Estado </th>
-                    <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+                    <td mat-cell *matCellDef="let element"><mat-slide-toggle [checked]="element.status" disabled></mat-slide-toggle></td>
                 </ng-container>
 
                 <!-- Actions Column -->
@@ -70,6 +72,9 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center none">
+            <mat-paginator fxFlex="100" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons ></mat-paginator>
         </div>
     </div>
 </div>

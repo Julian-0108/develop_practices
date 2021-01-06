@@ -8,6 +8,7 @@ import {
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { MasterInfoService } from '../services/master-info.service';
+import { MasterInfoDialog } from '../interfaces/master-info-dialog';
 
 @Component({
   selector: 'app-master-info',
@@ -23,7 +24,7 @@ export class MasterInfoComponent implements OnInit {
     private formBuilder: FormBuilder,
     private masterInfoService: MasterInfoService,
     private dialogRef: MatDialogRef<MasterInfoComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: MasterInfoDialog
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +44,7 @@ export class MasterInfoComponent implements OnInit {
       status: new FormControl('', [Validators.required]),
     });
   }
+
 
   initForm(): void {
     if (this.data?.element) {
