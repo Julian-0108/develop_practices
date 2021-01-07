@@ -8,22 +8,10 @@ import {
 } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
-import Swal from 'sweetalert2';
+import { catchError } from 'rxjs/operators';
 
-
-const TOAST = Swal.mixin({
-  toast: true,
-  position: 'top-end',
-  showConfirmButton: false,
-  timer: 4000,
-  showCloseButton: true,
-
-  onOpen: (Toast) => {
-    Toast.addEventListener('mouseenter', Swal.stopTimer)
-    Toast.addEventListener('mouseleave', Swal.resumeTimer)
-  }
-});
+import { NotificationService } from '../../shared/components/notification/services/notification.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -31,31 +19,26 @@ const TOAST = Swal.mixin({
 
 export class ResponseInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor(
+    private router: Router,
+    private notificationService: NotificationService
+  ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request)
       .pipe(
-        retry(1),
         catchError((error: HttpErrorResponse) => {
-
-          let errorMessage = '';
-          if (error.error instanceof ErrorEvent) {
-            // client-side error
-            errorMessage = `Error: ${error.error.message}`;
-            TOAST.fire({
-              icon: 'error',
-              title: `${errorMessage}`
-            });
-          } else {
-            // server-side error
-            errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-            TOAST.fire({
-              icon: 'error',
-              title: `${errorMessage}`
-            });
+          if (error.status === 401) {
+            this.notificationService.openSimpleSnackBar({title: 'Seguridad', message: 'Es necesario volver a iniciar sesión', type: 'info'});
+            this.router.navigateByUrl('/login');
+          } else if (error.status === 500 || error.status === 0) {
+            this.router.navigateByUrl('/error');
+          } else if ([400, 402, 403].includes(error.status)) {
+            if (error?.error?.message) {
+              this.notificationService.openSimpleSnackBar({title: 'Error', message: error[`error`][`message`], type: 'error'});
+            }
           }
-          return throwError(errorMessage);
+          return throwError(error);
         })
       )
   }
