@@ -1,4 +1,5 @@
 <body class="background">
+
   <button *ngIf="showBackButton" class="button-back__button" (click)="onClickbuttonBack()" mat-icon-button
     aria-label="back button">
     <mat-icon class="button-back__icon" svgIcon="arrow_back"></mat-icon>
@@ -9,7 +10,7 @@
   </div>
 
   <div class="card__container" fxLayout="row wrap" fxLayoutAlign="center center">
-    <mat-card [ngClass]="{'card--open': cardClicked === item.id && !item.sections}" (click)="onCardClicked(item)"
+    <mat-card (click)="onCardClicked(item)" [ngClass]="{'card--open': cardClicked === item._id && !item.sections}"
       fxLayout="column" fxLayoutAlign="start center" class="card" *ngFor="let item of items">
       <h1 class="card__title">{{item.name}}</h1>
 
@@ -37,8 +38,8 @@
         [src]="item.url || item.sections.url" alt="">
     </mat-card>
   </div>
-
-  <!-- <div class="card__container" fxLayout="row wrap" fxLayoutAlign="center center">
+<!--
+  <div class="card__container" fxLayout="row wrap" fxLayoutAlign="center center">
     <mat-card [ngClass]="{'card--open': cardClicked === item.id && !item.sections}" (click)="onCardClicked(item)"
       fxLayout="column" fxLayoutAlign="start center" class="card" *ngFor="let item of items">
       <h1 class="card__title">{{item.title}}</h1>
