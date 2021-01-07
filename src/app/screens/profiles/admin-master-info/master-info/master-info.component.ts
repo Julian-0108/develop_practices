@@ -8,6 +8,9 @@ import {
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { MasterInfoService } from '../services/master-info.service';
+import { MasterInfoDialog } from '../interfaces/master-info-dialog';
+import { NotificationService } from '../../../../shared/components/notification/services/notification.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-master-info',
@@ -21,9 +24,10 @@ export class MasterInfoComponent implements OnInit {
   constructor(
     private datePipe: DatePipe,
     private formBuilder: FormBuilder,
+    private notificationService: NotificationService,
     private masterInfoService: MasterInfoService,
     private dialogRef: MatDialogRef<MasterInfoComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: MasterInfoDialog
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +47,7 @@ export class MasterInfoComponent implements OnInit {
       status: new FormControl('', [Validators.required]),
     });
   }
+
 
   initForm(): void {
     if (this.data?.element) {
@@ -78,7 +83,10 @@ export class MasterInfoComponent implements OnInit {
   addRegisterToMaster() {
     this.masterInfoService
       .addRegisterToMaster(this.data.url, this.form.value)
-      .then((response: any) => this.onClose({ data: response.payload }))
+      .then((response: any) => {
+        this.notificationService.openSimpleSnackBar({ title: 'Acción exitosa', message: response?.message, type: 'success'});
+        this.onClose({ data: response.payload })
+      })
       .catch((err) => {});
   }
 
@@ -86,7 +94,10 @@ export class MasterInfoComponent implements OnInit {
 
     this.masterInfoService
       .updateRegisterToMaster(this.data.url, this.form.value)
-      .then((response: any) => this.onClose({ data: response.payload }))
+      .then((response: any) => {
+        this.notificationService.openSimpleSnackBar({ title: 'Acción exitosa', message: response?.message, type: 'success'});
+        this.onClose({ data: response.payload })
+      })
       .catch((err) => {});
   }
 

@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {
   NgModule,
-  LOCALE_ID
+  LOCALE_ID,
+  CUSTOM_ELEMENTS_SCHEMA,
+  NO_ERRORS_SCHEMA
 } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,6 +17,7 @@ import localeEsCo from '@angular/common/locales/es-CO';
 import { SharedModule } from "./shared/shared.module";
 import { registerLocaleData } from '@angular/common';
 import { CoreModule } from './core/core.module';
+
 
 
 
@@ -36,6 +39,10 @@ registerLocaleData(localeEsCo, 'es-CO');
       provide: LOCALE_ID,
       useValue: 'es-CO'
     }
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
   ],
   bootstrap: [AppComponent]
 })

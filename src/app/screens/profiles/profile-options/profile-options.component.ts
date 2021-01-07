@@ -188,22 +188,47 @@ export class ProfileOptionsComponent implements OnInit {
   }
 
   onClickbuttonBack() {
-    this.items = this.itemsOld
-    this.showBackButton = false ;
+    this.items = this.itemsOld;
+    this.showBackButton = false;
   }
 
-  ejemplo() {
+  success() {
     const option = {
-      title: 'Error',
-      message: 'ejemplo',
-      action: 'aceptar',
-      type:'error'
+      title: 'Success',
+      message: 'Error message',
+      type: 'success',
+    };
+    this.notificationService.openSimpleSnackBar(option).afterDismissed()
+    .subscribe(() => {
+      console.log('Alguna acción');
+    });;
+  }
+  error() {
+    const option = {
+      title: 'Titulo del mensaje',
+      message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit',
+      type: 'info',
+      action: 'Confirmar'
     };
     this.notificationService
-      .openSnackBar(option)
-      .afterDismissed()
-      .subscribe(() => {
-        console.log('hola');
-      });
+      .openComplexSnackBar(option).afterClosed().subscribe((resp) => {
+        console.log(resp);
+      })
+  }
+  warning() {
+    const option = {
+      title: 'Warning',
+      message: 'Error message',
+      type: 'warning',
+    };
+    this.notificationService.openSimpleSnackBar(option);
+  }
+  info() {
+    const option = {
+      title: 'Info',
+      message: 'Error message',
+      type: 'info',
+    };
+    this.notificationService.openSimpleSnackBar(option);
   }
 }

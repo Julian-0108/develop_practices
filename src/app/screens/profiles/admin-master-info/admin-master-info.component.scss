@@ -1,7 +1,15 @@
+.background {
+    background-color: #fff !important;
+    background-image: url('../../../../assets/images/adminmasters_background.svg');
+    background-size: 90% 100%;
+    background-position: top;
+}
+
 .header {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    height: 100px;
 }
 
 .title {
@@ -9,40 +17,22 @@
     font-size: 39px;
     line-height: 52px;
     text-align: center;
-    margin: 15px 0;
-}
-
-.subtitle {
-    color: #929292;
-    font-size: 26;
-    line-height: 35;
-    margin: 15px 0;
+    margin-top: 15px;
 }
 
 .main {
-    width: 100%;
+    margin: 0px 30px;
 }
 
 table {
     width: 100%;
 }
 
-.botones {
-    display: flex;
-    justify-content: space-between;
-}
-
-mat-form-field {
-    margin: 0 8px 8px 0;
-}
 button {
     margin: 0 8px 8px 0;
 }
 
-
-.main-button {
-    background-color: var(--primary-color);
-    color: white;
-    border-radius: 20px;
-    padding: 0 2em;
+mat-icon {
+    border: 1px solid #a1d2e8;
+    color: #a1d2e8;
 }

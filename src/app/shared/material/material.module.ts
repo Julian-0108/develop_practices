@@ -32,6 +32,7 @@ import { MatRadioModule } from '@angular/material/radio';
 
 
 
+
 const materialComponents = [
     MatPaginatorModule,
     MatSortModule,
@@ -62,7 +63,7 @@ const materialComponents = [
     ReactiveFormsModule,
     MatButtonToggleModule,
     MatDialogModule,
-    MatRadioModule
+    MatRadioModule,
 ];
 
 @NgModule({

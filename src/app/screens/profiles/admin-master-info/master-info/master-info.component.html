@@ -1,6 +1,6 @@
 <h2 mat-dialog-title> {{ data?.title }}</h2>
-<mat-dialog-content>
-    <form [formGroup]="form" novalidate>
+<mat-dialog-content >
+    <form [formGroup]="form" novalidate autocomplete="off">
         <div fxLayout="row" fxLayoutGap="5px">
             <div fxFlex="30">
                 <mat-form-field appearance="outline">
@@ -63,16 +63,24 @@
                     <mat-error>Campo obligatorio</mat-error>
                 </mat-form-field>
             </div>
-            <div fxFlex="calc(25% - 5px)">
+            <div fxFlex="calc(10% - 5px)">
+                <mat-form-field floatLabel="always" appearance="outline">
+                    <mat-label >Estado</mat-label>
+                    <mat-slide-toggle formControlName="status" ></mat-slide-toggle>
+                    <input matInput hidden>
+                </mat-form-field>
+            </div>
+        </div>
+        <div *ngIf="data?.url === 'modules'" fxLayout="row" fxLayoutGap="5px">
+            <div fxFlex="25">
                 <mat-form-field appearance="outline">
-                    <mat-label>Estado</mat-label>
+                    <mat-label>URL</mat-label>
                     <input
                         matInput
                         type="text"
-                        formControlName="status"
-                        placeholder="Estado"
+                        formControlName="url"
+                        placeholder="Url del módulo"
                     >
-                    <mat-error>Campo obligatorio</mat-error>
                 </mat-form-field>
             </div>
         </div>
