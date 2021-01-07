@@ -4,7 +4,9 @@ import { MasterInfoService } from "./services/master-info.service";
 import { Master } from "./interfaces/master.interface";
 import { MasterInfoComponent } from "./master-info/master-info.component";
 import { Title } from "@angular/platform-browser";
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: "app-admin-master-info",
@@ -17,25 +19,28 @@ export class AdminMasterInfoComponent implements OnInit {
     "name",
     "description",
     "type",
-    "status",
     "createdAt",
     "updatedAt",
+    "status",
     "actions",
   ];
 
   public readonly masters = [
-    { name: "Equipos base", url: "/base-teams-categories" },
+    { name: "Equipos base", url: "base-teams-categories" },
     { name: "Cursos y certificaciones", url: "courses-certifications" },
     { name: "Habilidades", url: "skills" },
-    { name: "Funciones", url: "function" },
-    { name: "Módulos", url: "module" },
+    { name: "Funciones", url: "functions" },
+    { name: "Módulos", url: "modules" },
     { name: "Conocimientos especificos", url: "specific-knowledge" },
-    { name: "Nivel educativo", url: "study" },
-    { name: "Herramientas de trabajo", url: "work-tool" },
+    { name: "Nivel educativo", url: "studies" },
+    { name: "Herramientas de trabajo", url: "work-tools" },
   ];
 
   public masterSeleted!: string;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
+  @ViewChild(MatSort, { static: true, read: MatSort }) sort!: MatSort
   dataSource!: MatTableDataSource<Master>;
+
   constructor(
     private title: Title,
     private masterInfoService: MasterInfoService,
@@ -49,7 +54,11 @@ export class AdminMasterInfoComponent implements OnInit {
   getDataMaster() {
     this.masterInfoService
       .getData(this.masterSeleted)
-      .then((res) => (this.dataSource =  new MatTableDataSource(res)));
+      .then((res) => {
+        this.dataSource =  new MatTableDataSource(res);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
   }
 
 
@@ -66,7 +75,6 @@ export class AdminMasterInfoComponent implements OnInit {
   }
 
   openDialog(element?: Master) {
-
     const dialogRef = this.dialog.open(MasterInfoComponent, {
       width: "60%",
       data: {
@@ -79,11 +87,13 @@ export class AdminMasterInfoComponent implements OnInit {
     dialogRef.toPromise().then((response: any) => {
 
       if (element && response?.data) {
-        this.updateRegisterToMatTable(response.data);
+        this.getDataMaster();
+        // this.updateRegisterToMatTable(response.data);
       }
 
       if (!element && response?.data) {
-        this.addRegisterToMatTable(response.data);
+        this.getDataMaster();
+        // this.addRegisterToMatTable(response.data);
       }
     })
   }
