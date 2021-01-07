@@ -178,6 +178,9 @@ body {
 }
 
 /* Card Styles */
+mat-card:hover {
+  cursor: pointer;
+}
 
 .card {
   margin: 10px;
@@ -207,6 +210,12 @@ body {
 
 .card--open {
   height: 21em;
+}
+
+.card__description {
+  color: #707070;
+  max-width: 199.3px;
+  text-align: center;
 }
 
 .option__icon {
@@ -266,4 +275,9 @@ mat-label {
   font-size: 1.4em;
   font-weight: 500;
   color: #707070;
+}
+
+/* Mat table */
+.mat-row:nth-child(even){
+  background-color: rgb(247, 247, 247);
 }
