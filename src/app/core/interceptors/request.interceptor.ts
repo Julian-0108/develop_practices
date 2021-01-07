@@ -37,14 +37,6 @@ export class RequestInterceptor implements HttpInterceptor {
     }
 
     const request = req.clone({ setHeaders: headersConfig });
-    return next.handle(request).pipe(
-      catchError((err: HttpErrorResponse) => {
-        if (err.status === 401) {
-          this.router.navigateByUrl('/login');
-        }
-
-        return throwError(err);
-      })
-    );
+    return next.handle(request);
   }
 }
