@@ -1,55 +1,14 @@
-main {
+.container {
+    padding-top: 5px;
+    text-align: center;
     background-image: url('../../../../assets/images/adminprofiles_background.png');
     background-repeat: no-repeat;
-    background-size: 100% 50%;
+    background-position: center;
+    background-size: cover;
+    height: 100px;
 }
 
-.container {
-    display: inline-block;
-    width: 100%;
-}
-
-.description {
-    margin-top: 10px;
-    text-align: center;
-}
-
-.admin {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 150px;
-}
-
-.admin__card {
-    margin: 0 10px;
-
-    .admin__card-img {
-        float: left;
-    }
-    .admin__card-description {
-        float: right;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-
-        p {
-            padding: 10px;
-            font-size: 28px;
-            color: #8f8f8f;
-        }
-    }
-
-    img {
-        width: 180px;
-        height: 180px;
-        border: 2px solid red;
-        -moz-border-radius: 50%;
-        -webkit-border-radius: 50%;
-        background-position: 50% 50%;
-        background-repeat:no-repeat;
-        align-content: center;
-    }
+.card__container {
+    margin-top: 2em;
+    padding: 0 0 3em;
 }
