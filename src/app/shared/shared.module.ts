@@ -11,9 +11,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NotificationComponent } from './components/notification/notification.component';
 import { ConfirmComponent } from './components/notification/confirm/confirm.component';
+import { ValidatorComponent } from './components/validator/validator.component';
 
 @NgModule({
-  declarations: [ToolbarComponent, NotificationComponent, FooterComponent, ConfirmComponent],
+  declarations: [
+    ToolbarComponent,
+    NotificationComponent,
+    FooterComponent,
+    ConfirmComponent,
+    ValidatorComponent,
+  ],
   imports: [CommonModule, RouterModule, MaterialModule],
   exports: [
     CommonModule,
@@ -24,9 +31,8 @@ import { ConfirmComponent } from './components/notification/confirm/confirm.comp
     ToolbarComponent,
     MaterialModule,
     FooterComponent,
+    ValidatorComponent,
   ],
-  providers: [
-    DatePipe
-  ],
+  providers: [DatePipe],
 })
 export class SharedModule {}

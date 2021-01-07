@@ -3,7 +3,8 @@ import { NotificationService } from '@app/shared/components/notification/service
 import { MatIcon, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ProfileOptionsService } from './services/profile-options.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-profile-options',
@@ -178,22 +179,24 @@ export class ProfileOptionsComponent implements OnInit {
     this.getBaseTeams();
   }
 
-  // onCardClicked(item: any) {
-  //   this.cardClicked = item._id;
-  //   if (item.sections) {
-  //     this.itemsOld = this.items;
-  //     this.items = item.sections;
-  //     this.showBackButton = true;
-  //   }
-  // }
   onCardClicked(item: any) {
-    this.cardClicked = item.id;
+    this.cardClicked = item._id;
     if (item.sections) {
       this.itemsOld = this.items;
       this.items = item.sections;
       this.showBackButton = true;
+      // this.show = !this.show;
     }
   }
+  // onCardClicked(item: any) {
+  //   this.cardClicked = item.id;
+  //   if (item.sections) {
+  //     this.itemsOld = this.items;
+  //     this.items = item.sections;
+  //     this.showBackButton = true;
+
+  //   }
+  // }
 
   async getBaseTeams() {
     this.items = await this.profileOptionsService.getBaseTeams();
