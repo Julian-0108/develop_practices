@@ -1,39 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+export interface Perfiles {
+  perfil: string;
+  nivel: string;
+  fechaCreacion: string;
+  fechaActualizacion: string;
+  estado: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+const ELEMENT_DATA: Perfiles[] = [
+  {perfil: 'profesional en formacion' , nivel: 'no aplica', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: 'activo'},
+  {perfil: 'consultor junior' , nivel: 'N1', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: 'activo'},
+  {perfil: 'consultor junior' , nivel: 'N2', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: 'inactivo'},
+  {perfil: 'consultor junior' , nivel: 'N3', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: 'activo'},
+  {perfil: 'consultor especialista' , nivel: 'N1', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: 'activo'},
+  {perfil: 'consultor especialista' , nivel: 'N2', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: 'inactivo'},
+  {perfil: 'consultor especialista' , nivel: 'N3', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: 'activo'},
+  {perfil: 'consultor senior' , nivel: 'N1', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: 'activo'},
+  {perfil: 'consultor senior' , nivel: 'N2', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: 'inactivo'},
+  {perfil: 'consultor senior' , nivel: 'N3', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: 'activo'},
 ];
-
 
 @Component({
   selector: 'app-manage-base-teams',
@@ -47,7 +33,7 @@ export class ManageBaseTeamsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['perfiles', 'niveles', 'fecha-creacion', 'fecha-actualizacion', 'estado', 'editar'];
   dataSource = ELEMENT_DATA;
 
 }
