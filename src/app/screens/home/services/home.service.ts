@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from "@environments/environment";
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { pluck } from 'rxjs/operators';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class HomeService {
   constructor(private http: HttpClient) { }
 
   getModules(): Promise<any> {
-    return this.http.get(`${environment.API_MUNDO_SETI}/module`)
+    return this.http.get(`${environment.API_MUNDO_SETI}/modules?type=home`)
     .pipe(
       pluck('payload')
     )
