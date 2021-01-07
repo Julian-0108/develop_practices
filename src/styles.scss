@@ -1,12 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
 :root {
-    // rojo seti: #c4382f
-    --primary-color: #de1920;
-    --secundary-color: #e6e6e6;
-    --light-text: white;
-    --light-bg: white;
-    --dark-text: rgb(41, 41, 41);
+  // rojo seti: #c4382f
+  --primary-color: #de1920;
+  --secundary-color: #e6e6e6;
+  --light-text: white;
+  --light-bg: white;
+  --dark-text: rgb(41, 41, 41);
 }
 
 body {
@@ -45,7 +45,21 @@ body {
 mat-form-field {
   width: 100%;
 }
+.main-button {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+  border-radius: 20px !important;
+  padding: 0 2em !important;
+}
 
+.secondary-button {
+  background-color: var(--secundary-color) !important;
+  color: var(--primary-color) !important;
+  border-radius: 20px !important;
+  padding: 0 2em !important;
+}
+
+/* Notification Styles */
 .mat-snack-bar-container {
   height: 5em;
   border-left-style: solid;
@@ -69,31 +83,21 @@ mat-form-field {
   bottom: 8px;
 }
 
-.main-button {
-    background-color: var(--primary-color) !important;
-    color: white !important;
-    border-radius: 20px !important;
-    padding: 0 2em !important;
-}
-
-.secondary-button {
-    background-color: var(--secundary-color) !important;
-    color: var(--primary-color) !important;
-    border-radius: 20px !important;
-    padding: 0 2em !important;
-}
 .error.mat-snack-bar-container {
   background-color: #F5DDD6;
   border-color: #DE8C75;
 }
+
 .success.mat-snack-bar-container {
   background-color: #deeadf;
   border-color: #81c784;
 }
+
 .warning.mat-snack-bar-container {
   background-color: #f5e8d3;
   border-color: #ffb84b;
 }
+
 .info.mat-snack-bar-container {
   background-color: #d8e6f1;
   border-color: #62aeee;
@@ -102,12 +106,15 @@ mat-form-field {
 .snack__close-icon--error {
   color: #DE8C75;
 }
+
 .snack__close-icon--success {
   color: #81c784;
 }
+
 .snack__close-icon--warning {
   color: #ffb84b;
 }
+
 .snack__close-icon--info {
   color: #62aeee;
 }
@@ -115,12 +122,15 @@ mat-form-field {
 .snack__icon--error {
   color: #DE8C75;
 }
+
 .snack__icon--success {
   color: #81c784;
 }
+
 .snack__icon--warning {
   color: #ffb84b;
 }
+
 .snack__icon--info {
   color: #62aeee;
 }
@@ -129,16 +139,109 @@ mat-form-field {
 .snack__subtitle--error {
   color: #918581;
 }
+
 .snack__title--success,
 .snack__subtitle--success {
   color: #737974;
 }
+
 .snack__title--warning,
 .snack__subtitle--warning {
   color: #867f75;
 }
+
 .snack__title--info,
 .snack__subtitle--info {
   color: #80888e;
 }
 
+/* Card Styles */
+
+.card {
+  margin: 10px;
+  height: 15em;
+  border-radius: 10px !important;
+  padding: 12px !important;
+}
+
+.card__title {
+  font-size: larger !important;
+  font-weight: bold !important;
+  text-align: center;
+  color: #de1920;
+}
+
+.card__image {
+  width: 199.3px;
+  height: 125.7px;
+}
+
+.card__image--open {
+  position: absolute;
+  bottom: -20px;
+  right: 5px;
+  width: 7em;
+}
+
+.card--open {
+  height: 21em;
+}
+
+.option__icon {
+  color: #DE1920;
+  font-size: 20px;
+}
+
+/* Input Styles */
+.item {
+  margin: 0 0 20px;
+}
+
+.label--red {
+  color: #DE1920;
+}
+
+mat-form-field .mat-input-element:disabled{
+  background-color: #efefef;
+  border-color: #efefef;
+  color: #909090;
+}
+
+mat-form-field .mat-input-element {
+  margin-top: 5px;
+  color: #707070;
+  padding-left: 2px;
+  border-style: solid;
+  border-color: #c3c3c3;
+  height: 30px;
+  border-width: 2px;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+
+mat-form-field .mat-input-element:focus {
+  outline: none;
+  box-shadow: 0 0 3px 0 rgb(144 144 144 / 71%) !important;
+}
+
+mat-form-field {
+  width: calc(100% - (5px * 2));
+}
+
+mat-form-field .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+mat-form-field .mat-form-field-infix {
+  padding: 5px 0 0 0;
+}
+
+.mat-form-field-invalid .mat-input-element {
+  border-color: #d28588 !important;
+}
+mat-label {
+  font-size: 1.4em;
+  font-weight: 500;
+  color: #707070;
+}
