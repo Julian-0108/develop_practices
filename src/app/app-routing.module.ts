@@ -33,6 +33,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'history',
+    loadChildren: () =>
+      import('./screens/profiles/profile-history/profile-history.module').then(
+        (m) => m.ProfileHistoryModule
+      ),
+  },
+  {
     path: 'generateqr',
     loadChildren: () =>
       import('./screens/sites/generateqr/generateqr.module').then((m) => m.GenerateqrModule),

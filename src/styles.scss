@@ -187,6 +187,7 @@ mat-card:hover {
   height: 15em;
   border-radius: 10px !important;
   padding: 12px !important;
+  transition: 300ms ease-out !important;
 }
 
 .card__title {
@@ -199,6 +200,7 @@ mat-card:hover {
 .card__image {
   width: 199.3px;
   height: 125.7px;
+  transition: 200ms ease-in !important;
 }
 
 .card__image--open {
@@ -206,10 +208,12 @@ mat-card:hover {
   bottom: -20px;
   right: 5px;
   width: 7em;
+  transition: 200ms ease-out !important;
 }
 
 .card--open {
   height: 21em;
+  transition: 200ms ease-in !important;
 }
 
 .card__description {

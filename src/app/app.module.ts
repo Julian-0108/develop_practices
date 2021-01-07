@@ -21,6 +21,7 @@ import { CoreModule } from './core/core.module';
 
 
 
+
 registerLocaleData(localeEsCo, 'es-CO');
 
 @NgModule({
