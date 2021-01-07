@@ -1,3 +1,4 @@
+<!--
 <div class="component">
     <div class="head">
         <button mat-icon-button class="head__button"><mat-icon class="icon">arrow_back</mat-icon></button>
@@ -10,44 +11,94 @@
         <button mat-flat-button class="btn-add"><mat-icon class="icon-add">add</mat-icon> Añadir</button>
         <table class="table" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-            <!-- Columna Perfiles -->
+           
             <ng-container matColumnDef="perfiles">
                 <th mat-header-cell *matHeaderCellDef class="table-header"> Perfiles </th>
                 <td mat-cell *matCellDef="let element"> {{element.perfil}} </td>
             </ng-container>
 
-            <!-- Columna Niveles -->
+            
             <ng-container matColumnDef="niveles">
                 <th mat-header-cell *matHeaderCellDef class="table-header table__center"> Niveles </th>
                 <td mat-cell *matCellDef="let element" class="table__center"> {{element.nivel}} </td>
             </ng-container>
 
-            <!-- Columna Fecha de creacion -->
+           
             <ng-container matColumnDef="fecha-creacion">
                 <th mat-header-cell *matHeaderCellDef class="table-header table__center"> Fecha De Creacion </th>
                 <td mat-cell *matCellDef="let element" class="table__center"> {{element.fechaCreacion}} </td>
             </ng-container>
 
-            <!-- Columna Fecha de actualizacion -->
+            
             <ng-container matColumnDef="fecha-actualizacion">
                 <th mat-header-cell *matHeaderCellDef class="table-header table__center"> Fecha De Actualizacion </th>
                 <td mat-cell *matCellDef="let element" class="table__center"> {{element.fechaActualizacion}} </td>
             </ng-container>
 
-            <!-- Columna de Estado -->
+           
             <ng-container matColumnDef="estado">
                 <th mat-header-cell *matHeaderCellDef class="table-header table__center"> Estado </th>
                 <td mat-cell *matCellDef="let element" class="table__center"> {{element.estado}} </td>
             </ng-container>
 
-            <!-- Columna de editar -->
+           
             <ng-container matColumnDef="editar">
-                <th mat-header-cell *matHeaderCellDef> </th>
+                <th mat-header-cell *matHeaderCellDef class="table-header"> </th>
                 <td mat-cell *matCellDef="let element" class="table__right"><button mat-icon-button class="edit-btn"> <mat-icon class="edit-icon">edit</mat-icon></button></td>
             </ng-container>
 
-            <tr style="color: white" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="tr"></tr>
         </table>
     </div>
+</div>
+-->
+<div class="head">
+    <button mat-icon-button class="button-back"><mat-icon class="icon-back">arrow_back</mat-icon></button>
+    <div class="text">
+        <h1 class="main-title">Gestionar Equipos Base:</h1>
+        <h2 class="main-subtitle">Bases de Datos</h2>
+    </div>
+</div>
+<div class="content">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="perfiles">
+            <th mat-header-cell *matHeaderCellDef class="rowheader"> Perfiles </th>
+            <td mat-cell *matCellDef="let element" class="row"> {{element.perfil}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="niveles">
+            <th mat-header-cell *matHeaderCellDef class="rowheader"> Niveles </th>
+            <td mat-cell *matCellDef="let element" class="row"> {{element.nivel}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="fecha-creacion">
+            <th mat-header-cell *matHeaderCellDef class="rowheader"> Fecha De Creacion </th>
+            <td mat-cell *matCellDef="let element" class="row"> {{element.fechaCreacion}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="fecha-actualizacion">
+            <th mat-header-cell *matHeaderCellDef class="rowheader"> Fecha De Actualizacion </th>
+            <td mat-cell *matCellDef="let element" class="row"> {{element.fechaActualizacion}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef class="rowheader"> Estado </th>
+            <td mat-cell *matCellDef="let element" class="row"> {{element.estado}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="editar">
+            <th mat-header-cell *matHeaderCellDef class="rowheader"> </th>
+            <td mat-cell *matCellDef="let element" class="row"><button mat-icon-button class="edit-btn"> <mat-icon class="edit-icon">edit</mat-icon></button></td>
+        </ng-container>
+
+        <tr class="tr-rowheader" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr class="tr-rows" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
 </div>
