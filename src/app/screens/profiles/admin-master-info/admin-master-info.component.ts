@@ -4,10 +4,9 @@ import { MasterInfoService } from "./services/master-info.service";
 import { Master } from "./interfaces/master.interface";
 import { MasterInfoComponent } from "./master-info/master-info.component";
 import { Title } from "@angular/platform-browser";
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatSelect } from "@angular/material/select";
 
 @Component({
   selector: "app-admin-master-info",
@@ -88,11 +87,13 @@ export class AdminMasterInfoComponent implements OnInit {
     dialogRef.toPromise().then((response: any) => {
 
       if (element && response?.data) {
-        this.updateRegisterToMatTable(response.data);
+        this.getDataMaster();
+        // this.updateRegisterToMatTable(response.data);
       }
 
       if (!element && response?.data) {
-        this.addRegisterToMatTable(response.data);
+        this.getDataMaster();
+        // this.addRegisterToMatTable(response.data);
       }
     })
   }
