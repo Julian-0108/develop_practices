@@ -10,20 +10,8 @@ main {
 }
 
 .description {
-    h1 {
-        color: var(--primary-color);
-        font-size: 55px;
-        line-height: 73px;
-        text-align: center;
-        margin: 15px 0;
-    }
-
-    h3 {
-        color: #707070;
-        font-size: 35px;
-        line-height: 41px;
-        text-align: center;
-    }
+    margin-top: 10px;
+    text-align: center;
 }
 
 .admin {
