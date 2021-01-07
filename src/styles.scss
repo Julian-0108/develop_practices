@@ -45,10 +45,7 @@ body {
   padding: 1em 2em 0;
 }
 
-/* Mat Form Field */
-mat-form-field {
-  width: 100%;
-}
+
 .main-button {
   background-color: var(--primary-color) !important;
   color: white !important;
@@ -100,18 +97,29 @@ mat-form-field {
 
 /* Buttons */
 
-.main-button {
+.button--accept {
     background-color: var(--primary-color) !important;
     color: white !important;
     border-radius: 20px !important;
     padding: 0 2em !important;
 }
 
-.secondary-button {
+.button--cancel {
     background-color: var(--secundary-color) !important;
     color: var(--primary-color) !important;
     border-radius: 20px !important;
     padding: 0 2em !important;
+}
+
+.main-title {
+  color: var(--primary-color);
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.main-subtitle {
+  text-align: center;
+  color: #707070;
 }
 
 .error.mat-snack-bar-container {
