@@ -7,16 +7,17 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./validator.component.scss'],
 })
 export class ValidatorComponent implements OnInit {
-  @Input() form: FormGroup;
-  @Input() name: string;
-  @Input() otherIcon: boolean;
+  @Input() form!: FormGroup;
+  @Input() name!: string;
+  @Input() otherIcon!: boolean;
   constructor() {
   }
 
   ngOnInit(): void {}
   getErrors() {
-    const errors = [];
-    for (const error of Object.entries(this.form.get(this.name).errors)) {
+    const errors: any = [];
+    const formErrors: any = this.form.get(this.name)!.errors
+    for (const error of Object.entries<any>(formErrors)) {
       let staticMsg = null;
       if (error[0] === 'required') {
         staticMsg = 'Campo obligatorio';
