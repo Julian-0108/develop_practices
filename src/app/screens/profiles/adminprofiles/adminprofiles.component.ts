@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ManageProfileService } from './services/manage-profile.service';
 import { Master } from '@shared/interfaces/master.interface';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-adminprofiles',
@@ -10,6 +11,7 @@ import { Master } from '@shared/interfaces/master.interface';
 })
 export class AdminprofilesComponent implements OnInit {
   public cards!: Master[];
+  public API_MUNDO_SETI: string = environment.API_MUNDO_SETI;
   constructor(
     private titleService: Title,
     private manageProfileService: ManageProfileService

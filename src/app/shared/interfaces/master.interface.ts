@@ -9,6 +9,7 @@ export interface Master {
   type?: string;
   status: boolean;
   url?: string;
+  imagePath?: string,
   createdAt?: string;
   updatedAt?: string;
 }
