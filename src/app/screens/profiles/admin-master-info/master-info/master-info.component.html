@@ -54,6 +54,10 @@
                     <input matInput type="text" formControlName="url" placeholder="Url del módulo">
                 </mat-form-field>
             </div>
+            <div class="item" fxFlex="25">
+                <mat-label class="label">Imagen</mat-label>
+                <input type="file" (change)="onFileChange($event)">
+            </div>
         </div>
 
     </form>

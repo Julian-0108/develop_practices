@@ -16,7 +16,7 @@
     <div class="cards">
         <ng-container *ngFor="let card of cards">
             <mat-card [routerLink]="card.url" *ngIf="card.status" matRipple matRippleCentered="centered" matRippleColor="#ce536285">
-                <img mat-card-image src="../../../assets/images/Grupo 362.png">
+                <img mat-card-image src="{{ API_MUNDO_SETI }}{{ card.imagePath }}">
                 <mat-card-content>
                     <mat-card-title>{{card.name}}</mat-card-title>
                     <p>{{card.description}}</p>
