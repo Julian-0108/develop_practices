@@ -29,6 +29,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
+import {MatStepperModule} from '@angular/material/stepper';
 
 
 
@@ -64,6 +65,7 @@ const materialComponents = [
     MatButtonToggleModule,
     MatDialogModule,
     MatRadioModule,
+    MatStepperModule
 ];
 
 @NgModule({
