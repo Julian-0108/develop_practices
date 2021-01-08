@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "@environments/environment";
 import { pluck } from "rxjs/operators";
-import { Master } from "../interfaces/master.interface";
+import { Master } from "@shared/interfaces/master.interface";
 
 @Injectable({
   providedIn: "root",

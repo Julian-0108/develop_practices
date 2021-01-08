@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MasterInfoService } from "./services/master-info.service";
-import { Master } from "./interfaces/master.interface";
+import { Master } from "@shared/interfaces/master.interface";
 import { MasterInfoComponent } from "./master-info/master-info.component";
 import { Title } from "@angular/platform-browser";
 import { MatTableDataSource } from '@angular/material/table';

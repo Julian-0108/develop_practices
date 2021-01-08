@@ -1,28 +1,12 @@
-<main>
-    <div class="container">
-        <div class="description">
-            <h1 class="main-title">Administrar perfilamiento</h1>
-            <h3 class="main-subtitle">Elige una opción para continuar con el proceso</h3>
-        </div>
-        <div class="admin">
-            <div class="admin__card">
-                <div class="admin__card-img">
-                    <img src="../../../assets/images/adminprofiles_master.svg" alt="administrar_maestros">
-                </div>
-                <div class="admin__card-description">
-                    <p>Administrar maestros</p>
-                    <button mat-button class="button--accept" routerLink="/master-info">Continuar</button>
-                </div>
-            </div>
-            <div class="admin__card">
-                <div class="admin__card-img">
-                    <img src="../../../assets/images/adminprofiles_profiles.svg" alt="administrar_maestros">
-                </div>
-                <div class="admin__card-description">
-                    <p>Administrar perfiles</p>
-                    <button mat-button class="button--accept" routerLink="/profile-options">Continuar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>
+<div class="container">
+    <h1 class="main-title">Administrar Perfilamiento</h1>
+    <h3 class="main-subtitle">Elige una opción para continuar con el proceso</h3>
+</div>
+
+<div class="card__container" fxLayout="row wrap" fxLayoutAlign="center center">
+    <mat-card *ngFor="let card of cards" [routerLink]="card.url" class="card">
+        <img  class="card__image" src="../../../assets/images/adminprofiles_profiles.svg" [alt]="card.name">
+        <h1 class="card__title">{{ card.name }}</h1>
+        <p class="card__description"> {{ card.description }}</p>
+    </mat-card>
+</div>

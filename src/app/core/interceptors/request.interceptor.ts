@@ -30,10 +30,10 @@ export class RequestInterceptor implements HttpInterceptor {
       'Access-Control-Allow-Origin': '*',
     };
 
-    const authData = JSON.parse(localStorage.getItem('authData') || '{}');
+    const authData = localStorage.getItem('authData');
 
     if (authData) {
-      headersConfig['access-token'] = authData.token;
+      headersConfig['access-token'] = JSON.parse(authData).token;
     }
 
     const request = req.clone({ setHeaders: headersConfig });
