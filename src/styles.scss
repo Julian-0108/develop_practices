@@ -94,6 +94,13 @@ body {
     padding: 0 2em !important;
 }
 
+/* Icons */
+.edit {
+  border: 1px solid #419bf9;
+  color: #419bf9;
+}
+
+
 .main-title {
   color: var(--primary-color);
   font-weight: bold;
@@ -284,4 +291,43 @@ mat-label {
 /* Mat table */
 .mat-row:nth-child(even){
   background-color: rgb(247, 247, 247);
+}
+
+/* Mat Dialog */
+mat-dialog-container {
+  border-radius: 10px !important;
+  padding: 0px !important;
+  width: 100% !important;
+}
+
+.mat-dialog-title {
+  padding: 5px 0px !important;
+}
+
+mat-dialog-content {
+  padding: 0 2em !important;
+  margin: 0 !important;
+  height: auto !important;
+}
+
+mat-dialog-actions {
+  padding: 0 2em !important;
+}
+
+.dialog__options {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 0px;
+}
+
+.dialog__options button {
+  margin: 0px 5px;
+}
+
+
+.dialog__title {
+  text-align: center;
+  background-color: var(--primary-color);
+  font-size: 20px;
+  color: white;
 }
