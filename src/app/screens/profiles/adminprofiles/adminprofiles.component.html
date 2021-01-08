@@ -5,8 +5,8 @@
 
 <div class="card__container" fxLayout="row wrap" fxLayoutAlign="center center">
     <mat-card *ngFor="let card of cards" [routerLink]="card.url" class="card">
-        <img  class="card__image" src="../../../assets/images/adminprofiles_profiles.svg" [alt]="card.name">
+        <img class="card__image" src="{{ API_MUNDO_SETI }}{{ card.imagePath }}" [alt]="card.name">
         <h1 class="card__title">{{ card.name }}</h1>
-        <p class="card__description"> {{ card.description }}</p>
+        <p class="card__description"> {{ card.description  }}</p>
     </mat-card>
 </div>
