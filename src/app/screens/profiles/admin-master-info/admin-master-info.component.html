@@ -15,7 +15,7 @@
                 </mat-form-field>
             </div>
             <div >
-                <button mat-button class="button--accept" (click)="openDialog()">Añadir</button>
+                <button mat-button class="button--accept" (click)="openDialog()"><mat-icon>add</mat-icon>Añadir</button>
             </div>
         </div>
         <div>
@@ -25,38 +25,38 @@
             <table fxFlex="100" [dataSource]="dataSource" matSort mat-table>
                 <!-- Name Column -->
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header"> Nombre </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header > Nombre </th>
                     <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                 </ng-container>
 
                 <!-- Description Column -->
                 <ng-container matColumnDef="description">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header"> Descripción </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header > Descripción </th>
                     <td mat-cell *matCellDef="let element"> {{element.description}} </td>
                 </ng-container>
 
                 <!-- Type Column -->
                 <ng-container matColumnDef="type">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header"> Tipo </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header > Tipo </th>
                     <td mat-cell *matCellDef="let element"> {{element.type}} </td>
                 </ng-container>
 
 
                 <!-- CreatedAt Column -->
                 <ng-container matColumnDef="createdAt">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header"> Fecha de creación </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header > Fecha de creación </th>
                     <td mat-cell *matCellDef="let element"> {{element.createdAt | date: 'dd/MM/yyyy' }} </td>
                 </ng-container>
 
                 <!-- UpdatedAt Column -->
                 <ng-container matColumnDef="updatedAt">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header">Fecha de actualización </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header >Fecha de actualización </th>
                     <td mat-cell *matCellDef="let element"> {{element.updatedAt | date: 'dd/MM/yyyy' }} </td>
                 </ng-container>
 
                 <!-- Status Column -->
                 <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header"> Estado </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header > Estado </th>
                     <td mat-cell *matCellDef="let element"><mat-slide-toggle [checked]="element.status" disabled></mat-slide-toggle></td>
                 </ng-container>
 
@@ -65,7 +65,7 @@
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let element">
                         <button mat-button (click)="openDialog(element)">
-                            <mat-icon>edit</mat-icon>
+                            <mat-icon class="edit">edit</mat-icon>
                         </button>
                     </td>
                 </ng-container>

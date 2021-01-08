@@ -19,6 +19,7 @@ import { HttpResponse } from '@angular/common/http';
 })
 export class MasterInfoComponent implements OnInit {
   form!: FormGroup;
+  public manage_images = ['modules'];
   private readonly DATE_FORM_CONTROL = 'yyyy-MM-dd';
 
   constructor(
