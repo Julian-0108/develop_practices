@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import { DialogComponent } from './dialog/dialog.component';
+
 
 export interface Perfiles {
   perfil: string;
@@ -26,14 +29,24 @@ const ELEMENT_DATA: Perfiles[] = [
   templateUrl: './manage-base-teams.component.html',
   styleUrls: ['./manage-base-teams.component.scss']
 })
+
 export class ManageBaseTeamsComponent implements OnInit {
 
-  constructor() { }
+  isLoadingResults = false;
+
+  displayedColumns: string[] = ['perfiles', 'niveles', 'fecha-creacion', 'fecha-actualizacion', 'estado', 'editar'];
+  dataSource = ELEMENT_DATA;
+
+  constructor(public dialog: MatDialog) {}
+  // Dialog
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogComponent);
+    
+  }
 
   ngOnInit(): void {
   }
 
-  displayedColumns: string[] = ['perfiles', 'niveles', 'fecha-creacion', 'fecha-actualizacion', 'estado', 'editar'];
-  dataSource = ELEMENT_DATA;
+  
 
 }
