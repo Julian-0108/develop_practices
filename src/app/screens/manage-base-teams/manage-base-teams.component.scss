@@ -48,7 +48,6 @@ td {
     border-color: transparent;
 }
 
-// kfhwefkujfLKNVRDKNVJDNVJL
 .rowheader,
 .row {
     text-align: center;
@@ -76,4 +75,30 @@ td {
     bottom: 0;
     left: 0;
     background: rgba(41, 41, 41, 0.15);
+}
+
+.level {
+    display: inline-block;
+    height: auto;
+    margin: auto;
+    padding: 0 2em;
+    color: white;
+    border-radius: 15px;
+    padding: 0 2em;
+}
+
+.none {
+    background-color: #a2a2a2;
+}
+
+.blue {
+    background-color: #a1d2e8;
+}
+
+.orange {
+    background-color: #f9aa6d;
+}
+
+.green {
+    background-color: #71de8e;
 }
