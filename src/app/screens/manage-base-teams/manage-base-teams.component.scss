@@ -1,0 +1,79 @@
+.head {
+    display: flex;
+    padding: 2em;
+}
+
+.text {
+    margin: auto;
+    text-align: center;
+}
+
+.button-back {
+    width: 4em;
+    height: 4em;
+    border: 1px solid var(--primary-color);
+    border-radius: 100%;
+    color: var(--primary-color);
+}
+
+.icon-back {
+    font-weight: bold;
+}
+
+.content {
+    padding-bottom: 4em;
+    width: 80%;
+    margin: auto;
+    position: relative;
+}
+
+.button--accept {
+    display: block;
+    margin-left: auto;
+}
+
+// TABLA
+table {
+    margin-top: 1em;
+    width: 100%;
+    border-radius: 20px 20px 20px 20px;
+    box-shadow: 3px 6px 10px 3px #00000029;
+}
+
+th {
+    border-color: transparent transparent #707070 transparent;
+}
+
+td {
+    border-color: transparent;
+}
+
+// kfhwefkujfLKNVRDKNVJDNVJL
+.rowheader,
+.row {
+    text-align: center;
+}
+
+.rowheader {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #9a9a9a;
+}
+
+.row {
+    font-size: 1em;
+    color: #787878;
+}
+
+.loading-shade {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(41, 41, 41, 0.15);
+}
