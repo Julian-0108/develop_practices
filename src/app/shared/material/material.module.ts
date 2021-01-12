@@ -29,6 +29,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
+import {MatStepperModule} from '@angular/material/stepper';
+
 import {MatChipsModule} from '@angular/material/chips';
 
 
@@ -64,6 +66,7 @@ const materialComponents = [
     MatButtonToggleModule,
     MatDialogModule,
     MatRadioModule,
+    MatStepperModule,
     MatChipsModule,
 ];
 

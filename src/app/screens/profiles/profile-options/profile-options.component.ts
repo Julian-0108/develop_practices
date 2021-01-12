@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ProfileOptionsService } from './services/profile-options.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { newArray } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-profile-options',
@@ -20,6 +21,7 @@ export class ProfileOptionsComponent implements OnInit {
     'Lorem ipsum, dolor sit amet consectetur adipisicing elit.Maxime, consequuntur assumenda';
   itemsOld: any = [];
   items: any;
+  rowsArray: any;
   // items = [
   //   {
   //     id: 'card1',
@@ -167,7 +169,6 @@ export class ProfileOptionsComponent implements OnInit {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     public profileOptionsService: ProfileOptionsService
-
   ) {
     this.matIconRegistry.addSvgIcon(
       'arrow_back',
@@ -198,8 +199,23 @@ export class ProfileOptionsComponent implements OnInit {
   //   }
   // }
 
+  buildRows(items: any) {
+    let newarray: any = [];
+    let finalArray: any = [];
+    items.forEach((element: any) => {
+      newarray = [...newarray, element];
+      if (newarray.length === 4) {
+        finalArray = [...finalArray, newarray];
+        newarray = [];
+      }
+    });
+    finalArray = [...finalArray, newarray];
+    this.rowsArray = finalArray;
+  }
+
   async getBaseTeams() {
     this.items = await this.profileOptionsService.getBaseTeams();
+    this.buildRows(this.items);
   }
 
   onClickbuttonBack() {
