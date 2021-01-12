@@ -1,38 +1,31 @@
 <div fxLayout="row" fxLayoutAlign="space-between">
   <div fxFlex="50">
     <mat-vertical-stepper #stepper>
-      <mat-step>
+      <mat-step *ngFor="let step of history" (click)="onStepClicked(step.id)">
         <mat-card class="history">
           <div class="history__information">
             <p class="history-information__pagraph">
-              <mat-label class="history-information__title">Autor del cambio: </mat-label>{{info.name}}
+              <mat-label class="history-information__title">Autor del cambio: </mat-label>{{step.name}}
             </p>
           </div>
           <div class="history__section">
             <p class="history-information__pagraph">
-              <mat-label class="history-information__title">Descripción: </mat-label>{{info.description}}
+              <mat-label class="history-information__title">Descripción: </mat-label>{{step.description}}
             </p>
           </div>
           <div class="history__section">
 
             <p class="history-information__pagraph">
-              <mat-label class="history-information__title">Fecha: </mat-label>{{info.date}}
+              <mat-label class="history-information__title">Fecha: </mat-label>{{step.date}}
             </p>
           </div>
         </mat-card>
-      </mat-step>
-      <mat-step>
-        <p>panel 2</p>
-      </mat-step>
-      <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
-        <p>panel 3</p>
       </mat-step>
       <ng-template matStepperIcon="number"></ng-template>
       <ng-template matStepperIcon="edit"></ng-template>
     </mat-vertical-stepper>
   </div>
   <div fxFlex="50">
-    <h1>Vista previa</h1>
+    <h1>{{historyId}}</h1>
   </div>
 </div>
