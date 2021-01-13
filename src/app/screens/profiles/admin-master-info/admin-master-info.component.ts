@@ -8,13 +8,13 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
+
 @Component({
   selector: "app-admin-master-info",
   templateUrl: "./admin-master-info.component.html",
   styleUrls: ["./admin-master-info.component.scss"],
 })
 export class AdminMasterInfoComponent implements OnInit {
-
   public readonly displayedColumns: string[] = [
     "name",
     "description",
@@ -44,12 +44,17 @@ export class AdminMasterInfoComponent implements OnInit {
   constructor(
     private title: Title,
     private masterInfoService: MasterInfoService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+
   ) {
     this.title.setTitle("Mundo SETI - administrar maestros");
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+  }
+
+
 
   getDataMaster() {
     this.masterInfoService

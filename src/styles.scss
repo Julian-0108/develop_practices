@@ -82,27 +82,39 @@ body {
 
 /* Buttons */
 
+.button {
+  height: 30px;
+  padding: 0 2em !important;
+  border-radius: 20px !important;
+}
+
 .button--accept {
   background-color: var(--primary-color) !important;
   color: white !important;
-  border-radius: 20px !important;
+  height: 30px;
   padding: 0 2em !important;
+  border-radius: 20px !important;
+
 }
 
 .button--cancel {
   background-color: var(--secundary-color) !important;
   color: var(--primary-color) !important;
-  border-radius: 20px !important;
+  height: 30px;
   padding: 0 2em !important;
+  border-radius: 20px !important;
 }
 
 
 /* Icons */
 
 .edit {
-    border: 1px solid #2e5392;
-    color: #2e5392;
-    border-radius: 5px;
+    color: #3392e4;
+    background-color: #3392e42e;
+    border-radius: 100%;
+    box-shadow: 0px 0px 6px #3392e42e;
+    font-size: 17px;
+    padding: 3px;
 }
 
 .main-title {
