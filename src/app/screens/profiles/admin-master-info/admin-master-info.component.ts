@@ -83,6 +83,7 @@ export class AdminMasterInfoComponent implements OnInit {
         url: this.masterSeleted
       },
     }).afterClosed();
+console.log(this.masterSeleted);
 
     dialogRef.toPromise().then((response: any) => {
 
