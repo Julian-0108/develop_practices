@@ -36,7 +36,7 @@
         </div>
 
         <img [ngClass]="{'card__image--open': cardClicked === item._id && !item.sections}" class="card__image"
-          [src]="item.url || item.sections.url" alt="">
+        src="{{ API_MUNDO_SETI }}{{ item.imagePath }}" alt="">
       </mat-card>
     </div>
   </div>

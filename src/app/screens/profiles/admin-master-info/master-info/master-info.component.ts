@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
@@ -14,8 +14,9 @@ import { NotificationService } from '@shared/components/notification/services/no
 })
 export class MasterInfoComponent implements OnInit {
   form!: FormGroup;
+
   /* Rutas que manejan imagenes */
-  public manage_images = ['modules'];
+  public manage_images = ['modules','base-teams-categories'];//,'base-teams-categories'
   private archivo!: string;
   private readonly DATE_FORM_CONTROL = 'yyyy-MM-dd';
 
@@ -32,7 +33,6 @@ export class MasterInfoComponent implements OnInit {
     this.form = this.createForm();
     this.initForm();
   }
-
   createForm(): FormGroup {
     return this.formBuilder.group({
       _id: new FormControl(),
@@ -43,7 +43,7 @@ export class MasterInfoComponent implements OnInit {
       url: new FormControl(),
       type: new FormControl('', [Validators.required]),
       status: new FormControl('', [Validators.required]),
-      imagePath: new FormControl(''),
+      imagePath: new FormControl({ value: '', disabled: true }),
     });
   }
 
@@ -60,6 +60,7 @@ export class MasterInfoComponent implements OnInit {
     }
 
     this.form.get('status')?.patchValue(true);
+
     this.form
       .get('createdAt')
       ?.patchValue(this.datePipe.transform(new Date(), this.DATE_FORM_CONTROL));
@@ -114,6 +115,9 @@ export class MasterInfoComponent implements OnInit {
   }
 
   onFileChange(event: any) {
+    console.log(event.target.files[0].name);
+    this.form.get('imagePath')?.patchValue(event.target.files[0].name);
+
     if (
       event.target.files.length > 0 &&
       ['jpg', 'png', 'svg'].includes(event.target.files[0].name.split('.')[1])
