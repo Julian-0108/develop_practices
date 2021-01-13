@@ -6,6 +6,7 @@ import { ProfileOptionsService } from './services/profile-options.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { newArray } from '@angular/compiler/src/util';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-profile-options',
@@ -13,6 +14,7 @@ import { newArray } from '@angular/compiler/src/util';
   styleUrls: ['./profile-options.component.scss'],
 })
 export class ProfileOptionsComponent implements OnInit {
+  public API_MUNDO_SETI: string = environment.API_MUNDO_SETI;
   title = 'Equipos Base';
   cardClicked = '';
   optionClicked = '';
