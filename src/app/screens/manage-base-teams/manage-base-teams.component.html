@@ -23,7 +23,11 @@
 
         <ng-container matColumnDef="niveles">
             <th mat-header-cell *matHeaderCellDef class="rowheader"> Niveles </th>
-            <td mat-cell *matCellDef="let element" class="row">{{element.nivel}}</td>
+            <td mat-cell *matCellDef="let element" class="row">
+                <div class="level" [ngClass]="{'none': element.nivel=='no aplica', 'blue': element.nivel=='N1',  'orange': element.nivel=='N2', 'green': element.nivel=='N3'}">
+                    {{element.nivel}}
+                </div>
+            </td>
         </ng-container>
 
 
