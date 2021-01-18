@@ -52,7 +52,14 @@
     background-color: #de1920;
     color: white;
     border-radius: 20px;
+    box-shadow: inset 0 0 0 0 #fff;
+    transition: ease-in-out 0.4s;
+
 }
+
+// .button:before {
+//   content: "Continuar";
+// }
 
 .separator {
     width: 100%;
@@ -155,4 +162,10 @@ mat-card-content p {
     mat-card-content p {
         font-size: 1.5em;
     }
+}
+
+.button:hover{
+  box-shadow: inset 400px 0 0 0 #fff;
+  color: #de1920;
+  border: solid 1px #de1920;
 }
