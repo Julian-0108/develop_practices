@@ -72,11 +72,11 @@ body {
 /* Mat Toggle */
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-  background-color: #d86266 !important;
+    background-color: #d86266 !important;
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-  background-color: var(--primary-color) !important;
+    background-color: var(--primary-color) !important;
 }
 
 
@@ -234,39 +234,36 @@ mat-card:hover {
 }
 
 .card__image {
-  width: 199.3px;
-  height: 125.7px;
+    width: 199.3px;
+    height: 125.7px;
 }
 
 .card__image--open {
-  position: absolute;
-  bottom: -20px;
-  right: 5px;
-  width: 7em;
+    position: absolute;
+    bottom: -20px;
+    right: 5px;
+    width: 7em;
 }
 
-
 .card--open {
-  // height: 21em;
-  animation-name: cardOpen;
-  animation-duration: 200ms;
-  animation-delay: 100ms;
-  animation-timing-function: linear;
-  animation-fill-mode: forwards;
+    // height: 21em;
+    animation-name: cardOpen;
+    animation-duration: 200ms;
+    animation-delay: 100ms;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
 }
 
 @keyframes cardOpen {
-  0% {
-    height: 15em;
-  }
-
-  50% {
-    height: 18em;
-  }
-
-  100% {
-    height: 21em;
-  }
+    0% {
+        height: 15em;
+    }
+    50% {
+        height: 18em;
+    }
+    100% {
+        height: 21em;
+    }
 }
 
 .card__description {
@@ -292,12 +289,13 @@ mat-card:hover {
 }
 
 mat-form-field .mat-input-element:disabled {
-  background-color: #efefef;
-  border-color: #efefef;
-  color: #909090;
+    background-color: #efefef;
+    border-color: #efefef;
+    color: #909090;
 }
 
-mat-form-field .mat-input-element, .mat-select {
+mat-form-field .mat-input-element,
+.mat-select {
     margin-top: 5px;
     color: #707070 !important;
     padding-left: 2px;
@@ -310,7 +308,7 @@ mat-form-field .mat-input-element, .mat-select {
 }
 
 mat-form-field .mat-select-value {
-  padding: 7px;
+    padding: 7px;
 }
 
 mat-form-field .mat-input-element:focus {
