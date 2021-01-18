@@ -21,6 +21,7 @@ export class MasterInfoComponent implements OnInit {
   types: any;
   masters: any;
 
+
   constructor(
     private datePipe: DatePipe,
     private formBuilder: FormBuilder,
@@ -31,6 +32,7 @@ export class MasterInfoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.data);
     this.form = this.createForm();
     this.initForm();
     this.fillTypesList();
@@ -38,8 +40,10 @@ export class MasterInfoComponent implements OnInit {
   }
 
   inputTypeValidator() {
-    if (!this.types.includes(this.form.get('type')?.value)) {
-      this.form.get('type')?.setErrors({ error: 'El tipo no existe' });
+    if (this.form.value.type !== 'EQUIPO_BASE') {
+      this.form.get('submenu')?.disable();
+    } else {
+      this.form.get('submenu')?.enable();
     }
   }
 
@@ -51,7 +55,7 @@ export class MasterInfoComponent implements OnInit {
         masterReferenceArray = [...masterReferenceArray, item.masterReference];
       }
     });
-    this.masters =masterReferenceArray;
+    this.masters = masterReferenceArray;
   }
   fillTypesList() {
     this.masterInfoService
@@ -63,16 +67,14 @@ export class MasterInfoComponent implements OnInit {
     return this.formBuilder.group({
       _id: new FormControl(),
       name: new FormControl('', [Validators.required]),
-      description: new FormControl({ value: '', disabled: this.data?.url === 'types' }, [
-        Validators.required,
-      ]),
+      description: new FormControl({ value: '', disabled: this.data?.url === 'types' }),
       masterReference: new FormControl(''),
       createdAt: new FormControl({ value: '', disabled: true }),
       updatedAt: new FormControl({ value: '', disabled: true }),
       url: new FormControl(),
-      type: new FormControl('', [Validators.required]),
-      status: new FormControl('', [Validators.required]),
-      submenu: new FormControl('', [Validators.required]),
+      type: new FormControl(''),
+      status: new FormControl(''),
+      submenu: new FormControl(''),
       imagePath: new FormControl({ value: '', disabled: true }),
     });
   }
@@ -90,7 +92,6 @@ export class MasterInfoComponent implements OnInit {
     }
 
     this.form.get('status')?.patchValue(true);
-    this.form.get('submenu')?.patchValue(false);
 
     this.form
       .get('createdAt')
@@ -187,5 +188,15 @@ export class MasterInfoComponent implements OnInit {
     this.manage_images.includes(this.data.url)
       ? this.addRegisterWithImageToMaster()
       : this.addRegisterToMaster();
+  }
+
+  submenuDisabled() {
+    if (this.data.url === 'base-teams-categories') {
+      if (this.data.element && this.data.element.type !== 'EQUIPO_BASE') {
+        return true;
+      }
+      return false;
+    }
+    return true;
   }
 }

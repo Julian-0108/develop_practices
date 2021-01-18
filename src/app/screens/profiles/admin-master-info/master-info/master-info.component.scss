@@ -7,9 +7,14 @@
   width: 5.9em !important;
 }
 
+.mat-button-toggle-disabled {
+  background-color: #efefef;
+  color: #cccccc;
+}
+
 .mat-button-toggle-checked {
-  color: #de1920 !important;
-  background-color: #EFEFEF;
+  color: #ffffff !important;
+  background-color: #daafaf;
 
 }
 
