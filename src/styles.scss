@@ -117,10 +117,19 @@ body {
     padding: 3px;
 }
 
+.title__container {
+  padding-top: 5em;
+  text-align: center;
+  width: 40%;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+}
+
 .main-title {
     color: var(--primary-color);
-    font-weight: bold;
-    font-size: 2em;
+    font-weight: bold !important;
+    font-size: 2em !important;
 }
 
 .main-subtitle {
@@ -212,6 +221,7 @@ mat-card:hover {
   height: 15em;
   border-radius: 10px !important;
   padding: 12px !important;
+  outline: none;
   // animation: 2000ms ease-out !important;
 }
 
@@ -220,6 +230,7 @@ mat-card:hover {
     font-weight: bold !important;
     text-align: center;
     color: #de1920;
+    margin: 0 !important;
 }
 
 .card__image {
@@ -390,5 +401,14 @@ mat-dialog-actions {
     background: rgba(41, 41, 41, 0.15);
 }
 
+.button-back {
+  background-image: url('assets/images/arrow_back.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute !important;
+  top: 4em;
+  left: 1em;
+}
 
 

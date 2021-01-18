@@ -39,6 +39,7 @@ export class ProfileOptionsComponent implements OnInit {
   //   {
   //     id: 'card2',
   //     title: 'Negocios',
+  //     submenu: false,
   //     content: [
   //       { profile: 'Profesional en Formación', levels: [], id: 'btn5' },
   //       { profile: 'Consultor Junior', levels: ['N1', 'N2', 'N3'], id: 'btn6' },
@@ -50,7 +51,8 @@ export class ProfileOptionsComponent implements OnInit {
   //   {
   //     id: 'card3',
   //     title: 'Operación',
-  //     sections: [
+  //     submenu: true,
+  //     content: [
   //       {
   //         title: 'Desarrollo',
   //         id: 'cardOp1',
@@ -182,13 +184,13 @@ export class ProfileOptionsComponent implements OnInit {
     this.getBaseTeams();
   }
 
-  onCardClicked(item: any) {
+  async onCardClicked(item: any) {
     this.cardClicked = item._id;
-    if (item.sections) {
+    if (item.submenu) {
       this.itemsOld = this.items;
-      this.items = item.sections;
+      this.items = await this.profileOptionsService.getSubBaseTeams((item.name).substring(0, 2).toUpperCase());
+      this.buildRows(this.items);
       this.showBackButton = true;
-      // this.show = !this.show;
     }
   }
   // onCardClicked(item: any) {
@@ -222,6 +224,7 @@ export class ProfileOptionsComponent implements OnInit {
 
   onClickbuttonBack() {
     this.items = this.itemsOld;
+    this.buildRows(this.itemsOld);
     this.showBackButton = false;
   }
 
@@ -235,7 +238,6 @@ export class ProfileOptionsComponent implements OnInit {
       .openSimpleSnackBar(option)
       .afterDismissed()
       .subscribe(() => {
-        console.log('Alguna acción');
       });
   }
   error() {
@@ -249,7 +251,6 @@ export class ProfileOptionsComponent implements OnInit {
       .openComplexSnackBar(option)
       .afterClosed()
       .subscribe((resp) => {
-        console.log(resp);
       });
   }
   warning() {

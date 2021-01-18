@@ -1,15 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="2061" height="2026" viewBox="0 0 2061 2026">
+<svg xmlns="http://www.w3.org/2000/svg" width="2382.153" height="2026" viewBox="0 0 2382.153 2026">
     <defs>
         <style>
             .cls-1{fill:rgba(152,152,152,.1)}.cls-2{fill:#fff}
         </style>
     </defs>
-    <g id="Grupo_680" transform="translate(59 -66)">
+    <g id="Grupo_680" transform="translate(197.304 -66)">
         <g id="Grupo_367" transform="translate(2745 3915)">
             <circle id="Elipse_77" cx="103.5" cy="103.5" r="103.5" class="cls-1" transform="translate(-1141 -2030)"/>
             <circle id="Elipse_78" cx="69" cy="69" r="69" class="cls-2" transform="translate(-1106 -1995)"/>
         </g>
-        <path id="Trazado_1079" d="M0 0h1920v525.024s-175.241 254.033-417.8 460.023C1335.842 1126.322 1138.215 1245 943.334 1245 463.334 1245 0 757.879 0 757.879z" class="cls-1" transform="translate(0 66)"/>
+        <path id="Trazado_1079" d="M-197.3 0h2382.149v544.986s-440.09 234.071-682.649 440.061C1335.842 1126.322 1138.215 1245 943.334 1245c-480 0-1140.634-494.006-1140.634-494.006z" class="cls-1" transform="translate(0 66)"/>
         <g id="Grupo_365" transform="translate(1082 3732)">
             <circle id="Elipse_77-2" cx="191" cy="191" r="191" class="cls-1" transform="translate(-1141 -2030)"/>
             <circle id="Elipse_78-2" cx="126" cy="126" r="126" class="cls-2" transform="translate(-1076 -1965)"/>

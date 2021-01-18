@@ -4,66 +4,97 @@
 <mat-dialog-content>
   <form [formGroup]="form" novalidate autocomplete="off">
     <div fxLayout="row">
-      <div class="item" fxFlex="30">
+      <div class="item" fxFlex="25">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Nombre</mat-label>
           <input matInput type="text" formControlName="name" placeholder="Nombre">
           <app-validator [form]="form" name="name"></app-validator>
         </mat-form-field>
       </div>
-      <div class="item" fxFlex="70">
+      <div class="item" fxFlex="45">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Descripción</mat-label>
           <input matInput formControlName="description" placeholder="Descripción">
           <app-validator [form]="form" name="description"></app-validator>
         </mat-form-field>
       </div>
+      <div *ngIf="data?.url === 'types'" class="item" fxFlex="30">
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label class="label">Maestra</mat-label>
+          <input matInput formControlName="masterReference" placeholder="Maestra" [matAutocomplete]="masterAutoCom">
+          <app-validator [form]="form" name="masterReference"></app-validator>
+            <mat-autocomplete autoActiveFirstOption #masterAutoCom="matAutocomplete">
+            <mat-option *ngFor="let master of masters" [value]="master">
+              {{master}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div *ngIf="data?.url !== 'types'" class="item" fxFlex="30">
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label class="label">Tipo</mat-label>
+          <input  matInput type="text" formControlName="type" placeholder="Tipo" [matAutocomplete]="auto">
+          <app-validator [form]="form" name="type"></app-validator>
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let type of types" [value]="type.name">
+              {{type.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
     </div>
     <div fxLayout="row">
-      <div class="item" fxFlex="30">
+      <div class="item" fxFlex="25">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Fecha de creación</mat-label>
           <input matInput type="date" formControlName="createdAt" placeholder="Fecha de creación" readonly>
         </mat-form-field>
       </div>
-      <div class="item" fxFlex="30">
+      <div class="item" fxFlex="25">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Fecha de modificación</mat-label>
           <input matInput type="date" formControlName="updatedAt" placeholder="Fecha de modificación" readonly>
         </mat-form-field>
       </div>
-      <div class="item" fxFlex="40">
+      <div class="item" fxFlex="25">
         <mat-form-field floatLabel="always" appearance="none">
-          <mat-label class="label">Tipo</mat-label>
-          <input matInput type="text" formControlName="type" placeholder="Tipo">
-          <app-validator [form]="form" name="type"></app-validator>
+          <mat-label class="label">Estado</mat-label>
+          <!-- <mat-slide-toggle formControlName="status"></mat-slide-toggle> -->
+          <mat-button-toggle-group class="button-toggle__container" formControlName="status">
+            <mat-button-toggle [value]="true">
+              Activo
+            </mat-button-toggle>
+            <mat-button-toggle [value]="false">
+              Inactivo
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+          <input matInput hidden>
+        </mat-form-field>
+      </div>
+      <div class="item" fxFlex="25">
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label class="label">SubMenú</mat-label>
+          <mat-button-toggle-group class="button-toggle__container" formControlName="submenu">
+            <mat-button-toggle [value]="true">
+              Sí
+            </mat-button-toggle>
+            <mat-button-toggle [value]="false">
+              No
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+          <input matInput hidden>
         </mat-form-field>
       </div>
     </div>
     <div *ngIf="manage_images.includes(data?.url)" fxLayout="row">
-      <div class="item" fxFlex="30">
+      <div class="item" fxFlex="50">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">URL</mat-label>
           <input matInput type="text" formControlName="url" placeholder="Url del módulo">
           <app-validator [form]="form" name="url"></app-validator>
         </mat-form-field>
       </div>
-      <div class="item" fxFlex="30">
-        <mat-form-field floatLabel="always" appearance="none">
-          <mat-label class="label">Estado</mat-label>
-          <!-- <mat-slide-toggle formControlName="status"></mat-slide-toggle> -->
-          <mat-button-toggle-group class="button-toggle__container" formControlName="status">
-            <mat-button-toggle [value]="true">
-              Activar
-            </mat-button-toggle>
-            <mat-button-toggle [value]="false">
-              Inactivar
-            </mat-button-toggle>
-          </mat-button-toggle-group>
-          <input matInput hidden>
-        </mat-form-field>
-      </div>
-      <div class="item file__container" fxFlex="38.5">
+      <div class="item file__container" fxFlex="49">
         <button class="file__button" (click)="fileInput.click()">
           <mat-icon class="file__icon">attach_file</mat-icon>
           <input #fileInput type="file" (change)="onFileChange($event)" style="display:none;" />

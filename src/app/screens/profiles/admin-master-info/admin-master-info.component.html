@@ -1,7 +1,10 @@
-
 <div>
+  <button routerLink="/admin-profiles" class="button-back" mat-mini-fab aria-label="back button"></button>
   <div class="header background">
-    <h1 class="title">Administrar Maestros</h1>
+    <div class="title__container">
+      <h1 class="main-title">Administrar Maestros</h1>
+      <!-- <p class="main-subtitle">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident minima ex, incidunt tempora sit, Provident minima ex, incidunt tempora sit</p> -->
+    </div>
   </div>
   <button class="button-back" routerLink="/admin-profiles" mat-icon-button>
     <mat-icon class="button-back__icon"></mat-icon>
@@ -18,17 +21,27 @@
           </mat-select>
         </mat-form-field>
       </div>
+      <!-- <div class="item" fxFlex="20" *ngIf="masterSeleted !== ''">
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label class="label">Seleccionar Tipo</mat-label>
+          <mat-select [(ngModel)]="typeSeleted" (selectionChange)="getDataType()">
+            <mat-option *ngFor="let type of types" [value]="type.masterReference">
+              {{ type.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div> -->
     </div>
     <div>
 
       <div class="mat-elevation-z8">
         <div class="button__container">
-          <div class="layer2" (click)="openDialog()">
+          <div *ngIf="masterSeleted !== ''" class="layer2" (click)="openDialog()">
             <div mat-button class="layer">
               <mat-icon>add</mat-icon>
             </div>
-              Añadir
-            </div>
+            Añadir
+          </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="center none">
           <table fxFlex="100" [dataSource]="dataSource" matSort mat-table>
@@ -36,6 +49,12 @@
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef> Nombre </th>
               <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- Reference Column -->
+            <ng-container matColumnDef="reference">
+              <th mat-header-cell *matHeaderCellDef> Maestra </th>
+              <td mat-cell *matCellDef="let element"> {{element.masterReference}} </td>
             </ng-container>
 
             <!-- Description Column -->
@@ -53,13 +72,13 @@
 
             <!-- CreatedAt Column -->
             <ng-container matColumnDef="createdAt">
-              <th mat-header-cell *matHeaderCellDef> Fecha de creación </th>
+              <th mat-header-cell *matHeaderCellDef matSort> Fecha de creación </th>
               <td mat-cell *matCellDef="let element"> {{element.createdAt | date: 'dd/MM/yyyy' }} </td>
             </ng-container>
 
             <!-- UpdatedAt Column -->
             <ng-container matColumnDef="updatedAt">
-              <th mat-header-cell *matHeaderCellDef>Fecha de actualización </th>
+              <th mat-header-cell *matHeaderCellDef matSort>Fecha de actualización </th>
               <td mat-cell *matCellDef="let element"> {{element.updatedAt | date: 'dd/MM/yyyy' }} </td>
             </ng-container>
 
@@ -70,6 +89,16 @@
                 <div>
                   <label class="chip__status"
                     [ngClass]="{'chip__status--active':element.status,'chip__status--inactive':!element.status}">{{element.status ? 'Activo' : 'Inactivo'}}</label>
+                </div>
+              </td>
+            </ng-container>
+            <!-- subMenu Column -->
+            <ng-container matColumnDef="submenu">
+              <th mat-header-cell *matHeaderCellDef> SubMenu </th>
+              <td mat-cell *matCellDef="let element">
+                <div>
+                  <label class="chip__status"
+                    [ngClass]="{'chip__status--active':element.submenu,'chip__status--inactive':!element.submenu}">{{element.submenu ? 'Sí' : 'No'}}</label>
                 </div>
               </td>
             </ng-container>
@@ -85,8 +114,8 @@
             </ng-container>
 
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
+            <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();"></tr>
           </table>
         </div>
         <div fxLayout="row" fxLayoutAlign="center none">
