@@ -33,7 +33,7 @@
       <div *ngIf="data?.url !== 'types'" class="item" fxFlex="30">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Tipo</mat-label>
-          <input  matInput type="text" formControlName="type" placeholder="Tipo" [matAutocomplete]="auto">
+          <input (blur)="inputTypeValidator()" matInput type="text" formControlName="type" placeholder="Tipo" [matAutocomplete]="auto">
           <app-validator [form]="form" name="type"></app-validator>
           <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
             <mat-option *ngFor="let type of types" [value]="type.name">
@@ -74,7 +74,7 @@
       <div class="item" fxFlex="25">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">SubMenú</mat-label>
-          <mat-button-toggle-group class="button-toggle__container" formControlName="submenu">
+          <mat-button-toggle-group [disabled]="submenuDisabled()" class="button-toggle__container" formControlName="submenu">
             <mat-button-toggle [value]="true">
               Sí
             </mat-button-toggle>

@@ -20,7 +20,7 @@ export class MasterInfoService {
     console.log(param);
     const url = param.name[0].name;
     return this.http
-      .get<Master>(`${environment.API_MUNDO_SETI}/types?masterReference=${url}`)
+      .get<Master>(`${environment.API_MUNDO_SETI}/types?masterReference=${url}&status=true`)
       .pipe( pluck('payload'))
       .toPromise();
   }

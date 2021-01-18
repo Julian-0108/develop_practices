@@ -3,8 +3,8 @@
         <img src="../../../assets/images/homeImage.png">
         <div class="description__content">
             <p class="description__content--tittle">Bienvenido a Mundo Seti</p>
-            <p class="description__content--text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime, consequuntur assumenda</p>
-            <button mat-button (click)="scroll()" class="button">Continuar</button>
+            <p class="description__content--text">Nuestro portal de gestión para el talento SETI. Aquí encontrarás el acceso a nuestra aplicación de Sitios, Perfiles de cargo y nuestra Universidad SETI</p>
+            <button mat-button (click)="scroll()" class="button button__hover">Continuar</button>
         </div>
     </div>
     <div #cardsHTML class="separator">
@@ -12,7 +12,7 @@
         <div class="separator__circle"></div>
         <div class="separator__circle"></div>
     </div>
-    <p class="text">Lorem ipsum, dolor sit amet Maxime, consequuntur assumenda</p>
+    <!-- <p class="text">Selecciona una opción de las siguientes, para continuar explorando.</p> -->
     <div class="cards">
         <ng-container *ngFor="let card of cards">
             <mat-card [routerLink]="card.url" *ngIf="card.status" matRipple matRippleCentered="centered" matRippleColor="#ff000019">
