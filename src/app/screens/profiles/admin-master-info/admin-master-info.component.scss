@@ -1,6 +1,6 @@
 .background {
     background-color: #fff !important;
-    background-image: url('../../../../assets/images/adminmasters_background.svg');
+    background-image: url('../../../../assets/images/background_adminMasters.svg');
     background-size: 90% 100%;
     background-position: top;
 }
@@ -32,9 +32,83 @@ button {
     margin: 0 8px 8px 0;
 }
 
-.select__input {
-
+.chip__status {
+  font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 9px;
 }
+
+.chip__status--active {
+background-color: #D1EAD2;
+color: #68BC6C;
+padding: 3px 14px;
+}
+.chip__status--inactive {
+background-color: #F5CFCC;
+color: #E06055;
+}
+
+.layer {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  background: #de1920;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.layer2 {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  border: solid 1px #de1920;
+  font-size: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin: 10px 10px 0 0;
+}
+
+.layer2:hover {
+  justify-content: space-between;
+  animation-name: hover;
+  animation-duration: 100ms;
+  animation-delay: 100ms;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes hover {
+  0% {
+    width: 30px;
+  }
+
+  50% {
+    width: 50px;
+  }
+
+  100% {
+    width: 75px;
+    border-radius: 17px;
+    font-size: 13px;
+    font-weight: 550;
+    color: #de1920;
+    padding: 0 12px 0 0;
+  }
+}
+
+.button__container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+
+
+
 
 
 

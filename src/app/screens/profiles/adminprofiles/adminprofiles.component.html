@@ -1,12 +1,19 @@
-<div class="container">
+<body class="main-container">
+  <button routerLink="/home" class="button-back" mat-mini-fab
+  aria-label="back button">
+</button>
+<div fxLayout="column" >
+  <div class="title__container">
     <h1 class="main-title">Administrar Perfilamiento</h1>
-    <h3 class="main-subtitle">Elige una opción para continuar con el proceso</h3>
+    <p class="main-subtitle">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident minima ex, incidunt tempora sit, Provident minima ex, incidunt tempora sit</p>
+  </div>
+  <div class="card__container" fxLayout="row wrap" fxLayoutAlign="center center">
+      <mat-card *ngFor="let card of cards" [routerLink]="card.url" class="card">
+          <img class="card__image" src="{{ API_MUNDO_SETI }}{{ card.imagePath }}" [alt]="card.name">
+          <h1 class="card__title">{{ card.name }}</h1>
+          <p class="card__description"> {{ card.description  }}</p>
+      </mat-card>
+  </div>
 </div>
 
-<div class="card__container" fxLayout="row wrap" fxLayoutAlign="center center">
-    <mat-card *ngFor="let card of cards" [routerLink]="card.url" class="card">
-        <img class="card__image" src="{{ API_MUNDO_SETI }}{{ card.imagePath }}" [alt]="card.name">
-        <h1 class="card__title">{{ card.name }}</h1>
-        <p class="card__description"> {{ card.description  }}</p>
-    </mat-card>
-</div>
+</body>

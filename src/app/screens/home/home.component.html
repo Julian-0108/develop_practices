@@ -15,7 +15,7 @@
     <p class="text">Lorem ipsum, dolor sit amet Maxime, consequuntur assumenda</p>
     <div class="cards">
         <ng-container *ngFor="let card of cards">
-            <mat-card [routerLink]="card.url" *ngIf="card.status" matRipple matRippleCentered="centered" matRippleColor="#ce536285">
+            <mat-card [routerLink]="card.url" *ngIf="card.status" matRipple matRippleCentered="centered" matRippleColor="#ff000019">
                 <img mat-card-image src="{{ API_MUNDO_SETI }}{{ card.imagePath }}">
                 <mat-card-content>
                     <mat-card-title>{{card.name}}</mat-card-title>

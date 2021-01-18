@@ -6,7 +6,6 @@ import { MasterInfoService } from '../services/master-info.service';
 import { MasterInfoDialog } from '../interfaces/master-info-dialog';
 import { NotificationService } from '@shared/components/notification/services/notification.service';
 
-
 @Component({
   selector: 'app-master-info',
   templateUrl: './master-info.component.html',
@@ -16,9 +15,11 @@ export class MasterInfoComponent implements OnInit {
   form!: FormGroup;
 
   /* Rutas que manejan imagenes */
-  public manage_images = ['modules','base-teams-categories'];//,'base-teams-categories'
+  public manage_images = ['modules', 'base-teams-categories'];
   private archivo!: string;
   private readonly DATE_FORM_CONTROL = 'yyyy-MM-dd';
+  types: any;
+  masters: any;
 
   constructor(
     private datePipe: DatePipe,
@@ -32,17 +33,46 @@ export class MasterInfoComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.createForm();
     this.initForm();
+    this.fillTypesList();
+    this.fillMastersList();
+  }
+
+  inputTypeValidator() {
+    if (!this.types.includes(this.form.get('type')?.value)) {
+      this.form.get('type')?.setErrors({ error: 'El tipo no existe' });
+    }
+  }
+
+  async fillMastersList() {
+    const x = await this.masterInfoService.getData(this.data.url);
+    let masterReferenceArray: any = [];
+    x.forEach((item: any) => {
+      if (!masterReferenceArray.includes(item.masterReference)) {
+        masterReferenceArray = [...masterReferenceArray, item.masterReference];
+      }
+    });
+    this.masters =masterReferenceArray;
+  }
+  fillTypesList() {
+    this.masterInfoService
+      .getTypes(this.data)
+      .then((response: any) => (this.types = response))
+      .catch((err) => {});
   }
   createForm(): FormGroup {
     return this.formBuilder.group({
       _id: new FormControl(),
       name: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
+      description: new FormControl({ value: '', disabled: this.data?.url === 'types' }, [
+        Validators.required,
+      ]),
+      masterReference: new FormControl(''),
       createdAt: new FormControl({ value: '', disabled: true }),
       updatedAt: new FormControl({ value: '', disabled: true }),
       url: new FormControl(),
       type: new FormControl('', [Validators.required]),
       status: new FormControl('', [Validators.required]),
+      submenu: new FormControl('', [Validators.required]),
       imagePath: new FormControl({ value: '', disabled: true }),
     });
   }
@@ -60,6 +90,7 @@ export class MasterInfoComponent implements OnInit {
     }
 
     this.form.get('status')?.patchValue(true);
+    this.form.get('submenu')?.patchValue(false);
 
     this.form
       .get('createdAt')
@@ -94,6 +125,8 @@ export class MasterInfoComponent implements OnInit {
   }
 
   addRegisterToMaster() {
+    console.log(this.data.url);
+    console.log(this.form.value);
     this.masterInfoService
       .addRegisterToMaster(this.data.url, this.form.value)
       .then((response: any) => this.showNotification(response))
@@ -139,6 +172,7 @@ export class MasterInfoComponent implements OnInit {
   onSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+
       return;
     }
 
@@ -146,12 +180,12 @@ export class MasterInfoComponent implements OnInit {
       this.manage_images.includes(this.data.url)
         ? this.updateRegisterWithImageToMaster()
         : this.updateRegisterToMaster();
+
       return;
     }
 
     this.manage_images.includes(this.data.url)
-    ? this.addRegisterWithImageToMaster()
-    : this.addRegisterToMaster()
-
+      ? this.addRegisterWithImageToMaster()
+      : this.addRegisterToMaster();
   }
 }

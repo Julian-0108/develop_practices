@@ -16,8 +16,19 @@ export class MasterInfoService {
       .pipe( pluck('payload') )
       .toPromise();
   }
+  getTypes(param: any): Promise<any>{
+    console.log(param);
+    const url = param.name[0].name;
+    return this.http
+      .get<Master>(`${environment.API_MUNDO_SETI}/types?masterReference=${url}`)
+      .pipe( pluck('payload'))
+      .toPromise();
+  }
 
   addRegisterToMaster(url: string, register: any) {
+    console.log(environment.API_MUNDO_SETI, url);
+    console.log(url,register );
+
     return this.http.post(`${environment.API_MUNDO_SETI}/${url}`, register).toPromise();
   }
 
@@ -25,8 +36,6 @@ export class MasterInfoService {
     return this.http.put(`${environment.API_MUNDO_SETI}/${url}/${id}`, register).toPromise();
   }
 
-
-  
   addRegisterToMasterWithImages(url: string, register: any) {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();

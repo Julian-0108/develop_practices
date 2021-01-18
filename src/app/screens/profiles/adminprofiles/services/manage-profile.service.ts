@@ -12,7 +12,7 @@ export class ManageProfileService {
 
   getData(): Promise<any>{
     return this.http
-      .get(`${environment.API_MUNDO_SETI}/modules?type=manage-profiles`)
+      .get(`${environment.API_MUNDO_SETI}/modules?type=manage-profiles&status=true`)
       .pipe( pluck('payload') )
       .toPromise();
   }
