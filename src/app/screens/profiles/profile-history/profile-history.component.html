@@ -1,7 +1,10 @@
+<button routerLink="/home" class="button-back" mat-mini-fab aria-label="back button">
+</button>
 <div fxLayout="row" fxLayoutAlign="space-between">
-  <div fxFlex="50">
-    <mat-vertical-stepper #stepper>
-      <mat-step *ngFor="let step of history" (click)="onStepClicked(step.id)">
+  <div fxFlex="50" class="stepper__container">
+    <mat-vertical-stepper #stepper [disableRipple]="true" (selectionChange)="onStepClicked($event)">
+      <mat-step *ngFor="let step of history">
+        <ng-template matStepLabel class="step__label">{{showDate(step.date)}}</ng-template>
         <mat-card class="history">
           <div class="history__information">
             <p class="history-information__pagraph">
@@ -26,6 +29,7 @@
     </mat-vertical-stepper>
   </div>
   <div fxFlex="50">
+    <h1>Previsualización</h1>
     <h1>{{historyId}}</h1>
   </div>
 </div>

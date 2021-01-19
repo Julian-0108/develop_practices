@@ -6,6 +6,10 @@
 ::ng-deep .mat-step-header .mat-step-icon-selected {
   background-color: #de1920;
   border-style: none;
+  background-image: url(../../../../assets/images/marca-de-verificacion.svg);
+  background-size: 14px;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 ::ng-deep .mat-step-header .mat-step-icon-state-edit {
@@ -34,5 +38,43 @@
 .history-information__pagraph {
   font-size: 12px;
   color: #959595;
-
 }
+::ng-deep .mat-step-label{
+  color: #b7b7b7 !important;
+  font-weight: 500;
+  font-size: 15px;
+}
+::ng-deep .mat-step-label-selected{
+  color: #707070 !important;
+  font-weight: 600;
+}
+::ng-deep .mat-step-header:hover{
+background-color: transparent
+}
+
+.stepper__container {
+  margin: 3em 3em;
+  overflow-y: scroll;
+  height: 75vh;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #de1920;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #8e8e8e;
+}
+

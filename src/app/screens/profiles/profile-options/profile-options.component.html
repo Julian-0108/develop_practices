@@ -19,19 +19,19 @@
         <div [ngStyle]="{'display': cardClicked === item._id ? 'block' : 'none'}" fxLayout="column"
           fxLayoutAlign="start start">
 
-          <div *ngFor="let profile of item.content">
+          <div *ngFor="let profile of item.profiles">
             <button (click)="optionClicked = profile._id" [id]="profile._id" class="option" mat-button>
-              <ng-container *ngIf="profile.levels.length !== 0">
+              <ng-container *ngIf="profile.level.length !== 0">
                 <mat-icon [ngStyle]="{'display': optionClicked !== profile._id ? 'none' : 'inline'}" aria-hidden="false"
                   class="option__icon" aria-label="row down">keyboard_arrow_down</mat-icon>
                 <mat-icon [ngStyle]="{'display': optionClicked === profile._id ? 'none' : 'inline'}" aria-hidden="false"
                   class="option__icon" aria-label="row right">keyboard_arrow_right</mat-icon>
               </ng-container>
-              {{profile.profile}}
+              {{profile.charge}}
             </button>
             <div class="pannel__level-buttons" *ngIf="optionClicked === profile._id" fxLayout="row"
               fxLayoutAlign="start center">
-              <button type="button" class="panel__level-button" *ngFor="let level of profile.levels"
+              <button type="button" class="panel__level-button" *ngFor="let level of profile.level"
                 mat-button>{{level}}</button>
             </div>
           </div>

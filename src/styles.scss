@@ -380,9 +380,9 @@ mat-dialog-actions {
 
 .dialog__title {
     text-align: center;
-    background-color: var(--primary-color);
+    background-color: #fff;
     font-size: 20px;
-    color: white;
+    color: var(--primary-color);
 }
 
 // Loader spinner
