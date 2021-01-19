@@ -1,11 +1,18 @@
 .error__icon {
     position: absolute;
-    top: 13px;
+    top: 8px;
     left: 100%;
     color: #f44336ad;
     font-size: 20px;
     // margin: 0 -11px;
     margin: 0 -20px;
+}
+
+.error__text {
+    color: #f44336;
+    font-size: 12px;
+    position: relative;
+    top: 2px;
 }
 
 .error__text {

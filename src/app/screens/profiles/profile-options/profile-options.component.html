@@ -1,18 +1,20 @@
 <body class="background">
-
-  <button *ngIf="showBackButton" class="button-back__button" (click)="onClickbuttonBack()" mat-icon-button
+  <button *ngIf="showBackButton" (click)="onClickbuttonBack()" class="button-back" mat-mini-fab
     aria-label="back button">
-    <mat-icon class="button-back__icon" svgIcon="arrow_back"></mat-icon>
   </button>
-  <div class="container" [ngStyle]="{'padding': showBackButton ? '0 0 0' : '3em 0 0'}">
+  <button *ngIf="!showBackButton" routerLink="/admin-profiles" class="button-back" mat-mini-fab
+    aria-label="back button">
+  </button>
+  <div class="container" >
     <h1 class="title">{{title}}</h1>
     <h3 class="subtitle">{{description}}</h3>
   </div>
 
   <div class="card__container" fxLayout="column" fxLayoutAlign="center center">
     <div *ngFor="let items1 of rowsArray" fxLayout="row">
-      <mat-card (click)="onCardClicked(item)" [ngClass]="{'card--open': cardClicked === item._id && !item.sections}"
-        fxLayout="column" fxLayoutAlign="start center" class="card" *ngFor="let item of items1">
+      <mat-card #card (click)="onCardClicked(item)"
+        [ngClass]="{'card--open': cardClicked === item._id && !item.submenu}" fxLayout="column"
+        fxLayoutAlign="start center" class="card" *ngFor="let item of items1">
         <h1 class="card__title">{{item.name}}</h1>
         <div [ngStyle]="{'display': cardClicked === item._id ? 'block' : 'none'}" fxLayout="column"
           fxLayoutAlign="start start">
@@ -35,8 +37,8 @@
           </div>
         </div>
 
-        <img [ngClass]="{'card__image--open': cardClicked === item._id && !item.sections}" class="card__image"
-        src="{{ API_MUNDO_SETI }}{{ item.imagePath }}" alt="">
+        <img [ngClass]="{'card__image--open': cardClicked === item._id && !item.submenu}" class="card__image"
+          src="{{ API_MUNDO_SETI }}{{ item.imagePath }}" alt="">
       </mat-card>
     </div>
   </div>

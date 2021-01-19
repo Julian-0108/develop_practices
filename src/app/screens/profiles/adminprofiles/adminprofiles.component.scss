@@ -1,14 +1,26 @@
-.container {
-    padding-top: 5px;
-    text-align: center;
-    background-image: url('../../../../assets/images/adminprofiles_background.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    height: 100px;
+
+.card {
+  height: 18em;
 }
 
 .card__container {
     margin-top: 2em;
     padding: 0 0 3em;
 }
+
+.main-container {
+  background-color: #fff !important;
+  background-image: url('../../../../assets/images/BACKGROUND_MANAGEPROFILE.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: calc(100vh - (45px + 30px));
+
+}
+
+.card:hover {
+  background-color: #f9eeee;
+  transition: all 0.5s;
+}
+
+
