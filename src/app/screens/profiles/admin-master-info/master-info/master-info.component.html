@@ -56,10 +56,10 @@
           <input matInput type="date" formControlName="updatedAt" placeholder="Fecha de modificación" readonly>
         </mat-form-field>
       </div>
+
       <div class="item" fxFlex="25">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Estado</mat-label>
-          <!-- <mat-slide-toggle formControlName="status"></mat-slide-toggle> -->
           <mat-button-toggle-group class="button-toggle__container" formControlName="status">
             <mat-button-toggle [value]="true">
               Activo
@@ -71,6 +71,7 @@
           <input matInput hidden>
         </mat-form-field>
       </div>
+
       <div class="item" fxFlex="25">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">SubMenú</mat-label>
