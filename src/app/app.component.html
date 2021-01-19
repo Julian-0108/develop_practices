@@ -1,10 +1,15 @@
 <div class="screen">
-    <app-toolbar>
-    </app-toolbar>
 
-    <router-outlet>
-    </router-outlet>
+    <div class="head">
+        <app-toolbar></app-toolbar>
+    </div>
 
-    <app-footer class="footer">
-    </app-footer>
+    <div class="body">
+        <router-outlet></router-outlet>
+    </div>
+
+    <div class="footer">
+        <app-footer></app-footer>
+    </div>
+
 </div>

@@ -1,27 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
+import { Title } from '@angular/platform-browser';
 
 
-export interface Perfiles {
-  perfil: string;
-  nivel: string;
-  fechaCreacion: string;
-  fechaActualizacion: string;
-  estado: boolean;
+export interface table {
+  profileName: string;
+  level: string;
+  createdAt: string;
+  updatedAt: string;
+  status: boolean;
 }
 
-const ELEMENT_DATA: Perfiles[] = [
-  {perfil: 'profesional en formacion' , nivel: 'no aplica', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: false},
-  {perfil: 'consultor junior' , nivel: 'N1', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: true},
-  {perfil: 'consultor junior' , nivel: 'N2', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: false},
-  {perfil: 'consultor junior' , nivel: 'N3', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: true},
-  {perfil: 'consultor especialista' , nivel: 'N1', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: true},
-  {perfil: 'consultor especialista' , nivel: 'N2', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: false},
-  {perfil: 'consultor especialista' , nivel: 'N3', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: true},
-  {perfil: 'consultor senior' , nivel: 'N1', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: true},
-  {perfil: 'consultor senior' , nivel: 'N2', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: false},
-  {perfil: 'consultor senior' , nivel: 'N3', fechaCreacion: '21/12/2020', fechaActualizacion: '21/12/2021', estado: true},
+const ELEMENT_DATA: table[] = [
+  {profileName: 'profesional en formacion' , level: 'no aplica', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: false},
+  {profileName: 'consultor junior' , level: 'N1', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: true},
+  {profileName: 'consultor junior' , level: 'N2', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: false},
+  {profileName: 'consultor junior' , level: 'N3', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: true},
+  {profileName: 'consultor especialista' , level: 'N1', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: true},
+  {profileName: 'consultor especialista' , level: 'N2', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: false},
+  {profileName: 'consultor especialista' , level: 'N3', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: true},
+  {profileName: 'consultor senior' , level: 'N1', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: true},
+  {profileName: 'consultor senior' , level: 'N2', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: false},
+  {profileName: 'consultor senior' , level: 'N3', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: true},
 ];
 
 @Component({
@@ -34,10 +35,12 @@ export class ManageBaseTeamsComponent implements OnInit {
 
   isLoadingResults = false;
 
-  displayedColumns: string[] = ['perfiles', 'niveles', 'fecha-creacion', 'fecha-actualizacion', 'estado', 'editar'];
+  displayedColumns: string[] = ['profiles', 'levels', 'created-at', 'updated-at', 'status', 'edit'];
   dataSource = ELEMENT_DATA;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private title: Title) {
+    this.title.setTitle("Mundo SETI - administrar equipos base");
+  }
   
   ngOnInit(): void {
   }
