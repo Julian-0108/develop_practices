@@ -7,22 +7,22 @@ import { Title } from '@angular/platform-browser';
 export interface table {
   profileName: string;
   level: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
   status: boolean;
 }
 
 const ELEMENT_DATA: table[] = [
-  {profileName: 'profesional en formacion' , level: 'no aplica', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: false},
-  {profileName: 'consultor junior' , level: 'N1', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: true},
-  {profileName: 'consultor junior' , level: 'N2', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: false},
-  {profileName: 'consultor junior' , level: 'N3', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: true},
-  {profileName: 'consultor especialista' , level: 'N1', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: true},
-  {profileName: 'consultor especialista' , level: 'N2', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: false},
-  {profileName: 'consultor especialista' , level: 'N3', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: true},
-  {profileName: 'consultor senior' , level: 'N1', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: true},
-  {profileName: 'consultor senior' , level: 'N2', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: false},
-  {profileName: 'consultor senior' , level: 'N3', createdAt: '21/12/2020', updatedAt: '21/12/2021', status: true},
+  {profileName: 'profesional en formacion' , level: 'no aplica', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: false},
+  {profileName: 'consultor junior' , level: 'N1', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: true},
+  {profileName: 'consultor junior' , level: 'N2', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: false},
+  {profileName: 'consultor junior' , level: 'N3', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: true},
+  {profileName: 'consultor especialista' , level: 'N1', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: true},
+  {profileName: 'consultor especialista' , level: 'N2', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: false},
+  {profileName: 'consultor especialista' , level: 'N3', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: true},
+  {profileName: 'consultor senior' , level: 'N1', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: true},
+  {profileName: 'consultor senior' , level: 'N2', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: false},
+  {profileName: 'consultor senior' , level: 'N3', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: true},
 ];
 
 @Component({

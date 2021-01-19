@@ -21,7 +21,7 @@
                             ejemplo
                         </mat-option>
                     </mat-select>
-                    <app-validator [form]="form" name="level"></app-validator>
+                    <app-validator [form]="form" name="level" [otherIcon]="true"></app-validator>
                 </mat-form-field>
             </div>
             <div fxFlex="50" class="item">
@@ -30,7 +30,7 @@
                     <mat-select formControlName="academicFormation">
                         <mat-option value="Formación Acadeica">Ejemplo</mat-option>
                     </mat-select>
-                    <app-validator [form]="form" name="academicFormation"></app-validator>
+                    <app-validator [form]="form" name="academicFormation" [otherIcon]="true"></app-validator>
                 </mat-form-field>
             </div>
         </div>
@@ -42,7 +42,7 @@
                     <mat-select formControlName="certifications">
                         <mat-option value="Certificaciones Requeridas">Ejemplo</mat-option>
                     </mat-select>
-                    <app-validator [form]="form" name="certifications"></app-validator>
+                    <app-validator [form]="form" name="certifications" [otherIcon]="true"></app-validator>
                 </mat-form-field>
             </div>
             <div fxFlex="25" class="item">
@@ -51,7 +51,7 @@
                     <mat-select formControlName="workExperience">
                         <mat-option value="Experiencia Profesional">Ejemplo</mat-option>
                     </mat-select>
-                    <app-validator [form]="form" name="workExperience"></app-validator>
+                    <app-validator [form]="form" name="workExperience" [otherIcon]="true"></app-validator>
                 </mat-form-field>
             </div>
             <div fxFlex="25" class="item">
@@ -60,7 +60,7 @@
                     <mat-select formControlName="areaExperience">
                         <mat-option value="Exp Específica en el Cargo">Ejemplo</mat-option>
                     </mat-select>
-                    <app-validator [form]="form" name="areaExperience"></app-validator>
+                    <app-validator [form]="form" name="areaExperience" [otherIcon]="true"></app-validator>
                 </mat-form-field>
             </div>
         </div>
@@ -72,7 +72,7 @@
                     <mat-select formControlName="areaSkills">
                         <mat-option value="Conocimientos Específicos del Cargo">Ejemplo</mat-option>
                     </mat-select>
-                    <app-validator [form]="form" name="areaSkills"></app-validator>
+                    <app-validator [form]="form" name="areaSkills" [otherIcon]="true"></app-validator>
                 </mat-form-field>
             </div>
             <div fxFlex="40" class="item">
@@ -81,7 +81,32 @@
                     <mat-select formControlName="roleFunctions">
                         <mat-option value="Funciones del Rol">Ejemplo</mat-option>
                     </mat-select>
-                    <app-validator [form]="form" name="roleFunctions"></app-validator>
+                    <app-validator [form]="form" name="roleFunctions" [otherIcon]="true"></app-validator>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="10px">
+            <div fxFlex="30" class="item">
+                <mat-form-field appearance="none" floatLabel="always">
+                    <mat-label>Creado el</mat-label>
+                    <input formControlName="createdAt" matInput type="date" readonly>
+                </mat-form-field>
+            </div>
+            <div fxFlex="30" class="item">
+                <mat-form-field appearance="none" floatLabel="always">
+                    <mat-label>Actualizado el</mat-label>
+                    <input formControlName="updatedAt" matInput type="date" readonly>
+                </mat-form-field>
+            </div>
+            <div fxFlex="40" class="item">
+                <mat-form-field appearance="none" floatLabel="always">
+                    <mat-label>Estado</mat-label>
+                    <mat-button-toggle-group formControlName="status">
+                        <mat-button-toggle [value]="true">Activo</mat-button-toggle>
+                        <mat-button-toggle [value]="false">Inactivo</mat-button-toggle>
+                    </mat-button-toggle-group>
+                    <input matInput hidden>
                 </mat-form-field>
             </div>
         </div>

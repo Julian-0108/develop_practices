@@ -83,26 +83,25 @@ body {
 /* Buttons */
 
 .button {
-  height: 35px;
-  padding: 0 2em !important;
-  border-radius: 20px !important;
+    height: 35px;
+    padding: 0 2em !important;
+    border-radius: 20px !important;
 }
 
 .button--accept {
-  background-color: var(--primary-color) !important;
-  color: white !important;
-  height: 30px;
-  padding: 0 2em !important;
-  border-radius: 20px !important;
-
+    background-color: var(--primary-color) !important;
+    color: white !important;
+    height: 30px;
+    padding: 0 2em !important;
+    border-radius: 20px !important;
 }
 
 .button--cancel {
-  background-color: var(--secundary-color) !important;
-  color: var(--primary-color) !important;
-  height: 30px;
-  padding: 0 2em !important;
-  border-radius: 20px !important;
+    background-color: var(--secundary-color) !important;
+    color: var(--primary-color) !important;
+    height: 30px;
+    padding: 0 2em !important;
+    border-radius: 20px !important;
 }
 
 
@@ -118,12 +117,12 @@ body {
 }
 
 .title__container {
-  padding-top: 5em;
-  text-align: center;
-  width: 40%;
-  align-self: center;
-  display: flex;
-  flex-direction: column;
+    padding-top: 5em;
+    text-align: center;
+    width: 40%;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .main-title {
@@ -217,12 +216,12 @@ mat-card:hover {
 }
 
 .card {
-  margin: 10px;
-  height: 15em;
-  border-radius: 10px !important;
-  padding: 12px !important;
-  outline: none;
-  // animation: 2000ms ease-out !important;
+    margin: 10px;
+    height: 15em;
+    border-radius: 10px !important;
+    padding: 12px !important;
+    outline: none;
+    // animation: 2000ms ease-out !important;
 }
 
 .card__title {
@@ -296,7 +295,7 @@ mat-form-field .mat-input-element:disabled {
 
 mat-form-field .mat-input-element,
 .mat-select {
-    margin-top: 5px;
+    margin-top: -1px;
     color: #707070 !important;
     padding-left: 2px;
     border-style: solid;
@@ -400,13 +399,11 @@ mat-dialog-actions {
 }
 
 .button-back {
-  background-image: url('assets/images/arrow_back.svg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  position: absolute !important;
-  top: 4em;
-  left: 1em;
+    background-image: url('assets/images/arrow_back.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute !important;
+    top: 4em;
+    left: 1em;
 }
-
-
