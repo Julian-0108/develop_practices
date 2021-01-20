@@ -83,25 +83,32 @@ body {
 /* Buttons */
 
 .button {
-    height: 35px;
-    padding: 0 2em !important;
-    border-radius: 20px !important;
+  height: 26px;
+  padding: 0 1em !important;
+  border-radius: 20px !important;
+  line-height: 0px !important;
+  width: 7em;
 }
 
 .button--accept {
-    background-color: var(--primary-color) !important;
-    color: white !important;
-    height: 30px;
-    padding: 0 2em !important;
-    border-radius: 20px !important;
+  background-color: var(--primary-color) !important;
+  color: white !important;
+  height: 26px;
+  padding: 0 1em !important;
+  border-radius: 20px !important;
+  line-height: 0px !important;
+  width: 7em;
+
 }
 
 .button--cancel {
-    background-color: var(--secundary-color) !important;
-    color: var(--primary-color) !important;
-    height: 30px;
-    padding: 0 2em !important;
-    border-radius: 20px !important;
+  background-color: var(--secundary-color) !important;
+  color: var(--primary-color) !important;
+  height: 26px;
+  padding: 0 1em !important;
+  border-radius: 20px !important;
+  line-height: 0px !important;
+  width: 7em;
 }
 
 
