@@ -19,19 +19,19 @@
         <div [ngStyle]="{'display': cardClicked === item._id ? 'block' : 'none'}" fxLayout="column"
           fxLayoutAlign="start start">
 
-          <div *ngFor="let profile of item.profiles">
-            <button (click)="optionClicked = profile._id" [id]="profile._id" class="option" mat-button>
-              <ng-container *ngIf="profile.level.length !== 0">
-                <mat-icon [ngStyle]="{'display': optionClicked !== profile._id ? 'none' : 'inline'}" aria-hidden="false"
+          <div *ngFor="let prof of item.profile">
+            <button (click)="optionClicked = prof.id" class="option" mat-button>
+              <ng-container *ngIf="prof.level.length !== 0">
+                <mat-icon [ngStyle]="{'display': optionClicked !== prof.id ? 'none' : 'inline'}" aria-hidden="false"
                   class="option__icon" aria-label="row down">keyboard_arrow_down</mat-icon>
-                <mat-icon [ngStyle]="{'display': optionClicked === profile._id ? 'none' : 'inline'}" aria-hidden="false"
+                <mat-icon [ngStyle]="{'display': optionClicked === prof.id ? 'none' : 'inline'}" aria-hidden="false"
                   class="option__icon" aria-label="row right">keyboard_arrow_right</mat-icon>
               </ng-container>
-              {{profile.charge}}
+              {{prof.name}}
             </button>
-            <div class="pannel__level-buttons" *ngIf="optionClicked === profile._id" fxLayout="row"
+            <div class="pannel__level-buttons" *ngIf="optionClicked === prof.id" fxLayout="row"
               fxLayoutAlign="start center">
-              <button type="button" class="panel__level-button" *ngFor="let level of profile.level"
+              <button type="button" class="panel__level-button" *ngFor="let level of prof.level"
                 mat-button>{{level}}</button>
             </div>
           </div>

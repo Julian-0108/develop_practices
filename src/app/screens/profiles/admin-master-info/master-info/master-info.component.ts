@@ -40,10 +40,10 @@ export class MasterInfoComponent implements OnInit {
   }
 
   inputTypeValidator() {
-    if (this.form.value.type !== 'EQUIPO_BASE') {
-      this.form.get('submenu')?.disable();
-    } else {
+    if (this.form.value.type === 'EQUIPO_BASE') {
       this.form.get('submenu')?.enable();
+    } else {
+      this.form.get('submenu')?.disable();
     }
   }
 
