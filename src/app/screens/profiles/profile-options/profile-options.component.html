@@ -32,7 +32,7 @@
             <div class="pannel__level-buttons" *ngIf="optionClicked === prof.id" fxLayout="row"
               fxLayoutAlign="start center">
               <button type="button" class="panel__level-button" *ngFor="let level of prof.level"
-                mat-button>{{level}}</button>
+                mat-button>{{level | uppercase}}</button>
             </div>
           </div>
         </div>
