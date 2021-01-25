@@ -1,0 +1,93 @@
+body {
+  background-color: #F2F2F2 !important;
+  min-height: calc(100vh - (45px + 30px));
+  padding: 0 10px 40px;
+}
+
+.profile__title {
+  color: #959595;
+  text-align: center;
+  font-weight: 600;
+  font-size: 20px;
+  padding: 1em 0;
+  margin: 0 0 11px;
+}
+
+.profile__card {
+  margin: 5px;
+}
+
+.profile-card__header{
+  display: flex !important;
+}
+.profile-card__title {
+  color: #de1920;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.profile-card__content {
+  background-color: #F6F6F6;
+  color: #787878;
+  padding: 1em;
+  border-radius: 5px;
+  margin: 3px;
+  flex: auto;
+}
+
+p {
+  margin: 0;
+}
+
+th.mat-header-cell {
+  text-align: center;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+table.mat-table {
+  width: 100%;
+}
+.actions {
+  display: flex;
+  position: absolute;
+  top: 4em;
+  right: 1em;
+}
+.action {
+  margin: 0 5px;
+}
+.mat-mini-fab
+ {
+  background-color: #FFF;
+  color: #de1920;
+  border: solid 1px;
+}
+
+.mat-menu-item {
+  box-shadow: inset 0 0 0 0 #fff;
+  transition: ease-in-out 0.5s;
+  color: #787878;
+}
+.mat-menu-item:hover {
+  box-shadow: inset 400px 0 0 0 #e9e9e9;
+  border-radius: 0 100px 100px 0;
+}
+::ng-deep.mat-expansion-panel-body {
+  padding: 0 !important;
+}
+::ng-deep.mat-slider-track-fill  {
+  background-color: #de1920 !important;
+}
+::ng-deep.mat-accent .mat-slider-thumb {
+  background-color: #de1920 !important;
+}
+.mat-expansion-panel-header-title, .mat-cell {
+  color: #787878;
+}
+.mat-cell {
+  font-size: 13px;
+}
+
+.mat-list-text {
+  color: #787878;
+}

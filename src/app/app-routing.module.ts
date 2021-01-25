@@ -33,6 +33,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'profile-template',
+    loadChildren: () =>
+      import('./screens/profiles/profile-template/profile-template.module').then(
+        (m) => m.ProfileTemplateModule
+      ),
+  },
+  {
     path: 'history',
     loadChildren: () =>
       import('./screens/profiles/profile-history/profile-history.module').then(
