@@ -1,5 +1,5 @@
 <div class="dialog__title">
-    <h2 mat-dialog-title> {{ data?.title }}</h2>
+  <h2 mat-dialog-title> {{ data?.title }}</h2>
 </div>
 <mat-dialog-content>
   <form [formGroup]="form" novalidate autocomplete="off">
@@ -21,9 +21,10 @@
       <div *ngIf="data?.url === 'types'" class="item" fxFlex="30">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Maestra</mat-label>
-          <input matInput formControlName="masterReference" placeholder="Maestra" [matAutocomplete]="masterAutoCom">
+          <input (blur)="inputMasterValidator()" matInput formControlName="masterReference" placeholder="Maestra"
+            [matAutocomplete]="masterAutoCom">
           <app-validator [form]="form" name="masterReference"></app-validator>
-            <mat-autocomplete autoActiveFirstOption #masterAutoCom="matAutocomplete">
+          <mat-autocomplete autoActiveFirstOption #masterAutoCom="matAutocomplete">
             <mat-option *ngFor="let master of masters" [value]="master">
               {{master}}
             </mat-option>
@@ -33,7 +34,8 @@
       <div *ngIf="data?.url !== 'types'" class="item" fxFlex="30">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Tipo</mat-label>
-          <input (blur)="inputTypeValidator()" matInput type="text" formControlName="type" placeholder="Tipo" [matAutocomplete]="auto">
+          <input (blur)="inputTypeValidator()" matInput type="text" formControlName="type" placeholder="Tipo"
+            [matAutocomplete]="auto">
           <app-validator [form]="form" name="type"></app-validator>
           <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
             <mat-option *ngFor="let type of types" [value]="type.name">
@@ -100,12 +102,12 @@
           <mat-icon class="file__icon">attach_file</mat-icon>
           <input #fileInput type="file" (change)="onFileChange($event)" style="display:none;" />
         </button>
-                <mat-form-field floatLabel="always" appearance="none">
-                    <mat-label class="label">Imagen</mat-label>
-                    <input class="file__input" matInput type="text" formControlName="imagePath" readonly>
-                </mat-form-field>
-            </div>
-        </div>
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label class="label">Imagen</mat-label>
+          <input class="file__input" matInput type="text" formControlName="imagePath" readonly>
+        </mat-form-field>
+      </div>
+    </div>
 
   </form>
   <div class="dialog__options">
