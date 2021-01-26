@@ -64,14 +64,17 @@
         <mat-card-content *ngIf="isEditable === 'education'">
           <div fxLayout="row">
             <div fxLayout="column" *ngFor="let data of getAllData">
-              <mat-selection-list>
-                <mat-list-option [selected]="onInitList(data)" *ngFor="let item of data">
+              <mat-selection-list #estudies (selectionChange)="onSelection($event)">
+                <mat-list-option [selected]="onInitList(item)" *ngFor="let item of data" [value]="item">
                   {{item.description}}
                 </mat-list-option>
               </mat-selection-list>
             </div>
-
           </div>
+              <div fxLayout="row" fxLayoutAlign="end center">
+                <button mat-button class="button button--accept" (click)="onSave()">Guardar</button>
+                <button mat-button class="button button--cancel" (click)="onCancel()">Cancelar</button>
+              </div>
         </mat-card-content>
       </mat-card>
       <mat-card class="profile__card">

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Tables } from '@app/shared/interfaces/profile-competences.interface';
 import { ProfileTemplateService } from './services/profile-template.service';
+import { MatSelectionList } from '@angular/material/list';
 
 @Component({
   selector: 'app-profile-template',
@@ -9,7 +10,7 @@ import { ProfileTemplateService } from './services/profile-template.service';
   styleUrls: ['./profile-template.component.scss'],
 })
 export class ProfileTemplateComponent implements OnInit {
-  // public displayedColumns: string[] = ['assertiveCommunication', 'measureApproval'];
+  @ViewChild('estudies') estudies!: MatSelectionList;
   dataAssertiveComunication!: MatTableDataSource<Tables>;
   dataAchievementOrientation!: MatTableDataSource<Tables>;
   dataServiceOrientation!: MatTableDataSource<Tables>;
@@ -59,7 +60,6 @@ export class ProfileTemplateComponent implements OnInit {
         });
         finalArray = [...finalArray, newarray];
         this.getAllData = finalArray;
-        // this.getAllData = res;
       });
       this.isEditable = 'education';
     }
@@ -71,5 +71,20 @@ export class ProfileTemplateComponent implements OnInit {
         return true;
       }
     }
+  }
+  onSave(){
+    console.log(this.estudies.selectedOptions.selected.map(v => v.value));
+  }
+
+  onSelection(event: any){
+    if (event.option.selected) {
+      this.estudies.selectedOptions.selected.push(event.option);
+    } else {
+      const removeItem = this.estudies.selectedOptions.selected.indexOf(event.option);
+      this.estudies.selectedOptions.selected.splice(removeItem, 1);
+    }
+  }
+  onCancel(){
+    this.isEditable = '';
   }
 }
