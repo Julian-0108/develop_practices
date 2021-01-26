@@ -236,35 +236,35 @@ export class MasterInfoComponent implements OnInit {
   }
 
   onSubmit() {
-      if (
-        this.form.get('submenu')?.value === null &&
-        this.data.url === 'base-teams-categories' &&
-        this.form.value.type === 'EQUIPO_BASE'
-      ) {
-        this.notificationService.openSimpleSnackBar({
-          title: 'Campo Obligatorio',
-          message: 'El campo "SubMenú" debe estar marcado.',
-          type: 'error',
-        });
-        return;
-      }
+    if (
+      this.form.get('submenu')?.value === null &&
+      this.data.url === 'base-teams-categories' &&
+      this.form.value.type === 'EQUIPO_BASE'
+    ) {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Campo Obligatorio',
+        message: 'El campo "SubMenú" debe estar marcado.',
+        type: 'error',
+      });
+      return;
+    }
 
-      if (this.form.invalid) {
-        this.form.markAllAsTouched();
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
 
-        return;
-      }
+      return;
+    }
 
-      if (this.data?.element) {
-        this.manage_images.includes(this.data.url)
-          ? this.updateRegisterWithImageToMaster()
-          : this.updateRegisterToMaster();
-        return;
-      }
-
+    if (this.data?.element) {
       this.manage_images.includes(this.data.url)
-        ? this.addRegisterWithImageToMaster()
-        : this.addRegisterToMaster();
+        ? this.updateRegisterWithImageToMaster()
+        : this.updateRegisterToMaster();
+      return;
+    }
+
+    this.manage_images.includes(this.data.url)
+      ? this.addRegisterWithImageToMaster()
+      : this.addRegisterToMaster();
   }
 
   submenuDisabled() {

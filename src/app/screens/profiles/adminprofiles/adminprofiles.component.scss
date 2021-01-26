@@ -1,6 +1,5 @@
-
 .card {
-  height: 18em;
+    height: 18em;
 }
 
 .card__container {
@@ -9,18 +8,46 @@
 }
 
 .main-container {
-  background-color: #fff !important;
-  background-image: url('../../../../assets/images/BACKGROUND_MANAGEPROFILE.svg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  height: calc(100vh - (45px + 30px));
-
+    background-color: #fff !important;
+    background-image: url('../../../../assets/images/BACKGROUND_MANAGEPROFILE.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: calc(100vh - (45px + 30px));
 }
 
 .card:hover {
-  background-color: #f9eeee;
-  transition: all 0.5s;
+    background-color: #f9eeee;
+    transition: all 0.5s;
 }
 
-
+@media screen and (min-width: 1450px) {
+    .main-title {
+        font-size: 2.3em !important;
+    }
+    .main-subtitle {
+        font-size: 1.8em;
+    }
+    .card__container {
+        margin-top: 4em;
+    }
+    mat-card {
+        width: 20em;
+        min-height: 30em;
+    }
+    mat-card img {
+        display: block;
+        margin: auto;
+        width: 17em;
+        height: 17em;
+    }
+    .card__title {
+        font-size: 2em !important;
+    }
+    .card__description {
+        display: block;
+        margin: auto;
+        text-align: center;
+        font-size: 1.5em !important;
+    }
+}
