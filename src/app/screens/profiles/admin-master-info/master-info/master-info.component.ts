@@ -21,7 +21,6 @@ export class MasterInfoComponent implements OnInit {
   types: any;
   masters: any;
 
-
   constructor(
     private datePipe: DatePipe,
     private formBuilder: FormBuilder,
@@ -42,15 +41,40 @@ export class MasterInfoComponent implements OnInit {
   inputTypeValidator() {
     if (this.form.value.type === 'EQUIPO_BASE') {
       this.form.get('submenu')?.enable();
+    } else if (
+      this.data.url === 'base-teams-categories' &&
+      this.form.value.type !== 'EQUIPO_BASE' &&
+      this.form.value.type !== null
+    ) {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Contenido Incorrecto',
+        message: 'El contenido del campo "Tipo" es incorrecto.',
+        type: 'error',
+      });
+      return;
     } else {
       this.form.get('submenu')?.disable();
     }
   }
 
+  inputMasterValidator() {
+    if (
+      !this.masters.includes(this.form.value.masterReference) &&
+      this.form.value.masterReference !== null
+    ) {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Contenido Incorrecto',
+        message: 'El contenido del campo "Maestra" es incorrecto.',
+        type: 'error',
+      });
+      return;
+    }
+  }
+
   async fillMastersList() {
-    const x = await this.masterInfoService.getData(this.data.url);
+    const masters = await this.masterInfoService.getData(this.data.url);
     let masterReferenceArray: any = [];
-    x.forEach((item: any) => {
+    masters.forEach((item: any) => {
       if (!masterReferenceArray.includes(item.masterReference)) {
         masterReferenceArray = [...masterReferenceArray, item.masterReference];
       }
@@ -60,19 +84,25 @@ export class MasterInfoComponent implements OnInit {
   fillTypesList() {
     this.masterInfoService
       .getTypes(this.data)
-      .then((response: any) => (this.types = response))
+      .then((response: any) => {
+        if (response.length === 0 && this.data.url === 'base-teams-categories') {
+          this.types = [{ name: 'EQUIPO_BASE' }];
+          return;
+        }
+        this.types = response;
+      })
       .catch((err) => {});
   }
   createForm(): FormGroup {
     return this.formBuilder.group({
       _id: new FormControl(),
       name: new FormControl('', [Validators.required]),
+      type: new FormControl(null),
       description: new FormControl({ value: '', disabled: this.data?.url === 'types' }),
-      masterReference: new FormControl(''),
+      masterReference: new FormControl(null),
       createdAt: new FormControl({ value: '', disabled: true }),
       updatedAt: new FormControl({ value: '', disabled: true }),
-      url: new FormControl(),
-      type: new FormControl(''),
+      url: new FormControl({ value: null, disabled: this.data?.url === 'base-teams-categories' }),
       status: new FormControl(''),
       submenu: new FormControl(''),
       imagePath: new FormControl({ value: '', disabled: true }),
@@ -80,6 +110,18 @@ export class MasterInfoComponent implements OnInit {
   }
 
   initForm(): void {
+    if (this.data.url !== 'types') {
+      this.form.controls.type?.setValidators([Validators.required]);
+      this.form.controls.type?.updateValueAndValidity();
+      this.form.controls.description?.setValidators([Validators.required]);
+      this.form.controls.description?.updateValueAndValidity();
+      this.form.controls.masterReference?.clearValidators();
+    } else {
+      this.form.controls.masterReference?.setValidators([Validators.required]);
+      this.form.controls.masterReference?.updateValueAndValidity();
+      this.form.controls.type?.clearValidators();
+      this.form.controls.description?.clearValidators();
+    }
     if (this.data?.element) {
       this.form.patchValue(this.data.element);
       this.form
@@ -92,6 +134,7 @@ export class MasterInfoComponent implements OnInit {
     }
 
     this.form.get('status')?.patchValue(true);
+    this.form.get('submenu')?.patchValue(null);
 
     this.form
       .get('createdAt')
@@ -122,30 +165,52 @@ export class MasterInfoComponent implements OnInit {
     this.masterInfoService
       .addRegisterToMasterWithImages(this.data.url, this.createFormData())
       .then((response: any) => this.showNotification(response))
-      .catch((err) => {});
+      .catch((err) => {
+        this.notificationService.openSimpleSnackBar({
+          title: 'Error Inesperado',
+          message: err.message,
+          type: 'error',
+        });
+      });
   }
 
   addRegisterToMaster() {
-    console.log(this.data.url);
-    console.log(this.form.value);
     this.masterInfoService
       .addRegisterToMaster(this.data.url, this.form.value)
       .then((response: any) => this.showNotification(response))
-      .catch((err) => {});
+      .catch((err) => {
+        this.notificationService.openSimpleSnackBar({
+          title: 'Error Inesperado',
+          message: err.message,
+          type: 'error',
+        });
+      });
   }
 
   updateRegisterToMaster() {
     this.masterInfoService
       .updateRegisterToMaster(this.data.url, this.data.element._id, this.form.value)
       .then((response: any) => this.showNotification(response))
-      .catch((err) => {});
+      .catch((err) => {
+        this.notificationService.openSimpleSnackBar({
+          title: 'Error Inesperado',
+          message: err.message,
+          type: 'error',
+        });
+      });
   }
 
   updateRegisterWithImageToMaster() {
     this.masterInfoService
       .updateToMasterWithImages(this.data.url, this.data.element._id, this.createFormData())
       .then((response: any) => this.showNotification(response))
-      .catch((err) => {});
+      .catch((err) => {
+        this.notificationService.openSimpleSnackBar({
+          title: 'Error Inesperado',
+          message: err.message,
+          type: 'error',
+        });
+      });
   }
 
   onFileChange(event: any) {
@@ -171,23 +236,35 @@ export class MasterInfoComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
+      if (
+        this.form.get('submenu')?.value === null &&
+        this.data.url === 'base-teams-categories' &&
+        this.form.value.type === 'EQUIPO_BASE'
+      ) {
+        this.notificationService.openSimpleSnackBar({
+          title: 'Campo Obligatorio',
+          message: 'El campo "SubMenú" debe estar marcado.',
+          type: 'error',
+        });
+        return;
+      }
 
-      return;
-    }
+      if (this.form.invalid) {
+        this.form.markAllAsTouched();
 
-    if (this.data?.element) {
+        return;
+      }
+
+      if (this.data?.element) {
+        this.manage_images.includes(this.data.url)
+          ? this.updateRegisterWithImageToMaster()
+          : this.updateRegisterToMaster();
+        return;
+      }
+
       this.manage_images.includes(this.data.url)
-        ? this.updateRegisterWithImageToMaster()
-        : this.updateRegisterToMaster();
-
-      return;
-    }
-
-    this.manage_images.includes(this.data.url)
-      ? this.addRegisterWithImageToMaster()
-      : this.addRegisterToMaster();
+        ? this.addRegisterWithImageToMaster()
+        : this.addRegisterToMaster();
   }
 
   submenuDisabled() {
