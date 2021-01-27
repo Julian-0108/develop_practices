@@ -105,6 +105,13 @@ color: #E06055;
   justify-content: flex-end;
 }
 
+.mat-column-description {
+width: 25em !important;
+}
+.mat-column-type, .mat-column-createdAt, .mat-column-updatedAt {
+text-align: center !important;
+}
+
 
 
 

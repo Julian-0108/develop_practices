@@ -86,7 +86,7 @@ export class MasterInfoComponent implements OnInit {
       .getTypes(this.data)
       .then((response: any) => {
         if (response.length === 0 && this.data.url === 'base-teams-categories') {
-          this.types = [{ name: 'EQUIPO_BASE' }];
+          this.types = [{ name: 'EQUIPO_BASE' },{ name: 'subGrupoOP' }];
           return;
         }
         this.types = response;

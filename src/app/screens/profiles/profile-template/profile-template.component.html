@@ -10,26 +10,16 @@
     </div>
     <div class="action">
       <button mat-mini-fab [matMenuTriggerFor]="menu">
-        <mat-icon>add</mat-icon>
-      </button>
-    </div>
-    <div class="action">
-      <button mat-mini-fab [matMenuTriggerFor]="menu">
         <mat-icon>create</mat-icon>
-      </button>
-    </div>
-    <div class="action">
-      <button mat-mini-fab [matMenuTriggerFor]="menu">
-        <mat-icon>delete</mat-icon>
       </button>
     </div>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="menuItemSelected('objective')">Objetivo del Rol</button>
       <button mat-menu-item (click)="menuItemSelected('experience')">Experiecia</button>
       <button mat-menu-item (click)="menuItemSelected('education')">Formación Académica</button>
-      <button mat-menu-item (click)="menuItemSelected('certificates')">Certificaciones Requeridas</button>
-      <button mat-menu-item (click)="menuItemSelected('knowledges')">Conocimientos Específicos</button>
-      <button mat-menu-item (click)="menuItemSelected('functions')">Funciones del Rol</button>
+      <button mat-menu-item (click)="menuItemSelected('requiredCertificates')">Certificaciones Requeridas</button>
+      <button mat-menu-item (click)="menuItemSelected('specificKnowledge')">Conocimientos Específicos</button>
+      <button mat-menu-item (click)="menuItemSelected('rolResponsabilities')">Funciones del Rol</button>
       <button mat-menu-item (click)="menuItemSelected('totalVal')">Valoración Total</button>
       <button mat-menu-item (click)="menuItemSelected('competencesVal')">Valoración Competencias Corporativas</button>
     </mat-menu>
@@ -61,31 +51,72 @@
             </p>
           </div>
         </mat-card-content>
-        <mat-card-content *ngIf="isEditable === 'education'">
-          <div fxLayout="row">
-            <div fxLayout="column" *ngFor="let data of getAllData">
-              <mat-selection-list #estudies (selectionChange)="onSelection($event)">
-                <mat-list-option [selected]="onInitList(item)" *ngFor="let item of data" [value]="item">
+        <!-- <mat-card-content *ngIf="isEditable === 'education'">
+          <button mat-icon-button>
+            <mat-icon>navigate_next</mat-icon>
+          </button>
+            <mat-selection-list #education fxLayout="row" *ngFor="let contentPage of contentPages">
+              <div fxLayout="column" *ngFor="let data of getAllData">
+                <mat-list-option [selected]="onInitList(item, 'education')" *ngFor="let item of contentPage" [value]="item">
                   {{item.description}}
                 </mat-list-option>
-              </mat-selection-list>
-            </div>
-          </div>
-              <div fxLayout="row" fxLayoutAlign="end center">
-                <button mat-button class="button button--accept" (click)="onSave()">Guardar</button>
-                <button mat-button class="button button--cancel" (click)="onCancel()">Cancelar</button>
               </div>
+            </mat-selection-list>
+
+          <div fxLayout="row" fxLayoutAlign="end center">
+            <button mat-button class="button button--accept" (click)="onSave('education')">Guardar</button>
+            <button mat-button class="button button--cancel" (click)="onCancel()">Cancelar</button>
+          </div>
+        </mat-card-content> -->
+        <mat-card-content *ngIf="isEditable === 'education'">
+          <button mat-icon-button (click)="nextTab()">
+            <mat-icon>navigate_next</mat-icon>
+          </button>
+          <mat-tab-group #matTabEducation mat-align-tabs="start" [(selectedIndex)]="tabIndex">
+            <mat-tab *ngFor="let contentPage of contentPages">
+              <mat-selection-list #education fxLayout="row">
+                <div fxLayout="column" *ngFor="let data of contentPage">
+                  <mat-list-option [selected]="onInitList(item, 'education')" *ngFor="let item of data" [value]="item">
+                    {{item.description}}
+                  </mat-list-option>
+                </div>
+              </mat-selection-list>
+            </mat-tab>
+          </mat-tab-group>
+
+          <div fxLayout="row" fxLayoutAlign="end center">
+            <button mat-button class="button button--accept" (click)="onSave('education')">Guardar</button>
+            <button mat-button class="button button--cancel" (click)="onCancel()">Cancelar</button>
+          </div>
         </mat-card-content>
       </mat-card>
       <mat-card class="profile__card">
         <mat-card-header>
           <mat-card-title class="profile-card__title">Conocimientos Específicos del Cargo</mat-card-title>
         </mat-card-header>
-        <mat-card-content fxLayout="row wrap">
+        <mat-card-content fxLayout="row wrap" *ngIf="isEditable !== 'specificKnowledge'">
           <div class="profile-card__content" *ngFor="let item of data.specificKnowledge">
             <p>
               {{item.description}}
             </p>
+          </div>
+        </mat-card-content>
+        <mat-card-content *ngIf="isEditable === 'specificKnowledge'">
+          <mat-tab-group mat-align-tabs="start">
+            <mat-tab label="First" *ngFor="let contentPage of contentPages">
+              <mat-selection-list #specificKnowledge fxLayout="row">
+                <div fxLayout="column" *ngFor="let data of contentPage">
+                  <mat-list-option [selected]="onInitList(item, 'specificKnowledge')" *ngFor="let item of data"
+                    [value]="item">
+                    {{item.description}}
+                  </mat-list-option>
+                </div>
+              </mat-selection-list>
+            </mat-tab>
+          </mat-tab-group>
+          <div fxLayout="row" fxLayoutAlign="end center">
+            <button mat-button class="button button--accept" (click)="onSave('specificKnowledge')">Guardar</button>
+            <button mat-button class="button button--cancel" (click)="onCancel()">Cancelar</button>
           </div>
         </mat-card-content>
       </mat-card>
@@ -141,11 +172,35 @@
         <mat-card-header>
           <mat-card-title class="profile-card__title">Certificaciones Requeridas</mat-card-title>
         </mat-card-header>
-        <mat-card-content fxLayout="row wrap">
+        <mat-card-content fxLayout="row wrap" *ngIf="isEditable !== 'requiredCertificates'">
           <div class="profile-card__content" *ngFor="let item of data.requiredCertificates">
             <p>
               {{item.description}}
             </p>
+          </div>
+        </mat-card-content>
+        <mat-card-content *ngIf="isEditable === 'requiredCertificates'">
+          <mat-selection-list #requiredCertificates fxLayout="row">
+            <div fxLayout="column">
+              <mat-list-option [selected]="onInitList(item,'requiredCertificates')" *ngFor="let item of getAllData"
+                [value]="item">
+                {{item.description}}
+              </mat-list-option>
+            </div>
+          </mat-selection-list>
+          <mat-tab-group mat-align-tabs="start">
+            <mat-tab label="First" *ngFor="let contentPage of contentPages">
+              <mat-selection-list #requiredCertificates fxLayout="column">
+                <mat-list-option [selected]="onInitList(item, 'requiredCertificates')" *ngFor="let item of contentPage"
+                  [value]="item">
+                  {{item.description}}
+                </mat-list-option>
+              </mat-selection-list>
+            </mat-tab>
+          </mat-tab-group>
+          <div fxLayout="row" fxLayoutAlign="end center">
+            <button mat-button class="button button--accept" (click)="onSave('requiredCertificates')">Guardar</button>
+            <button mat-button class="button button--cancel" (click)="onCancel()">Cancelar</button>
           </div>
         </mat-card-content>
       </mat-card>
@@ -153,11 +208,27 @@
         <mat-card-header>
           <mat-card-title class="profile-card__title">Funciones del Rol</mat-card-title>
         </mat-card-header>
-        <mat-card-content fxLayout="row wrap" fxLayoutAlign="space-around center">
-          <div class="profile-card__content" *ngFor="let item of data.specificKnowledge">
+        <mat-card-content fxLayout="row wrap" *ngIf="isEditable !== 'rolResponsabilities'">
+          <div class="profile-card__content" *ngFor="let item of data.rolResponsabilities">
             <p>
               {{item.description}}
             </p>
+          </div>
+        </mat-card-content>
+        <mat-card-content *ngIf="isEditable === 'rolResponsabilities'">
+          <mat-tab-group mat-align-tabs="start">
+            <mat-tab label="First" *ngFor="let contentPage of contentPages">
+              <mat-selection-list #rolResponsabilities fxLayout="column">
+                <mat-list-option [selected]="onInitList(item, 'rolResponsabilities')" *ngFor="let item of contentPage"
+                  [value]="item">
+                  {{item.description}}
+                </mat-list-option>
+              </mat-selection-list>
+            </mat-tab>
+          </mat-tab-group>
+          <div fxLayout="row" fxLayoutAlign="end center">
+            <button mat-button class="button button--accept" (click)="onSave('rolResponsabilities')">Guardar</button>
+            <button mat-button class="button button--cancel" (click)="onCancel()">Cancelar</button>
           </div>
         </mat-card-content>
       </mat-card>
