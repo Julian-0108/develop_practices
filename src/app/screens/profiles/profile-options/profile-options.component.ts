@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Directive } from '@angular/core';
+import { Component, OnInit, HostListener, Directive, ElementRef } from '@angular/core';
 import { NotificationService } from '@app/shared/components/notification/services/notification.service';
 import { MatIcon, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -22,8 +22,17 @@ export class ProfileOptionsComponent implements OnInit {
   description =
     'Lorem ipsum, dolor sit amet consectetur adipisicing elit.Maxime, consequuntur assumenda';
   itemsOld: any = [];
-  items: any;
+  items: any = [];
   rowsArray: any;
+  // PAGINACION
+  pageNumber=1; 
+  pageSize=8; 
+  results: any[] = [];
+  pagination: any;
+  pageCont : any;
+  buttonNext: boolean = false;
+  buttonPrevius: boolean = false;
+  pageContArr: any = [];
   // items = [
   //   {
   //     id: 'card1',
@@ -208,7 +217,7 @@ export class ProfileOptionsComponent implements OnInit {
     let finalArray: any = [];
     items.forEach((element: any) => {
       newarray = [...newarray, element];
-      if (newarray.length === 4) {
+      if (newarray.length === 2) {
         finalArray = [...finalArray, newarray];
         newarray = [];
       }
@@ -219,7 +228,7 @@ export class ProfileOptionsComponent implements OnInit {
 
   async getBaseTeams() {
     this.items = await this.profileOptionsService.getBaseTeams();
-    this.buildRows(this.items);
+    this.paginate();
   }
 
   onClickbuttonBack() {
@@ -269,4 +278,28 @@ export class ProfileOptionsComponent implements OnInit {
     };
     this.notificationService.openSimpleSnackBar(option);
   }
+
+  // PAGINACION
+
+  paginate(){
+    this.pageCont =Math.ceil(this.items.length / this.pageSize)  ; //calcular el numero de paginaciones totales
+    this.results = this.items.slice((this.pageNumber - 1) * this.pageSize, this.pageNumber * this.pageSize); //calular los items que se van a mostrar por paginacion
+    
+    this.pageNumber > 1  ? this.buttonPrevius=true : this.buttonPrevius=false; // mostrar boton anterior
+    this.pageNumber < this.pageCont ? this.buttonNext=true: this.buttonNext=false ; //mostrar boton siguiente
+
+    this.buildRows(this.results); // mostrar los resultados de la paginacion
+    this.pageContArr = Array.from(new Array(this.pageCont), (x,i) => i+1) // convertir pageCont en array
+  }
+  
+  nextPage(){
+    this.pageNumber ++;
+    this.paginate()
+  }
+
+  previusPage(){
+    this.pageNumber --;
+    this.paginate()
+  }
+
 }
