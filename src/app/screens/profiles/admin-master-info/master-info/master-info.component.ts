@@ -97,8 +97,8 @@ export class MasterInfoComponent implements OnInit {
     return this.formBuilder.group({
       _id: new FormControl(),
       name: new FormControl('', [Validators.required]),
-      type: new FormControl(null),
-      description: new FormControl({ value: '', disabled: this.data?.url === 'types' }),
+      type: new FormControl({ value: '', disabled: this.data?.url === 'security-responsabilities'}),
+      description: new FormControl({ value: '', disabled: this.data?.url === 'types' || this.data?.url === 'security-responsabilities' }),
       masterReference: new FormControl(null),
       createdAt: new FormControl({ value: '', disabled: true }),
       updatedAt: new FormControl({ value: '', disabled: true }),

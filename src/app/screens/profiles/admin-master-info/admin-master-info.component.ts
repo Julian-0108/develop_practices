@@ -36,6 +36,7 @@ export class AdminMasterInfoComponent implements OnInit {
     { name: 'Estudios', url: 'studies' },
     { name: 'Herramientas de trabajo', url: 'work-tools' },
     { name: 'Tipos', url: 'types' },
+    { name: 'Responsabilidades de seguridad', url: 'security-responsabilities' },
   ];
 
   public masterSeleted: string = '';
@@ -65,6 +66,10 @@ export class AdminMasterInfoComponent implements OnInit {
     if (this.masterSeleted === 'types') {
       return this.displayedColumns.filter(
         (el) => el !== 'type' && el !== 'description' && el !== 'submenu'
+      );
+    } else if (this.masterSeleted === 'security-responsabilities') {
+      return this.displayedColumns.filter(
+        (el) => el !== 'type' && el !== 'description' && el !== 'submenu' && el !=='reference'
       );
     } else {
       return this.displayedColumns.filter((el) => el !== 'reference');
