@@ -9,12 +9,10 @@
     --dark-text: rgb(41, 41, 41);
 }
 
-body {
-    padding: 0;
-    margin: 0;
+html, body {
     height: 100%;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    background-color: rgb(243, 243, 243);
+    margin: 0px;
+    padding: 0px;
 }
 
 ::-webkit-scrollbar-track {
