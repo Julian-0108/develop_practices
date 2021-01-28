@@ -93,3 +93,13 @@ table.mat-table {
   font-size: 14px;
 }
 
+.button{
+  margin: 0 5px;
+}
+
+::ng-deep.mat-tab-labels{
+  display: none !important;
+}
+::ng-deep.mat-tab-header{
+  display: none !important;
+}

@@ -32,6 +32,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import {MatStepperModule} from '@angular/material/stepper';
 
 import {MatChipsModule} from '@angular/material/chips';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 
@@ -68,6 +69,7 @@ const materialComponents = [
     MatRadioModule,
     MatStepperModule,
     MatChipsModule,
+    MatTabsModule
 ];
 
 @NgModule({
