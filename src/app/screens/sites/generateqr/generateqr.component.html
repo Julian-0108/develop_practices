@@ -1,9 +1,9 @@
-<div class="content grid-container" role="main">
-  <div class="home-wrapper grid-item">
-    <mat-card class="box mat-elevation-z7" style="margin-bottom: 30px;">
+<div class="content" role="main">
+  <div class="home-wrapper">
+    <mat-card class="box mat-elevation-z7">
       <mat-card-header>
         <mat-card-title>Generar</mat-card-title>
-        <mat-card-subtitle style="padding-bottom: 15px;">
+        <mat-card-subtitle >
           Copiar cada código individual y pegarlo en el documento que desea imprimir
         </mat-card-subtitle>
       </mat-card-header>
@@ -13,8 +13,8 @@
           <mat-card-content>
 
             <!-- Sede Select -->
-            <mat-form-field class="full-width">
-              <mat-label>Seleccionar sede...</mat-label>
+            <mat-form-field floatLabel="always" appearance="none">
+              <mat-label class="label">Seleccionar sede...</mat-label>
               <mat-select
                 [(value)]="selectedVenue"
                 [(ngModel)]="selectedVenue"
@@ -31,8 +31,8 @@
             </mat-form-field>
 
             <!-- Oficina Select -->
-            <mat-form-field class="full-width">
-              <mat-label>Seleccionar oficina...</mat-label>
+            <mat-form-field floatLabel="always" appearance="none">
+              <mat-label class="label">Seleccionar oficina...</mat-label>
               <mat-select
                 [(value)]="selectedOffice"
                 [(ngModel)]="selectedOffice"
@@ -52,8 +52,8 @@
             </mat-form-field>
 
             <!-- Sitio Select -->
-            <mat-form-field class="full-width">
-              <mat-label>Seleccionar sitio...</mat-label>
+            <mat-form-field floatLabel="always" appearance="none">
+              <mat-label class="label">Seleccionar sitio...</mat-label>
               <mat-select
                 [(value)]="selectedSite"
                 [(ngModel)]="selectedSite"
