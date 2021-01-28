@@ -31,6 +31,9 @@ export class ValidatorComponent implements OnInit {
       if (error[0] === 'pattern' && String(error[1].requiredPattern) === '^[0-9][0-9]?$|^100$') {
         staticMsg = `Este campo debe estar entre 0 y 100;`;
       }
+      if (error[0] === 'email') {
+        staticMsg = 'El correo no es válido';
+      }
       errors.push({
         type: error[0],
         msg: staticMsg || error[1],
