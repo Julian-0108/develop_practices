@@ -1,16 +1,15 @@
 <mat-toolbar class="mat-toolbar">
   <img class="logo__style" src="../../../../assets/images/logoSetiBlanco.png" alt="seti logo">
-  <span>Mundo Seti</span>
+  <span>Mundo SETI</span>
   <span class="spacer"></span>
 
-  <div *ngIf="false">
-    <button *ngIf="hideQrIcon()" mat-icon-button [routerLink]="['/home']" matTooltip="Generar"
-      aria-label="Example icon-button with a menu">
-      <mat-icon>home</mat-icon>
-    </button>
+  <button *ngIf="hideOptions()" mat-icon-button [routerLink]="['/home']" matTooltip="Home">
+    <mat-icon>home</mat-icon>
+  </button>
 
-    <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Reportes"
-      aria-label="Example icon-button with a menu">
+  <div *ngIf="hideMenuSites()">
+
+    <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Reportes">
       <mat-icon>event_note</mat-icon>
     </button>
 
@@ -38,18 +37,18 @@
 
     </mat-menu>
 
-    <button mat-icon-button [matMenuTriggerFor]="profileMenu" matTooltip="Más opciones"
-      aria-label="profile button with a menu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #profileMenu="matMenu">
-
-      <button mat-menu-item [routerLink]="['/login']" (click)="logout()">
-        <mat-icon>arrow_forward</mat-icon>
-        <span>Salir</span>
-      </button>
-
-    </mat-menu>
   </div>
+
+  <button *ngIf="hideOptions()" mat-icon-button [matMenuTriggerFor]="profileMenu" matTooltip="Más opciones">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #profileMenu="matMenu">
+
+    <button mat-menu-item [routerLink]="['/login']" (click)="logout()">
+      <mat-icon>arrow_forward</mat-icon>
+      <span>Salir</span>
+    </button>
+
+  </mat-menu>
 
 </mat-toolbar>

@@ -12,11 +12,6 @@
         <h1><strong>Iniciar Sesión</strong></h1>
       </mat-card-subtitle>
     </mat-card-header>
-
-    <mat-card-subtitle fxLayoutAlign="center center">
-      Inicia sesión para generar QR's y acceder a los reportes diarios.
-    </mat-card-subtitle>
-
     <form
       class="form"
       [formGroup]="loginFormGroup"
@@ -25,25 +20,25 @@
     >
       <mat-card-content>
 
-        <mat-form-field class="full-width" appearance="fill">
-          <mat-label>Email</mat-label>
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label class="label">Email</mat-label>
           <input
             matInput
             type="text"
             placeholder="Email"
             (keyup.enter)="onSubmit()"
             formControlName="username"
+            autocomplete="off"
             required
           />
-          <mat-icon matSuffix >mail_outline</mat-icon>
-          <mat-hint>Ingresa tu correo electrónico</mat-hint>
-          <mat-error>Email es obligatorio</mat-error>
+          <!-- <mat-icon matSuffix >mail_outline</mat-icon> -->
+          <app-validator [form]="loginFormGroup" name="username"></app-validator>
         </mat-form-field>
 
         <div style="height: 20px;"></div>
 
-        <mat-form-field class="full-width" appearance="fill">
-          <mat-label>Contraseña</mat-label>
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label class="label">Contraseña</mat-label>
           <input
             matInput
             placeholder="Contraseña"
@@ -52,11 +47,10 @@
             formControlName="password"
             required
           />
-          <mat-icon class="visibility-icon" matSuffix (click)="hide = !hide">
+          <!-- <mat-icon class="visibility-icon" matSuffix (click)="hide = !hide">
             {{ hide ? "visibility_off" : "visibility" }}
-          </mat-icon>
-          <mat-hint>Ingresa tu contraseña</mat-hint>
-          <mat-error>Contraseña es obligatoria</mat-error>
+          </mat-icon>-->
+          <app-validator [form]="loginFormGroup" name="password"></app-validator>
         </mat-form-field>
       </mat-card-content>
 
