@@ -1,8 +1,8 @@
 <div class="container">
 
   <div class="filter" fxLayoutAlign="center center">
-    <mat-form-field style="margin-bottom: 20px;">
-      <mat-label>Filtrar</mat-label>
+    <mat-form-field floatLabel="always" appearance="none" style="margin-bottom: 20px;">
+      <mat-label class="label">Filtrar</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar por nombre, cedula, temperatura (solo número)...">
     </mat-form-field>
   </div>

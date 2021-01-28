@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { version } from "../../../../../package.json";
 
 @Component({
   selector: 'app-toolbar',
@@ -8,8 +7,7 @@ import { version } from "../../../../../package.json";
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-  public title: string = 'Mundo Seti';
-  public version = version;
+  private readonly SITES_SETI = ['/movements', '/temperature', '/kits', '/generateqr'];
 
   constructor(private router: Router) { }
 
@@ -20,8 +18,12 @@ export class ToolbarComponent implements OnInit {
     localStorage.removeItem('authData');
   }
 
-  hideQrIcon() {
-    return this.router.url !== '/home';
+  hideMenuSites() {
+    return this.SITES_SETI.includes(this.router.url);
+  }
+
+  hideOptions() {
+    return this.router.url !== '/login';
   }
 
 }
