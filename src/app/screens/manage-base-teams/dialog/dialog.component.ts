@@ -18,8 +18,8 @@ export class DialogComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data:any, fb: FormBuilder, private datePipe: DatePipe) {
 
     this.form = fb.group({
-      profileName: ['', Validators.required],
-      level: ['', Validators.required],
+      charge: ['', Validators.required],
+      levels: ['', Validators.required],
       academicFormation: ['', Validators.required],
       certifications: ['', Validators.required],
       workExperience: ['', Validators.required],
@@ -33,12 +33,10 @@ export class DialogComponent implements OnInit {
 
     this.editForm();
     
-
   }
 
   ngOnInit(): void {
   }
-
 
   onSubmit(){
 
@@ -62,6 +60,7 @@ export class DialogComponent implements OnInit {
     if (this.data?.element){
       
       this.form.patchValue(this.data.element);
+      console.log(this.data.element);
       
       this.form.get('updatedAt')?.patchValue(this.datePipe.transform(new Date(), this.DATE_FORM_CONTROL));
       this.form.get('createdAt')?.patchValue(this.datePipe.transform(this.data.element.createdAt, this.DATE_FORM_CONTROL));

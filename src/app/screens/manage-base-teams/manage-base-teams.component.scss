@@ -162,3 +162,32 @@ td {
     background-color: #F5CFCC;
     color: #E06055;
 }
+
+@media screen and (min-width: 1450px) {
+    .content {
+        font-size: 1.4em;
+    }
+    .layer {
+        width: 45px;
+        height: 45px;
+    }
+    .layer2 {
+        width: 45px;
+        height: 45px;
+    }
+    .chip__status {
+        font-size: 14px;
+        border-radius: 15px;
+    }
+    @keyframes hover {
+        0% {
+            width: 45px;
+        }
+        100% {
+            width: 100px;
+            border-radius: 40px;
+            font-size: 16px;
+            padding-right: 15px;
+        }
+    }
+}

@@ -1,29 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
 import { Title } from '@angular/platform-browser';
-
-
-export interface table {
-  profileName: string;
-  level: string;
-  createdAt: Date;
-  updatedAt: Date;
-  status: boolean;
-}
-
-const ELEMENT_DATA: table[] = [
-  {profileName: 'profesional en formacion' , level: 'no aplica', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: false},
-  {profileName: 'consultor junior' , level: 'N1', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: true},
-  {profileName: 'consultor junior' , level: 'N2', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: false},
-  {profileName: 'consultor junior' , level: 'N3', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: true},
-  {profileName: 'consultor especialista' , level: 'N1', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: true},
-  {profileName: 'consultor especialista' , level: 'N2', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: false},
-  {profileName: 'consultor especialista' , level: 'N3', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: true},
-  {profileName: 'consultor senior' , level: 'N1', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: true},
-  {profileName: 'consultor senior' , level: 'N2', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: false},
-  {profileName: 'consultor senior' , level: 'N3', createdAt: new Date(1995,11,17), updatedAt: new Date(1995,11,17), status: true},
-];
+import { ActivatedRoute } from '@angular/router';
+import { ManageBaseTeamsService } from './service/manage-base-teams.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-manage-base-teams',
@@ -34,17 +15,39 @@ const ELEMENT_DATA: table[] = [
 export class ManageBaseTeamsComponent implements OnInit {
 
   isLoadingResults = false;
+  name!: string;
 
-  displayedColumns: string[] = ['profiles', 'levels', 'created-at', 'updated-at', 'status', 'edit'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = [
+    'profiles',
+    'levels',
+    'createdAt',
+    'updatedAt',
+    'status',
+    'actions',
+  ];
+  dataSource!: MatTableDataSource<any> ;
 
-  constructor(public dialog: MatDialog, private title: Title) {
+  constructor(
+    public dialog: MatDialog, 
+    private title: Title,
+    private router: ActivatedRoute,
+    private manageBaseTeamsService: ManageBaseTeamsService
+  ) {
     this.title.setTitle("Mundo SETI - administrar equipos base");
   }
   
   ngOnInit(): void {
+    this.getBaseTeams();
   }
-  
+
+  getBaseTeams(){
+    this.manageBaseTeamsService.getBaseTeams(this.router.snapshot.params['id'])
+    .then( (response:any) => {
+      this.name = response.name;
+      this.dataSource = new MatTableDataSource(response.profiles);
+    })
+    .catch(console.log)
+  }
   
   // Dialog
   openDialog(element?: any) {

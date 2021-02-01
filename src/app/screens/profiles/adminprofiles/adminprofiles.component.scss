@@ -22,18 +22,13 @@
 }
 
 @media screen and (min-width: 1450px) {
-    .main-title {
-        font-size: 2.3em !important;
-    }
-    .main-subtitle {
-        font-size: 1.8em;
-    }
     .card__container {
         margin-top: 4em;
     }
     mat-card {
         width: 20em;
         min-height: 30em;
+        margin: 2em;
     }
     mat-card img {
         display: block;

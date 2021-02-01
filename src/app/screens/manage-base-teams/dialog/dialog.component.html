@@ -9,19 +9,19 @@
             <div fxFlex="25" class="item">
                 <mat-form-field appearance="none" floatLabel="always">
                     <mat-label>Nombre del perfil</mat-label>
-                    <input formControlName="profileName" matInput type="text">
-                    <app-validator [form]="form" name="profileName"></app-validator>
+                    <input formControlName="charge" matInput type="text">
+                    <app-validator [form]="form" name="charge"></app-validator>
                 </mat-form-field>
             </div>
             <div fxFlex="25" class="item">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Niveles</mat-label>
-                    <mat-select formControlName="level">
+                    <mat-select formControlName="levels">
                         <mat-option value="Niveles">
                             ejemplo
                         </mat-option>
                     </mat-select>
-                    <app-validator [form]="form" name="level" [otherIcon]="true"></app-validator>
+                    <app-validator [form]="form" name="levels" [otherIcon]="true"></app-validator>
                 </mat-form-field>
             </div>
             <div fxFlex="50" class="item">
