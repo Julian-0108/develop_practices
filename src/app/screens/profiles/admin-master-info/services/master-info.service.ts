@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from "@environments/environment";
 import { pluck } from "rxjs/operators";
 import { Master } from "@shared/interfaces/master.interface";
+import { Response } from "@app/shared/interfaces/response.interface";
 
 @Injectable({
   providedIn: "root",
@@ -10,25 +11,22 @@ import { Master } from "@shared/interfaces/master.interface";
 export class MasterInfoService {
   constructor(private http: HttpClient) {}
 
-  getData(url: string): Promise<any>{
+  getData(url: string): Promise<Master[]>{
     return this.http
-      .get<Master>(`${environment.API_MUNDO_SETI}/${url}`)
-      .pipe( pluck('payload') )
+      .get<Response>(`${environment.API_MUNDO_SETI}/${url}`)
+      .pipe(pluck<Response, Master[]>('payload') )
       .toPromise();
   }
+
   getTypes(param: any): Promise<any>{
-    console.log(param);
     const url = param.name[0].name;
     return this.http
-      .get<Master>(`${environment.API_MUNDO_SETI}/types?masterReference=${url}&status=true`)
-      .pipe( pluck('payload'))
+      .get(`${environment.API_MUNDO_SETI}/types?masterReference=${url}&status=true`)
+      .pipe(pluck('payload'))
       .toPromise();
   }
 
   addRegisterToMaster(url: string, register: any) {
-    console.log(environment.API_MUNDO_SETI, url);
-    console.log(url,register );
-
     return this.http.post(`${environment.API_MUNDO_SETI}/${url}`, register).toPromise();
   }
 

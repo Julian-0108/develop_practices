@@ -349,6 +349,17 @@ mat-label {
     background-color: rgb(247, 247, 247);
 }
 
+.mat-header-cell {
+    text-align: center !important;
+    font-size: 1em !important;
+    font-weight: bold !important;
+    color: #9a9a9a !important;
+}
+
+.filter {
+    margin-top: -15px !important;
+    width: 95% !important;
+}
 
 /* Mat Dialog */
 
