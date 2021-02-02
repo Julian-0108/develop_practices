@@ -6,10 +6,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
-  declarations: [ProfileOptionsComponent],
+  declarations: [
+    ProfileOptionsComponent,
+  ],
   imports: [
     ProfileOptionsRoutingModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class ProfileOptionsModule { }

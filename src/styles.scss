@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+
 :root {
     // rojo seti: #c4382f
     --primary-color: #de1920;
@@ -8,7 +9,8 @@
     --dark-text: rgb(41, 41, 41);
 }
 
-html, body {
+html,
+body {
     height: 100%;
     margin: 0px;
     padding: 0px;
@@ -359,6 +361,7 @@ mat-label {
     width: 95% !important;
 }
 
+
 /* Mat Dialog */
 
 mat-dialog-container {
@@ -423,30 +426,43 @@ mat-dialog-actions {
     left: 1em;
 }
 
-.mat-pseudo-checkbox, .mat-pseudo-checkbox-checked {
-  border-radius: 3px !important;
-  border: solid 1px !important;
-}
+.mat-pseudo-checkbox,
 .mat-pseudo-checkbox-checked {
-  background: #fff1f1 !important;
-  border-color: #de1920 !important;
+    border-radius: 3px !important;
+    border: solid 1px !important;
 }
+
+.mat-pseudo-checkbox-checked {
+    background: #fff1f1 !important;
+    border-color: #de1920 !important;
+}
+
 .mat-pseudo-checkbox::after {
-  color: #de1920 !important;
-  top: 3px !important;
-  left: 2px !important;
+    color: #de1920 !important;
+    top: 3px !important;
+    left: 2px !important;
 }
+
 @media screen and (min-width: 1450px) {
     .button-back {
         height: 5em !important;
         width: 5em !important;
     }
+    .edit {
+        font-size: 20px;
+        padding: 5px;
+    }
+    .main-title {
+        font-size: 2.3em !important;
+    }
+    .main-subtitle {
+        font-size: 1.8em;
+    }
 }
+
 // div.mat-slider-disabled, .mat-accent .mat-slider-thumb, .mat-slider-track-fill {
 //   background-color: #707070 !important;
 // }
 // div.mat-slider-track-fill, .mat-accent .mat-slider-thumb{
 //   background-color: #de1920 !important;
 // }
-
-
