@@ -1,30 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '@environments/environment';
 import { map } from 'rxjs/operators';
-import { API_URL } from 'src/environments/environment';
 
+interface userData {
+  username: string;
+  password: string;
+}
 @Injectable({ providedIn: 'root' })
-
 export class AuthService {
 
-  private resource = '/user';
-  public token = '';
+  private readonly NAME_LOCAL_DATA = 'MSauthData';
+  constructor(private http: HttpClient) {}
 
-  constructor(
-    private http: HttpClient,
-  ) { }
-
-  login(username: string, password: string) {
-    let resourceUrl = API_URL + this.resource;
-    let body = JSON.stringify({ username, password });
-    let headers: HttpHeaders = new HttpHeaders({
-      "Content-Type": "application/json",
+  login({ username, password }: userData) {
+    const authData = btoa(`${username}:${password}`);
+    const headers = new HttpHeaders({
+      Authorization: `Basic ${authData}`,
     });
-
-    return this.http.post<any>(resourceUrl, body, { headers }).pipe(map(user => {
-      localStorage.setItem('authData', JSON.stringify(user));
-      this.token = user;
-    }));
+    return this.http.post<Response>(`${environment.API_SECURITY}/auth/login`, null, { headers })
+    .pipe(
+      map((response: any) => {
+        localStorage.setItem(this.NAME_LOCAL_DATA, JSON.stringify({user: response.payload.profile, token: response.payload.token}));
+      })
+    )
+    .toPromise();
   }
 
   isLoggedIn() {
@@ -32,8 +32,12 @@ export class AuthService {
   }
 
   getToken() {
-    let authData = localStorage.getItem('authData');
+    let authData = localStorage.getItem(this.NAME_LOCAL_DATA);
     return authData == null ? undefined : authData;
+  }
+
+  logout() {
+    localStorage.removeItem(this.NAME_LOCAL_DATA);
   }
 
 }
