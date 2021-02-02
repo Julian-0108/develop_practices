@@ -1,8 +1,9 @@
-body {
+mat-drawer-container {
   background-color: #F2F2F2 !important;
   min-height: calc(100vh - (45px + 30px));
   padding: 0 10px 40px;
 }
+
 
 .profile__title {
   color: #959595;
@@ -65,6 +66,7 @@ table.mat-table {
   background-color: #FFF;
   color: #de1920;
   border: solid 1px;
+  box-shadow: none;
 }
 
 .mat-menu-item {
@@ -82,14 +84,13 @@ table.mat-table {
   padding: 0 !important;
 }
 
-::ng-deep.mat-slider-track-fill {
-  background-color: #de1920 !important;
-}
+// ::ng-deep.mat-slider-track-fill {
+//   background-color: #de1920 !important;
+// }
 
-::ng-deep.mat-accent .mat-slider-thumb {
-  background-color: #de1920 !important;
-}
-
+// ::ng-deep.mat-accent .mat-slider-thumb {
+//   background-color: #de1920 !important;
+// }
 .mat-expansion-panel-header-title,
 .mat-cell {
   color: #787878;
@@ -115,11 +116,14 @@ table.mat-table {
 ::ng-deep.mat-tab-header {
   display: none !important;
 }
-.button-next, .button-before {
+
+.button-next,
+.button-before {
   position: absolute;
   top: 10px;
   color: #de1920;
 }
+
 .button-next {
   right: 0;
 }
@@ -143,3 +147,148 @@ table.mat-table {
   border-top: 0;
 }
 
+.card-error__icon {
+  color: #f87f77;
+  position: absolute;
+  top: 15px;
+  left: 8em;
+}
+
+/* History Styles */
+
+::ng-deep .mat-step-header .mat-step-icon {
+  background-color: #fff;
+  border: 1px solid #de1920;
+}
+
+::ng-deep .mat-step-header .mat-step-icon-selected {
+  background-color: #de1920;
+  border-style: none;
+  background-image: url(../../../../assets/images/marca-de-verificacion.svg);
+  background-size: 14px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+::ng-deep .mat-step-header .mat-step-icon-state-edit {
+  background-color: #fff;
+  border: 1px solid #de1920;
+}
+
+.history {
+  height: auto;
+  // width: 50%;
+  cursor: default;
+  border-radius: 9px;
+  box-shadow: rgb(130 130 169 / 25%) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  // margin: 6px 0;
+}
+
+.history__title {
+  color: #787878;
+  font-weight: 600;
+  text-align: center;
+  margin: 12px 0 0 0;
+}
+
+.history__section {
+  display: flex;
+  flex-direction: column;
+}
+
+.history-information__title {
+  font-size: 12px;
+  color: #707070;
+  font-weight: 550;
+}
+
+.history-information__pagraph {
+  font-size: 12px;
+  color: #959595;
+}
+
+::ng-deep .mat-step-label {
+  color: #b7b7b7 !important;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+::ng-deep .mat-step-label-selected {
+  color: #707070 !important;
+  font-weight: 600;
+}
+
+::ng-deep .mat-step-header:hover {
+  background-color: transparent
+}
+
+.stepper__container {
+  // margin: 3em 3em;
+  overflow-y: scroll;
+  height: 65vh;
+  width: 35em;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #de1920;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #8e8e8e;
+}
+
+.hitory__title {
+  font-size: 15px !important;
+  font-weight: 600;
+  color: #9a9a9a;
+  text-align: center;
+  line-height: 5;
+}
+
+.x {
+  width: 3em;
+  height: 3em;
+}
+
+.history__preview-container {
+  width: 100%;
+  text-align: end;
+  height: 25px;
+}
+
+.history__preview-button {
+  width: 20px;
+  height: 20px;
+  color: #6f6f6f;
+}
+
+.history__form{
+  padding: 30px 60px 0;
+}
+
+.datePicker__icon {
+  position: absolute;
+  bottom: -6px;
+  right: -7px;
+}
+
+mat-datepicker-toggle {
+  color: #de1920 !important;
+}
+
+::ng-deep.mat-calendar-body-selected {
+  background-color: #de1920 !important;
+  color: #fff;
+}

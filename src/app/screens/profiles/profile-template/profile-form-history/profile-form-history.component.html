@@ -1,0 +1,32 @@
+<form [formGroup]="formHistory" novalidate autocomplete="off" fxLayout="column" class="form">
+  <h1 class="form__title">Reporte de Historial</h1>
+  <div fxLayout="row">
+    <div class="item" fxFlex="50">
+      <mat-form-field floatLabel="always" appearance="none">
+        <mat-label class="label">Nombre Completo</mat-label>
+        <input matInput type="text" formControlName="name">
+        <app-validator [form]="formHistory" name="name"></app-validator>
+      </mat-form-field>
+    </div>
+    <div class="item" fxFlex="50">
+      <mat-form-field floatLabel="always" appearance="none">
+        <mat-label class="label">Fecha</mat-label>
+        <input matInput type="date" formControlName="date">
+        <app-validator [form]="formHistory" name="date"></app-validator>
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row">
+    <div class="item" fxFlex="100">
+      <mat-form-field floatLabel="always" appearance="none">
+        <mat-label class="label">Descripción de los Cambios</mat-label>
+        <textarea formControlName="description" matInput class="form__textarea"></textarea>
+        <app-validator [form]="formHistory" name="description"></app-validator>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="dialog__options">
+    <button mat-button class="button button--accept" (click)="onSave()">Guardar</button>
+    <button mat-button class="button button--cancel" [mat-dialog-close]="true">Cancelar</button>
+  </div>
+</form>

@@ -15,6 +15,6 @@ import { DialogComponent } from './dialog/dialog.component';
     CommonModule,
     ManageBaseTeamsRoutingModule,
     SharedModule
-  ]
+  ],
 })
 export class ManageBaseTeamsModule { }
