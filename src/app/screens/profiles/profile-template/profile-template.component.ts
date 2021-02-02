@@ -31,7 +31,7 @@ export class ProfileTemplateComponent implements OnInit {
   data!: any;
   securityResponsabilitiesData!: any;
   getAllData: any;
-  // contentPages: any;
+
   contentPagesEducation: any;
   contentPagesSecurityResp: any;
   contentPagesSpecificKnowledge: any;
@@ -55,8 +55,7 @@ export class ProfileTemplateComponent implements OnInit {
   public tabIndexRequiredCertificates = 0;
   public tabIndexRolResponsabilities = 0;
   public tabIndexSecurityResp = 0;
-  // formObjective!: FormGroup;
-  // formExperience!: FormGroup;
+
   formObjective = new FormGroup({
     objective: new FormControl(null, [Validators.required]),
   });
@@ -79,20 +78,21 @@ export class ProfileTemplateComponent implements OnInit {
   historyId!: string;
   existentDate!: string;
   historyFilter: any = [];
+  onHistory = false;
   history = [
     {
       name: 'Lina Jaramillo',
       description:
         'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
       date: '2021-01-13',
-      id: 'id1',
+      id: 456,
     },
     {
       name: 'Lina Jaramillo',
       description:
         'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
       date: '2021-01-15',
-      id: 'id2',
+      id: 123,
     },
     {
       name: 'Lina Jaramillo',
@@ -164,9 +164,12 @@ export class ProfileTemplateComponent implements OnInit {
     this.percent = ev.value;
   }
 
-  onPreview(id: any){
-    console.log(id);
-
+  async onPreview(id: any, drawer: any){
+    const showProfileHistory: any = await this.profileTemplateService.getAllData();
+    console.log(showProfileHistory.filter((profile: any) => profile._id === id));
+    this.data = showProfileHistory.filter((profile: any) => profile._id === id)[0];
+    this.onHistory = true;
+    drawer.toggle();
   }
 
   onSelectStartDate(event: any) {
@@ -200,7 +203,9 @@ export class ProfileTemplateComponent implements OnInit {
     );
   }
 
-
+  exitHistory(){
+    this.onHistory = false;
+  }
 
   nextTab(length: any, section: string) {
     switch (section) {
@@ -460,8 +465,6 @@ export class ProfileTemplateComponent implements OnInit {
             console.log('reporte Historial', resp);
           });
         }
-        // console.log(this.assertiveComSlider);
-        // console.log(this.assertiveComSlider.value);
       });
   }
 
@@ -605,7 +608,7 @@ export class ProfileTemplateComponent implements OnInit {
   }
 
   onStepClicked(id: any) {
-    this.historyId = this.history[id.selectedIndex].id;
+    // this.historyId = this.history[id.selectedIndex].id;
   }
 
   showDate(date: string) {

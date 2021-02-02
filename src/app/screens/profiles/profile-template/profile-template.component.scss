@@ -54,8 +54,12 @@ table.mat-table {
 .actions {
   display: flex;
   position: absolute;
-  top: 4em;
+  top: 2em;
   right: 1em;
+}
+
+.button-back {
+  top: 2em;
 }
 
 .action {
@@ -275,7 +279,7 @@ table.mat-table {
 }
 
 .history__form{
-  padding: 30px 60px 0;
+  padding: 40px 60px 0;
 }
 
 .datePicker__icon {
@@ -292,3 +296,15 @@ mat-datepicker-toggle {
   background-color: #de1920 !important;
   color: #fff;
 }
+.button--exit {
+  border: solid 1px #de1920;
+    color: #de1920;
+    width: auto;
+    height: 25px;
+    position: absolute;
+    top: 15px;
+    left: 9px;
+}
+.mat-button ::ng-deep .mat-button-focus-overlay{
+  display: none;
+  }

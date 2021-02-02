@@ -11,7 +11,7 @@
     <div class="item" fxFlex="50">
       <mat-form-field floatLabel="always" appearance="none">
         <mat-label class="label">Fecha</mat-label>
-        <input matInput type="date" formControlName="date">
+        <input readonly matInput type="date" formControlName="date" class="disabled">
         <app-validator [form]="formHistory" name="date"></app-validator>
       </mat-form-field>
     </div>

@@ -85,7 +85,270 @@ export class ProfileTemplateService {
   async getData() {
     return [
       {
+        title: 'Bases de datos: Consultor Especialista N1',
         _id: 123,
+        objective:
+          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum iusto dolores, ratione vero aspernatur accusamus amet illo tenetur architecto vel est odio, sed sunt, dignissimos vitae adipisci quas. Expedita, animi.',
+        professionalExperience: 2,
+        chargeExperience: 1,
+        securityResponsabilities: [
+          {
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+        ],
+        education: [
+          {
+            _id: 1,
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 2,
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 3,
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 4,
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 5,
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 6,
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 7,
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+        ],
+        requiredCertificates: [
+          {
+            _id: 1,
+            name: 'nombre del Certificado',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 2,
+            name: 'nombre del Certificado',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 3,
+            name: 'nombre del Certificado',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+        ],
+        specificKnowledge: [
+          {
+            _id: 1,
+            name: 'nombre del conocimiento',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 2,
+            name: 'nombre del conocimiento',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 3,
+            name: 'nombre del conocimiento',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+        ],
+        rolResponsabilities: [
+          {
+            _id: 1,
+            name: 'nombre de la función',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 2,
+            name: 'nombre de la función',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+        ],
+      },
+    ];
+  }
+  async getAllData() {
+    return [
+      {
+        title: 'Bases de datos: Consultor Especialista N2',
+        _id: 123,
+        objective:
+          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum iusto dolores, ratione vero aspernatur accusamus amet illo tenetur architecto vel est odio, sed sunt, dignissimos vitae adipisci quas. Expedita, animi.',
+        professionalExperience: 3,
+        chargeExperience: 1,
+        securityResponsabilities: [
+          {
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+        ],
+        education: [
+          {
+            _id: 1,
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 2,
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 3,
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 4,
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 5,
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 6,
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 7,
+            name: 'nombre de la formación',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+        ],
+        requiredCertificates: [
+          {
+            _id: 1,
+            name: 'nombre del Certificado',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 2,
+            name: 'nombre del Certificado',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 3,
+            name: 'nombre del Certificado',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+        ],
+        specificKnowledge: [
+          {
+            _id: 1,
+            name: 'nombre del conocimiento',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 2,
+            name: 'nombre del conocimiento',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 3,
+            name: 'nombre del conocimiento',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+        ],
+        rolResponsabilities: [
+          {
+            _id: 1,
+            name: 'nombre de la función',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            _id: 2,
+            name: 'nombre de la función',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+        ],
+      },
+      {
+        title: 'Bases de datos: Consultor Especialista N1',
+        _id: 456,
         objective:
           'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum iusto dolores, ratione vero aspernatur accusamus amet illo tenetur architecto vel est odio, sed sunt, dignissimos vitae adipisci quas. Expedita, animi.',
         professionalExperience: 2,
