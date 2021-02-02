@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '@app/screens/login/services/auth/auth.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -9,13 +10,16 @@ import { Router } from '@angular/router';
 export class ToolbarComponent implements OnInit {
   private readonly SITES_SETI = ['/movements', '/temperature', '/kits', '/generateqr'];
 
-  constructor(private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
 
   logout() {
-    localStorage.removeItem('authData');
+    this.authService.logout();
   }
 
   hideMenuSites() {
