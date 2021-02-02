@@ -4,12 +4,16 @@ import { environment } from "@environments/environment";
 import { pluck } from "rxjs/operators";
 import { Master } from "@shared/interfaces/master.interface";
 import { Response } from "@app/shared/interfaces/response.interface";
+import { AuthService } from '@app/screens/login/services/auth/auth.service';
 
 @Injectable({
   providedIn: "root",
 })
 export class MasterInfoService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+  ) {}
 
   getData(url: string): Promise<Master[]>{
     return this.http
@@ -47,7 +51,8 @@ export class MasterInfoService {
         }
       };
       xhr.open('POST', `${environment.API_MUNDO_SETI}/${url}`);
-      // xhr.setRequestHeader('Authorization', `Bearer ${sessionStorage.getItem('access_token')}`);
+      const authData: any = this.authService.getToken();
+      xhr.setRequestHeader('Authorization', `Bearer ${JSON.parse(authData).token}`);
       xhr.send(register);
     });
   }
@@ -65,7 +70,8 @@ export class MasterInfoService {
         }
       };
       xhr.open('PUT', `${environment.API_MUNDO_SETI}/${url}/${id}`);
-      // xhr.setRequestHeader('Authorization', `Bearer ${sessionStorage.getItem('access_token')}`);
+      const authData: any = this.authService.getToken();
+      xhr.setRequestHeader('Authorization', `Bearer ${JSON.parse(authData).token}`);
       xhr.send(register);
     });
   }
