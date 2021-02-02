@@ -6,100 +6,49 @@
     <form [formGroup]="form" novalidate autocomplete="off">
 
         <div fxLayout="row" fxLayoutGap="10px">
-            <div fxFlex="25" class="item">
+            <div fxFlex="50" class="item">
                 <mat-form-field appearance="none" floatLabel="always">
                     <mat-label>Nombre del perfil</mat-label>
                     <input formControlName="charge" matInput type="text">
                     <app-validator [form]="form" name="charge"></app-validator>
                 </mat-form-field>
             </div>
-            <div fxFlex="25" class="item">
+            <div fxFlex="50" class="item">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Niveles</mat-label>
-                    <mat-select formControlName="levels">
-                        <mat-option value="Niveles">
-                            ejemplo
+                    <mat-select formControlName="level">
+                        <mat-option value="no aplica">
+                            No Aplica
+                        </mat-option>
+                        <mat-option value="n1">
+                            Nivel 1
+                        </mat-option>
+                        <mat-option value="n2">
+                            Nivel 2
+                        </mat-option>
+                        <mat-option value="n3">
+                            Nivel 3
                         </mat-option>
                     </mat-select>
-                    <app-validator [form]="form" name="levels" [otherIcon]="true"></app-validator>
-                </mat-form-field>
-            </div>
-            <div fxFlex="50" class="item">
-                <mat-form-field floatLabel="always" appearance="none">
-                    <mat-label>Formación Acadeica</mat-label>
-                    <mat-select formControlName="academicFormation">
-                        <mat-option value="Formación Acadeica">Ejemplo</mat-option>
-                    </mat-select>
-                    <app-validator [form]="form" name="academicFormation" [otherIcon]="true"></app-validator>
+                    <app-validator [form]="form" name="level" [otherIcon]="true"></app-validator>
                 </mat-form-field>
             </div>
         </div>
 
         <div fxLayout="row" fxLayoutGap="10px">
-            <div fxFlex="50" class="item">
-                <mat-form-field floatLabel="always" appearance="none">
-                    <mat-label>Certificaciones Requeridas</mat-label>
-                    <mat-select formControlName="certifications">
-                        <mat-option value="Certificaciones Requeridas">Ejemplo</mat-option>
-                    </mat-select>
-                    <app-validator [form]="form" name="certifications" [otherIcon]="true"></app-validator>
-                </mat-form-field>
-            </div>
-            <div fxFlex="25" class="item">
-                <mat-form-field floatLabel="always" appearance="none">
-                    <mat-label>Experiencia Profesional</mat-label>
-                    <mat-select formControlName="workExperience">
-                        <mat-option value="Experiencia Profesional">Ejemplo</mat-option>
-                    </mat-select>
-                    <app-validator [form]="form" name="workExperience" [otherIcon]="true"></app-validator>
-                </mat-form-field>
-            </div>
-            <div fxFlex="25" class="item">
-                <mat-form-field floatLabel="always" appearance="none">
-                    <mat-label>Exp Específica en el Cargo</mat-label>
-                    <mat-select formControlName="areaExperience">
-                        <mat-option value="Exp Específica en el Cargo">Ejemplo</mat-option>
-                    </mat-select>
-                    <app-validator [form]="form" name="areaExperience" [otherIcon]="true"></app-validator>
-                </mat-form-field>
-            </div>
-        </div>
-
-        <div fxLayout="row" fxLayoutGap="10px">
-            <div fxFlex="40" class="item">
-                <mat-form-field floatLabel="always" appearance="none">
-                    <mat-label>Conocimientos Específicos del Cargo</mat-label>
-                    <mat-select formControlName="areaSkills">
-                        <mat-option value="Conocimientos Específicos del Cargo">Ejemplo</mat-option>
-                    </mat-select>
-                    <app-validator [form]="form" name="areaSkills" [otherIcon]="true"></app-validator>
-                </mat-form-field>
-            </div>
-            <div fxFlex="40" class="item">
-                <mat-form-field floatLabel="always" appearance="none">
-                    <mat-label>Funciones del Rol</mat-label>
-                    <mat-select formControlName="roleFunctions">
-                        <mat-option value="Funciones del Rol">Ejemplo</mat-option>
-                    </mat-select>
-                    <app-validator [form]="form" name="roleFunctions" [otherIcon]="true"></app-validator>
-                </mat-form-field>
-            </div>
-        </div>
-
-        <div fxLayout="row" fxLayoutGap="10px">
-            <div fxFlex="30" class="item">
+            <div fxFlex="35" class="item">
                 <mat-form-field appearance="none" floatLabel="always">
                     <mat-label>Creado el</mat-label>
                     <input formControlName="createdAt" matInput type="date" readonly>
                 </mat-form-field>
             </div>
-            <div fxFlex="30" class="item">
+            <div fxFlex="35" class="item">
                 <mat-form-field appearance="none" floatLabel="always">
                     <mat-label>Actualizado el</mat-label>
                     <input formControlName="updatedAt" matInput type="date" readonly>
                 </mat-form-field>
             </div>
-            <div fxFlex="40" class="item">
+            <div fxFlex="30" class="item">
                 <mat-form-field appearance="none" floatLabel="always">
                     <mat-label>Estado</mat-label>
                     <mat-button-toggle-group formControlName="status">

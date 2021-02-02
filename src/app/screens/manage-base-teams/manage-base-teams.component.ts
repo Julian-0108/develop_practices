@@ -16,6 +16,7 @@ export class ManageBaseTeamsComponent implements OnInit {
 
   isLoadingResults = false;
   name!: string;
+  CoursesCertifications! : any;
 
   displayedColumns: string[] = [
     'profiles',
