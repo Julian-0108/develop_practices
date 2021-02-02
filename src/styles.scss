@@ -1,5 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-
 :root {
     // rojo seti: #c4382f
     --primary-color: #de1920;
@@ -60,10 +59,10 @@ html, body {
 
 .snack__close-icon {
     font-weight: bold;
-    position: absolute;
+    // position: absolute;
     font-size: 16px;
-    left: 18em;
-    bottom: 8px;
+    // left: 18em;
+    // bottom: 8px;
 }
 
 
@@ -432,3 +431,11 @@ mat-dialog-actions {
         width: 5em !important;
     }
 }
+// div.mat-slider-disabled, .mat-accent .mat-slider-thumb, .mat-slider-track-fill {
+//   background-color: #707070 !important;
+// }
+// div.mat-slider-track-fill, .mat-accent .mat-slider-thumb{
+//   background-color: #de1920 !important;
+// }
+
+

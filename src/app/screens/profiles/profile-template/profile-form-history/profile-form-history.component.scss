@@ -1,0 +1,17 @@
+.form{
+  padding: 20px 30px;
+}
+.form__title {
+  color: #de1920;
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 30px;
+}
+
+.form__textarea {
+  height: 65px;
+  outline: none;
+  resize: none;
+  overflow: auto;
+  padding: 2px;
+}
