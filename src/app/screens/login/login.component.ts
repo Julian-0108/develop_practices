@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit {
   }
 
   ifTokenExists(): void {
-    console.log(this._authService.isLoggedIn());
     if (this._authService.isLoggedIn()) {
       this.router.navigate(['/home']);
     }
