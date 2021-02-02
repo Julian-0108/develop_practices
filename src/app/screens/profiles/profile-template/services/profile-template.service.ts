@@ -20,58 +20,58 @@ export class ProfileTemplateService {
         {
           name: 'Comunicación Estricta',
           measureApproval: 30,
-          id: 11,
+          id: 2,
         },
         {
           name: 'Retroalimentación',
           measureApproval: 90,
-          id: 12,
+          id: 3,
         },
       ],
       achievementOrientation: [
         {
           name: 'Orientación al Resultado',
           measureApproval: 50,
-          id: 1,
+          id: 4,
         },
         {
           name: 'Planeación',
           measureApproval: 30,
-          id: 11,
+          id: 5,
         },
         {
           name: 'Atención al Detalle',
           measureApproval: 90,
-          id: 12,
+          id: 6,
         },
         {
           name: 'Sentido de Urgencia',
           measureApproval: 90,
-          id: 12,
+          id: 7,
         },
       ],
       serviceOrientation: [
         {
           name: 'Autocontrol',
           measureApproval: 50,
-          id: 1,
+          id: 8,
         },
         {
           name: 'Habilidad Social',
           measureApproval: 30,
-          id: 11,
+          id: 8,
         },
         {
           name: 'Compromiso Laboral',
           measureApproval: 90,
-          id: 12,
+          id: 9,
         },
       ],
       teamwork: [
         {
           name: 'Adaptabilidad',
           measureApproval: 50,
-          id: 1,
+          id: 10,
         },
         {
           name: 'Trabajo en Equipo',
@@ -85,6 +85,7 @@ export class ProfileTemplateService {
   async getData() {
     return [
       {
+        _id: 123,
         objective:
           'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum iusto dolores, ratione vero aspernatur accusamus amet illo tenetur architecto vel est odio, sed sunt, dignissimos vitae adipisci quas. Expedita, animi.',
         professionalExperience: 2,
@@ -326,111 +327,111 @@ export class ProfileTemplateService {
         name: 'nombre de la formación',
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
       },
-      // {
-      //   _id: 23,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 24,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 25,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 26,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 27,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 28,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 29,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 30,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 31,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 32,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 33,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 34,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 35,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 36,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 37,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 38,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 39,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 40,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 41,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 42,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
-      // {
-      //   _id: 43,
-      //   name: 'nombre de la formación',
-      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      // },
+      {
+        _id: 23,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 24,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 25,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 26,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 27,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 28,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 29,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 30,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 31,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 32,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 33,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 34,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 35,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 36,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 37,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 38,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 39,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 40,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 41,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 42,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
+      {
+        _id: 43,
+        name: 'nombre de la formación',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      },
     ];
   }
 

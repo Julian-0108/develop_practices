@@ -1,7 +1,9 @@
-  <button class="snack__button" (click)="matSnackBarRef.dismiss()" mat-icon-button>
-    <mat-icon class="snack__close-icon snack__close-icon--{{data.type}}">clear</mat-icon>
-  </button>
-  <div class="snack__content">
+<div class="snack__content">
+  <div class="snack__button-container">
+    <button class="snack__button" (click)="matSnackBarRef.dismiss()" mat-icon-button>
+      <mat-icon class="snack__close-icon snack__close-icon--{{data.type}}">clear</mat-icon>
+    </button>
+  </div>
     <mat-icon class="snack__icon snack__icon--{{data.type}}">{{data.icon}}</mat-icon>
     <div>
       <p class="snack__title snack__title--{{data.type}}">
