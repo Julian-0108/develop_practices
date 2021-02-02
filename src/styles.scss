@@ -61,10 +61,10 @@ body {
 
 .snack__close-icon {
     font-weight: bold;
-    position: absolute;
+    // position: absolute;
     font-size: 16px;
-    left: 18em;
-    bottom: 8px;
+    // left: 18em;
+    // bottom: 8px;
 }
 
 
@@ -361,6 +361,7 @@ mat-label {
     width: 95% !important;
 }
 
+
 /* Mat Dialog */
 
 mat-dialog-container {
@@ -458,3 +459,10 @@ mat-dialog-actions {
         font-size: 1.8em;
     }
 }
+
+// div.mat-slider-disabled, .mat-accent .mat-slider-thumb, .mat-slider-track-fill {
+//   background-color: #707070 !important;
+// }
+// div.mat-slider-track-fill, .mat-accent .mat-slider-thumb{
+//   background-color: #de1920 !important;
+// }

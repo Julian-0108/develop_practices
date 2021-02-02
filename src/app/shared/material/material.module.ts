@@ -33,6 +33,8 @@ import {MatStepperModule} from '@angular/material/stepper';
 
 import {MatChipsModule} from '@angular/material/chips';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 
 
@@ -69,7 +71,9 @@ const materialComponents = [
     MatRadioModule,
     MatStepperModule,
     MatChipsModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
 ];
 
 @NgModule({
