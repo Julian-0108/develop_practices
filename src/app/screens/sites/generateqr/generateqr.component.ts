@@ -66,9 +66,6 @@ export class GenerateqrComponent implements OnInit {
       .find(sites => sites['_id'] == this.idSites).nombre;
     this.qrHormiguero = `${this.idSites}` + ':entrada'
     this.qrHormigueroS = `${this.idSites}` + ':salida'
-    // console.log(this.resultNameSites);
-    // console.log(this.qrHormiguero);
-    // console.log(this.qrHormigueroS);
   }
 
   getVenues() {
@@ -78,12 +75,10 @@ export class GenerateqrComponent implements OnInit {
         .map(
           (venues) => (venues['_id'])
         );
-      // console.log(this.resultVenues);
     });
   }
 
   onChangeVenue(value: string) {
-    // console.log(value);
     this._officeService.getOfficeByVenueId(value).subscribe(
       (data: any) => {
         this.offices = data;
@@ -92,13 +87,11 @@ export class GenerateqrComponent implements OnInit {
           .map(
             (offices) => (offices['_id'])
           );
-        // console.log(this.resultOffices);
       }
     )
   }
 
   onChangeOffice(value: any) {
-    // console.log(value);
     this._sitesService.getSitesByOfficeId(value).subscribe(
       (data: any) => {
         this.sites = data;
@@ -107,7 +100,6 @@ export class GenerateqrComponent implements OnInit {
           .map(
             (sites) => (sites['_id'])
           );
-        // console.log(this.resultSites);
       }
     )
   }
@@ -119,7 +111,6 @@ export class GenerateqrComponent implements OnInit {
   onSubmitKit() {
     this.myDate = formatDate(new Date(), 'yyyy-MM-dd-h:mm-a', 'en')
     this.qrKit = `${this.myDate}` + ':kit';
-    // console.log(this.qrKit);
   }
 
 }
