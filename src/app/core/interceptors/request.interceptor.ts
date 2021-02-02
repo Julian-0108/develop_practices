@@ -26,11 +26,10 @@ export class RequestInterceptor implements HttpInterceptor {
     const headersConfig: any = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': '*'
     };
 
     const authData = this.authService.getToken();
-
     if (authData) {
       headersConfig['Authorization'] = `Bearer ${JSON.parse(authData).token}`;
     }
