@@ -56,6 +56,7 @@ export class ManageBaseTeamsComponent implements OnInit {
       width: "60%",
       data: {
         element,
+        idBaseTeams: this.router.snapshot.params['id'],
         title: element ? 'Editar' : 'Agregar'
       },
     }).afterClosed();
