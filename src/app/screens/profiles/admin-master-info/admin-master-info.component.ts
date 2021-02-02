@@ -32,7 +32,7 @@ export class AdminMasterInfoComponent implements OnInit {
     { name: 'Habilidades', url: 'skills' },
     { name: 'Funciones', url: 'functions' },
     { name: 'Módulos', url: 'modules' },
-    { name: 'Conocimientos especificos', url: 'specific-knowledge' },
+    { name: 'Conocimientos específicos', url: 'specific-knowledge' },
     { name: 'Estudios', url: 'studies' },
     { name: 'Herramientas de trabajo', url: 'work-tools' },
     { name: 'Tipos', url: 'types' },
@@ -102,7 +102,6 @@ export class AdminMasterInfoComponent implements OnInit {
         },
       })
       .afterClosed();
-    console.log(this.masterSeleted);
     dialogRef.toPromise().then((response: any) => {
       if (element && response?.data) {
         this.getDataMaster();
@@ -114,5 +113,14 @@ export class AdminMasterInfoComponent implements OnInit {
         // this.addRegisterToMatTable(response.data);
       }
     });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue: String = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { MasterInfoService } from '../services/master-info.service';
 import { MasterInfoDialog } from '../interfaces/master-info-dialog';
 import { NotificationService } from '@shared/components/notification/services/notification.service';
+import { CustomValidatorService } from '@shared/utils/custom-validator.service';
 
 @Component({
   selector: 'app-master-info',
@@ -26,50 +27,18 @@ export class MasterInfoComponent implements OnInit {
     private formBuilder: FormBuilder,
     private notificationService: NotificationService,
     private masterInfoService: MasterInfoService,
+    private customValidator: CustomValidatorService,
     private dialogRef: MatDialogRef<MasterInfoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: MasterInfoDialog
   ) {}
 
   ngOnInit(): void {
-    console.log(this.data);
     this.form = this.createForm();
     this.initForm();
     this.fillTypesList();
     this.fillMastersList();
   }
 
-  inputTypeValidator() {
-    if (this.form.value.type === 'EQUIPO_BASE') {
-      this.form.get('submenu')?.enable();
-    } else if (
-      this.data.url === 'base-teams-categories' &&
-      this.form.value.type !== 'EQUIPO_BASE' &&
-      this.form.value.type !== null
-    ) {
-      this.notificationService.openSimpleSnackBar({
-        title: 'Contenido Incorrecto',
-        message: 'El contenido del campo "Tipo" es incorrecto.',
-        type: 'error',
-      });
-      return;
-    } else {
-      this.form.get('submenu')?.disable();
-    }
-  }
-
-  inputMasterValidator() {
-    if (
-      !this.masters.includes(this.form.value.masterReference) &&
-      this.form.value.masterReference !== null
-    ) {
-      this.notificationService.openSimpleSnackBar({
-        title: 'Contenido Incorrecto',
-        message: 'El contenido del campo "Maestra" es incorrecto.',
-        type: 'error',
-      });
-      return;
-    }
-  }
 
   async fillMastersList() {
     const masters = await this.masterInfoService.getData(this.data.url);
@@ -81,6 +50,7 @@ export class MasterInfoComponent implements OnInit {
     });
     this.masters = masterReferenceArray;
   }
+
   fillTypesList() {
     this.masterInfoService
       .getTypes(this.data)
@@ -93,10 +63,11 @@ export class MasterInfoComponent implements OnInit {
       })
       .catch((err) => {});
   }
+
   createForm(): FormGroup {
     return this.formBuilder.group({
       _id: new FormControl(),
-      name: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required, this.customValidator.noWhitespaceValidator]),
       type: new FormControl({ value: '', disabled: this.data?.url === 'security-responsabilities'}),
       description: new FormControl({ value: '', disabled: this.data?.url === 'types' || this.data?.url === 'security-responsabilities' }),
       masterReference: new FormControl(null),
@@ -113,15 +84,20 @@ export class MasterInfoComponent implements OnInit {
     if (this.data.url !== 'types') {
       this.form.controls.type?.setValidators([Validators.required]);
       this.form.controls.type?.updateValueAndValidity();
-      this.form.controls.description?.setValidators([Validators.required]);
+      this.form.controls.description?.setValidators([Validators.required, this.customValidator.noWhitespaceValidator]);
       this.form.controls.description?.updateValueAndValidity();
       this.form.controls.masterReference?.clearValidators();
+      if (this.data.url === 'security-responsabilities') {
+        this.form.controls.description?.clearValidators();
+        this.form.controls.description?.updateValueAndValidity();
+      }
     } else {
       this.form.controls.masterReference?.setValidators([Validators.required]);
       this.form.controls.masterReference?.updateValueAndValidity();
       this.form.controls.type?.clearValidators();
       this.form.controls.description?.clearValidators();
     }
+
     if (this.data?.element) {
       this.form.patchValue(this.data.element);
       this.form
@@ -214,7 +190,6 @@ export class MasterInfoComponent implements OnInit {
   }
 
   onFileChange(event: any) {
-    console.log(event.target.files[0].name);
     this.form.get('imagePath')?.patchValue(event.target.files[0].name);
 
     if (
@@ -251,7 +226,11 @@ export class MasterInfoComponent implements OnInit {
 
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-
+      this.notificationService.openSimpleSnackBar({
+        title: 'Campos obligatorios',
+        message: 'Revisa la información del formulario',
+        type: 'error',
+      });
       return;
     }
 

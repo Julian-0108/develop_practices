@@ -21,27 +21,26 @@
       <div *ngIf="data?.url === 'types'" class="item" fxFlex="30">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Maestra</mat-label>
-          <input (blur)="inputMasterValidator()" matInput formControlName="masterReference" placeholder="Maestra"
-            [matAutocomplete]="masterAutoCom">
-          <app-validator [form]="form" name="masterReference"></app-validator>
-          <mat-autocomplete autoActiveFirstOption #masterAutoCom="matAutocomplete">
+          <mat-select formControlName="masterReference">
             <mat-option *ngFor="let master of masters" [value]="master">
               {{master}}
             </mat-option>
-          </mat-autocomplete>
+        </mat-select>
+          <app-validator [form]="form" name="masterReference" [otherIcon]="true"></app-validator>
         </mat-form-field>
       </div>
       <div *ngIf="data?.url !== 'types'" class="item" fxFlex="30">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Tipo</mat-label>
-          <input (blur)="inputTypeValidator()" matInput type="text" formControlName="type" placeholder="Tipo"
-            [matAutocomplete]="auto">
-          <app-validator [form]="form" name="type"></app-validator>
-          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-select formControlName="type">
             <mat-option *ngFor="let type of types" [value]="type.name">
               {{type.name}}
             </mat-option>
-          </mat-autocomplete>
+            <mat-option *ngIf="types?.length === 0" disabled>
+              <i>No hay tipos disponibles</i>
+            </mat-option>
+        </mat-select>
+        <app-validator [form]="form" name="type" [otherIcon]="true"></app-validator>
         </mat-form-field>
       </div>
     </div>
