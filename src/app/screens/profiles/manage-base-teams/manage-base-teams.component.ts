@@ -5,7 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ManageBaseTeamsService } from './service/manage-base-teams.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { NotificationService } from '../../shared/components/notification/services/notification.service';
+import { NotificationService } from '@shared/components/notification/services/notification.service';
 
 @Component({
   selector: 'app-manage-base-teams',
