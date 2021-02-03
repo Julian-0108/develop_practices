@@ -116,6 +116,18 @@ button {
 
 @media screen and (min-width: 1450px) {
     table {
-        font-size: 2em !important;
+        font-size: 1.2em !important;
+    }
+    .label {
+        font-size: 1.1em !important;
+    }
+}
+
+@media screen and (min-width: 1750px) {
+    table {
+        font-size: 1.5em !important;
+    }
+    .label {
+        font-size: 1.2em !important;
     }
 }

@@ -80,7 +80,7 @@ export class DialogComponent implements OnInit {
           message: response.message,
           type: 'success'
         });
-        this.dialogRef.close();
+        this.closeDialog({ data: response.payload });
       })
       .catch((response:any)=>{
         this.notificationService.openSimpleSnackBar({
@@ -100,7 +100,7 @@ export class DialogComponent implements OnInit {
           message: response.message,
           type: 'success'
         });
-        this.dialogRef.close();
+        this.closeDialog({ data: response.payload });
       })
       .catch((response:any)=>{
         this.notificationService.openSimpleSnackBar({
@@ -109,6 +109,10 @@ export class DialogComponent implements OnInit {
           type: 'error'
         });
       });
+  }
+
+  closeDialog(data: any = null){
+    this.dialogRef.close(data);
   }
 
 }

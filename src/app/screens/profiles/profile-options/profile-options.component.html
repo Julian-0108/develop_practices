@@ -52,7 +52,7 @@
         <div class="cards" fxLayout="row" fxLayoutAlign="center">
 
             <div *ngFor="let items1 of rowsArray">
-                <mat-card #card (click)="onCardClicked(item)" [ngClass]="{'card--open': cardClicked === item._id && !item.submenu}" fxLayout="column" fxLayoutAlign="start center" class="card" *ngFor="let item of items1">
+                <mat-card #card (click)="onCardClicked(item)" [ngClass]="{'card--open': cardClicked === item._id && !item.submenu}" fxLayout="column" fxLayoutAlign="start" class="card-base-team" *ngFor="let item of items1">
                     <h1 class="card__title">{{item.name}}</h1>
                     <div [ngStyle]="{'display': cardClicked === item._id ? 'block' : 'none'}" fxLayout="column" fxLayoutAlign="start start">
 

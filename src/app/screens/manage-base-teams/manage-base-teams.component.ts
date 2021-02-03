@@ -5,6 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ManageBaseTeamsService } from './service/manage-base-teams.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { NotificationService } from '../../shared/components/notification/services/notification.service';
 
 @Component({
   selector: 'app-manage-base-teams',
@@ -32,7 +33,8 @@ export class ManageBaseTeamsComponent implements OnInit {
     public dialog: MatDialog, 
     private title: Title,
     private router: ActivatedRoute,
-    private manageBaseTeamsService: ManageBaseTeamsService
+    private manageBaseTeamsService: ManageBaseTeamsService,
+    private notificationService: NotificationService
   ) {
     this.title.setTitle("Mundo SETI - administrar equipos base");
   }
@@ -47,7 +49,13 @@ export class ManageBaseTeamsComponent implements OnInit {
       this.name = response.name;
       this.dataSource = new MatTableDataSource(response.profiles);
     })
-    .catch(console.log)
+    .catch((response:any)=>{
+      this.notificationService.openSimpleSnackBar({
+        title: 'Petición Incorrecta',
+        message: response.message,
+        type: 'error'
+      });
+    });
   }
   
   // Dialog
@@ -59,7 +67,11 @@ export class ManageBaseTeamsComponent implements OnInit {
         idBaseTeams: this.router.snapshot.params['id'],
         title: element ? 'Editar' : 'Agregar'
       },
-    }).afterClosed();
+    }).afterClosed().toPromise().then(( response: any) => {
+      if (response.data) {
+        this.getBaseTeams();
+      }
+    });
 
     
   }
