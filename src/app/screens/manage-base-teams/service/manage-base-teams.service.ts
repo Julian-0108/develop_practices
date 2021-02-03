@@ -15,14 +15,6 @@ export class ManageBaseTeamsService {
     return this.http.get(`${environment.API_MUNDO_SETI}/base-teams-categories?_id=${id}`).pipe( pluck('payload') ).toPromise();
   }
 
-  /*getMasterCoursesCertifications(){
-    return this.http.get(`${environment.API_MUNDO_SETI}/courses-certifications`).pipe( pluck('payload') ).toPromise();
-  }
-
-  getMasterSpecificKnowledge(){
-    return this.http.get(`${environment.API_MUNDO_SETI}/specific-knowledge`).pipe(pluck('payload')).toPromise();
-  }*/
-
   addProfile(payload: any){
     return this.http.post(`${environment.API_MUNDO_SETI}/bases-profiles`, payload).toPromise()
   }

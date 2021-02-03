@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DatePipe, formatDate } from '@angular/common';
 import { ManageBaseTeamsService } from '../service/manage-base-teams.service';
 import { NotificationService } from '@shared/components/notification/services/notification.service';
@@ -19,20 +19,21 @@ export class DialogComponent implements OnInit {
   CoursesCertifications!: any;
   specificKnowledge!: any;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+  constructor( @Inject(MAT_DIALOG_DATA) public data: any,
     fb: FormBuilder,
     private datePipe: DatePipe,
     private notificationService: NotificationService,
-    private manageBaseTeamsService: ManageBaseTeamsService
+    private manageBaseTeamsService: ManageBaseTeamsService,
+    private dialogRef: MatDialogRef<any>,
   ) {
 
     this.form = fb.group({
-      _id: [''],
-      charge: ['', Validators.required],
-      level: ['', Validators.required],
-      createdAt: [''],
-      updatedAt: [''],
-      status: ['', Validators.required],
+      _id: new FormControl(''),
+      charge: new FormControl('', [Validators.required]),
+      level: new FormControl(''),
+      createdAt: new FormControl({value: '', disabled: true}),
+      updatedAt: new FormControl({value: '', disabled: true}),
+      status: new FormControl({value: ''},[Validators.required]),
     });
 
     this.editForm();
@@ -62,11 +63,6 @@ export class DialogComponent implements OnInit {
 
     if (!this.form.valid) {
       this.form.markAllAsTouched();
-      this.notificationService.openSimpleSnackBar({
-        title: '¿no sabe llenar un formulario?',
-        message: 'LLena el formulario ome',
-        type: 'info'
-      });
       return;
     }
 
@@ -84,8 +80,15 @@ export class DialogComponent implements OnInit {
           message: response.message,
           type: 'success'
         });
+        this.dialogRef.close();
       })
-      .catch(console.log)
+      .catch((response:any)=>{
+        this.notificationService.openSimpleSnackBar({
+          title: 'Error',
+          message: response.message,
+          type: 'error'
+        });
+      });
   }
 
   updateProfile(id: any, formData: any) {
@@ -97,8 +100,15 @@ export class DialogComponent implements OnInit {
           message: response.message,
           type: 'success'
         });
+        this.dialogRef.close();
       })
-      .catch(console.log)
+      .catch((response:any)=>{
+        this.notificationService.openSimpleSnackBar({
+          title: 'Error',
+          message: response.message,
+          type: 'error'
+        });
+      });
   }
 
 }
