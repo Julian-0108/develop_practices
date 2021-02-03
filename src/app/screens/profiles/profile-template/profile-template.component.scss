@@ -44,7 +44,7 @@ p {
 th.mat-header-cell {
   text-align: center;
   font-size: 13.5px;
-  font-weight: 600;
+  font-weight: 500 !important;
 }
 
 table.mat-table {
@@ -298,13 +298,16 @@ mat-datepicker-toggle {
 }
 .button--exit {
   border: solid 1px #de1920;
-    color: #de1920;
-    width: auto;
-    height: 25px;
-    position: absolute;
-    top: 15px;
-    left: 9px;
+  color: #de1920;
+  width: auto;
+  height: 25px;
+  position: absolute;
+  top: 15px;
+  left: 9px;
 }
-.mat-button ::ng-deep .mat-button-focus-overlay{
-  display: none;
-  }
+
+.label-edit {
+  color: #de1920 !important;
+  font-weight: 600 !important;
+}
+

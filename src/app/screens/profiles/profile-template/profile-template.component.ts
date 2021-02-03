@@ -5,7 +5,7 @@ import { ProfileTemplateService } from './services/profile-template.service';
 import { MatSelectionList } from '@angular/material/list';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NotificationService } from '@app/shared/components/notification/services/notification.service';
-import { MatSlider } from '@angular/material/slider';
+import { MatSlider, MatSliderChange } from '@angular/material/slider';
 import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileFormHistoryComponent } from './profile-form-history/profile-form-history.component';
@@ -27,7 +27,7 @@ export class ProfileTemplateComponent implements OnInit {
   dataAchievementOrientation!: MatTableDataSource<Tables>;
   dataServiceOrientation!: MatTableDataSource<Tables>;
   dataTeamwork!: MatTableDataSource<Tables>;
-  percent = 0;
+  percent!: any;
   data!: any;
   securityResponsabilitiesData!: any;
   getAllData: any;
@@ -144,6 +144,7 @@ export class ProfileTemplateComponent implements OnInit {
       id: 'id3',
     },
   ];
+
   constructor(
     private profileTemplateService: ProfileTemplateService,
     private notificationService: NotificationService,
@@ -154,19 +155,19 @@ export class ProfileTemplateComponent implements OnInit {
   //   this.cd.detectChanges();
   // }
   ngOnInit(): void {
-    this.getDataCorporativeCompetences();
     this.getData();
     this.history.sort((a, b) => (a.date < b.date ? 1 : -1));
     this.historyFilter = this.history
   }
 
-  x(ev: any) {
+  x(ev: MatSliderChange, id: any) {
     this.percent = ev.value;
+    console.log(ev.source._elementRef.nativeElement.id);
   }
+
 
   async onPreview(id: any, drawer: any){
     const showProfileHistory: any = await this.profileTemplateService.getAllData();
-    console.log(showProfileHistory.filter((profile: any) => profile._id === id));
     this.data = showProfileHistory.filter((profile: any) => profile._id === id)[0];
     this.onHistory = true;
     drawer.toggle();
@@ -203,8 +204,10 @@ export class ProfileTemplateComponent implements OnInit {
     );
   }
 
-  exitHistory(){
+  exitHistory(drawer: any){
+    this.getData();
     this.onHistory = false;
+    drawer.toggle();
   }
 
   nextTab(length: any, section: string) {
@@ -298,17 +301,14 @@ export class ProfileTemplateComponent implements OnInit {
   displayedColumns(table: string) {
     return [table, 'measureApproval'];
   }
-  getDataCorporativeCompetences() {
-    this.profileTemplateService.getDataCorporativeCompetences().then((res: any) => {
-      this.dataAssertiveComunication = new MatTableDataSource(res.assertiveComunication);
-      this.dataAchievementOrientation = new MatTableDataSource(res.achievementOrientation);
-      this.dataServiceOrientation = new MatTableDataSource(res.serviceOrientation);
-      this.dataTeamwork = new MatTableDataSource(res.teamwork);
-    });
-  }
+
   getData() {
     this.profileTemplateService.getData().then((res: any) => {
       this.data = res[0];
+      this.dataAssertiveComunication = new MatTableDataSource(res[0].corporativeCompetences.assertiveComunication);
+      this.dataAchievementOrientation = new MatTableDataSource(res[0].corporativeCompetences.achievementOrientation);
+      this.dataServiceOrientation = new MatTableDataSource(res[0].corporativeCompetences.serviceOrientation);
+      this.dataTeamwork = new MatTableDataSource(res[0].corporativeCompetences.teamwork);
     });
     this.getSecurityResponsabilities();
   }
