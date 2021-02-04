@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { MasterInfoService } from '../services/master-info.service';
-import { MasterInfoDialog } from '../interfaces/master-info-dialog';
+import { MasterInfoDialog, Masters } from '../interfaces/master-info-dialog';
 import { NotificationService } from '@shared/components/notification/services/notification.service';
 import { CustomValidatorService } from '@shared/utils/custom-validator.service';
 
@@ -19,8 +19,8 @@ export class MasterInfoComponent implements OnInit {
   public manage_images = ['modules', 'base-teams-categories'];
   private archivo!: string;
   private readonly DATE_FORM_CONTROL = 'yyyy-MM-dd';
-  types: any;
-  masters: any;
+  types: any[] = [];
+  masters: Masters[] = [];
 
   constructor(
     private datePipe: DatePipe,
@@ -36,20 +36,8 @@ export class MasterInfoComponent implements OnInit {
     this.form = this.createForm();
     this.initForm();
     this.fillTypesList();
-    this.fillMastersList();
   }
 
-
-  async fillMastersList() {
-    const masters = await this.masterInfoService.getData(this.data.url);
-    let masterReferenceArray: any = [];
-    masters.forEach((item: any) => {
-      if (!masterReferenceArray.includes(item.masterReference)) {
-        masterReferenceArray = [...masterReferenceArray, item.masterReference];
-      }
-    });
-    this.masters = masterReferenceArray;
-  }
 
   fillTypesList() {
     this.masterInfoService
@@ -92,6 +80,7 @@ export class MasterInfoComponent implements OnInit {
         this.form.controls.description?.updateValueAndValidity();
       }
     } else {
+      this.masters = this.data.masters.filter(master => master.name !== 'Tipos');
       this.form.controls.masterReference?.setValidators([Validators.required]);
       this.form.controls.masterReference?.updateValueAndValidity();
       this.form.controls.type?.clearValidators();
