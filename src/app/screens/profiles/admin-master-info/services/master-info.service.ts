@@ -25,7 +25,7 @@ export class MasterInfoService {
   getTypes(param: any): Promise<any>{
     const url = param.name[0].name;
     return this.http
-      .get(`${environment.API_MUNDO_SETI}/types?masterReference=${url}&status=true`)
+      .get(`${environment.API_MUNDO_SETI}/types?masterReference=${encodeURIComponent(url)}&status=true`)
       .pipe(pluck('payload'))
       .toPromise();
   }

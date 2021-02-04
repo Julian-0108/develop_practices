@@ -384,7 +384,7 @@
                       <th mat-header-cell *matHeaderCellDef> Medida de Aprobación </th>
                       <td mat-cell *matCellDef="let element">
                         <mat-slider [disabled]="!isEditable" [value]="element.measureApproval" min="0" max="100"
-                          (input)="x($event)"></mat-slider>
+                          (input)="x($event, element.id)"></mat-slider>
                         <label>{{percent}}%</label>
                       </td>
                     </ng-container>
@@ -414,7 +414,7 @@
                       <th mat-header-cell *matHeaderCellDef> Medida de Aprobación </th>
                       <td mat-cell *matCellDef="let element">
                         <mat-slider [disabled]="!isEditable" [value]="element.measureApproval" min="0" max="100"
-                          (input)="x($event)"></mat-slider>
+                          (input)="x($event, element.id)"></mat-slider>
                         <label>{{percent}}%</label>
                       </td>
                     </ng-container>
@@ -444,7 +444,7 @@
                       <th mat-header-cell *matHeaderCellDef> Medida de Aprobación </th>
                       <td mat-cell *matCellDef="let element">
                         <mat-slider [disabled]="!isEditable" [value]="element.measureApproval" min="0" max="100"
-                          (input)="x($event)"></mat-slider>
+                          (input)="x($event, element.id)"></mat-slider>
                         <label>{{percent}}%</label>
                       </td>
                     </ng-container>
