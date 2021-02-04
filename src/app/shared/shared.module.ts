@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { NotificationComponent } from './components/notification/notification.component';
 import { ConfirmComponent } from './components/notification/confirm/confirm.component';
 import { ValidatorComponent } from './components/validator/validator.component';
+import { NotImageDirective } from './directives/not-image.directive';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ValidatorComponent } from './components/validator/validator.component';
     FooterComponent,
     ConfirmComponent,
     ValidatorComponent,
+    NotImageDirective,
   ],
   imports: [CommonModule, RouterModule, MaterialModule],
   exports: [
@@ -32,6 +34,7 @@ import { ValidatorComponent } from './components/validator/validator.component';
     MaterialModule,
     FooterComponent,
     ValidatorComponent,
+    NotImageDirective
   ],
   providers: [DatePipe],
 })

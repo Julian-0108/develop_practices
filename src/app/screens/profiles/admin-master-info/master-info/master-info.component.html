@@ -11,25 +11,25 @@
           <app-validator [form]="form" name="name"></app-validator>
         </mat-form-field>
       </div>
-      <div class="item" fxFlex="45">
+      <div class="item" fxFlex="50">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Descripción</mat-label>
           <input matInput formControlName="description" placeholder="Descripción">
           <app-validator [form]="form" name="description"></app-validator>
         </mat-form-field>
       </div>
-      <div *ngIf="data?.url === 'types'" class="item" fxFlex="30">
+      <div *ngIf="data?.url === 'types'" class="item" fxFlex="25">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Maestra</mat-label>
           <mat-select formControlName="masterReference">
-            <mat-option *ngFor="let master of masters" [value]="master">
-              {{master}}
+            <mat-option *ngFor="let master of masters" [value]="master.name">
+              {{master.name }}
             </mat-option>
         </mat-select>
           <app-validator [form]="form" name="masterReference" [otherIcon]="true"></app-validator>
         </mat-form-field>
       </div>
-      <div *ngIf="data?.url !== 'types'" class="item" fxFlex="30">
+      <div *ngIf="data?.url !== 'types'" class="item" fxFlex="25">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Tipo</mat-label>
           <mat-select formControlName="type">
@@ -45,23 +45,23 @@
       </div>
     </div>
     <div fxLayout="row">
-      <div class="item" fxFlex="25">
+      <div class="item" fxFlex="20">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Fecha de creación</mat-label>
-          <input matInput type="date" formControlName="createdAt" placeholder="Fecha de creación" readonly>
+          <input matInput type="date" formControlName="createdAt" matTooltip="Fecha de creación del registro" placeholder="Fecha de creación" readonly>
         </mat-form-field>
       </div>
-      <div class="item" fxFlex="25">
+      <div class="item" fxFlex="20">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Fecha de modificación</mat-label>
-          <input matInput type="date" formControlName="updatedAt" placeholder="Fecha de modificación" readonly>
+          <input matInput type="date" formControlName="updatedAt" matTooltip="Fecha de modificación del registro" placeholder="Fecha de modificación" readonly>
         </mat-form-field>
       </div>
 
       <div class="item" fxFlex="25">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Estado</mat-label>
-          <mat-button-toggle-group class="button-toggle__container" formControlName="status">
+          <mat-button-toggle-group matTooltip="Indica si el registro esta activo o inactivo" formControlName="status">
             <mat-button-toggle [value]="true">
               Activo
             </mat-button-toggle>
@@ -72,11 +72,11 @@
           <input matInput hidden>
         </mat-form-field>
       </div>
-
+      &nbsp;
       <div class="item" fxFlex="25">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Submenú</mat-label>
-          <mat-button-toggle-group disabled class="button-toggle__container" formControlName="submenu">
+          <mat-button-toggle-group [disabled]="submenuDisabled()" matTooltip="Indica si el equipo base tiene submenú / subcategoria " formControlName="submenu">
             <mat-button-toggle [value]="true">
               Sí
             </mat-button-toggle>
@@ -92,7 +92,7 @@
       <div class="item" fxFlex="50">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">URL</mat-label>
-          <input matInput type="text" formControlName="url" placeholder="Url del módulo">
+          <input matInput type="text" matTooltip="Indica a donde se quiere redirigir dentro de la app Mundo SETI" formControlName="url" placeholder="Url del módulo">
           <app-validator [form]="form" name="url"></app-validator>
         </mat-form-field>
       </div>
@@ -103,7 +103,7 @@
         </button>
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Imagen</mat-label>
-          <input class="file__input" matInput type="text" formControlName="imagePath" readonly>
+          <input class="file__input" matInput type="text" matTooltip="Imagen para mostrar en el menú" formControlName="imagePath" readonly>
         </mat-form-field>
       </div>
     </div>

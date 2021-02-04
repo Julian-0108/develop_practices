@@ -17,17 +17,17 @@ export class ProfileFormHistoryComponent implements OnInit {
 
   formHistory = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    date: new FormControl({value: '', disabled: true}),
+    date: new FormControl(''),
     description: new FormControl('', [Validators.required]),
   });
 
   ngOnInit(): void {
     console.log(this.data)
-    this.formHistory.get('date')?.patchValue(moment(new Date()).format('YYYY-MM-DD'));
+    this.formHistory.get('date')?.setValue(moment(new Date()).format('YYYY-MM-DD'));
   }
 
   onSave() {
-    this.dialogRef.close({...this.formHistory.value, idProfile: this.data.profileDate._id, date: this.formHistory.value.date});
+    this.dialogRef.close({...this.formHistory.value, idProfile: this.data.profileDate._id});
   }
 
 
