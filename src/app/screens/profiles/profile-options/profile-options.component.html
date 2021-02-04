@@ -91,13 +91,7 @@
               src="{{ API_MUNDO_SETI }}{{ item.imagePath }}" alt="" appNotImage>
           </mat-card>
         </div>
-        <button class="btn-manage" [routerLink]="['/manage-base-teams', item._id]">Gestionar</button>
       </div>
-
-      <img [ngClass]="{'card__image--open': cardClicked === item._id && !item.submenu}" class="card__image"
-        src="{{ API_MUNDO_SETI }}{{ item.imagePath }}" alt="">
-      </mat-card>
-    </div>
 
   </div>
   <div class="buttonss" fxLayoutAlign="center center" fxFlex="7">
