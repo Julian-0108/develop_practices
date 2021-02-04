@@ -25,7 +25,7 @@
       </div>
 
     </div>
-    <h1 class="profile__title">{{data.title}}</h1>
+    <h1 class="profile__title">{{data.nameBaseTeam}}: {{data.charge}}</h1>
     <mat-drawer #drawer class="example-sidenav" mode="over" position="end">
       <h1 class="history__title">Historial</h1>
       <button mat-button *ngIf="onHistory" class="button button--exit" (click)="exitHistory(drawer)">
@@ -55,25 +55,25 @@
       <div class="stepper__container">
         <mat-vertical-stepper #stepper [disableRipple]="true" (selectionChange)="onStepClicked($event)">
           <mat-step *ngFor="let step of historyFilter">
-            <ng-template matStepLabel class="step__label">{{showDate(step.date)}}</ng-template>
+            <ng-template matStepLabel class="step__label">{{showDate(step.createdAt)}}</ng-template>
             <mat-card class="history">
               <div class="history__information">
                 <p class="history-information__pagraph">
-                  <mat-label class="history-information__title">Autor del cambio: </mat-label>{{step.name}}
+                  <mat-label class="history-information__title">Autor del cambio: </mat-label>{{step.author}}
                 </p>
               </div>
               <div class="history__section">
                 <p class="history-information__pagraph">
-                  <mat-label class="history-information__title">Descripción: </mat-label>{{step.description}}
+                  <mat-label class="history-information__title">Descripción: </mat-label>{{step.descriptionChanges}}
                 </p>
               </div>
               <div class="history__section">
                 <p class="history-information__pagraph">
-                  <mat-label class="history-information__title">Fecha: </mat-label>{{step.date}}
+                  <mat-label class="history-information__title">Fecha: </mat-label>{{step.createdAt}}
                 </p>
               </div>
               <div class="history__preview-container">
-                <button mat-icon-button class="history__preview-button" (click)="onPreview(step.id, drawer)"
+                <button mat-icon-button class="history__preview-button" (click)="onPreview(step.idBaseProfile, drawer)"
                   [disableRipple]="true">
                   <mat-icon>visibility</mat-icon>
                 </button>
@@ -134,18 +134,20 @@
                 <mat-icon>navigate_before</mat-icon>
               </button>
             </ng-container>
+            <mat-selection-list #education fxLayout="row">
             <mat-tab-group #matTabEducation mat-align-tabs="start" [(selectedIndex)]="tabIndexEducation">
               <mat-tab *ngFor="let contentPage of contentPagesEducation">
-                <mat-selection-list #education fxLayout="row">
+                <div fxLayout="row">
                   <div fxLayout="column" *ngFor="let data of contentPage">
                     <mat-list-option [selected]="onInitList(item, 'education')" *ngFor="let item of data"
                       [value]="item">
                       {{item.description}}
                     </mat-list-option>
                   </div>
-                </mat-selection-list>
-              </mat-tab>
-            </mat-tab-group>
+                </div>
+                </mat-tab>
+              </mat-tab-group>
+            </mat-selection-list>
           </mat-card-content>
         </mat-card>
         <mat-card class="profile__card">
@@ -172,19 +174,21 @@
                 <mat-icon>navigate_before</mat-icon>
               </button>
             </ng-container>
+            <mat-selection-list #specificKnowledge fxLayout="row">
             <mat-tab-group #matTabSpecificKnowledge mat-align-tabs="start"
               [(selectedIndex)]="tabIndexSpecificKnowledge">
               <mat-tab label="First" *ngFor="let contentPage of contentPagesSpecificKnowledge">
-                <mat-selection-list #specificKnowledge fxLayout="row">
+                <div fxLayout="row">
                   <div fxLayout="column" *ngFor="let data of contentPage">
                     <mat-list-option [selected]="onInitList(item, 'specificKnowledge')" *ngFor="let item of data"
                       [value]="item">
                       {{item.description}}
                     </mat-list-option>
                   </div>
-                </mat-selection-list>
-              </mat-tab>
-            </mat-tab-group>
+                </div>
+                </mat-tab>
+              </mat-tab-group>
+            </mat-selection-list>
           </mat-card-content>
         </mat-card>
         <mat-card class="profile__card">
@@ -193,10 +197,9 @@
             </mat-card-title>
           </mat-card-header>
           <mat-card-content fxLayout="row wrap">
-            <div class="profile-card__content" *ngFor="let item of securityResponsabilitiesData">
+            <div class="profile-card__content" *ngFor="let item of data.securityResponsabilities">
               <p>
-                {{item.name}}
-                <!-- {{item.description}} -->
+                {{item.description}}
               </p>
             </div>
           </mat-card-content>
@@ -278,17 +281,17 @@
                 <mat-icon>navigate_before</mat-icon>
               </button>
             </ng-container>
+            <mat-selection-list #requiredCertificates fxLayout="column">
             <mat-tab-group #matTabRequiredCertificates mat-align-tabs="start"
               [(selectedIndex)]="tabIndexRequiredCertificates">
               <mat-tab label="First" *ngFor="let contentPage of contentPagesRequiredCertificates">
-                <mat-selection-list #requiredCertificates fxLayout="column">
                   <mat-list-option [selected]="onInitList(item, 'requiredCertificates')"
                     *ngFor="let item of contentPage" [value]="item">
                     {{item.description}}
                   </mat-list-option>
-                </mat-selection-list>
-              </mat-tab>
-            </mat-tab-group>
+                </mat-tab>
+              </mat-tab-group>
+            </mat-selection-list>
           </mat-card-content>
         </mat-card>
         <mat-card class="profile__card">
@@ -315,17 +318,53 @@
                 <mat-icon>navigate_before</mat-icon>
               </button>
             </ng-container>
+            <mat-selection-list #rolResponsabilities fxLayout="column">
             <mat-tab-group #matTabRolResponsabilities mat-align-tabs="start"
               [(selectedIndex)]="tabIndexRolResponsabilities">
               <mat-tab label="First" *ngFor="let contentPage of contentPagesRolResponsabilities">
-                <mat-selection-list #rolResponsabilities fxLayout="column">
                   <mat-list-option [selected]="onInitList(item, 'rolResponsabilities')" *ngFor="let item of contentPage"
                     [value]="item">
                     {{item.description}}
                   </mat-list-option>
-                </mat-selection-list>
-              </mat-tab>
-            </mat-tab-group>
+                </mat-tab>
+              </mat-tab-group>
+            </mat-selection-list>
+          </mat-card-content>
+        </mat-card>
+        <mat-card class="profile__card">
+          <mat-card-header>
+            <mat-card-title class="profile-card__title">Talentos <mat-icon *ngIf="talentsError" class="card-error__icon"
+                matSuffix>error</mat-icon>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content fxLayout="row wrap" *ngIf="!isEditable">
+            <div class="profile-card__content" *ngFor="let item of data.talents">
+              <p>
+                {{item.description}}
+              </p>
+            </div>
+          </mat-card-content>
+          <mat-card-content *ngIf="isEditable">
+            <ng-container *ngIf="contentPagesTalents.length > 1">
+              <button mat-icon-button (click)="nextTab(matTabTalents._tabs.length, 'talents')" class="button-next"
+                [disabled]="nextPageButtonDisabledTalents">
+                <mat-icon>navigate_next</mat-icon>
+              </button>
+              <button mat-icon-button (click)="beforeTab('talents')" class="button-before"
+                [disabled]="beforePageButtonDisabledTalents">
+                <mat-icon>navigate_before</mat-icon>
+              </button>
+            </ng-container>
+            <mat-selection-list #talents fxLayout="column">
+              <mat-tab-group #matTabTalents mat-align-tabs="start" [(selectedIndex)]="tabIndexTalents">
+                <mat-tab label="First" *ngFor="let contentPage of contentPagesTalents">
+                  <mat-list-option [selected]="onInitList(item, 'talents')" *ngFor="let item of contentPage"
+                    [value]="item">
+                    {{item.description}}
+                  </mat-list-option>
+                </mat-tab>
+              </mat-tab-group>
+            </mat-selection-list>
           </mat-card-content>
         </mat-card>
         <mat-card class="profile__card">
@@ -341,7 +380,8 @@
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div fxLayout="row" fxLayoutAlign="center none" style="width: 100%;">
-                  <table fxFlex="100" mat-table [dataSource]="dataAssertiveComunication" class="mat-elevation-z0">
+                  <table #assertiveComunicationTable fxFlex="100" mat-table [dataSource]="dataAssertiveComunication"
+                    class="mat-elevation-z0">
 
                     <!-- Comunicación Asertiva -->
                     <ng-container matColumnDef="assertiveCommunication">
@@ -353,9 +393,9 @@
                     <ng-container matColumnDef="measureApproval">
                       <th mat-header-cell *matHeaderCellDef> Medida de Aprobación </th>
                       <td mat-cell *matCellDef="let element">
-                        <mat-slider id="{{element.id}}" color="warn" [disabled]="!isEditable" [value]="element.measureApproval" min="0"
-                          max="100" (input)="x($event, element.id)"></mat-slider>
-                        <label for="{{element.id}}">{{percent}}%</label>
+                        <mat-slider color="warn" [value]="percent[element.id]" [disabled]="!isEditable" min="0"
+                          max="100" (input)="onChangeSliderValue($event, element.id, element)"></mat-slider>
+                        <label>{{percent[element.id]}}%</label>
                       </td>
                     </ng-container>
 
@@ -383,9 +423,9 @@
                     <ng-container matColumnDef="measureApproval">
                       <th mat-header-cell *matHeaderCellDef> Medida de Aprobación </th>
                       <td mat-cell *matCellDef="let element">
-                        <mat-slider [disabled]="!isEditable" [value]="element.measureApproval" min="0" max="100"
-                          (input)="x($event)"></mat-slider>
-                        <label>{{percent}}%</label>
+                        <mat-slider color="warn" [disabled]="!isEditable" [value]="percent[element.id]" min="0"
+                          max="100" (input)="onChangeSliderValue($event, element.id, element)"></mat-slider>
+                        <label>{{percent[element.id]}}%</label>
                       </td>
                     </ng-container>
 
@@ -413,9 +453,9 @@
                     <ng-container matColumnDef="measureApproval">
                       <th mat-header-cell *matHeaderCellDef> Medida de Aprobación </th>
                       <td mat-cell *matCellDef="let element">
-                        <mat-slider [disabled]="!isEditable" [value]="element.measureApproval" min="0" max="100"
-                          (input)="x($event)"></mat-slider>
-                        <label>{{percent}}%</label>
+                        <mat-slider color="warn" [disabled]="!isEditable" [value]="percent[element.id]" min="0"
+                          max="100" (input)="onChangeSliderValue($event, element.id, element)"></mat-slider>
+                        <label>{{percent[element.id]}}%</label>
                       </td>
                     </ng-container>
 
@@ -443,9 +483,9 @@
                     <ng-container matColumnDef="measureApproval">
                       <th mat-header-cell *matHeaderCellDef> Medida de Aprobación </th>
                       <td mat-cell *matCellDef="let element">
-                        <mat-slider [disabled]="!isEditable" [value]="element.measureApproval" min="0" max="100"
-                          (input)="x($event)"></mat-slider>
-                        <label>{{percent}}%</label>
+                        <mat-slider color="warn" [disabled]="!isEditable" [value]="percent[element.id]" min="0"
+                          max="100" (input)="onChangeSliderValue($event, element.id, element)"></mat-slider>
+                        <label>{{percent[element.id]}}%</label>
                       </td>
                     </ng-container>
 
