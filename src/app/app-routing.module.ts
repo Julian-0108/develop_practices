@@ -67,7 +67,7 @@ const routes: Routes = [
   },
   { path: 'admin-profiles', loadChildren: () => import('./screens/profiles/adminprofiles/adminprofiles.module').then(m => m.AdminprofilesModule) },
   { path: 'master-info', loadChildren: () => import('./screens/profiles/admin-master-info/admin-master-info.module').then(m => m.AdminMasterInfoModule) },
-  { path: 'manage-base-teams/:id', loadChildren: () => import('./screens/manage-base-teams/manage-base-teams.module').then(m => m.ManageBaseTeamsModule) },
+  { path: 'manage-base-teams/:id', loadChildren: () => import('./screens/profiles/manage-base-teams/manage-base-teams.module').then(m => m.ManageBaseTeamsModule) },
   { path: 'error', loadChildren: () => import('./screens/error/error.module').then(m => m.ErrorModule) },
   { path: '**', loadChildren: () => import('./screens/notfound/notfound.module').then(m => m.NotfoundModule) },
 ];
