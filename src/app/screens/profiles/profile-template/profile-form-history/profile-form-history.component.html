@@ -1,17 +1,17 @@
 <form [formGroup]="formHistory" novalidate autocomplete="off" fxLayout="column" class="form">
   <h1 class="form__title">Reporte de Historial</h1>
   <div fxLayout="row">
-    <div class="item" fxFlex="50">
+    <div class="item" fxFlex="60">
       <mat-form-field floatLabel="always" appearance="none">
         <mat-label class="label">Nombre Completo</mat-label>
-        <input matInput type="text" formControlName="name">
-        <app-validator [form]="formHistory" name="name"></app-validator>
+        <input matInput type="text" formControlName="author">
+        <app-validator [form]="formHistory" name="author"></app-validator>
       </mat-form-field>
     </div>
-    <div class="item" fxFlex="50">
+    <div class="item" fxFlex="40">
       <mat-form-field floatLabel="always" appearance="none">
         <mat-label class="label">Fecha</mat-label>
-        <input readonly matInput type="date" formControlName="date" class="disabled">
+        <input matInput type="date" formControlName="date">
         <app-validator [form]="formHistory" name="date"></app-validator>
       </mat-form-field>
     </div>
@@ -20,8 +20,8 @@
     <div class="item" fxFlex="100">
       <mat-form-field floatLabel="always" appearance="none">
         <mat-label class="label">Descripción de los Cambios</mat-label>
-        <textarea formControlName="description" matInput class="form__textarea"></textarea>
-        <app-validator [form]="formHistory" name="description"></app-validator>
+        <textarea formControlName="descriptionChanges" matInput class="form__textarea"></textarea>
+        <app-validator [form]="formHistory" name="descriptionChanges"></app-validator>
       </mat-form-field>
     </div>
   </div>

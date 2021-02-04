@@ -1,5 +1,11 @@
-import { Component, OnInit, ViewChild, ChangeDetectionStrategy,ChangeDetectorRef } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
+import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { Tables } from '@app/shared/interfaces/profile-competences.interface';
 import { ProfileTemplateService } from './services/profile-template.service';
 import { MatSelectionList } from '@angular/material/list';
@@ -9,6 +15,7 @@ import { MatSlider, MatSliderChange } from '@angular/material/slider';
 import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileFormHistoryComponent } from './profile-form-history/profile-form-history.component';
+import { CdkTable } from '@angular/cdk/table';
 
 @Component({
   selector: 'app-profile-template',
@@ -21,39 +28,44 @@ export class ProfileTemplateComponent implements OnInit {
   @ViewChild('requiredCertificates') requiredCertificates!: MatSelectionList;
   @ViewChild('specificKnowledge') specificKnowledge!: MatSelectionList;
   @ViewChild('rolResponsabilities') rolResponsabilities!: MatSelectionList;
+  @ViewChild('talents') talents!: MatSelectionList;
   @ViewChild('securityResp') securityResp!: MatSelectionList;
-  @ViewChild('assertiveComSlider') assertiveComSlider!: MatSlider;
+  // @ViewChild('assertiveComunicationTable') assertiveComunicationTable!: CdkTable<Tables>;
   dataAssertiveComunication!: MatTableDataSource<Tables>;
   dataAchievementOrientation!: MatTableDataSource<Tables>;
   dataServiceOrientation!: MatTableDataSource<Tables>;
   dataTeamwork!: MatTableDataSource<Tables>;
-  percent!: any;
-  data!: any;
+  percent: any = {};
+  data: any = [];
   securityResponsabilitiesData!: any;
   getAllData: any;
 
-  contentPagesEducation: any;
-  contentPagesSecurityResp: any;
-  contentPagesSpecificKnowledge: any;
-  contentPagesRequiredCertificates: any;
-  contentPagesRolResponsabilities: any;
-  contentPagesSecurityResponsabilities: any;
+  contentPagesEducation = [];
+  // contentPagesSecurityResp: any;
+  contentPagesSpecificKnowledge = [];
+  contentPagesRequiredCertificates = [];
+  contentPagesRolResponsabilities = [];
+  contentPagesTalents = [];
+  contentPagesSecurityResponsabilities = [];
   isEditable = false;
   nextPageButtonDisabledEducation = false;
   nextPageButtonDisabledRequiredCertificates = false;
   nextPageButtonDisabledSpecificKnowledge = false;
   nextPageButtonDisabledRolResponsabilities = false;
+  nextPageButtonDisabledTalents = false;
   nextPageButtonDisabledSecurityResp: any;
   beforePageButtonDisabledSecurityResp: any;
   beforePageButtonDisabledEducation = true;
   beforePageButtonDisabledRequiredCertificates = true;
   beforePageButtonDisabledSpecificKnowledge = true;
   beforePageButtonDisabledRolResponsabilities = true;
+  beforePageButtonDisabledTalents = true;
   selectedOptions: any = [];
   public tabIndexEducation = 0;
   public tabIndexSpecificKnowledge = 0;
   public tabIndexRequiredCertificates = 0;
   public tabIndexRolResponsabilities = 0;
+  public tabIndexTalents = 0;
   public tabIndexSecurityResp = 0;
 
   formObjective = new FormGroup({
@@ -68,111 +80,121 @@ export class ProfileTemplateComponent implements OnInit {
     endDate: new FormControl(),
   });
   sendInformation = {};
-  value = 0;
   /* Errors */
   educationError = false;
   requiredCertificatesError = false;
   specificKnowledgeError = false;
   rolResponsabilitiesError = false;
+  talentsError = false;
 
+  /* History */
   historyId!: string;
   existentDate!: string;
   historyFilter: any = [];
   onHistory = false;
-  history = [
-    {
-      name: 'Lina Jaramillo',
-      description:
-        'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
-      date: '2021-01-13',
-      id: 456,
-    },
-    {
-      name: 'Lina Jaramillo',
-      description:
-        'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
-      date: '2021-01-15',
-      id: 123,
-    },
-    {
-      name: 'Lina Jaramillo',
-      description:
-        'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
-      date: '2021-01-12',
-      id: 'id3',
-    },
-    {
-      name: 'Lina Jaramillo',
-      description:
-        'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
-      date: '2020-12-12',
-      id: 'id3',
-    },
-    {
-      name: 'Lina Jaramillo',
-      description:
-        'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
-      date: '2020-12-12',
-      id: 'id3',
-    },
-    {
-      name: 'Lina Jaramillo',
-      description:
-        'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
-      date: '2020-12-12',
-      id: 'id3',
-    },
-    {
-      name: 'Lina Jaramillo',
-      description:
-        'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
-      date: '2020-12-12',
-      id: 'id3',
-    },
-    {
-      name: 'Lina Jaramillo',
-      description:
-        'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
-      date: '2020-11-12',
-      id: 'id3',
-    },
-    {
-      name: 'Lina Jaramillo',
-      description:
-        'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
-      date: '2020-11-12',
-      id: 'id3',
-    },
-  ];
+  history: any = [];
+  // history = [
+  //   {
+  //     name: 'Lina Jaramillo',
+  //     description:
+  //       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
+  //     date: '2021-01-13',
+  //     id: 456,
+  //   },
+  //   {
+  //     name: 'Lina Jaramillo',
+  //     description:
+  //       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
+  //     date: '2021-01-15',
+  //     id: 123,
+  //   },
+  //   {
+  //     name: 'Lina Jaramillo',
+  //     description:
+  //       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
+  //     date: '2021-01-12',
+  //     id: 'id3',
+  //   },
+  //   {
+  //     name: 'Lina Jaramillo',
+  //     description:
+  //       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
+  //     date: '2020-12-12',
+  //     id: 'id3',
+  //   },
+  //   {
+  //     name: 'Lina Jaramillo',
+  //     description:
+  //       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
+  //     date: '2020-12-12',
+  //     id: 'id3',
+  //   },
+  //   {
+  //     name: 'Lina Jaramillo',
+  //     description:
+  //       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
+  //     date: '2020-12-12',
+  //     id: 'id3',
+  //   },
+  //   {
+  //     name: 'Lina Jaramillo',
+  //     description:
+  //       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
+  //     date: '2020-12-12',
+  //     id: 'id3',
+  //   },
+  //   {
+  //     name: 'Lina Jaramillo',
+  //     description:
+  //       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
+  //     date: '2020-11-12',
+  //     id: 'id3',
+  //   },
+  //   {
+  //     name: 'Lina Jaramillo',
+  //     description:
+  //       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
+  //     date: '2020-11-12',
+  //     id: 'id3',
+  //   },
+  // ];
 
   constructor(
     private profileTemplateService: ProfileTemplateService,
     private notificationService: NotificationService,
-    private _dialog: MatDialog
-    // private cd: ChangeDetectorRef
+    private _dialog: MatDialog // private cd: ChangeDetectorRef
   ) {}
   // refresh() {
   //   this.cd.detectChanges();
   // }
   ngOnInit(): void {
     this.getData();
-    this.history.sort((a, b) => (a.date < b.date ? 1 : -1));
-    this.historyFilter = this.history
   }
 
-  x(ev: MatSliderChange, id: any) {
-    this.percent = ev.value;
-    console.log(ev.source._elementRef.nativeElement.id);
+  onChangeSliderValue(ev: MatSliderChange, id: any, element: any) {
+    this.percent[id] = ev.value;
+    element.measureApproval = this.percent[element.id];
   }
 
-
-  async onPreview(id: any, drawer: any){
-    const showProfileHistory: any = await this.profileTemplateService.getAllData();
-    this.data = showProfileHistory.filter((profile: any) => profile._id === id)[0];
+  /**
+   * @autor Hanna
+   * @description Función que muestra como estaba el perfil en determinado tiempo,
+   * dependiendo de lo que se selecione es la sección historial.
+   */
+  async onPreview(id: any, drawer: any) {
+    this.profileTemplateService.historyActions('get')?.then((res: any) => {
+      this.data = res.filter((profile: any) => profile.idBaseProfile === id)[0];
+    })
+    console.log(this.data);
+    // this.data = showProfileHistory.filter((profile: any) => profile._id === id)[0];
     this.onHistory = true;
     drawer.toggle();
   }
-
+  /**
+   * @autor Hanna
+   * @description Función que filtra el contenido del historial con la
+   * fecha inicial digitada y como fecha final, la fecha actual por defecto.
+   */
   onSelectStartDate(event: any) {
     const startDate = moment.default(event.value).format('YYYY-MM-DD');
     const endDate =
@@ -182,34 +204,42 @@ export class ProfileTemplateComponent implements OnInit {
 
     this.historyFilter = this.history.filter(
       (item: any) =>
-        moment.default(item.date).isSameOrAfter(startDate) &&
-        moment.default(item.date).isSameOrBefore(endDate)
+        moment.default(item.createdAt).isSameOrAfter(startDate) &&
+        moment.default(item.createdAt).isSameOrBefore(endDate)
     );
   }
-
+  /**
+   * @autor Hanna
+   * @description Función que filtra el contenido del historial con la
+   * fecha inicial digitada y la fecha final digitada.
+   */
   onSelectEndDate(event: any) {
     const endDate = moment.default(event.value).format('YYYY-MM-DD');
     const startDate = moment.default(this.formFilterHistory.value.startDate).format('YYYY-MM-DD');
     console.log(
       this.history.filter(
         (item: any) =>
-          moment.default(item.date).isSameOrAfter(startDate) &&
-          moment.default(item.date).isSameOrBefore(endDate)
+          moment.default(item.createdAt).isSameOrAfter(startDate) &&
+          moment.default(item.createdAt).isSameOrBefore(endDate)
       )
     );
     this.historyFilter = this.history.filter(
       (item: any) =>
-        moment.default(item.date).isSameOrAfter(startDate) &&
-        moment.default(item.date).isSameOrBefore(endDate)
+        moment.default(item.createdAt).isSameOrAfter(startDate) &&
+        moment.default(item.createdAt).isSameOrBefore(endDate)
     );
   }
 
-  exitHistory(drawer: any){
+  exitHistory(drawer: any) {
     this.getData();
     this.onHistory = false;
     drawer.toggle();
   }
-
+  /**
+   * @autor Hanna
+   * @description Las funciones "nextTab" & "beforeTab", son funciones que
+   * controlan la navegación de los tabs, en las listas en cada sección.
+   */
   nextTab(length: any, section: string) {
     switch (section) {
       case 'education':
@@ -246,6 +276,15 @@ export class ProfileTemplateComponent implements OnInit {
         }
         if (this.tabIndexRolResponsabilities === length - 1) {
           this.nextPageButtonDisabledRolResponsabilities = true;
+        }
+        break;
+      case 'talents':
+        this.tabIndexTalents = this.tabIndexTalents + 1;
+        if (this.tabIndexTalents > 0) {
+          this.beforePageButtonDisabledTalents = false;
+        }
+        if (this.tabIndexTalents === length - 1) {
+          this.nextPageButtonDisabledTalents = true;
         }
         break;
       case 'securityResponsabilities':
@@ -289,6 +328,13 @@ export class ProfileTemplateComponent implements OnInit {
           this.beforePageButtonDisabledRolResponsabilities = true;
         }
         break;
+      case 'talents':
+        this.tabIndexTalents = this.tabIndexTalents - 1;
+        this.nextPageButtonDisabledTalents = false;
+        if (this.tabIndexTalents === 0) {
+          this.beforePageButtonDisabledTalents = true;
+        }
+        break;
       case 'securityResponsabilities':
         this.tabIndexSecurityResp = this.tabIndexSecurityResp - 1;
         this.nextPageButtonDisabledSecurityResp = false;
@@ -301,24 +347,60 @@ export class ProfileTemplateComponent implements OnInit {
   displayedColumns(table: string) {
     return [table, 'measureApproval'];
   }
-
+  /**
+   * @autor Hanna
+   * @description Esta función consulta el json de la información de la aplicación y
+   * la asigna a sus respectivas variables.
+   */
   getData() {
     this.profileTemplateService.getData().then((res: any) => {
       this.data = res[0];
-      this.dataAssertiveComunication = new MatTableDataSource(res[0].corporativeCompetences.assertiveComunication);
-      this.dataAchievementOrientation = new MatTableDataSource(res[0].corporativeCompetences.achievementOrientation);
-      this.dataServiceOrientation = new MatTableDataSource(res[0].corporativeCompetences.serviceOrientation);
-      this.dataTeamwork = new MatTableDataSource(res[0].corporativeCompetences.teamwork);
+      this.dataAssertiveComunication = new MatTableDataSource(
+        res[0].corporativeCompetences[0].assertiveComunication
+      );
+      res[0].corporativeCompetences[0].assertiveComunication.forEach((el: any) => {
+        this.percent[el.id] = el.measureApproval;
+      });
+      this.dataAchievementOrientation = new MatTableDataSource(
+        res[0].corporativeCompetences[0].achievementOrientation
+      );
+      res[0].corporativeCompetences[0].achievementOrientation.forEach((el: any) => {
+        this.percent[el.id] = el.measureApproval;
+      });
+      this.dataServiceOrientation = new MatTableDataSource(
+        res[0].corporativeCompetences[0].serviceOrientation
+      );
+      res[0].corporativeCompetences[0].serviceOrientation.forEach((el: any) => {
+        this.percent[el.id] = el.measureApproval;
+      });
+      this.dataTeamwork = new MatTableDataSource(res[0].corporativeCompetences[0].teamwork);
+      res[0].corporativeCompetences[0].teamwork.forEach((el: any) => {
+        this.percent[el.id] = el.measureApproval;
+      });
     });
-    this.getSecurityResponsabilities();
+    this.profileTemplateService.historyActions('get')?.then((res: any) => {
+      this.history = res.map((item: any) => {
+        item.createdAt = moment.default(item.createdAt).format('YYYY-MM-DD');
+        return item;
+      });
+
+      this.history.sort((a: any, b: any) => (a.createdAt < b.createdAt ? 1 : -1));
+      this.historyFilter = this.history;
+    });
+    // this.getSecurityResponsabilities();
   }
 
-  getSecurityResponsabilities() {
-    this.profileTemplateService.getAllSecurityResponsabilities().then((res: any) => {
-      this.securityResponsabilitiesData = res;
-    });
-  }
+  // getSecurityResponsabilities() {
+  //   this.profileTemplateService.getAllSecurityResponsabilities().then((res: any) => {
+  //     this.securityResponsabilitiesData = res;
+  //   });
+  // }
 
+  /**
+   * @autor Hanna
+   * @description Función que asigna los valores actuales a cada sección, cuando
+   * está en el estado de editar.
+   */
   onEdit() {
     /* Objective */
     this.formObjective.get('objective')?.patchValue(this.data.objective);
@@ -341,10 +423,14 @@ export class ProfileTemplateComponent implements OnInit {
     this.profileTemplateService.getAllFunctions().then((res: any) => {
       this.buildPagesAndColumnsList2(res, 'rolResponsabilities');
     });
-    /* Security Responsabilities */
-    this.profileTemplateService.getAllSecurityResponsabilities().then((res: any) => {
-      this.buildPagesAndColumnsList(res, 'securityResponsabilities');
+    /* Talents */
+    this.profileTemplateService.getAllTalents().then((res: any) => {
+      this.buildPagesAndColumnsList2(res, 'talents');
     });
+    /* Security Responsabilities */
+    // this.profileTemplateService.getAllSecurityResponsabilities().then((res: any) => {
+    //   this.buildPagesAndColumnsList(res, 'securityResponsabilities');
+    // });
 
     this.isEditable = true;
   }
@@ -367,7 +453,13 @@ export class ProfileTemplateComponent implements OnInit {
 
     // this.isEditable = item;
   }
-
+  /**
+   * @autor Hanna
+   * @description Función que construye las columnas de las opciones que se mostrarán en
+   * cada página o tab de las secciones que contengan listas.Esta función arma un máximo
+   * de 3 columnas. La función "buildPagesAndColumnsList2", por ser secciones de menor tamaño,
+   * arma solo una columna con listas de máximo 6 items.
+   */
   buildPagesAndColumnsList(res: any, section: string) {
     let newarraycolumns: any = [];
     let newarrayPages: any = [];
@@ -381,7 +473,7 @@ export class ProfileTemplateComponent implements OnInit {
       }
     });
     finalArrayColumns = [...finalArrayColumns, newarraycolumns];
-    console.log(finalArrayColumns);
+
     finalArrayColumns.forEach((el: any) => {
       newarrayPages = [...newarrayPages, el];
       if (newarrayPages.length === 3) {
@@ -392,7 +484,7 @@ export class ProfileTemplateComponent implements OnInit {
     if (newarrayPages[0].length !== 0) {
       finalArrayPages = [...finalArrayPages, newarrayPages];
     }
-    console.log(finalArrayPages);
+
     switch (section) {
       case 'education':
         this.contentPagesEducation = finalArrayPages;
@@ -418,7 +510,6 @@ export class ProfileTemplateComponent implements OnInit {
       }
     });
     finalArrayPages = [...finalArrayPages, newarrayPages];
-    console.log(finalArrayPages);
     // this.contentPages = finalArrayPages;
     switch (section) {
       case 'requiredCertificates':
@@ -427,9 +518,17 @@ export class ProfileTemplateComponent implements OnInit {
       case 'rolResponsabilities':
         this.contentPagesRolResponsabilities = finalArrayPages;
         break;
+      case 'talents':
+        this.contentPagesTalents = finalArrayPages;
+        break;
     }
   }
 
+  /**
+   * @autor Hanna
+   * @description Esta función inicializa las listas, marcando visualmente las opciones
+   * que ya se están usando.
+   */
   onInitList(item: any, section: string) {
     for (const i of this.data[section]) {
       if (i._id === item._id) {
@@ -438,34 +537,69 @@ export class ProfileTemplateComponent implements OnInit {
     }
   }
   onSave() {
-    this.onSaveObjective();
-    this.onSaveEperience();
-    this.onSaveeEucation();
-    this.onSaveRequiredCertificates();
-    this.onSaveSpecificKnowledge();
-    this.onSavErolResponsabilities();
-    const saveHistorial = {
-      title: 'Guardar en Historial',
-      message: '¿Desea que el registro de los cambios se guarde en el historial?',
-      type: 'warning',
-    };
-    this.notificationService
-      .openComplexSnackBar(saveHistorial)
-      .afterClosed()
-      .subscribe((resp) => {
-        console.log(this.sendInformation);
-        console.log(resp);
-        if (resp) {
-          this._dialog.open(ProfileFormHistoryComponent, {
-            data: {
-              profileDate: this.data
-            },
-            autoFocus: false
-          }).afterClosed().subscribe((resp: any) => {
-            console.log('reporte Historial', resp);
-          });
-        }
-      });
+    if (
+      this.onSaveObjective() === true &&
+      this.onSaveEperience() === true &&
+      this.onSaveeEucation() === true &&
+      this.onSaveRequiredCertificates() === true &&
+      this.onSaveSpecificKnowledge() === true &&
+      this.onSaveRolResponsabilities() === true &&
+      this.onSaveTalents() === true &&
+      this.onSaveCorporativeCompetences() === true
+    ) {
+      const saveHistorial = {
+        title: 'Guardar en Historial',
+        message: '¿Desea que el registro de los cambios se guarde en el historial?',
+        type: 'warning',
+      };
+      this.notificationService
+        .openComplexSnackBar(saveHistorial)
+        .afterClosed()
+        .subscribe((resp) => {
+          if (resp) {
+            this._dialog
+              .open(ProfileFormHistoryComponent, {
+                data: {
+                  ...this.sendInformation,
+                },
+                autoFocus: false,
+              })
+              .afterClosed()
+              .subscribe((resp: any) => {
+                resp = {
+                  ...resp,
+                  idBaseTeam: this.data.idBaseTeam,
+                  idBaseProfile: this.data.idBaseProfile,
+                  charge: this.data.charge,
+                  nameBaseTeam: this.data.nameBaseTeam,
+                  securityResponsabilities: this.data.securityResponsabilities
+                };
+                console.log('reporte Historial', resp);
+                this.profileTemplateService
+                  .historyActions('post', resp)
+                  ?.then((res: any) => {
+                    console.log(res);
+                    this.notificationService.openSimpleSnackBar({
+                      title: 'Operación Finalizada',
+                      message:
+                        'La información se ha actualizado con éxito y su historial fue creado.',
+                      type: 'success',
+                    });
+                    this.getData();
+                    this.isEditable = false;
+                  });
+              });
+          } else {
+            console.log(this.sendInformation);
+            console.log(resp);
+            this.notificationService.openSimpleSnackBar({
+              title: 'Operación Finalizada',
+              message: 'La información se ha actualizado con éxito.',
+              type: 'success',
+            });
+          }
+        });
+    }
   }
 
   onSaveObjective() {
@@ -515,7 +649,7 @@ export class ProfileTemplateComponent implements OnInit {
       ...this.sendInformation,
       education: this.education.selectedOptions.selected.map((value) => value.value),
     };
-    // console.log(this.education.selectedOptions.selected.map((value) => value.value));
+    console.log(this.education.selectedOptions.selected.map((value) => value.value));
     return true;
   }
   onSaveRequiredCertificates() {
@@ -558,7 +692,7 @@ export class ProfileTemplateComponent implements OnInit {
     // console.log(this.specificKnowledge.selectedOptions.selected.map((value) => value.value));
     return true;
   }
-  onSavErolResponsabilities() {
+  onSaveRolResponsabilities() {
     if (this.rolResponsabilities.selectedOptions.selected.length === 0) {
       this.notificationService.openSimpleSnackBar({
         title: 'Acción Incorrecta',
@@ -578,12 +712,48 @@ export class ProfileTemplateComponent implements OnInit {
     // console.log(this.rolResponsabilities.selectedOptions.selected.map((value) => value.value));
     return true;
   }
+  onSaveTalents() {
+    if (this.talents.selectedOptions.selected.length === 0) {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Acción Incorrecta',
+        message: 'Debe seccionar al menos un item de la lista de "Talentos".',
+        type: 'error',
+      });
+      this.talentsError = true;
+      return;
+    }
+    this.talentsError = false;
+    this.sendInformation = {
+      ...this.sendInformation,
+      talents: this.talents.selectedOptions.selected.map((value) => value.value),
+    };
+    console.log(this.talents.selectedOptions.selected.map((value) => value.value));
+    return true;
+  }
+  onSaveCorporativeCompetences() {
+    this.sendInformation = {
+      ...this.sendInformation,
+      corporativeCompetences: [
+        {
+          assertiveComunication: this.dataAssertiveComunication.filteredData,
+          achievementOrientation: this.dataAchievementOrientation.filteredData,
+          serviceOrientation: this.dataServiceOrientation.filteredData,
+          teamwork: this.dataTeamwork.filteredData,
+        },
+      ],
+    };
+    return true;
+  }
 
   onCancel() {
     this.sendInformation = {};
     this.isEditable = false;
   }
-
+  /**
+   * @autor Hanna
+   * @description Esta función limita los campos a que solo reciban números,
+   * impidiendo al usuario escribir letras.
+   */
   soloNumeros(value: any) {
     /*
      * La expresión regular valida que el valor ingresado sea numérico de 0-9.
@@ -611,6 +781,11 @@ export class ProfileTemplateComponent implements OnInit {
     // this.historyId = this.history[id.selectedIndex].id;
   }
 
+  /**
+   * @autor Hanna
+   * @description Esta función muestra las fechas en la sección de historial,
+   * omitiendo los rangos de fechas que se repitan.
+   */
   showDate(date: string) {
     const dateTransformad = moment.default(date).format('YYYY-MM');
     if (this.existentDate !== dateTransformad) {
@@ -620,7 +795,11 @@ export class ProfileTemplateComponent implements OnInit {
       return null;
     }
   }
-
+  /**
+   * @autor Hanna
+   * @description Esta función le da un formato más diciente, a las fechas de
+   * la sección de historial.
+   */
   onTransformDate(date: string) {
     switch (new Date(date).getMonth() + 1) {
       case 1:

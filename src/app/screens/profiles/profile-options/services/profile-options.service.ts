@@ -12,14 +12,15 @@ export class ProfileOptionsService {
   async getBaseTeams() {
     return await this.httpClient
       .get(`${environment.API_MUNDO_SETI}/base-teams-categories?status=true&type=EQUIPO_BASE`)
-      .pipe( pluck('payload') )
+      .pipe(pluck('payload'))
       .toPromise();
   }
   async getSubBaseTeams(source: string) {
-    console.log(source)
+    console.log(source);
     return await this.httpClient
       .get(`${environment.API_MUNDO_SETI}/base-teams-categories?status=true&type=subGrupo${source}`)
-      .pipe( pluck('payload') )
+      .pipe(pluck('payload'))
       .toPromise();
   }
+
 }
