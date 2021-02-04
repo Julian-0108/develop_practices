@@ -250,24 +250,28 @@ mat-card:hover {
 }
 
 .card--open {
-    height: auto;
-    padding-bottom: 70px !important;
+    // height: auto; // JFVNRSJVNRJRNV
+    // height: calc(100% + 70px); // JFVNRSJVNRJRNV
+    // padding-bottom: 70px !important; // JFVNRSJVNRJRNV
     max-width: 20em;
+    // min-height: 18em !important; // JFVNRSJVNRJRNV
     animation-name: cardOpen;
-    animation-duration: 200ms;
+    animation-duration: 200ms; // 200ms
     animation-delay: 100ms;
     animation-timing-function: linear;
     animation-fill-mode: forwards;
 }
 
 @keyframes cardOpen {
-    0% {
-        height: 12em;
-    }
+    // 0% {
+    //     height: 0%;
+    // }
     // 50% {
     //     height: 18em;
     // }
     100% {
+        padding-bottom: 70px;
+        // height: calc(100% + 70px); // JFVNRSJVNRJRNV
         height: auto;
     }
 }
