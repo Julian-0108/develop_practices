@@ -250,7 +250,11 @@ mat-card:hover {
 }
 
 .card--open {
-    // height: 21em;
+    // height: auto; // JFVNRSJVNRJRNV
+    // height: calc(100% + 70px); // JFVNRSJVNRJRNV
+    // padding-bottom: 70px !important; // JFVNRSJVNRJRNV
+    // min-height: 18em !important; // JFVNRSJVNRJRNV
+    max-width: 20em;
     animation-name: cardOpen;
     animation-duration: 200ms;
     animation-delay: 100ms;
@@ -259,15 +263,17 @@ mat-card:hover {
 }
 
 @keyframes cardOpen {
-    0% {
-        height: 15em;
-    }
-    50% {
-        height: 18em;
-    }
-    100% {
-        height: 21em;
-    }
+    // // 0% {
+    // //     height: 0%;
+    // // }
+    // // 50% {
+    // //     height: 18em;
+    // // }
+    // 100% {
+    //     padding-bottom: 70px;
+    //     // height: calc(100% + 70px); // :C
+    //     height: auto;
+    // }
 }
 
 .card__description {
@@ -445,8 +451,8 @@ mat-dialog-actions {
 
 @media screen and (min-width: 1450px) {
     .button-back {
-        height: 5em !important;
-        width: 5em !important;
+        height: 4em !important;
+        width: 4em !important;
     }
     .edit {
         font-size: 20px;

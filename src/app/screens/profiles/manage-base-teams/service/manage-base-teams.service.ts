@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { pluck } from 'rxjs/operators';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,16 +11,16 @@ export class ManageBaseTeamsService {
 
   constructor(private http: HttpClient) { }
 
-  getBaseTeams(id: number){
+  getBaseTeams(id: string){
     return this.http.get(`${environment.API_MUNDO_SETI}/base-teams-categories?_id=${id}`).pipe( pluck('payload') ).toPromise();
   }
 
-  getMasterCoursesCertifications(){
-    return this.http.get(`${environment.API_MUNDO_SETI}/courses-certifications`).pipe( pluck('payload') ).toPromise();
+  addProfile(payload: any){
+    return this.http.post(`${environment.API_MUNDO_SETI}/bases-profiles`, payload).toPromise()
   }
 
-  getMasterSpecificKnowledge(){
-    return this.http.get(`${environment.API_MUNDO_SETI}/specific-knowledge`).pipe(pluck('payload')).toPromise();
+  updateProfile(id: string, payload: any){
+    return this.http.put(`${environment.API_MUNDO_SETI}/bases-profiles/${id}`, payload).toPromise();
   }
 
 }

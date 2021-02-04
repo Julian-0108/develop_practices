@@ -7,6 +7,7 @@ import { Title } from '@angular/platform-browser';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { Masters } from './interfaces/master-info-dialog';
 
 @Component({
   selector: 'app-admin-master-info',
@@ -26,7 +27,8 @@ export class AdminMasterInfoComponent implements OnInit {
     'actions',
   ];
 
-  public readonly masters = [
+
+  public readonly masters: Masters[] = [
     { name: 'Equipos base', url: 'base-teams-categories' },
     { name: 'Cursos y certificaciones', url: 'courses-certifications' },
     { name: 'Habilidades', url: 'skills' },
@@ -62,7 +64,7 @@ export class AdminMasterInfoComponent implements OnInit {
     });
   }
 
-  getDisplayedColumns() {
+  getDisplayedColumns(): string[] {
     if (this.masterSeleted === 'types') {
       return this.displayedColumns.filter(
         (el) => el !== 'type' && el !== 'description' && el !== 'submenu'
@@ -76,20 +78,6 @@ export class AdminMasterInfoComponent implements OnInit {
     }
   }
 
-  addRegisterToMatTable(element: any) {
-    this.dataSource.data = [element, ...this.dataSource.data];
-  }
-
-  updateRegisterToMatTable(element: Master) {
-    const index = this.dataSource.data.findIndex(
-      (elementMaster) => elementMaster._id === element._id
-    );
-    if (index !== -1) {
-      this.dataSource.data[index] = element;
-      this.dataSource.data = [...this.dataSource.data];
-    }
-  }
-
   openDialog(element?: Master) {
     const dialogRef = this.dialog
       .open(MasterInfoComponent, {
@@ -99,18 +87,13 @@ export class AdminMasterInfoComponent implements OnInit {
           title: element ? 'Editar' : 'Agregar',
           url: this.masterSeleted,
           name: this.masters.filter((el: any) => el.url === this.masterSeleted),
+          masters: this.masters
         },
       })
       .afterClosed();
     dialogRef.toPromise().then((response: any) => {
-      if (element && response?.data) {
+      if (response?.data) {
         this.getDataMaster();
-        // this.updateRegisterToMatTable(response.data);
-      }
-
-      if (!element && response?.data) {
-        this.getDataMaster();
-        // this.addRegisterToMatTable(response.data);
       }
     });
   }

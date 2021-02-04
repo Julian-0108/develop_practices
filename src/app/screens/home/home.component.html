@@ -1,6 +1,6 @@
 <div class="component">
     <div class="description">
-        <img src="../../../assets/images/homeImage.png">
+        <img src="../../../assets/images/homeImage.png" appNotImage>
         <div class="description__content">
             <p class="description__content--tittle">Bienvenido a Mundo Seti</p>
             <p class="description__content--text">Nuestro portal de gestión para el talento SETI. Aquí encontrarás el acceso a nuestra aplicación de Sitios, Perfiles de cargo y nuestra Universidad SETI</p>
@@ -16,7 +16,7 @@
     <div class="cards">
         <ng-container *ngFor="let card of cards">
             <mat-card [routerLink]="card.url" *ngIf="card.status" matRipple matRippleCentered="centered" matRippleColor="#ff000019">
-                <img mat-card-image src="{{ API_MUNDO_SETI }}{{ card.imagePath }}">
+                <img mat-card-image src="{{ API_MUNDO_SETI }}{{ card.imagePath }}" appNotImage>
                 <mat-card-content>
                     <mat-card-title>{{card.name}}</mat-card-title>
                     <p>{{card.description}}</p>

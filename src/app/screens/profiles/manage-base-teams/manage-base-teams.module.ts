@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ManageBaseTeamsRoutingModule } from './manage-base-teams-routing.module';
 import { ManageBaseTeamsComponent } from './manage-base-teams.component';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { DialogComponent } from './dialog/dialog.component';
 
 @NgModule({
