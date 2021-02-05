@@ -16,7 +16,7 @@ import {Router} from '@angular/router';
 })
 export class ProfileOptionsComponent implements OnInit {
   public API_MUNDO_SETI: string = environment.API_MUNDO_SETI;
-  title = 'Equipos Base';
+  title = 'Habilidades';
   cardClicked = '';
   optionClicked = '';
   showBackButton = false;

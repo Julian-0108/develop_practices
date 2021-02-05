@@ -1,25 +1,25 @@
 <body>
   <mat-drawer-container>
-    <button routerLink="/profile-options" class="button-back" mat-mini-fab aria-label="back button">
+    <button routerLink="/profile-options" class="button-back" mat-mini-fab aria-label="back button" matTooltip="Volver a la página anterior">
     </button>
     <div class="actions">
       <div class="action" *ngIf="!isEditable">
-        <button (click)="drawer.toggle()" mat-mini-fab>
+        <button (click)="drawer.toggle()" mat-mini-fab  matTooltip="Ver historial del perfil">
           <mat-icon>history</mat-icon>
         </button>
       </div>
       <div class="action" *ngIf="!isEditable && !onHistory">
-        <button mat-mini-fab (click)="onEdit()">
+        <button mat-mini-fab (click)="onEdit()"  matTooltip="Editar perfil">
           <mat-icon>create</mat-icon>
         </button>
       </div>
       <div class="action" *ngIf="isEditable">
-        <button mat-mini-fab (click)="onSave()">
+        <button mat-mini-fab (click)="onSave()" matTooltip="Guardar cambios">
           <mat-icon>save</mat-icon>
         </button>
       </div>
       <div class="action" *ngIf="isEditable">
-        <button mat-mini-fab (click)="onCancel()">
+        <button mat-mini-fab (click)="onCancel()" matTooltip="Cancelar">
           <mat-icon>close</mat-icon>
         </button>
       </div>
@@ -35,7 +35,7 @@
         <div class="item" fxFlex="50">
           <mat-form-field floatLabel="always" appearance="none">
             <mat-label>Fecha Inicial</mat-label>
-            <input placeholder="dd/mm/yyyy" (dateInput)="onSelectStartDate($event)" matInput
+            <input placeholder="dd/mm/yyyy" (dateInput)="onSelectStartDate($event)" matInput class="disabled"
               [matDatepicker]="pickerStart" readonly formControlName="startDate" (click)="pickerStart.open()">
             <mat-datepicker-toggle matSuffix [for]="pickerStart" class="datePicker__icon"></mat-datepicker-toggle>
             <mat-datepicker #pickerStart disabled="false"></mat-datepicker>
@@ -45,7 +45,7 @@
           <mat-form-field floatLabel="always" appearance="none">
             <mat-label>Fecha Final</mat-label>
             <input placeholder="dd/mm/yyyy" (dateInput)="onSelectEndDate($event)" matInput [matDatepicker]="pickerEnd"
-              readonly formControlName="endDate" (click)="pickerEnd.open()">
+              class="disabled" readonly formControlName="endDate" (click)="pickerEnd.open()">
             <mat-datepicker-toggle matSuffix [for]="pickerEnd" class="datePicker__icon"></mat-datepicker-toggle>
             <mat-datepicker #pickerEnd disabled="false"></mat-datepicker>
           </mat-form-field>
@@ -55,7 +55,7 @@
       <div class="stepper__container">
         <mat-vertical-stepper #stepper [disableRipple]="true" (selectionChange)="onStepClicked($event)">
           <mat-step *ngFor="let step of historyFilter">
-            <ng-template matStepLabel class="step__label">{{showDate(step.createdAt)}}</ng-template>
+            <ng-template matStepLabel class="step__label">{{step.showDate}}</ng-template>
             <mat-card class="history">
               <div class="history__information">
                 <p class="history-information__pagraph">
@@ -69,7 +69,8 @@
               </div>
               <div class="history__section">
                 <p class="history-information__pagraph">
-                  <mat-label class="history-information__title">Fecha: </mat-label>{{step.createdAt}}
+                  <mat-label class="history-information__title">Fecha: </mat-label>
+                  {{step.createdAt | date: 'dd/MM/yyyy'}}
                 </p>
               </div>
               <div class="history__preview-container">
@@ -135,16 +136,17 @@
               </button>
             </ng-container>
             <mat-selection-list #education fxLayout="row">
-            <mat-tab-group #matTabEducation mat-align-tabs="start" [(selectedIndex)]="tabIndexEducation">
-              <mat-tab *ngFor="let contentPage of contentPagesEducation">
-                <div fxLayout="row">
-                  <div fxLayout="column" *ngFor="let data of contentPage">
-                    <mat-list-option [selected]="onInitList(item, 'education')" *ngFor="let item of data"
-                      [value]="item">
-                      {{item.description}}
-                    </mat-list-option>
+              <mat-tab-group #matTabEducation mat-align-tabs="start" [(selectedIndex)]="tabIndexEducation"
+                animationDuration="0ms">
+                <mat-tab *ngFor="let contentPage of contentPagesEducation">
+                  <div fxLayout="row">
+                    <div fxLayout="column" *ngFor="let data of contentPage">
+                      <mat-list-option [selected]="onInitList(item, 'education')" *ngFor="let item of data"
+                        [value]="item">
+                        {{item.description}}
+                      </mat-list-option>
+                    </div>
                   </div>
-                </div>
                 </mat-tab>
               </mat-tab-group>
             </mat-selection-list>
@@ -175,17 +177,17 @@
               </button>
             </ng-container>
             <mat-selection-list #specificKnowledge fxLayout="row">
-            <mat-tab-group #matTabSpecificKnowledge mat-align-tabs="start"
-              [(selectedIndex)]="tabIndexSpecificKnowledge">
-              <mat-tab label="First" *ngFor="let contentPage of contentPagesSpecificKnowledge">
-                <div fxLayout="row">
-                  <div fxLayout="column" *ngFor="let data of contentPage">
-                    <mat-list-option [selected]="onInitList(item, 'specificKnowledge')" *ngFor="let item of data"
-                      [value]="item">
-                      {{item.description}}
-                    </mat-list-option>
+              <mat-tab-group #matTabSpecificKnowledge mat-align-tabs="start" animationDuration="0ms"
+                [(selectedIndex)]="tabIndexSpecificKnowledge">
+                <mat-tab label="First" *ngFor="let contentPage of contentPagesSpecificKnowledge">
+                  <div fxLayout="row">
+                    <div fxLayout="column" *ngFor="let data of contentPage">
+                      <mat-list-option [selected]="onInitList(item, 'specificKnowledge')" *ngFor="let item of data"
+                        [value]="item">
+                        {{item.description}}
+                      </mat-list-option>
+                    </div>
                   </div>
-                </div>
                 </mat-tab>
               </mat-tab-group>
             </mat-selection-list>
@@ -282,9 +284,9 @@
               </button>
             </ng-container>
             <mat-selection-list #requiredCertificates fxLayout="column">
-            <mat-tab-group #matTabRequiredCertificates mat-align-tabs="start"
-              [(selectedIndex)]="tabIndexRequiredCertificates">
-              <mat-tab label="First" *ngFor="let contentPage of contentPagesRequiredCertificates">
+              <mat-tab-group #matTabRequiredCertificates mat-align-tabs="start" animationDuration="0ms"
+                [(selectedIndex)]="tabIndexRequiredCertificates">
+                <mat-tab label="First" *ngFor="let contentPage of contentPagesRequiredCertificates">
                   <mat-list-option [selected]="onInitList(item, 'requiredCertificates')"
                     *ngFor="let item of contentPage" [value]="item">
                     {{item.description}}
@@ -319,9 +321,9 @@
               </button>
             </ng-container>
             <mat-selection-list #rolResponsabilities fxLayout="column">
-            <mat-tab-group #matTabRolResponsabilities mat-align-tabs="start"
-              [(selectedIndex)]="tabIndexRolResponsabilities">
-              <mat-tab label="First" *ngFor="let contentPage of contentPagesRolResponsabilities">
+              <mat-tab-group #matTabRolResponsabilities mat-align-tabs="start" animationDuration="0ms"
+                [(selectedIndex)]="tabIndexRolResponsabilities">
+                <mat-tab label="First" *ngFor="let contentPage of contentPagesRolResponsabilities">
                   <mat-list-option [selected]="onInitList(item, 'rolResponsabilities')" *ngFor="let item of contentPage"
                     [value]="item">
                     {{item.description}}
@@ -356,7 +358,8 @@
               </button>
             </ng-container>
             <mat-selection-list #talents fxLayout="column">
-              <mat-tab-group #matTabTalents mat-align-tabs="start" [(selectedIndex)]="tabIndexTalents">
+              <mat-tab-group #matTabTalents mat-align-tabs="start" [(selectedIndex)]="tabIndexTalents"
+                animationDuration="0ms">
                 <mat-tab label="First" *ngFor="let contentPage of contentPagesTalents">
                   <mat-list-option [selected]="onInitList(item, 'talents')" *ngFor="let item of contentPage"
                     [value]="item">
