@@ -4,6 +4,7 @@ import {
   ViewChild,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  AfterViewInit,
 } from '@angular/core';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { Tables } from '@app/shared/interfaces/profile-competences.interface';
@@ -88,6 +89,7 @@ export class ProfileTemplateComponent implements OnInit {
   talentsError = false;
 
   /* History */
+  i: any;
   historyId!: string;
   existentDate!: string;
   historyFilter: any = [];
@@ -216,13 +218,6 @@ export class ProfileTemplateComponent implements OnInit {
   onSelectEndDate(event: any) {
     const endDate = moment.default(event.value).format('YYYY-MM-DD');
     const startDate = moment.default(this.formFilterHistory.value.startDate).format('YYYY-MM-DD');
-    console.log(
-      this.history.filter(
-        (item: any) =>
-          moment.default(item.createdAt).isSameOrAfter(startDate) &&
-          moment.default(item.createdAt).isSameOrBefore(endDate)
-      )
-    );
     this.historyFilter = this.history.filter(
       (item: any) =>
         moment.default(item.createdAt).isSameOrAfter(startDate) &&
@@ -381,15 +376,28 @@ export class ProfileTemplateComponent implements OnInit {
     this.profileTemplateService.historyActions('get')?.then((res: any) => {
       this.history = res.map((item: any) => {
         item.createdAt = moment.default(item.createdAt).format('YYYY-MM-DD');
+        item.showDate = this.showDate(item.createdAt);
         return item;
       });
-
       this.history.sort((a: any, b: any) => (a.createdAt < b.createdAt ? 1 : -1));
       this.historyFilter = this.history;
     });
     // this.getSecurityResponsabilities();
   }
-
+  /**
+   * @autor Hanna
+   * @description Esta función muestra las fechas en la sección de historial,
+   * omitiendo los rangos de fechas que se repitan.
+   */
+  showDate(date: string) {
+      const dateTransformad = moment.default(date).format('YYYY-MM');
+      if (this.existentDate !== dateTransformad) {
+        this.existentDate = dateTransformad;
+        return this.onTransformDate(date);
+      } else {
+        return null;
+      }
+  }
   // getSecurityResponsabilities() {
   //   this.profileTemplateService.getAllSecurityResponsabilities().then((res: any) => {
   //     this.securityResponsabilitiesData = res;
@@ -509,8 +517,10 @@ export class ProfileTemplateComponent implements OnInit {
         newarrayPages = [];
       }
     });
-    finalArrayPages = [...finalArrayPages, newarrayPages];
-    // this.contentPages = finalArrayPages;
+    if (newarrayPages.length !== 0){
+      finalArrayPages = [...finalArrayPages, newarrayPages];
+    }
+    console.log(finalArrayPages);
     switch (section) {
       case 'requiredCertificates':
         this.contentPagesRequiredCertificates = finalArrayPages;
@@ -781,20 +791,6 @@ export class ProfileTemplateComponent implements OnInit {
     // this.historyId = this.history[id.selectedIndex].id;
   }
 
-  /**
-   * @autor Hanna
-   * @description Esta función muestra las fechas en la sección de historial,
-   * omitiendo los rangos de fechas que se repitan.
-   */
-  showDate(date: string) {
-    const dateTransformad = moment.default(date).format('YYYY-MM');
-    if (this.existentDate !== dateTransformad) {
-      this.existentDate = dateTransformad;
-      return this.onTransformDate(date);
-    } else {
-      return null;
-    }
-  }
   /**
    * @autor Hanna
    * @description Esta función le da un formato más diciente, a las fechas de

@@ -92,9 +92,10 @@ table.mat-table {
 //   background-color: #de1920 !important;
 // }
 
-// ::ng-deep.mat-accent .mat-slider-thumb {
-//   background-color: #de1920 !important;
-// }
+::ng-deep.mat-slider-horizontal {
+  min-width: 8em !important;
+  margin: 0 5px 0 0 !important;
+}
 .mat-expansion-panel-header-title,
 .mat-cell {
   color: #787878;
@@ -137,7 +138,6 @@ table.mat-table {
 }
 
 .profile__textarea {
-  // width: 100% !important;
   height: 5em !important;
   outline: none;
   resize: none;
@@ -154,8 +154,9 @@ table.mat-table {
 .card-error__icon {
   color: #f87f77;
   position: absolute;
-  top: 15px;
-  left: 8em;
+  top: 14px;
+  left: auto;
+  padding: 0 0 0 10px;
 }
 
 /* History Styles */
@@ -311,3 +312,8 @@ mat-datepicker-toggle {
   font-weight: 600 !important;
 }
 
+.disabled {
+  background-color: #efefef;
+  border-color: #efefef;
+  color: #909090;
+}
