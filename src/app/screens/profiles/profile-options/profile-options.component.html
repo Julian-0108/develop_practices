@@ -21,8 +21,6 @@
                     <h1 class="card__title">{{item.name}}</h1>
                     <div [ngStyle]="{'display': cardClicked === item._id ? 'block' : 'none'}" fxLayout="column" fxLayoutAlign="start start">
                         <div *ngFor="let prof of item.profile">
-
-                            <!-- <ng-container *ngIf="prof?.status ==true"> -->
                             <button (click)="optionClicked = prof.id" class="option" mat-button>
                                       <ng-container *ngIf="prof.level.length !== 0">
                                         <mat-icon [ngStyle]="{'display': optionClicked !== prof.id ? 'none' : 'inline'}" aria-hidden="false"
@@ -35,11 +33,9 @@
                             <div class="pannel__level-buttons" *ngIf="optionClicked === prof.id" fxLayout="row" fxLayoutAlign="start center">
                                 <button type="button" class="panel__level-button" *ngFor="let level of prof.level" mat-button (click)="redirectToTemplateProfile(item._id, prof.id, level)">{{level | uppercase}}</button>
                             </div>
-                            <!-- </ng-container> -->
-
                         </div>
 
-                        <button class="btn-manage" [routerLink]="['/manage-base-teams', item._id]">Gestionar</button>
+                        <button class="btn-manage" [routerLink]="['/manage-base-teams', item._id]" *ngIf="item.profile.length !==0">Gestionar</button>
                     </div>
 
                     <img [ngClass]="{'card__image--open': cardClicked === item._id && !item.submenu}" class="card__image" src="{{ API_MUNDO_SETI }}{{ item.imagePath }}" alt="" appNotImage>
