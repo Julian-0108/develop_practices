@@ -2,9 +2,6 @@ import {
   Component,
   OnInit,
   ViewChild,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  AfterViewInit,
 } from '@angular/core';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { Tables } from '@app/shared/interfaces/profile-competences.interface';
@@ -16,7 +13,7 @@ import { MatSlider, MatSliderChange } from '@angular/material/slider';
 import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileFormHistoryComponent } from './profile-form-history/profile-form-history.component';
-import { CdkTable } from '@angular/cdk/table';
+import {SnackOptionsInterface} from '@shared/interfaces/notification.interface'
 
 @Component({
   selector: 'app-profile-template',
@@ -557,7 +554,7 @@ export class ProfileTemplateComponent implements OnInit {
       this.onSaveTalents() === true &&
       this.onSaveCorporativeCompetences() === true
     ) {
-      const saveHistorial = {
+      const saveHistorial: SnackOptionsInterface = {
         title: 'Guardar en Historial',
         message: '¿Desea que el registro de los cambios se guarde en el historial?',
         type: 'warning',
