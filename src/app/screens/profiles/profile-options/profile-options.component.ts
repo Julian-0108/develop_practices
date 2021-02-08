@@ -216,6 +216,10 @@ export class ProfileOptionsComponent implements OnInit {
   //   }
   // }
 
+  /**
+   * @author Hanna
+   * @description crea arreglos de filas que limita el numero de resultados por fila
+   */
   buildRows(items: any) {
     let newarray: any = [];
     let finalArray: any = [];
