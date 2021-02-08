@@ -46,15 +46,25 @@ export class ManageBaseTeamsComponent implements OnInit {
   getBaseTeams(){
     this.manageBaseTeamsService.getBaseTeams(this.router.snapshot.params['id'])
     .then( (response:any) => {
-      this.name = response.name;
-      this.dataSource = new MatTableDataSource(response.profiles);
+      if (response.length === 0) {
+        this.notificationService.openSimpleSnackBar({
+          title: 'Vacio',
+          message: 'eqipo base no encontrado',
+          type: 'info'
+        });
+        return;
+      }
+        this.name = response[0].name;
+        this.dataSource = new MatTableDataSource(response[0].profiles);
     })
-    .catch((response:any)=>{
-      this.notificationService.openSimpleSnackBar({
-        title: 'Petición Incorrecta',
-        message: response.message,
-        type: 'error'
-      });
+    .catch((error: any)=> {
+      if (error.error?.statusCode !== 400) {
+        this.notificationService.openSimpleSnackBar({
+          title: 'Petición Incorrecta',
+          message: 'Error cargando el equipo base. Vuelve a intentar',
+          type: 'error'
+        });
+      }
     });
   }
   

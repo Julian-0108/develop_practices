@@ -252,7 +252,7 @@ mat-card:hover {
 .card--open {
     // height: auto; // JFVNRSJVNRJRNV
     // height: calc(100% + 70px); // JFVNRSJVNRJRNV
-    // padding-bottom: 70px !important; // JFVNRSJVNRJRNV
+    padding-bottom: 70px !important;
     // min-height: 18em !important; // JFVNRSJVNRJRNV
     max-width: 20em;
     animation-name: cardOpen;
@@ -462,7 +462,7 @@ mat-dialog-actions {
         font-size: 2.3em !important;
     }
     .main-subtitle {
-        font-size: 1.8em;
+        font-size: 1.8em !important;
     }
 }
 
