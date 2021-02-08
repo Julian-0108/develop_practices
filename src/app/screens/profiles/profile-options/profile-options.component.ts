@@ -216,6 +216,10 @@ export class ProfileOptionsComponent implements OnInit {
   //   }
   // }
 
+  /**
+   * @author Hanna
+   * @description crea arreglos de filas que limita el numero de resultados por fila
+   */
   buildRows(items: any) {
     let newarray: any = [];
     let finalArray: any = [];
@@ -281,8 +285,11 @@ export class ProfileOptionsComponent implements OnInit {
     this.notificationService.openSimpleSnackBar(option);
   }
 
+  /**
+   * @author Wilmer
+   * @description pagina los datos recividos del servicio para mostrar 8 resultador por paginación.
+   */
   // PAGINACION
-
   paginate() {
     this.pageCont = Math.ceil(this.items.length / this.pageSize); //calcular el numero de paginaciones totales
     this.results = this.items.slice(

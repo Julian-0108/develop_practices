@@ -16,12 +16,9 @@
 .description img {
     display: flex;
     align-self: center;
-    object-fit: cover;
-    height: 70%;
-    width: 40%;
-    max-width: 50em;
-    max-height: 40em;
-    border-radius: 60% 100% 100% 60% / 80% 80% 80% 80%;
+    height: 500px;
+    width: 600px;
+    object-fit: contain;
 }
 
 .description__content {
@@ -97,6 +94,7 @@ mat-card {
     border-radius: 38px;
     box-shadow: 3px 6px 12px 3px #00000029 !important;
     cursor: pointer;
+    outline: none;
 }
 
 mat-card img {
@@ -121,6 +119,12 @@ mat-card-title {
 mat-card-content p {
     color: #707070;
     text-align: center;
+}
+
+.button:hover {
+    box-shadow: inset 400px 0 0 0 #fff;
+    color: #de1920;
+    border: solid 1px #de1920;
 }
 
 @media screen and (min-width: 1450px) {
@@ -156,12 +160,13 @@ mat-card-content p {
         font-size: 2em;
     }
     mat-card-content p {
-        font-size: 1.5em;
+        font-size: 1.3em;
     }
 }
 
-.button:hover {
-    box-shadow: inset 400px 0 0 0 #fff;
-    color: #de1920;
-    border: solid 1px #de1920;
+@media screen and (min-width: 1750px) {
+    .description img {
+        height: 650px;
+        width: 800px;
+    }
 }
