@@ -281,8 +281,11 @@ export class ProfileOptionsComponent implements OnInit {
     this.notificationService.openSimpleSnackBar(option);
   }
 
+  /**
+   * @author Wilmer
+   * @description pagina los datos recividos del servicio para mostrar 8 resultador por paginación.
+   */
   // PAGINACION
-
   paginate() {
     this.pageCont = Math.ceil(this.items.length / this.pageSize); //calcular el numero de paginaciones totales
     this.results = this.items.slice(

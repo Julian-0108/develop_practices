@@ -43,6 +43,11 @@ export class DialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+/**
+ * @author Wilmer
+ * @description se asignan los valores a los inputs del formulario
+ */
   editForm() {
 
     this.form.get('status')?.patchValue(true);
