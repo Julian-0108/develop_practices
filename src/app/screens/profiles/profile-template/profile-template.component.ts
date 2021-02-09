@@ -10,6 +10,7 @@ import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileFormHistoryComponent } from './profile-form-history/profile-form-history.component';
 import { SnackOptionsInterface } from '@shared/interfaces/notification.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile-template',
@@ -80,7 +81,9 @@ export class ProfileTemplateComponent implements OnInit {
   specificKnowledgeError = false;
   rolResponsabilitiesError = false;
   talentsError = false;
-
+  idBaseTeam = this.activatedRoute.snapshot.params.idBaseTeam;
+  charge = this.activatedRoute.snapshot.params.charge;
+  level = this.activatedRoute.snapshot.params.level;
   /* History */
   i: any;
   historyId!: string;
@@ -157,8 +160,10 @@ export class ProfileTemplateComponent implements OnInit {
   constructor(
     private profileTemplateService: ProfileTemplateService,
     private notificationService: NotificationService,
-    private _dialog: MatDialog // private cd: ChangeDetectorRef
-  ) {}
+    private _dialog: MatDialog, // private cd: ChangeDetectorRef
+    private activatedRoute: ActivatedRoute
+  ) {
+  }
   // refresh() {
   //   this.cd.detectChanges();
   // }
@@ -171,19 +176,34 @@ export class ProfileTemplateComponent implements OnInit {
       case 'assertiveCommunication':
         return this.dataAssertiveComunication.filteredData
           .map((item) => item.measureApproval)
-          .reduce((acc, value) => Math.round(acc + value / this.dataAssertiveComunication.filteredData.length),0);
+          .reduce(
+            (acc, value) =>
+              Math.round(acc + value / this.dataAssertiveComunication.filteredData.length),
+            0
+          );
       case 'achievementOrientation':
         return this.dataAchievementOrientation.filteredData
           .map((item) => item.measureApproval)
-          .reduce((acc, value) => Math.round(acc + value / this.dataAchievementOrientation.filteredData.length), 0);
+          .reduce(
+            (acc, value) =>
+              Math.round(acc + value / this.dataAchievementOrientation.filteredData.length),
+            0
+          );
       case 'serviceOrientation':
         return this.dataServiceOrientation.filteredData
           .map((item) => item.measureApproval)
-          .reduce((acc, value) => Math.round(acc + value / this.dataServiceOrientation.filteredData.length), 0);
+          .reduce(
+            (acc, value) =>
+              Math.round(acc + value / this.dataServiceOrientation.filteredData.length),
+            0
+          );
       case 'teamwork':
         return this.dataTeamwork.filteredData
           .map((item) => item.measureApproval)
-          .reduce((acc, value) => Math.round(acc + value / this.dataTeamwork.filteredData.length), 0);
+          .reduce(
+            (acc, value) => Math.round(acc + value / this.dataTeamwork.filteredData.length),
+            0
+          );
     }
   }
 
@@ -362,28 +382,23 @@ export class ProfileTemplateComponent implements OnInit {
    * la asigna a sus respectivas variables.
    */
   getData() {
-    this.profileTemplateService.getData().then((res: any) => {
+    this.profileTemplateService.getData(this.idBaseTeam, this.charge, this.level ? this.level : null).then((res: any) => {
+      console.log(res);
       this.data = res[0];
-      this.dataAssertiveComunication = new MatTableDataSource(
-        res[0].corporativeCompetences.assertiveComunication
-      );
-      res[0].corporativeCompetences.assertiveComunication.forEach((el: any) => {
+      this.dataAssertiveComunication = new MatTableDataSource(res[0].assertiveComunication);
+      res[0].assertiveComunication.forEach((el: any) => {
         this.percent[el._id] = el.measureApproval;
       });
-      this.dataAchievementOrientation = new MatTableDataSource(
-        res[0].corporativeCompetences.achievementOrientation
-      );
-      res[0].corporativeCompetences.achievementOrientation.forEach((el: any) => {
+      this.dataAchievementOrientation = new MatTableDataSource(res[0].achievementOrientation);
+      res[0].achievementOrientation.forEach((el: any) => {
         this.percent[el._id] = el.measureApproval;
       });
-      this.dataServiceOrientation = new MatTableDataSource(
-        res[0].corporativeCompetences.serviceOrientation
-      );
-      res[0].corporativeCompetences.serviceOrientation.forEach((el: any) => {
+      this.dataServiceOrientation = new MatTableDataSource(res[0].serviceOrientation);
+      res[0].serviceOrientation.forEach((el: any) => {
         this.percent[el._id] = el.measureApproval;
       });
-      this.dataTeamwork = new MatTableDataSource(res[0].corporativeCompetences.teamwork);
-      res[0].corporativeCompetences.teamwork.forEach((el: any) => {
+      this.dataTeamwork = new MatTableDataSource(res[0].teamwork);
+      res[0].teamwork.forEach((el: any) => {
         this.percent[el._id] = el.measureApproval;
       });
     });
@@ -612,13 +627,26 @@ export class ProfileTemplateComponent implements OnInit {
                 });
               });
           } else {
-            console.log(this.sendInformation);
-            console.log(resp);
-            this.notificationService.openSimpleSnackBar({
-              title: 'Operación Finalizada',
-              message: 'La información se ha actualizado con éxito.',
-              type: 'success',
-            });
+            this.sendInformation = {
+              ...this.sendInformation,
+              idBaseTeam: this.data.idBaseTeam,
+              idBaseProfile: this.data.idBaseProfile,
+              charge: this.data.charge,
+              nameBaseTeam: this.data.nameBaseTeam,
+              securityResponsabilities: this.data.securityResponsabilities,
+              status: this.data.status,
+            };
+            this.profileTemplateService
+              .updateProfile(this.data.idBaseProfile, this.sendInformation)
+              .then((res: any) => {
+                this.notificationService.openSimpleSnackBar({
+                  title: 'Operación Finalizada',
+                  message: 'La información se ha actualizado con éxito.',
+                  type: 'success',
+                });
+                this.getData();
+                this.isEditable = false;
+              });
           }
         });
     }
@@ -756,11 +784,11 @@ export class ProfileTemplateComponent implements OnInit {
     this.sendInformation = {
       ...this.sendInformation,
       corporativeCompetences: {
-          assertiveComunication: this.dataAssertiveComunication.filteredData,
-          achievementOrientation: this.dataAchievementOrientation.filteredData,
-          serviceOrientation: this.dataServiceOrientation.filteredData,
-          teamwork: this.dataTeamwork.filteredData,
-        }
+        assertiveComunication: this.dataAssertiveComunication.filteredData,
+        achievementOrientation: this.dataAchievementOrientation.filteredData,
+        serviceOrientation: this.dataServiceOrientation.filteredData,
+        teamwork: this.dataTeamwork.filteredData,
+      },
     };
     return true;
   }

@@ -7,7 +7,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { newArray } from '@angular/compiler/src/util';
 import { environment } from 'src/environments/environment';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-options',
@@ -15,7 +15,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./profile-options.component.scss'],
 })
 export class ProfileOptionsComponent implements OnInit {
-  public API_MUNDO_SETI: string = environment.API_MUNDO_SETI;
+  public API_MASTER_INFO: string = environment.API_MASTER_INFO;
   showBackButton = false;
   title = 'Habilidades';
   cardClicked = '';
@@ -316,8 +316,10 @@ export class ProfileOptionsComponent implements OnInit {
     this.paginate();
   }
 
-  redirectToTemplateProfile(baseTeamId: any, profileId: any, level: string){
-    console.log({equipoBase: baseTeamId, perfil: profileId, level});
-    this.router.navigate(['/profile-template']);
+  redirectToTemplateProfile(baseTeamId: any, charge: any, level?: string) {
+    console.log({ equipoBase: baseTeamId, perfil: charge, level });
+    level
+      ? this.router.navigate([`/profile-template/${baseTeamId}/${charge}/${level}`])
+      : this.router.navigate([`/profile-template/${baseTeamId}/${charge}`]);
   }
 }

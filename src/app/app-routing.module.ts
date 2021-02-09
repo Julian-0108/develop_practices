@@ -1,5 +1,5 @@
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -33,7 +33,14 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'profile-template',
+    path: 'profile-template/:idBaseTeam/:charge',
+    loadChildren: () =>
+      import('./screens/profiles/profile-template/profile-template.module').then(
+        (m) => m.ProfileTemplateModule
+      ),
+  },
+  {
+    path: 'profile-template/:idBaseTeam/:charge/:level',
     loadChildren: () =>
       import('./screens/profiles/profile-template/profile-template.module').then(
         (m) => m.ProfileTemplateModule
@@ -65,11 +72,35 @@ const routes: Routes = [
         (m) => m.AdminMasterInfoModule
       ),
   },
-  { path: 'admin-profiles', loadChildren: () => import('./screens/profiles/adminprofiles/adminprofiles.module').then(m => m.AdminprofilesModule) },
-  { path: 'master-info', loadChildren: () => import('./screens/profiles/admin-master-info/admin-master-info.module').then(m => m.AdminMasterInfoModule) },
-  { path: 'manage-base-teams/:id', loadChildren: () => import('./screens/profiles/manage-base-teams/manage-base-teams.module').then(m => m.ManageBaseTeamsModule) },
-  { path: 'error', loadChildren: () => import('./screens/error/error.module').then(m => m.ErrorModule) },
-  { path: '**', loadChildren: () => import('./screens/notfound/notfound.module').then(m => m.NotfoundModule) },
+  {
+    path: 'admin-profiles',
+    loadChildren: () =>
+      import('./screens/profiles/adminprofiles/adminprofiles.module').then(
+        (m) => m.AdminprofilesModule
+      ),
+  },
+  {
+    path: 'master-info',
+    loadChildren: () =>
+      import('./screens/profiles/admin-master-info/admin-master-info.module').then(
+        (m) => m.AdminMasterInfoModule
+      ),
+  },
+  {
+    path: 'manage-base-teams/:id',
+    loadChildren: () =>
+      import('./screens/profiles/manage-base-teams/manage-base-teams.module').then(
+        (m) => m.ManageBaseTeamsModule
+      ),
+  },
+  {
+    path: 'error',
+    loadChildren: () => import('./screens/error/error.module').then((m) => m.ErrorModule),
+  },
+  {
+    path: '**',
+    loadChildren: () => import('./screens/notfound/notfound.module').then((m) => m.NotfoundModule),
+  },
 ];
 
 @NgModule({

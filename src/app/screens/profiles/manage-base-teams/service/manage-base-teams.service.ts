@@ -12,15 +12,15 @@ export class ManageBaseTeamsService {
   constructor(private http: HttpClient) { }
 
   getBaseTeams(id: string){
-    return this.http.get(`${environment.API_MUNDO_SETI}/base-teams-categories?_id=${id}`).pipe( pluck('payload') ).toPromise();
+    return this.http.get(`${environment.API_MASTER_INFO}/base-teams-categories?_id=${id}`).pipe( pluck('payload') ).toPromise();
   }
 
   addProfile(payload: any){
-    return this.http.post(`${environment.API_MUNDO_SETI}/bases-profiles`, payload).toPromise()
+    return this.http.post(`${environment.API_MASTER_INFO}/bases-profiles`, payload).toPromise()
   }
 
   updateProfile(id: string, payload: any){
-    return this.http.put(`${environment.API_MUNDO_SETI}/bases-profiles/${id}`, payload).toPromise();
+    return this.http.put(`${environment.API_MASTER_INFO}/bases-profiles/${id}`, payload).toPromise();
   }
 
 }
