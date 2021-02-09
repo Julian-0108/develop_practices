@@ -34,8 +34,8 @@
                                 <button type="button" class="panel__level-button" *ngFor="let level of prof.level" mat-button (click)="redirectToTemplateProfile(item._id, prof.id, level)">{{level | uppercase}}</button>
                             </div>
                         </div>
-
-                        <button class="btn-manage" [routerLink]="['/manage-base-teams', item._id]" *ngIf="item.profile.length !==0">Gestionar</button>
+                        <p class="card-void" *ngIf="item.profile.length < 1 ">Aún no hay registros disponibles</p>
+                        <button class="btn-manage" [routerLink]="['/manage-base-teams', item._id]">Gestionar</button>
                     </div>
 
                     <img [ngClass]="{'card__image--open': cardClicked === item._id && !item.submenu}" class="card__image" src="{{ API_MUNDO_SETI }}{{ item.imagePath }}" alt="" appNotImage>

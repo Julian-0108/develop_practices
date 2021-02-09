@@ -14,14 +14,11 @@
 }
 
 .description img {
-  display: flex;
-  align-self: center;
-  object-fit: cover;
-  height: 70%;
-  width: 40%;
-  max-width: 50em;
-  max-height: 40em;
-  border-radius: 60% 100% 100% 60% / 80% 80% 80% 80%;
+    display: flex;
+    align-self: center;
+    height: 500px;
+    width: 600px;
+    object-fit: contain;
 }
 
 .description__content {
@@ -94,13 +91,14 @@ mat-card {
 }
 
 mat-card {
-  margin: 1em;
-  width: 17em;
-  min-height: 25em;
-  background-color: #ffffff;
-  border-radius: 38px;
-  box-shadow: 3px 6px 12px 3px #00000029 !important;
-  cursor: pointer;
+    margin: 1em;
+    width: 17em;
+    min-height: 25em;
+    background-color: #ffffff;
+    border-radius: 38px;
+    box-shadow: 3px 6px 12px 3px #00000029 !important;
+    cursor: pointer;
+    outline: none;
 }
 
 mat-card img {
@@ -127,53 +125,52 @@ mat-card-content p {
   text-align: center;
 }
 
-@media screen and (min-width: 1450px) {
-  .description__content--tittle {
-    font-size: 4.5em;
-  }
-
-  .description__content--text {
-    font-size: 2.3em;
-  }
-
-  .button {
-    font-size: 1.8em;
-    padding: .5em 1.5em;
-    border-radius: 40px;
-    height: 40px;
-  }
-
-  .text {
-    max-width: 1000px;
-    font-size: 2.5em;
-  }
-
-  .separator__circle {
-    width: 1.5em;
-    height: 1.5em;
-  }
-
-  mat-card {
-    width: 20em;
-    min-height: 30em;
-  }
-
-  mat-card img {
-    width: 17em;
-    height: 17em;
-  }
-
-  mat-card-title {
-    font-size: 2em;
-  }
-
-  mat-card-content p {
-    font-size: 1.5em;
-  }
+.button:hover {
+    box-shadow: inset 400px 0 0 0 #fff;
+    color: #de1920;
+    border: solid 1px #de1920;
 }
 
-.button:hover {
-  box-shadow: inset 400px 0 0 0 #fff;
-  color: #de1920;
-  border: solid 1px #de1920;
+@media screen and (min-width: 1450px) {
+    .description__content--tittle {
+        font-size: 4.5em;
+    }
+    .description__content--text {
+        font-size: 2.3em;
+    }
+    .button {
+        font-size: 1.8em;
+        padding: .5em 1.5em;
+        border-radius: 40px;
+        height: 40px;
+    }
+    .text {
+        max-width: 1000px;
+        font-size: 2.5em;
+    }
+    .separator__circle {
+        width: 1.5em;
+        height: 1.5em;
+    }
+    mat-card {
+        width: 20em;
+        min-height: 30em;
+    }
+    mat-card img {
+        width: 17em;
+        height: 17em;
+    }
+    mat-card-title {
+        font-size: 2em;
+    }
+    mat-card-content p {
+        font-size: 1.3em;
+    }
+}
+
+@media screen and (min-width: 1750px) {
+    .description img {
+        height: 650px;
+        width: 800px;
+    }
 }

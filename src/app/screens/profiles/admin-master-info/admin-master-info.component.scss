@@ -32,7 +32,12 @@ button {
     margin: 0 8px 8px 0;
 }
 
+.filter-inputs {
+    min-height: 36.8px;
+}
+
 .chip__status {
+    margin-left: 6px;
     font-size: 11px;
     padding: 3px 10px;
     border-radius: 9px;
@@ -108,7 +113,7 @@ button {
     width: 25em !important;
 }
 
-.mat-column-type,
+.submenu,
 .mat-column-createdAt,
 .mat-column-updatedAt {
     text-align: center !important;
@@ -121,13 +126,22 @@ button {
     .label {
         font-size: 1.1em !important;
     }
+    .chip__status {
+        margin-left: 0px;
+    }
 }
 
 @media screen and (min-width: 1750px) {
     table {
-        font-size: 1.5em !important;
+        font-size: 1.4em !important;
     }
     .label {
         font-size: 1.2em !important;
+    }
+    .chip__status {
+        margin-left: 0px;
+    }
+    .filter-inputs {
+        min-height: 45.8px;
     }
 }

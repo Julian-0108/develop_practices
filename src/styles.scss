@@ -466,6 +466,30 @@ mat-dialog-actions {
     }
 }
 
+@media screen and (min-width: 1450px) {
+    .button-back {
+        height: 3.5em !important;
+        width: 3.4em !important;
+    }
+    .edit {
+        font-size: 20px;
+        padding: 5px;
+    }
+    .main-title {
+        font-size: 2.3em !important;
+    }
+    .main-subtitle {
+        font-size: 1.8em !important;
+    }
+}
+
+@media screen and (min-width: 1750px) {
+    .button-back {
+        height: 4em !important;
+        width: 4em !important;
+    }
+}
+
 // div.mat-slider-disabled, .mat-accent .mat-slider-thumb, .mat-slider-track-fill {
 //   background-color: #707070 !important;
 // }
