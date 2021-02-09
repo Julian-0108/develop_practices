@@ -202,7 +202,8 @@ export class ProfileOptionsComponent implements OnInit {
       this.items = await this.profileOptionsService.getSubBaseTeams(
         item.name.substring(0, 2).toUpperCase()
       );
-      this.buildRows(this.items);
+      // this.buildRows(this.items);
+      this.paginate();
       this.showBackButton = true;
       this.title = 'Habilidades de Operación';
     }
@@ -242,7 +243,9 @@ export class ProfileOptionsComponent implements OnInit {
 
   onClickbuttonBack() {
     this.items = this.itemsOld;
-    this.buildRows(this.itemsOld);
+    // this.buildRows(this.itemsOld);
+    this.pageNumber=1;
+    this.paginate();
     this.showBackButton = false;
     this.title = 'Habilidades';
   }

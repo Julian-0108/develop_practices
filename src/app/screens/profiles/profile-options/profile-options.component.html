@@ -22,7 +22,9 @@
         <mat-card *ngFor="let item of items1" #card (click)="onCardClicked(item)"
           [ngClass]="{'card--open': cardClicked === item._id && !item.submenu }" fxLayout="column" fxLayoutAlign="start"
           class="card-base-team">
-          <h1 class="card__title">{{item.name}}</h1>
+          <h1 class="card__tittle"
+            [ngClass]="{'card__title-large':item.name.length >= 26, 'card__title-short':item.name.length <= 25 }">
+            {{item.name}}</h1>
           <div [ngStyle]="{'display': cardClicked === item._id ? 'block' : 'none'}" fxLayout="column"
             fxLayoutAlign="start start">
             <div *ngFor="let prof of item.profile">
@@ -36,12 +38,6 @@
                 {{prof.name}}
               </button>
               <button *ngIf="prof.level.length === 0" (click)="redirectToTemplateProfile(item._id, prof.name); optionClicked = prof.id" class="option" mat-button>
-                <!-- <ng-container>
-                  <mat-icon [ngStyle]="{'display': optionClicked !== prof.id ? 'none' : 'inline'}" aria-hidden="false"
-                    class="option__icon" aria-label="row down">keyboard_arrow_down</mat-icon>
-                  <mat-icon [ngStyle]="{'display': optionClicked === prof.id ? 'none' : 'inline'}" aria-hidden="false"
-                    class="option__icon" aria-label="row right">keyboard_arrow_right</mat-icon>
-                </ng-container> -->
                 {{prof.name}}
               </button>
               <div class="pannel__level-buttons" *ngIf="optionClicked === prof.id" fxLayout="row"
@@ -50,8 +46,10 @@
                   (click)="redirectToTemplateProfile(item._id, prof.name, level)">{{level | uppercase}}</button>
               </div>
             </div>
-            <p class="card-void" *ngIf="item.profile.length < 1 ">Aún no hay registros disponibles</p>
-            <button class="btn-manage" [routerLink]="['/manage-base-teams', item._id]">Gestionar</button>
+            <p class="card-void" *ngIf="item.profile.length < 1 && item._id != '5ff62ec29105420011077a44'">Aún no hay
+              registros disponibles</p>
+            <button *ngIf="item._id != '5ff62ec29105420011077a44'" class="btn-manage"
+              [routerLink]="['/manage-base-teams', item._id]">Gestionar</button>
           </div>
 
           <img [ngClass]="{'card__image--open': cardClicked === item._id && !item.submenu}" class="card__image"

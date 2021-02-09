@@ -610,7 +610,7 @@ export class ProfileTemplateComponent implements OnInit {
                   idBaseTeam: this.data.idBaseTeam,
                   idBaseProfile: this.data.idBaseProfile,
                   charge: this.data.charge,
-                  nameBaseTeam: this.data.nameBaseTeam,
+                  nameBaseTeam: this.data.teamName,
                   securityResponsabilities: this.data.securityResponsabilities,
                 };
                 console.log('reporte Historial', resp);
@@ -632,7 +632,7 @@ export class ProfileTemplateComponent implements OnInit {
               idBaseTeam: this.data.idBaseTeam,
               idBaseProfile: this.data.idBaseProfile,
               charge: this.data.charge,
-              nameBaseTeam: this.data.nameBaseTeam,
+              nameBaseTeam: this.data.teamName,
               securityResponsabilities: this.data.securityResponsabilities,
               status: this.data.status,
             };

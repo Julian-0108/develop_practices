@@ -27,6 +27,34 @@
 .cards {
     min-width: 70%;
     min-height: 50vh;
+    // border: 1px solid blue;
+}
+
+.card-base-team {
+    min-height: 190px !important;
+    margin: 10px;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 2px 5px 10px 2px #00000029 !important;
+}
+
+.card__tittle {
+    width: auto;
+    max-width: 200px;
+    font-weight: bold !important;
+    text-align: center;
+    color: #de1920;
+    margin-bottom: 10px;
+    line-height: normal;
+}
+
+.card__title-short {
+    font-size: 1.2em;
+}
+
+.card__title-large {
+    font-size: 1em;
+    // margin-bottom: -15px !important;
 }
 
 .buttonss {
@@ -107,18 +135,10 @@
     background-color: #DE1920;
 }
 
-.card-base-team {
-    min-height: 12em;
-    margin: 10px;
-    overflow: hidden;
-    border-radius: 20px;
-    box-shadow: 2px 5px 10px 2px #00000029 !important;
-}
-
 .card__image {
     width: 199.3px;
     height: 99.7px;
-    margin: 15px 0;
+    margin: 15px auto;
     object-fit: contain;
 }
 
@@ -150,6 +170,16 @@
         min-width: 19em;
         min-height: 18em;
         margin: 1em;
+    }
+    .card__tittle {
+        max-width: 245px;
+    }
+    .card__title-short {
+        font-size: 1.5em;
+    }
+    .card__title-large {
+        font-size: 1.5em;
+        // margin-bottom: -15px !important;
     }
     .card__image {
         // margin: auto;
