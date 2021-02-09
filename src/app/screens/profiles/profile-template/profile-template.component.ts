@@ -1,8 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { Tables } from '@app/shared/interfaces/profile-competences.interface';
 import { ProfileTemplateService } from './services/profile-template.service';
@@ -13,7 +9,7 @@ import { MatSlider, MatSliderChange } from '@angular/material/slider';
 import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileFormHistoryComponent } from './profile-form-history/profile-form-history.component';
-import {SnackOptionsInterface} from '@shared/interfaces/notification.interface'
+import { SnackOptionsInterface } from '@shared/interfaces/notification.interface';
 
 @Component({
   selector: 'app-profile-template',
@@ -170,9 +166,30 @@ export class ProfileTemplateComponent implements OnInit {
     this.getData();
   }
 
+  getTotalPercent(table: any) {
+    switch (table) {
+      case 'assertiveCommunication':
+        return this.dataAssertiveComunication.filteredData
+          .map((item) => item.measureApproval)
+          .reduce((acc, value) => Math.round(acc + value / this.dataAssertiveComunication.filteredData.length),0);
+      case 'achievementOrientation':
+        return this.dataAchievementOrientation.filteredData
+          .map((item) => item.measureApproval)
+          .reduce((acc, value) => Math.round(acc + value / this.dataAchievementOrientation.filteredData.length), 0);
+      case 'serviceOrientation':
+        return this.dataServiceOrientation.filteredData
+          .map((item) => item.measureApproval)
+          .reduce((acc, value) => Math.round(acc + value / this.dataServiceOrientation.filteredData.length), 0);
+      case 'teamwork':
+        return this.dataTeamwork.filteredData
+          .map((item) => item.measureApproval)
+          .reduce((acc, value) => Math.round(acc + value / this.dataTeamwork.filteredData.length), 0);
+    }
+  }
+
   onChangeSliderValue(ev: MatSliderChange, id: any, element: any) {
     this.percent[id] = ev.value;
-    element.measureApproval = this.percent[element.id];
+    element.measureApproval = this.percent[element._id];
   }
 
   /**
@@ -183,7 +200,7 @@ export class ProfileTemplateComponent implements OnInit {
   async onPreview(id: any, drawer: any) {
     this.profileTemplateService.historyActions('get')?.then((res: any) => {
       this.data = res.filter((profile: any) => profile.idBaseProfile === id)[0];
-    })
+    });
     console.log(this.data);
     // this.data = showProfileHistory.filter((profile: any) => profile._id === id)[0];
     this.onHistory = true;
@@ -348,26 +365,26 @@ export class ProfileTemplateComponent implements OnInit {
     this.profileTemplateService.getData().then((res: any) => {
       this.data = res[0];
       this.dataAssertiveComunication = new MatTableDataSource(
-        res[0].corporativeCompetences[0].assertiveComunication
+        res[0].corporativeCompetences.assertiveComunication
       );
-      res[0].corporativeCompetences[0].assertiveComunication.forEach((el: any) => {
-        this.percent[el.id] = el.measureApproval;
+      res[0].corporativeCompetences.assertiveComunication.forEach((el: any) => {
+        this.percent[el._id] = el.measureApproval;
       });
       this.dataAchievementOrientation = new MatTableDataSource(
-        res[0].corporativeCompetences[0].achievementOrientation
+        res[0].corporativeCompetences.achievementOrientation
       );
-      res[0].corporativeCompetences[0].achievementOrientation.forEach((el: any) => {
-        this.percent[el.id] = el.measureApproval;
+      res[0].corporativeCompetences.achievementOrientation.forEach((el: any) => {
+        this.percent[el._id] = el.measureApproval;
       });
       this.dataServiceOrientation = new MatTableDataSource(
-        res[0].corporativeCompetences[0].serviceOrientation
+        res[0].corporativeCompetences.serviceOrientation
       );
-      res[0].corporativeCompetences[0].serviceOrientation.forEach((el: any) => {
-        this.percent[el.id] = el.measureApproval;
+      res[0].corporativeCompetences.serviceOrientation.forEach((el: any) => {
+        this.percent[el._id] = el.measureApproval;
       });
-      this.dataTeamwork = new MatTableDataSource(res[0].corporativeCompetences[0].teamwork);
-      res[0].corporativeCompetences[0].teamwork.forEach((el: any) => {
-        this.percent[el.id] = el.measureApproval;
+      this.dataTeamwork = new MatTableDataSource(res[0].corporativeCompetences.teamwork);
+      res[0].corporativeCompetences.teamwork.forEach((el: any) => {
+        this.percent[el._id] = el.measureApproval;
       });
     });
     this.profileTemplateService.historyActions('get')?.then((res: any) => {
@@ -387,13 +404,13 @@ export class ProfileTemplateComponent implements OnInit {
    * omitiendo los rangos de fechas que se repitan.
    */
   showDate(date: string) {
-      const dateTransformad = moment.default(date).format('YYYY-MM');
-      if (this.existentDate !== dateTransformad) {
-        this.existentDate = dateTransformad;
-        return this.onTransformDate(date);
-      } else {
-        return null;
-      }
+    const dateTransformad = moment.default(date).format('YYYY-MM');
+    if (this.existentDate !== dateTransformad) {
+      this.existentDate = dateTransformad;
+      return this.onTransformDate(date);
+    } else {
+      return null;
+    }
   }
   // getSecurityResponsabilities() {
   //   this.profileTemplateService.getAllSecurityResponsabilities().then((res: any) => {
@@ -514,7 +531,7 @@ export class ProfileTemplateComponent implements OnInit {
         newarrayPages = [];
       }
     });
-    if (newarrayPages.length !== 0){
+    if (newarrayPages.length !== 0) {
       finalArrayPages = [...finalArrayPages, newarrayPages];
     }
     console.log(finalArrayPages);
@@ -579,22 +596,20 @@ export class ProfileTemplateComponent implements OnInit {
                   idBaseProfile: this.data.idBaseProfile,
                   charge: this.data.charge,
                   nameBaseTeam: this.data.nameBaseTeam,
-                  securityResponsabilities: this.data.securityResponsabilities
+                  securityResponsabilities: this.data.securityResponsabilities,
                 };
                 console.log('reporte Historial', resp);
-                this.profileTemplateService
-                  .historyActions('post', resp)
-                  ?.then((res: any) => {
-                    console.log(res);
-                    this.notificationService.openSimpleSnackBar({
-                      title: 'Operación Finalizada',
-                      message:
-                        'La información se ha actualizado con éxito y su historial fue creado.',
-                      type: 'success',
-                    });
-                    this.getData();
-                    this.isEditable = false;
+                this.profileTemplateService.historyActions('post', resp)?.then((res: any) => {
+                  console.log(res);
+                  this.notificationService.openSimpleSnackBar({
+                    title: 'Operación Finalizada',
+                    message:
+                      'La información se ha actualizado con éxito y su historial fue creado.',
+                    type: 'success',
                   });
+                  this.getData();
+                  this.isEditable = false;
+                });
               });
           } else {
             console.log(this.sendInformation);
@@ -740,14 +755,12 @@ export class ProfileTemplateComponent implements OnInit {
   onSaveCorporativeCompetences() {
     this.sendInformation = {
       ...this.sendInformation,
-      corporativeCompetences: [
-        {
+      corporativeCompetences: {
           assertiveComunication: this.dataAssertiveComunication.filteredData,
           achievementOrientation: this.dataAchievementOrientation.filteredData,
           serviceOrientation: this.dataServiceOrientation.filteredData,
           teamwork: this.dataTeamwork.filteredData,
-        },
-      ],
+        }
     };
     return true;
   }
