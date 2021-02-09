@@ -154,6 +154,7 @@
     margin-top: 10px;
     font-style: italic;
     color: #9f9fa0;
+    text-align: center;
 }
 
 @media screen and (min-width: 1450px) {
@@ -168,7 +169,7 @@
     }
     .card-base-team {
         min-width: 19em;
-        min-height: 18em;
+        min-height: 300px !important;
         margin: 1em;
     }
     .card__tittle {
@@ -211,6 +212,9 @@
         width: 20px;
     }
     .btn-manage {
+        font-size: 1.3em;
+    }
+    .card-void {
         font-size: 1.3em;
     }
     // @keyframes cardOpen {
