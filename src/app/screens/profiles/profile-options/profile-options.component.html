@@ -18,7 +18,7 @@
 
             <div *ngFor="let items1 of rowsArray">
                 <mat-card *ngFor="let item of items1" #card (click)="onCardClicked(item)" [ngClass]="{'card--open': cardClicked === item._id && !item.submenu }" fxLayout="column" fxLayoutAlign="start" class="card-base-team">
-                    <h1 class="card__title">{{item.name}}</h1>
+                    <h1 class="card__tittle" [ngClass]="{'card__title-large':item.name.length >= 26, 'card__title-short':item.name.length <= 25 }">{{item.name}}</h1>
                     <div [ngStyle]="{'display': cardClicked === item._id ? 'block' : 'none'}" fxLayout="column" fxLayoutAlign="start start">
                         <div *ngFor="let prof of item.profile">
                             <button (click)="optionClicked = prof.id" class="option" mat-button>
@@ -34,8 +34,8 @@
                                 <button type="button" class="panel__level-button" *ngFor="let level of prof.level" mat-button (click)="redirectToTemplateProfile(item._id, prof.id, level)">{{level | uppercase}}</button>
                             </div>
                         </div>
-                        <p class="card-void" *ngIf="item.profile.length < 1 ">Aún no hay registros disponibles</p>
-                        <button class="btn-manage" [routerLink]="['/manage-base-teams', item._id]">Gestionar</button>
+                        <p class="card-void" *ngIf="item.profile.length < 1 && item._id != '5ff62ec29105420011077a44'">Aún no hay registros disponibles</p>
+                        <button *ngIf="item._id != '5ff62ec29105420011077a44'" class="btn-manage" [routerLink]="['/manage-base-teams', item._id]">Gestionar</button>
                     </div>
 
                     <img [ngClass]="{'card__image--open': cardClicked === item._id && !item.submenu}" class="card__image" src="{{ API_MUNDO_SETI }}{{ item.imagePath }}" alt="" appNotImage>

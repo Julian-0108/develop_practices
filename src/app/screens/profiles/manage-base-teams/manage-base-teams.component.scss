@@ -1,6 +1,6 @@
 .head {
     display: flex;
-    padding: 2em;
+    padding-top: 2em;
 }
 
 .text {
@@ -9,7 +9,7 @@
 }
 
 .content {
-    padding-bottom: 4em;
+    padding-bottom: 2em;
     width: 80%;
     margin: auto;
     position: relative;
@@ -50,19 +50,6 @@ td {
 .row {
     font-size: 1em;
     color: #787878;
-}
-
-.loading-shade {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: rgba(41, 41, 41, 0.15);
 }
 
 .level {
