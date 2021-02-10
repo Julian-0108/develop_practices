@@ -4,7 +4,7 @@
     <div class="item" fxFlex="60">
       <mat-form-field floatLabel="always" appearance="none">
         <mat-label class="label">Nombre Completo</mat-label>
-        <input matInput type="text" formControlName="author">
+        <input readonly matInput type="text" formControlName="author" class="disabled">
         <app-validator [form]="formHistory" name="author"></app-validator>
       </mat-form-field>
     </div>

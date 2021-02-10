@@ -1388,29 +1388,28 @@ export class ProfileTemplateService {
     }
   }
 
-  async getData(idBaseTeam: string, charge: string, level?: string) {
-    if (level) {
+  async getData(idProfile: string) {
+    // if (idBaseTeam && charge) {
       return await this.httpClient
         .get(
-          `${environment.API_BASE_PROFILES}/bases-profiles?idBaseTeam=${idBaseTeam}&charge=${charge}&level=${level}`
+          `${environment.API_BASE_PROFILES}/bases-profiles/${idProfile}`
         )
         .pipe(pluck('payload'))
         .toPromise();
-    } else {
-      return await this.httpClient
-        .get(
-          `${environment.API_BASE_PROFILES}/bases-profiles?idBaseTeam=${idBaseTeam}&charge=${charge}`
-        )
-        .pipe(pluck('payload'))
-        .toPromise();
-    }
+    // } else if (idProfile){
+    //   return await this.httpClient
+    //     .get(
+    //       `${environment.API_BASE_PROFILES}/bases-profiles?idBaseTeam=${idProfile}`
+    //     )
+    //     .pipe(pluck('payload'))
+    //     .toPromise();
+    // }
   }
   async updateProfile(id: any, body: any) {
     console.log('ID =>', id, 'BODY =>', body);
-
-    // return this.httpClient
-    // .post(`${environment.API_MASTER_INFO}/bases-profiles/${id}`, body)
-    // .pipe(pluck('payload'))
-    // .toPromise();
+    return await this.httpClient
+    .put(`${environment.API_MASTER_INFO}/bases-profiles/${id}`, body)
+    .pipe(pluck('payload'))
+    .toPromise();
   }
 }

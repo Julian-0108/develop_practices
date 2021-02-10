@@ -37,13 +37,15 @@
                 </ng-container>
                 {{prof.name}}
               </button>
-              <button *ngIf="prof.level.length === 0" (click)="redirectToTemplateProfile(item._id, prof.name); optionClicked = prof.id" class="option" mat-button>
+              <button *ngIf="prof.level.length === 0"
+                (click)="redirectToTemplateProfile(prof.name, item.profiles); optionClicked = prof.id" class="option"
+                mat-button>
                 {{prof.name}}
               </button>
               <div class="pannel__level-buttons" *ngIf="optionClicked === prof.id" fxLayout="row"
                 fxLayoutAlign="start center">
                 <button type="button" class="panel__level-button" *ngFor="let level of prof.level" mat-button
-                  (click)="redirectToTemplateProfile(item._id, prof.name, level)">{{level | uppercase}}</button>
+                  (click)="redirectToTemplateProfile(prof.name, item.profiles, level)">{{level | uppercase}}</button>
               </div>
             </div>
             <p class="card-void" *ngIf="item.profile.length < 1 && item._id != '5ff62ec29105420011077a44'">Aún no hay

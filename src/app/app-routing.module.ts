@@ -33,14 +33,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'profile-template/:idBaseTeam/:charge',
-    loadChildren: () =>
-      import('./screens/profiles/profile-template/profile-template.module').then(
-        (m) => m.ProfileTemplateModule
-      ),
-  },
-  {
-    path: 'profile-template/:idBaseTeam/:charge/:level',
+    path: 'profile-template/:idProfile',
     loadChildren: () =>
       import('./screens/profiles/profile-template/profile-template.module').then(
         (m) => m.ProfileTemplateModule

@@ -49,6 +49,7 @@ export class NotificationService {
         message: params.message,
         type: params.type,
         action: params.action,
+        contraryAction: params.contraryAction,
         icon,
       },
       autoFocus: false

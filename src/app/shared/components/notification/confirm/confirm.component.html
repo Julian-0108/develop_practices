@@ -3,8 +3,10 @@
   <h1 class="dialog__title">{{data.title}}</h1>
   <p class="dialog__subtitle">{{data.message}}</p>
   <div class="dialog__buttons">
-    <button (click)="dialogRef.close(false)" class="dialog__button dialog__button-close" mat-button>Cancelar</button>
-    <button (click)="dialogRef.close(true)" class="dialog__button dialog__button-continue dialog__button-continue--{{data.type}}"
+    <button (click)="dialogRef.close(false)" class="dialog__button dialog__button-close"
+      mat-button>{{data.contraryAction || 'Cancelar'}}</button>
+    <button (click)="dialogRef.close(true)"
+      class="dialog__button dialog__button-continue dialog__button-continue--{{data.type}}"
       mat-button>{{data.action || 'Aceptar'}}</button>
   </div>
 </div>

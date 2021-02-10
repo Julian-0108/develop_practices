@@ -319,10 +319,11 @@ export class ProfileOptionsComponent implements OnInit {
     this.paginate();
   }
 
-  redirectToTemplateProfile(baseTeamId: any, charge: any, level?: string) {
-    console.log({ equipoBase: baseTeamId, perfil: charge, level });
-    level
-      ? this.router.navigate([`/profile-template/${baseTeamId}/${charge}/${level}`])
-      : this.router.navigate([`/profile-template/${baseTeamId}/${charge}`]);
+  redirectToTemplateProfile(charge: any,idProfile: any = [], level?: string) {
+    const id = idProfile.find((el: any) => (el.level === level && el.charge === charge) || el.charge === charge)
+    console.log(id);
+    console.log(id._id);
+    this.router.navigate([`/profile-template/${id._id}`]);
+
   }
 }

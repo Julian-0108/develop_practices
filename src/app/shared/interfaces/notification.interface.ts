@@ -9,6 +9,7 @@ export interface SnackOptionsInterface {
   message: string;
   type: types;
   action?: string;
+  contraryAction?: string;
   horizontalPosition?: MatSnackBarHorizontalPosition;
   verticalPosition?: MatSnackBarVerticalPosition;
 }
