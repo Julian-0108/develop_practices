@@ -1373,6 +1373,13 @@ export class ProfileTemplateService {
     // ];
   }
 
+  async getAllSecurityResponsabilities(){
+    return await this.httpClient
+    .get(`${environment.API_MASTER_INFO}/security-responsabilities?status=true`)
+    .pipe(pluck('payload'))
+    .toPromise();
+  }
+
   historyActions(action: string, data?: any) {
     if (action === 'get') {
       return this.httpClient
