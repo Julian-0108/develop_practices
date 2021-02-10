@@ -864,7 +864,7 @@ export class ProfileTemplateComponent implements OnInit {
     this.formExperience.value[field] = Number(this.formExperience.value[field]);
   }
 
-  pipeYears(year: number) {
+  pipeYears(year: number = 0) {
     return year > 1 ? `${year} años` : `${year} año`;
   }
 
