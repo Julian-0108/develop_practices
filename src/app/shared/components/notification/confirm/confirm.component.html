@@ -1,4 +1,9 @@
 <div class="dialog__container" fxLayout="column" fxLayoutAlign="space-around center">
+  <div class="dialog__close-button">
+    <button mat-icon-button class="icon__close" (click)="dialogRef.close('close')">
+      <mat-icon >close</mat-icon>
+    </button>
+  </div>
   <mat-icon class="dialog__icon dialog__icon--{{data.type}}">{{data.icon}}</mat-icon>
   <h1 class="dialog__title">{{data.title}}</h1>
   <p class="dialog__subtitle">{{data.message}}</p>
