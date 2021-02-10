@@ -12,7 +12,7 @@ import { NotificationService } from '../../../shared/components/notification/ser
 })
 export class AdminprofilesComponent implements OnInit {
   public cards!: Master[];
-  public API_MUNDO_SETI: string = environment.API_MUNDO_SETI;
+  public API_MASTER_INFO: string = environment.API_MASTER_INFO;
   constructor(
     private titleService: Title,
     private manageProfileService: ManageProfileService,

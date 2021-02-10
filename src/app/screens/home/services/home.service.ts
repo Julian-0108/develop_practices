@@ -11,7 +11,7 @@ export class HomeService {
   constructor(private http: HttpClient) { }
 
   getModules(): Promise<any> {
-    return this.http.get(`${environment.API_MUNDO_SETI}/modules?type=home&status=true`)
+    return this.http.get(`${environment.API_MASTER_INFO}/modules?type=home&status=true`)
     .pipe(
       pluck('payload')
     )

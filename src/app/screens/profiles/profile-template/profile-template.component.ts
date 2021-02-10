@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { Tables } from '@app/shared/interfaces/profile-competences.interface';
 import { ProfileTemplateService } from './services/profile-template.service';
@@ -16,7 +9,8 @@ import { MatSlider, MatSliderChange } from '@angular/material/slider';
 import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileFormHistoryComponent } from './profile-form-history/profile-form-history.component';
-import { CdkTable } from '@angular/cdk/table';
+import { SnackOptionsInterface } from '@shared/interfaces/notification.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile-template',
@@ -87,7 +81,10 @@ export class ProfileTemplateComponent implements OnInit {
   specificKnowledgeError = false;
   rolResponsabilitiesError = false;
   talentsError = false;
-
+  // idBaseTeam = this.activatedRoute.snapshot.params.idBaseTeam;
+  // charge = this.activatedRoute.snapshot.params.charge;
+  idProfile = this.activatedRoute.snapshot.params.idProfile;
+  // level = this.activatedRoute.snapshot.params.level;
   /* History */
   i: any;
   historyId!: string;
@@ -164,7 +161,8 @@ export class ProfileTemplateComponent implements OnInit {
   constructor(
     private profileTemplateService: ProfileTemplateService,
     private notificationService: NotificationService,
-    private _dialog: MatDialog // private cd: ChangeDetectorRef
+    private _dialog: MatDialog, // private cd: ChangeDetectorRef
+    private activatedRoute: ActivatedRoute
   ) {}
   // refresh() {
   //   this.cd.detectChanges();
@@ -173,9 +171,65 @@ export class ProfileTemplateComponent implements OnInit {
     this.getData();
   }
 
+  getTotalPercent(table: any) {
+    switch (table) {
+      case 'assertiveCommunication':
+        // setTimeout(() => {
+        if (this.dataAssertiveComunication) {
+          return this.dataAssertiveComunication.filteredData
+            .map((item) => item.measureApproval)
+            .reduce(
+              (acc, value) =>
+                Math.round(acc + value / this.dataAssertiveComunication.filteredData.length),
+              0
+            );
+        }
+        break;
+      // }, 2000);
+      case 'achievementOrientation':
+        // setTimeout(() => {
+        if (this.dataAchievementOrientation) {
+          return this.dataAchievementOrientation.filteredData
+            .map((item) => item.measureApproval)
+            .reduce(
+              (acc, value) =>
+                Math.round(acc + value / this.dataAchievementOrientation.filteredData.length),
+              0
+            );
+        }
+        break;
+      // }, 2000);
+      case 'serviceOrientation':
+        // setTimeout(() => {
+        if (this.dataServiceOrientation) {
+          return this.dataServiceOrientation.filteredData
+            .map((item) => item.measureApproval)
+            .reduce(
+              (acc, value) =>
+                Math.round(acc + value / this.dataServiceOrientation.filteredData.length),
+              0
+            );
+        }
+        break;
+      // }, 2000);
+      case 'teamwork':
+        // setTimeout(() => {
+        if (this.dataTeamwork) {
+          return this.dataTeamwork.filteredData
+            .map((item) => item.measureApproval)
+            .reduce(
+              (acc, value) => Math.round(acc + value / this.dataTeamwork.filteredData.length),
+              0
+            );
+        }
+        break;
+      // }, 2000);
+    }
+  }
+
   onChangeSliderValue(ev: MatSliderChange, id: any, element: any) {
     this.percent[id] = ev.value;
-    element.measureApproval = this.percent[element.id];
+    element.measureApproval = this.percent[element._id];
   }
 
   /**
@@ -186,8 +240,8 @@ export class ProfileTemplateComponent implements OnInit {
   async onPreview(id: any, drawer: any) {
     this.profileTemplateService.historyActions('get')?.then((res: any) => {
       this.data = res.filter((profile: any) => profile.idBaseProfile === id)[0];
-    })
-    console.log(this.data);
+      console.log('historial',this.data);
+    });
     // this.data = showProfileHistory.filter((profile: any) => profile._id === id)[0];
     this.onHistory = true;
     drawer.toggle();
@@ -206,8 +260,8 @@ export class ProfileTemplateComponent implements OnInit {
 
     this.historyFilter = this.history.filter(
       (item: any) =>
-        moment.default(item.createdAt).isSameOrAfter(startDate) &&
-        moment.default(item.createdAt).isSameOrBefore(endDate)
+        moment.default(item.updatedAt).isSameOrAfter(startDate) &&
+        moment.default(item.updatedAt).isSameOrBefore(endDate)
     );
   }
   /**
@@ -220,8 +274,8 @@ export class ProfileTemplateComponent implements OnInit {
     const startDate = moment.default(this.formFilterHistory.value.startDate).format('YYYY-MM-DD');
     this.historyFilter = this.history.filter(
       (item: any) =>
-        moment.default(item.createdAt).isSameOrAfter(startDate) &&
-        moment.default(item.createdAt).isSameOrBefore(endDate)
+        moment.default(item.updatedAt).isSameOrAfter(startDate) &&
+        moment.default(item.updatedAt).isSameOrBefore(endDate)
     );
   }
 
@@ -348,38 +402,34 @@ export class ProfileTemplateComponent implements OnInit {
    * la asigna a sus respectivas variables.
    */
   getData() {
-    this.profileTemplateService.getData().then((res: any) => {
+    // (this.idBaseTeam, this.charge, this.level ? this.level : null
+    this.profileTemplateService.getData(this.idProfile).then((res: any) => {
+      console.log(res);
       this.data = res[0];
-      this.dataAssertiveComunication = new MatTableDataSource(
-        res[0].corporativeCompetences[0].assertiveComunication
-      );
-      res[0].corporativeCompetences[0].assertiveComunication.forEach((el: any) => {
-        this.percent[el.id] = el.measureApproval;
+      this.dataAssertiveComunication = new MatTableDataSource(res[0].assertiveComunication);
+      res[0].assertiveComunication.forEach((el: any) => {
+        this.percent[el._id] = el.measureApproval;
       });
-      this.dataAchievementOrientation = new MatTableDataSource(
-        res[0].corporativeCompetences[0].achievementOrientation
-      );
-      res[0].corporativeCompetences[0].achievementOrientation.forEach((el: any) => {
-        this.percent[el.id] = el.measureApproval;
+      this.dataAchievementOrientation = new MatTableDataSource(res[0].achievementOrientation);
+      res[0].achievementOrientation.forEach((el: any) => {
+        this.percent[el._id] = el.measureApproval;
       });
-      this.dataServiceOrientation = new MatTableDataSource(
-        res[0].corporativeCompetences[0].serviceOrientation
-      );
-      res[0].corporativeCompetences[0].serviceOrientation.forEach((el: any) => {
-        this.percent[el.id] = el.measureApproval;
+      this.dataServiceOrientation = new MatTableDataSource(res[0].serviceOrientation);
+      res[0].serviceOrientation.forEach((el: any) => {
+        this.percent[el._id] = el.measureApproval;
       });
-      this.dataTeamwork = new MatTableDataSource(res[0].corporativeCompetences[0].teamwork);
-      res[0].corporativeCompetences[0].teamwork.forEach((el: any) => {
-        this.percent[el.id] = el.measureApproval;
+      this.dataTeamwork = new MatTableDataSource(res[0].teamwork);
+      res[0].teamwork.forEach((el: any) => {
+        this.percent[el._id] = el.measureApproval;
       });
     });
     this.profileTemplateService.historyActions('get')?.then((res: any) => {
+      this.history.sort((a: any, b: any) => (a.updatedAt < b.updatedAt ? 1 : -1));
       this.history = res.map((item: any) => {
-        item.createdAt = moment.default(item.createdAt).format('YYYY-MM-DD');
-        item.showDate = this.showDate(item.createdAt);
+        item.updatedAt = moment.default(item.updatedAt).format('YYYY-MM-DD');
+        item[`showDate`] = this.showDate(item.updatedAt);
         return item;
       });
-      this.history.sort((a: any, b: any) => (a.createdAt < b.createdAt ? 1 : -1));
       this.historyFilter = this.history;
     });
     // this.getSecurityResponsabilities();
@@ -390,13 +440,13 @@ export class ProfileTemplateComponent implements OnInit {
    * omitiendo los rangos de fechas que se repitan.
    */
   showDate(date: string) {
-      const dateTransformad = moment.default(date).format('YYYY-MM');
-      if (this.existentDate !== dateTransformad) {
-        this.existentDate = dateTransformad;
-        return this.onTransformDate(date);
-      } else {
-        return null;
-      }
+    const dateTransformad = moment.default(date).format('YYYY-MM');
+    if (this.existentDate !== dateTransformad) {
+      this.existentDate = dateTransformad;
+      return this.onTransformDate(date);
+    } else {
+      return null;
+    }
   }
   // getSecurityResponsabilities() {
   //   this.profileTemplateService.getAllSecurityResponsabilities().then((res: any) => {
@@ -517,7 +567,7 @@ export class ProfileTemplateComponent implements OnInit {
         newarrayPages = [];
       }
     });
-    if (newarrayPages.length !== 0){
+    if (newarrayPages.length !== 0) {
       finalArrayPages = [...finalArrayPages, newarrayPages];
     }
     console.log(finalArrayPages);
@@ -557,10 +607,12 @@ export class ProfileTemplateComponent implements OnInit {
       this.onSaveTalents() === true &&
       this.onSaveCorporativeCompetences() === true
     ) {
-      const saveHistorial = {
+      const saveHistorial: SnackOptionsInterface = {
         title: 'Guardar en Historial',
         message: '¿Desea que el registro de los cambios se guarde en el historial?',
         type: 'warning',
+        action: 'Con Historial',
+        contraryAction: 'Sin Historial',
       };
       this.notificationService
         .openComplexSnackBar(saveHistorial)
@@ -579,34 +631,46 @@ export class ProfileTemplateComponent implements OnInit {
                 resp = {
                   ...resp,
                   idBaseTeam: this.data.idBaseTeam,
-                  idBaseProfile: this.data.idBaseProfile,
+                  idBaseProfile: this.data._id,
                   charge: this.data.charge,
-                  nameBaseTeam: this.data.nameBaseTeam,
-                  securityResponsabilities: this.data.securityResponsabilities
+                  nameBaseTeam: this.data.teamName,
+                  securityResponsabilities: this.data.securityResponsabilities,
                 };
                 console.log('reporte Historial', resp);
-                this.profileTemplateService
-                  .historyActions('post', resp)
-                  ?.then((res: any) => {
-                    console.log(res);
-                    this.notificationService.openSimpleSnackBar({
-                      title: 'Operación Finalizada',
-                      message:
-                        'La información se ha actualizado con éxito y su historial fue creado.',
-                      type: 'success',
-                    });
-                    this.getData();
-                    this.isEditable = false;
+                delete resp[`_id`];
+                this.profileTemplateService.historyActions('post', resp)?.then((res: any) => {
+                  console.log(res);
+                  this.notificationService.openSimpleSnackBar({
+                    title: 'Operación Finalizada',
+                    message:
+                      'La información se ha actualizado con éxito y su historial fue creado.',
+                    type: 'success',
                   });
+                  this.getData();
+                  this.isEditable = false;
+                });
               });
           } else {
-            console.log(this.sendInformation);
-            console.log(resp);
-            this.notificationService.openSimpleSnackBar({
-              title: 'Operación Finalizada',
-              message: 'La información se ha actualizado con éxito.',
-              type: 'success',
-            });
+            this.sendInformation = {
+              ...this.sendInformation,
+              idBaseTeam: this.data.idBaseTeam,
+              idBaseProfile: this.data._id,
+              charge: this.data.charge,
+              nameBaseTeam: this.data.teamName,
+              securityResponsabilities: this.data.securityResponsabilities,
+              status: this.data.status,
+            };
+            this.profileTemplateService
+              .updateProfile(this.idProfile, this.sendInformation)
+              .then(() => {
+                this.notificationService.openSimpleSnackBar({
+                  title: 'Operación Finalizada',
+                  message: 'La información se ha actualizado con éxito.',
+                  type: 'success',
+                });
+                this.getData();
+                this.isEditable = false;
+              });
           }
         });
     }
@@ -743,14 +807,12 @@ export class ProfileTemplateComponent implements OnInit {
   onSaveCorporativeCompetences() {
     this.sendInformation = {
       ...this.sendInformation,
-      corporativeCompetences: [
-        {
-          assertiveComunication: this.dataAssertiveComunication.filteredData,
-          achievementOrientation: this.dataAchievementOrientation.filteredData,
-          serviceOrientation: this.dataServiceOrientation.filteredData,
-          teamwork: this.dataTeamwork.filteredData,
-        },
-      ],
+      corporativeCompetences: {
+        assertiveComunication: this.dataAssertiveComunication.filteredData,
+        achievementOrientation: this.dataAchievementOrientation.filteredData,
+        serviceOrientation: this.dataServiceOrientation.filteredData,
+        teamwork: this.dataTeamwork.filteredData,
+      },
     };
     return true;
   }
@@ -781,6 +843,7 @@ export class ProfileTemplateComponent implements OnInit {
       this.formExperience.get(field)?.setErrors({ error: 'El número ingresado no es válido.' });
       return;
     }
+    this.formExperience.value[field] = Number(this.formExperience.value[field]);
   }
 
   pipeYears(year: number) {
@@ -799,51 +862,51 @@ export class ProfileTemplateComponent implements OnInit {
   onTransformDate(date: string) {
     switch (new Date(date).getMonth() + 1) {
       case 1:
-        return `Enero ${String(new Date(date).getMonth() + 1).padStart(2, '0')} ${new Date(
+        return `Enero ${new Date(
           date
         ).getFullYear()}`;
       case 2:
-        return `Febrero ${String(new Date(date).getMonth() + 1).padStart(2, '0')} ${new Date(
+        return `Febrero ${new Date(
           date
         ).getFullYear()}`;
       case 3:
-        return `Marzo ${String(new Date(date).getMonth() + 1).padStart(2, '0')} ${new Date(
+        return `Marzo ${new Date(
           date
         ).getFullYear()}`;
       case 4:
-        return `Abril ${String(new Date(date).getMonth() + 1).padStart(2, '0')} ${new Date(
+        return `Abril ${new Date(
           date
         ).getFullYear()}`;
       case 5:
-        return `Mayo ${String(new Date(date).getMonth() + 1).padStart(2, '0')} ${new Date(
+        return `Mayo ${new Date(
           date
         ).getFullYear()}`;
       case 6:
-        return `Junio ${String(new Date(date).getMonth() + 1).padStart(2, '0')} ${new Date(
+        return `Junio ${new Date(
           date
         ).getFullYear()}`;
       case 7:
-        return `Julio ${String(new Date(date).getMonth() + 1).padStart(2, '0')} ${new Date(
+        return `Julio ${new Date(
           date
         ).getFullYear()}`;
       case 8:
-        return `Agosto ${String(new Date(date).getMonth() + 1).padStart(2, '0')} ${new Date(
+        return `Agosto ${new Date(
           date
         ).getFullYear()}`;
       case 9:
-        return `Septiembre ${String(new Date(date).getMonth() + 1).padStart(2, '0')} ${new Date(
+        return `Septiembre ${new Date(
           date
         ).getFullYear()}`;
       case 10:
-        return `Octubre ${String(new Date(date).getMonth() + 1).padStart(2, '0')} ${new Date(
+        return `Octubre ${new Date(
           date
         ).getFullYear()}`;
       case 11:
-        return `Noviembre ${String(new Date(date).getMonth() + 1).padStart(2, '0')} ${new Date(
+        return `Noviembre ${new Date(
           date
         ).getFullYear()}`;
       case 12:
-        return `Diciembre ${String(new Date(date).getMonth() + 1).padStart(2, '0')} ${new Date(
+        return `Diciembre ${new Date(
           date
         ).getFullYear()}`;
       default:

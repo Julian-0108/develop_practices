@@ -25,12 +25,11 @@ export class ProfileFormHistoryComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.data);
     this.formHistory.get('date')?.patchValue(moment(new Date()).format('YYYY-MM-DD'));
+    const userName: any = JSON.parse(String(localStorage.getItem('MSauthData')));
+    this.formHistory.get('author')?.patchValue(userName.user.displayName);
   }
 
   onSave() {
-    this.formHistory
-      .get('author')
-      ?.patchValue(this.titleCasePipe.transform(this.formHistory.value.author));
     this.formHistory
       .get('descriptionChanges')
       ?.patchValue(

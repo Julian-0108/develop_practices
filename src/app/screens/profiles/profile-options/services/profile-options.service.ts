@@ -9,16 +9,16 @@ import { pluck } from 'rxjs/operators';
 export class ProfileOptionsService {
   constructor(private httpClient: HttpClient) {}
 
-  async getBaseTeams() {
-    return await this.httpClient
-      .get(`${environment.API_MUNDO_SETI}/base-teams-categories?status=true&type=EQUIPO_BASE`)
+  getBaseTeams() {
+    return this.httpClient
+      .get(`${environment.API_MASTER_INFO}/base-teams-categories?status=true&type=EQUIPO_BASE`)
       .pipe(pluck('payload'))
       .toPromise();
   }
-  async getSubBaseTeams(source: string) {
+  getSubBaseTeams(source: string) {
     console.log(source);
-    return await this.httpClient
-      .get(`${environment.API_MUNDO_SETI}/base-teams-categories?status=true&type=subGrupo${source}`)
+    return this.httpClient
+      .get(`${environment.API_MASTER_INFO}/base-teams-categories?status=true&type=subGrupo${source}`)
       .pipe(pluck('payload'))
       .toPromise();
   }

@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
 
   @ViewChild('cardsHTML') cardsHTML : ElementRef | undefined;
   public cards: any;
-  public API_MUNDO_SETI = environment.API_MUNDO_SETI;
+  public API_MASTER_INFO = environment.API_MASTER_INFO;
 
   constructor(private homeService: HomeService) {}
 

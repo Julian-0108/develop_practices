@@ -27,7 +27,7 @@
       "@core/*":["src/app/core/*"],
       "@screens/*":["src/app/screens/*"],
       "@shared/*":["src/app/shared/*"],
-      "@environments/*":["src/environments/*"],
+      "@environments/*":["src/environments/*"]
     }
   },
   "angularCompilerOptions": {

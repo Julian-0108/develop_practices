@@ -7,18 +7,12 @@ import {
 import { NotificationComponent } from '../notification.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmComponent } from '../confirm/confirm.component';
+import {SnackOptionsInterface} from '@shared/interfaces/notification.interface'
 
-interface SnackOptionsInterface {
-  title: string;
-  message: string;
-  type: string;
-  action?: string;
-  horizontalPosition?: MatSnackBarHorizontalPosition;
-  verticalPosition?: MatSnackBarVerticalPosition;
-}
 @Injectable({
   providedIn: 'root',
 })
+
 export class NotificationService {
   constructor(private _snackBar: MatSnackBar,private _dialog: MatDialog) {}
 
@@ -55,13 +49,14 @@ export class NotificationService {
         message: params.message,
         type: params.type,
         action: params.action,
+        contraryAction: params.contraryAction,
         icon,
       },
       autoFocus: false
     });
   }
   iconCondition(params:SnackOptionsInterface){
-    let icon = params.type;
+    let icon: any = params.type;
     if (icon === 'success') {
       icon = 'check_circle';
     }

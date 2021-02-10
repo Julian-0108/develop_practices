@@ -7,7 +7,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { newArray } from '@angular/compiler/src/util';
 import { environment } from 'src/environments/environment';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-options',
@@ -15,13 +15,13 @@ import {Router} from '@angular/router';
   styleUrls: ['./profile-options.component.scss'],
 })
 export class ProfileOptionsComponent implements OnInit {
-  public API_MUNDO_SETI: string = environment.API_MUNDO_SETI;
+  public API_MASTER_INFO: string = environment.API_MASTER_INFO;
+  showBackButton = false;
   title = 'Habilidades';
   cardClicked = '';
   optionClicked = '';
-  showBackButton = false;
   description =
-    'Lorem ipsum, dolor sit amet consectetur adipisicing elit.Maxime, consequuntur assumenda';
+    'Habilidades, capacidades, competencias y talentos necesarios para el desarrollo de funciones.';
   itemsOld: any = [];
   items: any = [];
   rowsArray: any;
@@ -205,6 +205,7 @@ export class ProfileOptionsComponent implements OnInit {
       // this.buildRows(this.items);
       this.paginate();
       this.showBackButton = true;
+      this.title = 'Habilidades de Operación';
     }
   }
   // onCardClicked(item: any) {
@@ -246,47 +247,48 @@ export class ProfileOptionsComponent implements OnInit {
     this.pageNumber=1;
     this.paginate();
     this.showBackButton = false;
+    this.title = 'Habilidades';
   }
 
-  success() {
-    const option = {
-      title: 'Success',
-      message: 'Error message',
-      type: 'success',
-    };
-    this.notificationService
-      .openSimpleSnackBar(option)
-      .afterDismissed()
-      .subscribe(() => {});
-  }
-  error() {
-    const option = {
-      title: 'Titulo del mensaje',
-      message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit',
-      type: 'info',
-      action: 'Confirmar',
-    };
-    this.notificationService
-      .openComplexSnackBar(option)
-      .afterClosed()
-      .subscribe((resp) => {});
-  }
-  warning() {
-    const option = {
-      title: 'Warning',
-      message: 'Error message',
-      type: 'warning',
-    };
-    this.notificationService.openSimpleSnackBar(option);
-  }
-  info() {
-    const option = {
-      title: 'Info',
-      message: 'Error message',
-      type: 'info',
-    };
-    this.notificationService.openSimpleSnackBar(option);
-  }
+  // success() {
+  //   const option = {
+  //     title: 'Success',
+  //     message: 'Error message',
+  //     type: 'success',
+  //   };
+  //   this.notificationService
+  //     .openSimpleSnackBar(option)
+  //     .afterDismissed()
+  //     .subscribe(() => {});
+  // }
+  // error() {
+  //   const option = {
+  //     title: 'Titulo del mensaje',
+  //     message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit',
+  //     type: 'info',
+  //     action: 'Confirmar',
+  //   };
+  //   this.notificationService
+  //     .openComplexSnackBar(option)
+  //     .afterClosed()
+  //     .subscribe((resp) => {});
+  // }
+  // warning() {
+  //   const option = {
+  //     title: 'Warning',
+  //     message: 'Error message',
+  //     type: 'warning',
+  //   };
+  //   this.notificationService.openSimpleSnackBar(option);
+  // }
+  // info() {
+  //   const option = {
+  //     title: 'Info',
+  //     message: 'Error message',
+  //     type: 'info',
+  //   };
+  //   this.notificationService.openSimpleSnackBar(option);
+  // }
 
   /**
    * @author Wilmer
@@ -317,8 +319,11 @@ export class ProfileOptionsComponent implements OnInit {
     this.paginate();
   }
 
-  redirectToTemplateProfile(baseTeamId: any, profileId: any, level: string){
-    console.log({equipoBase: baseTeamId, perfil: profileId, level});
-    this.router.navigate(['/profile-template']);
+  redirectToTemplateProfile(charge: any,idProfile: any = [], level?: string) {
+    const id = idProfile.find((el: any) => (el.level === level && el.charge === charge) || el.charge === charge)
+    console.log(id);
+    console.log(id._id);
+    this.router.navigate([`/profile-template/${id._id}`]);
+
   }
 }
