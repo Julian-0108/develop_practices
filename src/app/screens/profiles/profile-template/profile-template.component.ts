@@ -93,81 +93,14 @@ export class ProfileTemplateComponent implements OnInit {
   historyFilter: any = [];
   onHistory = false;
   history: any = [];
-  // history = [
-  //   {
-  //     name: 'Lina Jaramillo',
-  //     description:
-  //       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
-  //     date: '2021-01-13',
-  //     id: 456,
-  //   },
-  //   {
-  //     name: 'Lina Jaramillo',
-  //     description:
-  //       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
-  //     date: '2021-01-15',
-  //     id: 123,
-  //   },
-  //   {
-  //     name: 'Lina Jaramillo',
-  //     description:
-  //       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
-  //     date: '2021-01-12',
-  //     id: 'id3',
-  //   },
-  //   {
-  //     name: 'Lina Jaramillo',
-  //     description:
-  //       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
-  //     date: '2020-12-12',
-  //     id: 'id3',
-  //   },
-  //   {
-  //     name: 'Lina Jaramillo',
-  //     description:
-  //       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
-  //     date: '2020-12-12',
-  //     id: 'id3',
-  //   },
-  //   {
-  //     name: 'Lina Jaramillo',
-  //     description:
-  //       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
-  //     date: '2020-12-12',
-  //     id: 'id3',
-  //   },
-  //   {
-  //     name: 'Lina Jaramillo',
-  //     description:
-  //       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
-  //     date: '2020-12-12',
-  //     id: 'id3',
-  //   },
-  //   {
-  //     name: 'Lina Jaramillo',
-  //     description:
-  //       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
-  //     date: '2020-11-12',
-  //     id: 'id3',
-  //   },
-  //   {
-  //     name: 'Lina Jaramillo',
-  //     description:
-  //       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. In molestiae voluptas quibusdam,',
-  //     date: '2020-11-12',
-  //     id: 'id3',
-  //   },
-  // ];
 
   constructor(
     private profileTemplateService: ProfileTemplateService,
     private notificationService: NotificationService,
-    private _dialog: MatDialog, // private cd: ChangeDetectorRef
+    private _dialog: MatDialog,
     private activatedRoute: ActivatedRoute
   ) {}
-  // refresh() {
-  //   this.cd.detectChanges();
-  // }
+
   ngOnInit(): void {
     this.getData();
   }
@@ -175,7 +108,6 @@ export class ProfileTemplateComponent implements OnInit {
   getTotalPercent(table: any) {
     switch (table) {
       case 'assertiveCommunication':
-        // setTimeout(() => {
         if (this.dataAssertiveComunication) {
           return this.dataAssertiveComunication.filteredData
             .map((item) => item.measureApproval)
@@ -186,9 +118,7 @@ export class ProfileTemplateComponent implements OnInit {
             );
         }
         break;
-      // }, 2000);
       case 'achievementOrientation':
-        // setTimeout(() => {
         if (this.dataAchievementOrientation) {
           return this.dataAchievementOrientation.filteredData
             .map((item) => item.measureApproval)
@@ -199,9 +129,8 @@ export class ProfileTemplateComponent implements OnInit {
             );
         }
         break;
-      // }, 2000);
+
       case 'serviceOrientation':
-        // setTimeout(() => {
         if (this.dataServiceOrientation) {
           return this.dataServiceOrientation.filteredData
             .map((item) => item.measureApproval)
@@ -212,9 +141,8 @@ export class ProfileTemplateComponent implements OnInit {
             );
         }
         break;
-      // }, 2000);
+
       case 'teamwork':
-        // setTimeout(() => {
         if (this.dataTeamwork) {
           return this.dataTeamwork.filteredData
             .map((item) => item.measureApproval)
@@ -224,7 +152,6 @@ export class ProfileTemplateComponent implements OnInit {
             );
         }
         break;
-      // }, 2000);
     }
   }
 
@@ -239,11 +166,9 @@ export class ProfileTemplateComponent implements OnInit {
    * dependiendo de lo que se selecione es la sección historial.
    */
   async onPreview(id: any, drawer: any) {
-    this.profileTemplateService.historyActions('get')?.then((res: any) => {
-      this.data = res.filter((profile: any) => profile.idBaseProfile === id)[0];
-      console.log('historial',this.data);
+    this.profileTemplateService.historyPreview(id).then((res: any) => {
+      this.data = res;
     });
-    // this.data = showProfileHistory.filter((profile: any) => profile._id === id)[0];
     this.onHistory = true;
     drawer.toggle();
   }
@@ -424,7 +349,7 @@ export class ProfileTemplateComponent implements OnInit {
         this.percent[el._id] = el.measureApproval;
       });
     });
-    this.profileTemplateService.historyActions('get')?.then((res: any) => {
+    this.profileTemplateService.historyActions('get', this.idProfile)?.then((res: any) => {
       this.history.sort((a: any, b: any) => (a.updatedAt < b.updatedAt ? 1 : -1));
       this.history = res.map((item: any) => {
         item.updatedAt = moment.default(item.updatedAt).format('YYYY-MM-DD');
@@ -433,7 +358,6 @@ export class ProfileTemplateComponent implements OnInit {
       });
       this.historyFilter = this.history;
     });
-    // this.getSecurityResponsabilities();
   }
   /**
    * @autor Hanna
@@ -449,12 +373,6 @@ export class ProfileTemplateComponent implements OnInit {
       return null;
     }
   }
-  // getSecurityResponsabilities() {
-  //   this.profileTemplateService.getAllSecurityResponsabilities().then((res: any) => {
-  //     this.securityResponsabilitiesData = res;
-  //   });
-  // }
-
   /**
    * @autor Hanna
    * @description Función que asigna los valores actuales a cada sección, cuando
@@ -620,6 +538,9 @@ export class ProfileTemplateComponent implements OnInit {
         .openComplexSnackBar(saveHistorial)
         .afterClosed()
         .subscribe((resp) => {
+          if (resp === 'close') {
+            return;
+          }
           if (resp) {
             this._dialog
               .open(ProfileFormHistoryComponent, {
@@ -635,22 +556,35 @@ export class ProfileTemplateComponent implements OnInit {
                   idBaseTeam: this.data.idBaseTeam,
                   idBaseProfile: this.data._id,
                   charge: this.data.charge,
-                  nameBaseTeam: this.data.teamName,
+                  teamName: this.data.teamName,
+                  status: this.data.status,
                   // securityResponsabilities: this.data.securityResponsabilities,
                 };
                 console.log('reporte Historial', resp);
                 delete resp[`_id`];
-                this.profileTemplateService.historyActions('post', resp)?.then((res: any) => {
-                  console.log(res);
-                  this.notificationService.openSimpleSnackBar({
-                    title: 'Operación Finalizada',
-                    message:
-                      'La información se ha actualizado con éxito y su historial fue creado.',
-                    type: 'success',
+                this.profileTemplateService
+                  .updateProfile(this.idProfile, resp)
+                  ?.then(() =>
+                    this.profileTemplateService.historyActions('post', this.idProfile, resp)
+                  )
+                  .then(() => {
+                    this.notificationService.openSimpleSnackBar({
+                      title: 'Operación Finalizada',
+                      message:
+                        'La información se ha actualizado con éxito y su historial fue creado.',
+                      type: 'success',
+                    });
+                    this.existentDate = '';
+                    this.getData();
+                    this.isEditable = false;
+                  })
+                  .catch((error) => {
+                    this.notificationService.openSimpleSnackBar({
+                      title: 'Ocurrió un Error',
+                      message: error.message,
+                      type: 'error',
+                    });
                   });
-                  this.getData();
-                  this.isEditable = false;
-                });
               });
           } else {
             this.sendInformation = {
@@ -658,7 +592,7 @@ export class ProfileTemplateComponent implements OnInit {
               idBaseTeam: this.data.idBaseTeam,
               idBaseProfile: this.data._id,
               charge: this.data.charge,
-              nameBaseTeam: this.data.teamName,
+              teamName: this.data.teamName,
               // securityResponsabilities: this.data.securityResponsabilities,
               status: this.data.status,
             };
@@ -670,6 +604,7 @@ export class ProfileTemplateComponent implements OnInit {
                   message: 'La información se ha actualizado con éxito.',
                   type: 'success',
                 });
+                this.existentDate = '';
                 this.getData();
                 this.isEditable = false;
               });
@@ -677,7 +612,6 @@ export class ProfileTemplateComponent implements OnInit {
         });
     }
   }
-
   onSaveObjective() {
     if (this.formObjective.invalid) {
       this.formObjective.markAllAsTouched();
@@ -808,7 +742,8 @@ export class ProfileTemplateComponent implements OnInit {
     if (this.securityResponsabilities.selectedOptions.selected.length === 0) {
       this.notificationService.openSimpleSnackBar({
         title: 'Acción Incorrecta',
-        message: 'Debe seccionar al menos un item de la lista de "Responsabilidades para Seguridad y Salud en el Trabajo".',
+        message:
+          'Debe seccionar al menos un item de la lista de "Responsabilidades para Seguridad y Salud en el Trabajo".',
         type: 'error',
       });
       this.securityRespError = true;
@@ -817,7 +752,9 @@ export class ProfileTemplateComponent implements OnInit {
     this.securityRespError = false;
     this.sendInformation = {
       ...this.sendInformation,
-      securityResponsabilities: this.securityResponsabilities.selectedOptions.selected.map((value) => value.value),
+      securityResponsabilities: this.securityResponsabilities.selectedOptions.selected.map(
+        (value) => value.value
+      ),
     };
     console.log(this.securityResponsabilities.selectedOptions.selected.map((value) => value.value));
     return true;
@@ -880,53 +817,29 @@ export class ProfileTemplateComponent implements OnInit {
   onTransformDate(date: string) {
     switch (new Date(date).getMonth() + 1) {
       case 1:
-        return `Enero ${new Date(
-          date
-        ).getFullYear()}`;
+        return `Enero ${new Date(date).getFullYear()}`;
       case 2:
-        return `Febrero ${new Date(
-          date
-        ).getFullYear()}`;
+        return `Febrero ${new Date(date).getFullYear()}`;
       case 3:
-        return `Marzo ${new Date(
-          date
-        ).getFullYear()}`;
+        return `Marzo ${new Date(date).getFullYear()}`;
       case 4:
-        return `Abril ${new Date(
-          date
-        ).getFullYear()}`;
+        return `Abril ${new Date(date).getFullYear()}`;
       case 5:
-        return `Mayo ${new Date(
-          date
-        ).getFullYear()}`;
+        return `Mayo ${new Date(date).getFullYear()}`;
       case 6:
-        return `Junio ${new Date(
-          date
-        ).getFullYear()}`;
+        return `Junio ${new Date(date).getFullYear()}`;
       case 7:
-        return `Julio ${new Date(
-          date
-        ).getFullYear()}`;
+        return `Julio ${new Date(date).getFullYear()}`;
       case 8:
-        return `Agosto ${new Date(
-          date
-        ).getFullYear()}`;
+        return `Agosto ${new Date(date).getFullYear()}`;
       case 9:
-        return `Septiembre ${new Date(
-          date
-        ).getFullYear()}`;
+        return `Septiembre ${new Date(date).getFullYear()}`;
       case 10:
-        return `Octubre ${new Date(
-          date
-        ).getFullYear()}`;
+        return `Octubre ${new Date(date).getFullYear()}`;
       case 11:
-        return `Noviembre ${new Date(
-          date
-        ).getFullYear()}`;
+        return `Noviembre ${new Date(date).getFullYear()}`;
       case 12:
-        return `Diciembre ${new Date(
-          date
-        ).getFullYear()}`;
+        return `Diciembre ${new Date(date).getFullYear()}`;
       default:
         break;
     }

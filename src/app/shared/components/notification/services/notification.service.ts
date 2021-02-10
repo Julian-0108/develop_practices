@@ -14,7 +14,8 @@ import {SnackOptionsInterface} from '@shared/interfaces/notification.interface'
 })
 
 export class NotificationService {
-  constructor(private _snackBar: MatSnackBar,private _dialog: MatDialog) {}
+  constructor(private _snackBar: MatSnackBar,private _dialog: MatDialog) {
+  }
 
   /**
    * @param params Este parámetro contiene los datos que definirán cómo se ve
@@ -52,7 +53,8 @@ export class NotificationService {
         contraryAction: params.contraryAction,
         icon,
       },
-      autoFocus: false
+      autoFocus: false,
+      disableClose: true
     });
   }
   iconCondition(params:SnackOptionsInterface){

@@ -32,6 +32,17 @@
   color: #fff
 }
 
+.dialog__close-button {
+  position: absolute;
+}
+
+.icon__close {
+  left: 10em;
+    color: #898f93;
+    position: relative;
+    bottom: 6em;
+}
+
 .dialog__icon {
   font-size: 3em;
   margin: 0 0 20px;
