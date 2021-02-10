@@ -38,7 +38,7 @@
                         <!-- Reference Column -->
                         <ng-container matColumnDef="reference">
                             <th mat-header-cell *matHeaderCellDef> Maestra
-                                <div>
+                                <div class="filter-inputs">
                                     <mat-form-field floatLabel="always" appearance="none">
                                         <input matInput class="filter" (keyup)="applyFilter($event)" type="text">
                                     </mat-form-field>
@@ -50,7 +50,7 @@
                         <!-- Name Column -->
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef> Nombre
-                                <div>
+                                <div class="filter-inputs">
                                     <mat-form-field floatLabel="always" appearance="none">
                                         <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
                                     </mat-form-field>
@@ -62,7 +62,7 @@
                         <!-- Description Column -->
                         <ng-container matColumnDef="description">
                             <th mat-header-cell *matHeaderCellDef> Descripción
-                                <div>
+                                <div class="filter-inputs">
                                     <mat-form-field floatLabel="always" appearance="none">
                                         <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
                                     </mat-form-field>
@@ -74,7 +74,7 @@
                         <!-- Type Column -->
                         <ng-container matColumnDef="type">
                             <th mat-header-cell *matHeaderCellDef> Tipo
-                                <div>
+                                <div class="filter-inputs">
                                     <mat-form-field floatLabel="always" appearance="none">
                                         <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
                                     </mat-form-field>
@@ -87,7 +87,7 @@
                         <!-- CreatedAt Column -->
                         <ng-container matColumnDef="createdAt">
                             <th mat-header-cell *matHeaderCellDef matSort> Fecha de creación
-                                <div>
+                                <div class="filter-inputs">
                                     <mat-form-field floatLabel="always" appearance="none">
                                         <input matInput class="filter" (keyup)="applyFilter($event)" type="date">
                                     </mat-form-field>
@@ -99,7 +99,7 @@
                         <!-- UpdatedAt Column -->
                         <ng-container matColumnDef="updatedAt">
                             <th mat-header-cell *matHeaderCellDef matSort>Fecha de actualización
-                                <div>
+                                <div class="filter-inputs">
                                     <mat-form-field floatLabel="always" appearance="none">
                                         <input matInput class="filter" (keyup)="applyFilter($event)" type="date">
                                     </mat-form-field>

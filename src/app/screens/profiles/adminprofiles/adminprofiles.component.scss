@@ -29,7 +29,7 @@
     }
     mat-card {
         width: 20em;
-        min-height: 28em;
+        min-height: 26em;
         margin: 1.3em;
     }
     mat-card img {
@@ -45,7 +45,8 @@
     .card__description {
         display: block;
         margin: auto;
-        text-align: center;
-        font-size: 1.4em !important;
+        max-width: none !important;
+        font-size: 1.3em !important;
+        line-height: 1.2;
     }
 }
