@@ -24,7 +24,7 @@ export class ProfileTemplateComponent implements OnInit {
   @ViewChild('specificKnowledge') specificKnowledge!: MatSelectionList;
   @ViewChild('rolResponsabilities') rolResponsabilities!: MatSelectionList;
   @ViewChild('talents') talents!: MatSelectionList;
-  @ViewChild('securityResp') securityResp!: MatSelectionList;
+  @ViewChild('securityResponsabilities') securityResponsabilities!: MatSelectionList;
   // @ViewChild('assertiveComunicationTable') assertiveComunicationTable!: CdkTable<Tables>;
   dataAssertiveComunication!: MatTableDataSource<Tables>;
   dataAchievementOrientation!: MatTableDataSource<Tables>;
@@ -81,6 +81,7 @@ export class ProfileTemplateComponent implements OnInit {
   specificKnowledgeError = false;
   rolResponsabilitiesError = false;
   talentsError = false;
+  securityRespError = false;
   // idBaseTeam = this.activatedRoute.snapshot.params.idBaseTeam;
   // charge = this.activatedRoute.snapshot.params.charge;
   idProfile = this.activatedRoute.snapshot.params.idProfile;
@@ -486,9 +487,9 @@ export class ProfileTemplateComponent implements OnInit {
       this.buildPagesAndColumnsList2(res, 'talents');
     });
     /* Security Responsabilities */
-    // this.profileTemplateService.getAllSecurityResponsabilities().then((res: any) => {
-    //   this.buildPagesAndColumnsList(res, 'securityResponsabilities');
-    // });
+    this.profileTemplateService.getAllSecurityResponsabilities().then((res: any) => {
+      this.buildPagesAndColumnsList(res, 'securityResponsabilities');
+    });
 
     this.isEditable = true;
   }
@@ -605,6 +606,7 @@ export class ProfileTemplateComponent implements OnInit {
       this.onSaveSpecificKnowledge() === true &&
       this.onSaveRolResponsabilities() === true &&
       this.onSaveTalents() === true &&
+      this.onSaveSecurityResp() === true &&
       this.onSaveCorporativeCompetences() === true
     ) {
       const saveHistorial: SnackOptionsInterface = {
@@ -634,7 +636,7 @@ export class ProfileTemplateComponent implements OnInit {
                   idBaseProfile: this.data._id,
                   charge: this.data.charge,
                   nameBaseTeam: this.data.teamName,
-                  securityResponsabilities: this.data.securityResponsabilities,
+                  // securityResponsabilities: this.data.securityResponsabilities,
                 };
                 console.log('reporte Historial', resp);
                 delete resp[`_id`];
@@ -657,7 +659,7 @@ export class ProfileTemplateComponent implements OnInit {
               idBaseProfile: this.data._id,
               charge: this.data.charge,
               nameBaseTeam: this.data.teamName,
-              securityResponsabilities: this.data.securityResponsabilities,
+              // securityResponsabilities: this.data.securityResponsabilities,
               status: this.data.status,
             };
             this.profileTemplateService
@@ -701,11 +703,9 @@ export class ProfileTemplateComponent implements OnInit {
     }
     this.sendInformation = {
       ...this.sendInformation,
-      professionalExperience: this.formExperience.value.professionalExperience,
-      chargeExperience: this.formExperience.value.chargeExperience,
+      professionalExperience: Number(this.formExperience.value.professionalExperience),
+      chargeExperience: Number(this.formExperience.value.chargeExperience),
     };
-    // console.log(this.formExperience.value.professionalExperience);
-    // console.log(this.formExperience.value.chargeExperience);
     return true;
   }
   onSaveeEucation() {
@@ -804,6 +804,24 @@ export class ProfileTemplateComponent implements OnInit {
     console.log(this.talents.selectedOptions.selected.map((value) => value.value));
     return true;
   }
+  onSaveSecurityResp() {
+    if (this.securityResponsabilities.selectedOptions.selected.length === 0) {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Acción Incorrecta',
+        message: 'Debe seccionar al menos un item de la lista de "Responsabilidades para Seguridad y Salud en el Trabajo".',
+        type: 'error',
+      });
+      this.securityRespError = true;
+      return;
+    }
+    this.securityRespError = false;
+    this.sendInformation = {
+      ...this.sendInformation,
+      securityResponsabilities: this.securityResponsabilities.selectedOptions.selected.map((value) => value.value),
+    };
+    console.log(this.securityResponsabilities.selectedOptions.selected.map((value) => value.value));
+    return true;
+  }
   onSaveCorporativeCompetences() {
     this.sendInformation = {
       ...this.sendInformation,
@@ -846,7 +864,7 @@ export class ProfileTemplateComponent implements OnInit {
     this.formExperience.value[field] = Number(this.formExperience.value[field]);
   }
 
-  pipeYears(year: number) {
+  pipeYears(year: number = 0) {
     return year > 1 ? `${year} años` : `${year} año`;
   }
 

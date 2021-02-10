@@ -20,7 +20,7 @@ export class ManageBaseTeamsService {
   }
 
   updateProfile(id: string, payload: any){
-    return this.http.put(`${environment.API_MASTER_INFO}/bases-profiles/${id}`, payload).toPromise();
+    return this.http.put(`${environment.API_MASTER_INFO}/bases-profiles/simple/${id}`, payload).toPromise();
   }
 
 }
