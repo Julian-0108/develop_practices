@@ -938,20 +938,20 @@ export class ProfileTemplateService {
 
   historyPreview(id: any) {
     return this.httpClient
-      .get(`${environment.API_MASTER_INFO}/historical-records/${id}`)
+      .get(`${environment.API_BASE_PROFILES}/historical-records/${id}`)
       .pipe(pluck('payload'))
       .toPromise();
   }
   historyActions(action: string, idProfile: string, data?: any) {
     if (action === 'get') {
       return this.httpClient
-        .get(`${environment.API_MASTER_INFO}/historical-records?idBaseProfile=${idProfile}`)
+        .get(`${environment.API_BASE_PROFILES}/historical-records?idBaseProfile=${idProfile}`)
         .pipe(pluck('payload'))
         .toPromise();
     } else if (action === 'post') {
       // console.log(data)
       return this.httpClient
-        .post(`${environment.API_MASTER_INFO}/historical-records`, data)
+        .post(`${environment.API_BASE_PROFILES}/historical-records`, data)
         .pipe(pluck('payload'))
         .toPromise();
     }
@@ -966,7 +966,7 @@ export class ProfileTemplateService {
   async updateProfile(id: any, body: any) {
     console.log('ID =>', id, 'BODY =>', body);
     return await this.httpClient
-      .put(`${environment.API_MASTER_INFO}/bases-profiles/${id}`, body)
+      .put(`${environment.API_BASE_PROFILES}/bases-profiles/${id}`, body)
       .pipe(pluck('payload'))
       .toPromise();
   }
