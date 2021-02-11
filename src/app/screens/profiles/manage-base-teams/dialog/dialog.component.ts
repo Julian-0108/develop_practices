@@ -18,6 +18,7 @@ export class DialogComponent implements OnInit {
   form: FormGroup;
   CoursesCertifications!: any;
   specificKnowledge!: any;
+  profiles!: any ;
 
   constructor( @Inject(MAT_DIALOG_DATA) public data: any,
     fb: FormBuilder,
@@ -41,6 +42,7 @@ export class DialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getBaseTeams();
   }
 
 
@@ -70,6 +72,26 @@ export class DialogComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
+
+    /**
+     * @author Wilmer
+     * @description se valida que no se cree un registro que ya existe comparando los registros del servicio con los inputs del formulario
+     */
+    this.profiles.forEach( (element: any) => {
+        if (element.charge == this.form.value.charge && element.level == this.form.value.level ) {
+          this.notificationService.openSimpleSnackBar({
+            title: 'Error.',
+            message: 'este registro ya fue creado',
+            type: 'error'
+          }); 
+          return;
+        }
+    });
+
+    // else if (){
+    //   console.log('este dato ya existe, no se puede crear de nuevo');
+    //   return;
+    // }
 
     this.data?.element ? this.updateProfile(this.form.get('_id')?.value, this.form.value) : this.addProfile(this.form.value);
 
@@ -118,6 +140,16 @@ export class DialogComponent implements OnInit {
 
   closeDialog(data: any = null){
     this.dialogRef.close(data);
+  }
+
+  getBaseTeams(){
+    this.manageBaseTeamsService.getBaseTeams(this.data.idBaseTeams)
+    .then( (response:any) => {
+        this.profiles = response[0].profiles;
+    })
+    .catch((error: any)=> {
+        console.log(error);
+    });
   }
 
 }
