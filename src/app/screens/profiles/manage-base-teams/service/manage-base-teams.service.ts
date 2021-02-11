@@ -16,11 +16,11 @@ export class ManageBaseTeamsService {
   }
 
   addProfile(payload: any){
-    return this.http.post(`${environment.API_MASTER_INFO}/bases-profiles`, payload).toPromise()
+    return this.http.post(`${environment.API_BASE_PROFILES}/bases-profiles`, payload).toPromise()
   }
 
   updateProfile(id: string, payload: any){
-    return this.http.put(`${environment.API_MASTER_INFO}/bases-profiles/simple/${id}`, payload).toPromise();
+    return this.http.put(`${environment.API_BASE_PROFILES}/bases-profiles/simple/${id}`, payload).toPromise();
   }
 
 }
