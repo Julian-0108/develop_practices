@@ -59,6 +59,7 @@ export class ManageBaseTeamsComponent implements OnInit {
         this.name = response[0].name;
         this.idProfiles = response[0]._id;
         this.dataSource = new MatTableDataSource(response[0].profiles);
+        console.log(response[0]);
     })
     .catch((error: any)=> {
       if (error.error?.statusCode !== 400) {
@@ -78,7 +79,8 @@ export class ManageBaseTeamsComponent implements OnInit {
       data: {
         element,
         idBaseTeams: this.router.snapshot.params['id'],
-        title: element ? 'Editar' : 'Agregar'
+        title: element ? 'Editar' : 'Agregar',
+        profiles: this.dataSource.data
       },
     }).afterClosed().toPromise().then(( response: any) => {
       if (response.data) {
