@@ -15,9 +15,7 @@ import { NotificationService } from '@shared/components/notification/services/no
 
 export class ManageBaseTeamsComponent implements OnInit {
 
-  isLoadingResults = false;
   name!: string;
-  idProfiles!: string;
   CoursesCertifications! : any;
 
   displayedColumns: string[] = [
@@ -57,9 +55,7 @@ export class ManageBaseTeamsComponent implements OnInit {
         return;
       }
         this.name = response[0].name;
-        this.idProfiles = response[0]._id;
         this.dataSource = new MatTableDataSource(response[0].profiles);
-        console.log(response[0]);
     })
     .catch((error: any)=> {
       if (error.error?.statusCode !== 400) {
@@ -89,8 +85,8 @@ export class ManageBaseTeamsComponent implements OnInit {
     });
   }
 
-  redirectToProfileTemplate(){
-    const url = this.rout.createUrlTree([`/profile-template/${this.idProfiles}`]);
+  redirectToProfileTemplate(id : any){
+    const url = this.rout.createUrlTree([`/profile-template/${id}`]);
     window.open(url.toString(), '_blank');
   }
 

@@ -42,8 +42,6 @@ export class DialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getBaseTeams();
-    console.log(this.data.profiles);
   }
 
 
@@ -69,25 +67,16 @@ export class DialogComponent implements OnInit {
 
   onSubmit() {
 
-    // let alreadyExist: boolean = false;
-
-    /**
-     * @author Wilmer
-     * @description se valida que no se cree un registro que ya existe comparando los registros del servicio con los inputs del formulario
-     */
-    // this.profiles.forEach( (element: any) => {
-    //   if (element.charge.toLowerCase() == this.form.value.charge.toLowerCase() && element.level.toLowerCase() == this.form.value.level.toLowerCase() ) {
-    //     alreadyExist= true;
-    //   }
-    // });
-
     if (!this.form.valid) {
       this.form.markAllAsTouched();
       return;
     }
-
-    const alreadyExist = this.data.profiles((profile: any) => profile.charge.toLowerCase() == this.form.value.charge.toLowerCase() && profile.level.toLowerCase() == this.form.value.level.toLowerCase());
-
+  
+    /**
+     * @author Wilmer
+     * @description se valida que no se cree un registro que ya existe comparando los registros del servicio con los inputs del formulario
+     */
+    const alreadyExist = this.data.profiles.some((profile: any) => profile.charge.toLowerCase() == this.form.value.charge.toLowerCase() && profile.level.toLowerCase() == this.form.value.level.toLowerCase() && profile.status == this.form.value.status );
     if (alreadyExist) {
       this.notificationService.openSimpleSnackBar({
         title: 'Error.',
@@ -144,16 +133,6 @@ export class DialogComponent implements OnInit {
 
   closeDialog(data: any = null) {
     this.dialogRef.close(data);
-  }
-
-  getBaseTeams() {
-    this.manageBaseTeamsService.getBaseTeams(this.data.idBaseTeams)
-      .then((response: any) => {
-        this.profiles = response[0].profiles;
-      })
-      .catch((error: any) => {
-        console.log(error);
-      });
   }
 
 }
