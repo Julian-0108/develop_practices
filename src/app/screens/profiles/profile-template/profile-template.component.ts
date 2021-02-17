@@ -11,12 +11,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProfileFormHistoryComponent } from './profile-form-history/profile-form-history.component';
 import { SnackOptionsInterface } from '@shared/interfaces/notification.interface';
 import { ActivatedRoute } from '@angular/router';
+import { OnlyNumbers } from '@shared/functions/onlyNumbers';
 
 @Component({
   selector: 'app-profile-template',
   templateUrl: './profile-template.component.html',
   styleUrls: ['./profile-template.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileTemplateComponent implements OnInit {
   @ViewChild('education') education!: MatSelectionList;
@@ -25,7 +25,6 @@ export class ProfileTemplateComponent implements OnInit {
   @ViewChild('rolResponsabilities') rolResponsabilities!: MatSelectionList;
   @ViewChild('talents') talents!: MatSelectionList;
   @ViewChild('securityResponsabilities') securityResponsabilities!: MatSelectionList;
-  // @ViewChild('assertiveComunicationTable') assertiveComunicationTable!: CdkTable<Tables>;
   dataAssertiveComunication!: MatTableDataSource<Tables>;
   dataAchievementOrientation!: MatTableDataSource<Tables>;
   dataServiceOrientation!: MatTableDataSource<Tables>;
@@ -36,7 +35,6 @@ export class ProfileTemplateComponent implements OnInit {
   getAllData: any;
 
   contentPagesEducation = [];
-  // contentPagesSecurityResp: any;
   contentPagesSpecificKnowledge = [];
   contentPagesRequiredCertificates = [];
   contentPagesRolResponsabilities = [];
@@ -62,13 +60,27 @@ export class ProfileTemplateComponent implements OnInit {
   public tabIndexRolResponsabilities = 0;
   public tabIndexTalents = 0;
   public tabIndexSecurityResp = 0;
+  monthNames = [
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre',
+  ];
 
   formObjective = new FormGroup({
     objective: new FormControl(null, [Validators.required]),
   });
   formExperience = new FormGroup({
-    professionalExperience: new FormControl(null),
-    chargeExperience: new FormControl(null),
+    professionalExperience: new FormControl(0),
+    chargeExperience: new FormControl(0),
   });
   formFilterHistory = new FormGroup({
     startDate: new FormControl(),
@@ -82,10 +94,8 @@ export class ProfileTemplateComponent implements OnInit {
   rolResponsabilitiesError = false;
   talentsError = false;
   securityRespError = false;
-  // idBaseTeam = this.activatedRoute.snapshot.params.idBaseTeam;
-  // charge = this.activatedRoute.snapshot.params.charge;
   idProfile = this.activatedRoute.snapshot.params.idProfile;
-  // level = this.activatedRoute.snapshot.params.level;
+  onlyNumbers = new OnlyNumbers();
   /* History */
   i: any;
   historyId!: string;
@@ -328,9 +338,7 @@ export class ProfileTemplateComponent implements OnInit {
    * la asigna a sus respectivas variables.
    */
   getData() {
-    // (this.idBaseTeam, this.charge, this.level ? this.level : null
     this.profileTemplateService.getData(this.idProfile).then((res: any) => {
-      console.log(res);
       this.data = res[0];
       this.dataAssertiveComunication = new MatTableDataSource(res[0].assertiveComunication);
       res[0].assertiveComunication.forEach((el: any) => {
@@ -408,7 +416,6 @@ export class ProfileTemplateComponent implements OnInit {
     this.profileTemplateService.getAllSecurityResponsabilities().then((res: any) => {
       this.buildPagesAndColumnsList(res, 'securityResponsabilities');
     });
-
     this.isEditable = true;
   }
 
@@ -426,9 +433,6 @@ export class ProfileTemplateComponent implements OnInit {
     });
     finalArray = [...finalArray, newarray];
     this.getAllData = finalArray;
-    console.log(this.getAllData);
-
-    // this.isEditable = item;
   }
   /**
    * @autor Hanna
@@ -471,7 +475,6 @@ export class ProfileTemplateComponent implements OnInit {
         break;
       case 'securityResponsabilities':
         this.contentPagesSecurityResponsabilities = finalArrayPages;
-        // console.log(this.contentPagesSecurityResponsabilities);
 
         break;
     }
@@ -489,7 +492,6 @@ export class ProfileTemplateComponent implements OnInit {
     if (newarrayPages.length !== 0) {
       finalArrayPages = [...finalArrayPages, newarrayPages];
     }
-    console.log(finalArrayPages);
     switch (section) {
       case 'requiredCertificates':
         this.contentPagesRequiredCertificates = finalArrayPages;
@@ -498,6 +500,8 @@ export class ProfileTemplateComponent implements OnInit {
         this.contentPagesRolResponsabilities = finalArrayPages;
         break;
       case 'talents':
+        console.log(finalArrayPages);
+
         this.contentPagesTalents = finalArrayPages;
         break;
     }
@@ -517,15 +521,15 @@ export class ProfileTemplateComponent implements OnInit {
   }
   onSave() {
     if (
-      this.onSaveObjective() === true &&
-      this.onSaveEperience() === true &&
-      this.onSaveeEucation() === true &&
-      this.onSaveRequiredCertificates() === true &&
-      this.onSaveSpecificKnowledge() === true &&
-      this.onSaveRolResponsabilities() === true &&
-      this.onSaveTalents() === true &&
-      this.onSaveSecurityResp() === true &&
-      this.onSaveCorporativeCompetences() === true
+      this.onSaveObjective() &&
+      this.onSaveEperience() &&
+      this.onSaveeEucation() &&
+      this.onSaveRequiredCertificates() &&
+      this.onSaveSpecificKnowledge() &&
+      this.onSaveRolResponsabilities() &&
+      this.onSaveTalents() &&
+      this.onSaveSecurityResp() &&
+      this.onSaveCorporativeCompetences()
     ) {
       const saveHistorial: SnackOptionsInterface = {
         title: 'Guardar en Historial',
@@ -538,79 +542,90 @@ export class ProfileTemplateComponent implements OnInit {
         .openComplexSnackBar(saveHistorial)
         .afterClosed()
         .subscribe((resp) => {
-          if (resp === 'close') {
-            return;
-          }
+          if (resp === 'close') return;
           if (resp) {
-            this._dialog
-              .open(ProfileFormHistoryComponent, {
-                data: {
-                  ...this.sendInformation,
-                },
-                autoFocus: false,
-              })
-              .afterClosed()
-              .subscribe((resp: any) => {
-                resp = {
-                  ...resp,
-                  idBaseTeam: this.data.idBaseTeam,
-                  idBaseProfile: this.data._id,
-                  charge: this.data.charge,
-                  teamName: this.data.teamName,
-                  status: this.data.status,
-                  // securityResponsabilities: this.data.securityResponsabilities,
-                };
-                console.log('reporte Historial', resp);
-                delete resp[`_id`];
-                this.profileTemplateService
-                  .updateProfile(this.idProfile, resp)
-                  ?.then(() =>
-                    this.profileTemplateService.historyActions('post', this.idProfile, resp)
-                  )
-                  .then(() => {
-                    this.notificationService.openSimpleSnackBar({
-                      title: 'Operación Finalizada',
-                      message:
-                        'La información se ha actualizado con éxito y su historial fue creado.',
-                      type: 'success',
-                    });
-                    this.existentDate = '';
-                    this.getData();
-                    this.isEditable = false;
-                  })
-                  .catch((error) => {
-                    this.notificationService.openSimpleSnackBar({
-                      title: 'Ocurrió un Error',
-                      message: error.message,
-                      type: 'error',
-                    });
-                  });
-              });
+            this.onSavewithHistory();
           } else {
-            this.sendInformation = {
-              ...this.sendInformation,
-              idBaseTeam: this.data.idBaseTeam,
-              idBaseProfile: this.data._id,
-              charge: this.data.charge,
-              teamName: this.data.teamName,
-              // securityResponsabilities: this.data.securityResponsabilities,
-              status: this.data.status,
-            };
-            this.profileTemplateService
-              .updateProfile(this.idProfile, this.sendInformation)
-              .then(() => {
-                this.notificationService.openSimpleSnackBar({
-                  title: 'Operación Finalizada',
-                  message: 'La información se ha actualizado con éxito.',
-                  type: 'success',
-                });
-                this.existentDate = '';
-                this.getData();
-                this.isEditable = false;
-              });
+            this.onSaveWithOutHistory();
           }
         });
     }
+  }
+
+  onSavewithHistory() {
+    /*
+     * Se abre el formulario donde se ingresa la descripción de los cambios,
+     * que se guardarán en el historial.
+     */
+    this._dialog
+      .open(ProfileFormHistoryComponent, {
+        data: {
+          ...this.sendInformation,
+        },
+        autoFocus: false,
+      })
+      .afterClosed()
+      .subscribe((resp: any) => {
+        /*
+         * Acciones que se activan al dar click en el botón "guardar" del formulario.
+         */
+        resp = {
+          ...resp,
+          idBaseTeam: this.data.idBaseTeam,
+          idBaseProfile: this.data._id,
+          charge: this.data.charge,
+          teamName: this.data.teamName,
+          status: this.data.status,
+        };
+        delete resp[`_id`];
+        /*
+         * Se Guarda la información en historial y se actualiza la información del
+         * perfil.
+         */
+        this.profileTemplateService
+          .updateProfile(this.idProfile, resp)
+          ?.then(() => this.profileTemplateService.historyActions('post', this.idProfile, resp))
+          .then(() => {
+            this.notificationService.openSimpleSnackBar({
+              title: 'Operación Finalizada',
+              message: 'La información se ha actualizado con éxito y su historial fue creado.',
+              type: 'success',
+            });
+            this.existentDate = '';
+            this.getData();
+            this.isEditable = false;
+          })
+          .catch((error) => {
+            this.notificationService.openSimpleSnackBar({
+              title: 'Ocurrió un Error',
+              message: error.message,
+              type: 'error',
+            });
+          });
+      });
+  }
+  onSaveWithOutHistory() {
+    this.sendInformation = {
+      ...this.sendInformation,
+      idBaseTeam: this.data.idBaseTeam,
+      idBaseProfile: this.data._id,
+      charge: this.data.charge,
+      teamName: this.data.teamName,
+      status: this.data.status,
+    };
+    /*
+     *Actualiza la información del perfil.
+     */
+    this.profileTemplateService.updateProfile(this.idProfile, this.sendInformation).then(() => {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Operación Finalizada',
+        message: 'La información se ha actualizado con éxito.',
+        type: 'success',
+      });
+      this.existentDate = '';
+      this.getData();
+      this.isEditable = false;
+    });
   }
   onSaveObjective() {
     if (this.formObjective.invalid) {
@@ -627,7 +642,6 @@ export class ProfileTemplateComponent implements OnInit {
       ...this.sendInformation,
       objective: this.formObjective.value.objective,
     };
-    // console.log(this.formObjective.value.objective);
     return true;
   }
   onSaveEperience() {
@@ -657,7 +671,6 @@ export class ProfileTemplateComponent implements OnInit {
       ...this.sendInformation,
       education: this.education.selectedOptions.selected.map((value) => value.value),
     };
-    console.log(this.education.selectedOptions.selected.map((value) => value.value));
     return true;
   }
   onSaveRequiredCertificates() {
@@ -677,7 +690,6 @@ export class ProfileTemplateComponent implements OnInit {
         (value) => value.value
       ),
     };
-    // console.log(this.requiredCertificates.selectedOptions.selected.map((value) => value.value));
     return true;
   }
   onSaveSpecificKnowledge() {
@@ -697,7 +709,6 @@ export class ProfileTemplateComponent implements OnInit {
         (value) => value.value
       ),
     };
-    // console.log(this.specificKnowledge.selectedOptions.selected.map((value) => value.value));
     return true;
   }
   onSaveRolResponsabilities() {
@@ -717,7 +728,6 @@ export class ProfileTemplateComponent implements OnInit {
         (value) => value.value
       ),
     };
-    // console.log(this.rolResponsabilities.selectedOptions.selected.map((value) => value.value));
     return true;
   }
   onSaveTalents() {
@@ -735,7 +745,6 @@ export class ProfileTemplateComponent implements OnInit {
       ...this.sendInformation,
       talents: this.talents.selectedOptions.selected.map((value) => value.value),
     };
-    console.log(this.talents.selectedOptions.selected.map((value) => value.value));
     return true;
   }
   onSaveSecurityResp() {
@@ -756,7 +765,6 @@ export class ProfileTemplateComponent implements OnInit {
         (value) => value.value
       ),
     };
-    console.log(this.securityResponsabilities.selectedOptions.selected.map((value) => value.value));
     return true;
   }
   onSaveCorporativeCompetences() {
@@ -776,18 +784,9 @@ export class ProfileTemplateComponent implements OnInit {
     this.sendInformation = {};
     this.isEditable = false;
   }
-  /**
-   * @autor Hanna
-   * @description Esta función limita los campos a que solo reciban números,
-   * impidiendo al usuario escribir letras.
-   */
-  soloNumeros(value: any) {
-    /*
-     * La expresión regular valida que el valor ingresado sea numérico de 0-9.
-     */
-    /^[0-9]+$/.test(value.key.toString())
-      ? (value.returnValue = true)
-      : (value.returnValue = false);
+
+  onlyNumbersFunction(value: any) {
+    this.onlyNumbers.classicOnlyNumbers(value);
   }
 
   fieldExperienceValidation(field: string) {
@@ -805,43 +804,12 @@ export class ProfileTemplateComponent implements OnInit {
     return year > 1 ? `${year} años` : `${year} año`;
   }
 
-  onStepClicked(id: any) {
-    // this.historyId = this.history[id.selectedIndex].id;
-  }
-
   /**
    * @autor Hanna
    * @description Esta función le da un formato más diciente, a las fechas de
-   * la sección de historial.
+   * la sección de historial. (ejemplo: Febrero 2021)
    */
   onTransformDate(date: string) {
-    switch (new Date(date).getMonth() + 1) {
-      case 1:
-        return `Enero ${new Date(date).getFullYear()}`;
-      case 2:
-        return `Febrero ${new Date(date).getFullYear()}`;
-      case 3:
-        return `Marzo ${new Date(date).getFullYear()}`;
-      case 4:
-        return `Abril ${new Date(date).getFullYear()}`;
-      case 5:
-        return `Mayo ${new Date(date).getFullYear()}`;
-      case 6:
-        return `Junio ${new Date(date).getFullYear()}`;
-      case 7:
-        return `Julio ${new Date(date).getFullYear()}`;
-      case 8:
-        return `Agosto ${new Date(date).getFullYear()}`;
-      case 9:
-        return `Septiembre ${new Date(date).getFullYear()}`;
-      case 10:
-        return `Octubre ${new Date(date).getFullYear()}`;
-      case 11:
-        return `Noviembre ${new Date(date).getFullYear()}`;
-      case 12:
-        return `Diciembre ${new Date(date).getFullYear()}`;
-      default:
-        break;
-    }
+    return `${this.monthNames[new Date(date).getMonth()]} ${new Date(date).getFullYear()}`;
   }
 }
