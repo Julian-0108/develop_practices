@@ -55,7 +55,7 @@
         </div>
       </form>
       <div class="stepper__container">
-        <mat-vertical-stepper #stepper [disableRipple]="true" (selectionChange)="onStepClicked($event)">
+        <mat-vertical-stepper #stepper [disableRipple]="true">
           <mat-step *ngFor="let step of historyFilter">
             <ng-template matStepLabel class="step__label">{{step.showDate}}</ng-template>
             <mat-card class="history">
@@ -275,14 +275,14 @@
             <form [formGroup]="formExperience" novalidate autocomplete="off" fxLayout="row">
               <div class="item" fxFlex="50">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input (blur)="fieldExperienceValidation('professionalExperience')" (keypress)="soloNumeros($event)"
+                  <input (blur)="fieldExperienceValidation('professionalExperience')" (keypress)="onlyNumbersFunction($event)"
                     formControlName="professionalExperience" matInput>
                   <app-validator [form]="formExperience" name="professionalExperience"></app-validator>
                 </mat-form-field>
               </div>
               <div class="item" fxFlex="50">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input (blur)="fieldExperienceValidation('chargeExperience')" (keypress)="soloNumeros($event)"
+                  <input (blur)="fieldExperienceValidation('chargeExperience')" (keypress)="onlyNumbersFunction($event)"
                     formControlName="chargeExperience" matInput>
                   <app-validator [form]="formExperience" name="chargeExperience"></app-validator>
                 </mat-form-field>
@@ -394,7 +394,7 @@
                 <mat-tab label="First" *ngFor="let contentPage of contentPagesTalents">
                   <mat-list-option [selected]="onInitList(item, 'talents')" *ngFor="let item of contentPage"
                     [value]="item">
-                    {{item.description}}
+                    {{item.name}}
                   </mat-list-option>
                 </mat-tab>
               </mat-tab-group>

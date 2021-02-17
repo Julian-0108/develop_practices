@@ -296,14 +296,14 @@ export class ProfileOptionsComponent implements OnInit {
    */
   // PAGINACION
   paginate() {
-    this.pageCont = Math.ceil(this.items.length / this.pageSize); //calcular el numero de paginaciones totales
+    this.pageCont = Math.ceil(this.items.length / this.pageSize); // calcular el numero de paginaciones totales
     this.results = this.items.slice(
       (this.pageNumber - 1) * this.pageSize,
       this.pageNumber * this.pageSize
-    ); //calular los items que se van a mostrar por paginacion
+    ); // calular los items que se van a mostrar por paginacion
 
     this.pageNumber > 1 ? (this.buttonPrevius = true) : (this.buttonPrevius = false); // mostrar boton anterior
-    this.pageNumber < this.pageCont ? (this.buttonNext = true) : (this.buttonNext = false); //mostrar boton siguiente
+    this.pageNumber < this.pageCont ? (this.buttonNext = true) : (this.buttonNext = false); // mostrar boton siguiente
 
     this.buildRows(this.results); // mostrar los resultados de la paginacion
     this.pageContArr = Array.from(new Array(this.pageCont), (x, i) => i + 1); // convertir pageCont en array
@@ -324,6 +324,5 @@ export class ProfileOptionsComponent implements OnInit {
     console.log(id);
     console.log(id._id);
     this.router.navigate([`/profile-template/${id._id}`]);
-
   }
 }
