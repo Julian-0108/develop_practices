@@ -332,3 +332,19 @@ p.talents {
   display: flex;
 }
 
+.not-found__title {
+    font-size: 17px;
+    text-align: center;
+    color: #adadad;
+}
+
+.not-found__image {
+  background-image: url(../../../../assets/Astronaut-01.svg);
+  width: 7em;
+  height: 7em;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 2em 13em 0;
+}
+
