@@ -32,13 +32,14 @@ export class ProfileTemplateComponent implements OnInit {
   percent: any = {};
   data: any = [];
   securityResponsabilitiesData!: any;
-  getAllData: any;
+
 
   contentPagesEducation = [];
   contentPagesSpecificKnowledge = [];
   contentPagesRequiredCertificates = [];
   contentPagesRolResponsabilities = [];
   contentPagesTalents = [];
+  contentPagesTalentsReadOnly = [];
   contentPagesSecurityResponsabilities = [];
   isEditable = false;
   nextPageButtonDisabledEducation = false;
@@ -46,6 +47,7 @@ export class ProfileTemplateComponent implements OnInit {
   nextPageButtonDisabledSpecificKnowledge = false;
   nextPageButtonDisabledRolResponsabilities = false;
   nextPageButtonDisabledTalents = false;
+  nextPageButtonDisabledTalentsReadOnly = false;
   nextPageButtonDisabledSecurityResp: any;
   beforePageButtonDisabledSecurityResp: any;
   beforePageButtonDisabledEducation = true;
@@ -53,12 +55,14 @@ export class ProfileTemplateComponent implements OnInit {
   beforePageButtonDisabledSpecificKnowledge = true;
   beforePageButtonDisabledRolResponsabilities = true;
   beforePageButtonDisabledTalents = true;
+  beforePageButtonDisabledTalentsReadOnly = true;
   selectedOptions: any = [];
   public tabIndexEducation = 0;
   public tabIndexSpecificKnowledge = 0;
   public tabIndexRequiredCertificates = 0;
   public tabIndexRolResponsabilities = 0;
   public tabIndexTalents = 0;
+  public tabIndexTalentsReadOnly = 0;
   public tabIndexSecurityResp = 0;
   monthNames = [
     'Enero',
@@ -171,7 +175,7 @@ export class ProfileTemplateComponent implements OnInit {
   }
 
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Función que muestra como estaba el perfil en determinado tiempo,
    * dependiendo de lo que se selecione es la sección historial.
    */
@@ -183,7 +187,7 @@ export class ProfileTemplateComponent implements OnInit {
     drawer.toggle();
   }
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Función que filtra el contenido del historial con la
    * fecha inicial digitada y como fecha final, la fecha actual por defecto.
    */
@@ -201,7 +205,7 @@ export class ProfileTemplateComponent implements OnInit {
     );
   }
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Función que filtra el contenido del historial con la
    * fecha inicial digitada y la fecha final digitada.
    */
@@ -221,7 +225,7 @@ export class ProfileTemplateComponent implements OnInit {
     drawer.toggle();
   }
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Las funciones "nextTab" & "beforeTab", son funciones que
    * controlan la navegación de los tabs, en las listas en cada sección.
    */
@@ -272,6 +276,15 @@ export class ProfileTemplateComponent implements OnInit {
           this.nextPageButtonDisabledTalents = true;
         }
         break;
+      case 'talentsReadOnly':
+        this.tabIndexTalentsReadOnly = this.tabIndexTalentsReadOnly + 1;
+        if (this.tabIndexTalentsReadOnly > 0) {
+          this.beforePageButtonDisabledTalentsReadOnly = false;
+        }
+        if (this.tabIndexTalentsReadOnly === length - 1) {
+          this.nextPageButtonDisabledTalentsReadOnly = true;
+        }
+        break;
       case 'securityResponsabilities':
         this.tabIndexSecurityResp = this.tabIndexSecurityResp + 1;
         if (this.tabIndexSecurityResp > 0) {
@@ -320,6 +333,13 @@ export class ProfileTemplateComponent implements OnInit {
           this.beforePageButtonDisabledTalents = true;
         }
         break;
+      case 'talentsReadOnly':
+        this.tabIndexTalentsReadOnly = this.tabIndexTalentsReadOnly - 1;
+        this.nextPageButtonDisabledTalentsReadOnly = false;
+        if (this.tabIndexTalentsReadOnly === 0) {
+          this.beforePageButtonDisabledTalentsReadOnly = true;
+        }
+        break;
       case 'securityResponsabilities':
         this.tabIndexSecurityResp = this.tabIndexSecurityResp - 1;
         this.nextPageButtonDisabledSecurityResp = false;
@@ -333,13 +353,14 @@ export class ProfileTemplateComponent implements OnInit {
     return [table, 'measureApproval'];
   }
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Esta función consulta el json de la información de la aplicación y
    * la asigna a sus respectivas variables.
    */
   getData() {
     this.profileTemplateService.getData(this.idProfile).then((res: any) => {
       this.data = res[0];
+      this.buildTalentsReadOnly(this.data);
       this.dataAssertiveComunication = new MatTableDataSource(res[0].assertiveComunication);
       res[0].assertiveComunication.forEach((el: any) => {
         this.percent[el._id] = el.measureApproval;
@@ -368,7 +389,7 @@ export class ProfileTemplateComponent implements OnInit {
     });
   }
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Esta función muestra las fechas en la sección de historial,
    * omitiendo los rangos de fechas que se repitan.
    */
@@ -382,7 +403,7 @@ export class ProfileTemplateComponent implements OnInit {
     }
   }
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Función que asigna los valores actuales a cada sección, cuando
    * está en el estado de editar.
    */
@@ -419,23 +440,23 @@ export class ProfileTemplateComponent implements OnInit {
     this.isEditable = true;
   }
 
-  buildColumns(res: any) {
+  buildTalentsReadOnly(data: any) {
     let newarray: any = [];
     let finalArray: any = [];
-    res.forEach((element: any) => {
-      element.forEach((el: any) => {
-        newarray = [...newarray, el];
-        if (newarray.length === 7) {
+    data.talents.forEach((element: any) => {
+        newarray = [...newarray, element];
+        if (newarray.length === 12) {
           finalArray = [...finalArray, newarray];
           newarray = [];
         }
-      });
     });
-    finalArray = [...finalArray, newarray];
-    this.getAllData = finalArray;
+    if (newarray.length !== 0) {
+      finalArray = [...finalArray, newarray];
+    }
+    this.contentPagesTalentsReadOnly = finalArray;
   }
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Función que construye las columnas de las opciones que se mostrarán en
    * cada página o tab de las secciones que contengan listas.Esta función arma un máximo
    * de 3 columnas. La función "buildPagesAndColumnsList2", por ser secciones de menor tamaño,
@@ -500,15 +521,13 @@ export class ProfileTemplateComponent implements OnInit {
         this.contentPagesRolResponsabilities = finalArrayPages;
         break;
       case 'talents':
-        console.log(finalArrayPages);
-
         this.contentPagesTalents = finalArrayPages;
         break;
     }
   }
 
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Esta función inicializa las listas, marcando visualmente las opciones
    * que ya se están usando.
    */
@@ -801,11 +820,11 @@ export class ProfileTemplateComponent implements OnInit {
   }
 
   pipeYears(year: number = 0) {
-    return year > 1 ? `${year} años` : `${year} año`;
+    return year > 1 || year === 0 ? `${year} años` : `${year} año`;
   }
 
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Esta función le da un formato más diciente, a las fechas de
    * la sección de historial. (ejemplo: Febrero 2021)
    */
