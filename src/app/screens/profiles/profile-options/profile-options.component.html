@@ -1,16 +1,18 @@
 <body class="background">
-    <button *ngIf="showBackButton" (click)="onClickbuttonBack()" class="button-back" mat-mini-fab aria-label="back button">
+  <button *ngIf="showBackButton" (click)="onClickbuttonBack()" class="button-back" mat-mini-fab
+    aria-label="back button">
   </button>
-    <button *ngIf="!showBackButton" routerLink="/admin-profiles" class="button-back" mat-mini-fab aria-label="back button">
+  <button *ngIf="!showBackButton" routerLink="/admin-profiles" class="button-back" mat-mini-fab
+    aria-label="back button">
   </button>
-    <div class="container">
-        <h1 class="title">{{title}}</h1>
-        <h3 class="subtitle">{{description}}</h3>
-    </div>
+  <div class="container">
+    <h1 class="title">{{title}}</h1>
+    <h3 class="subtitle">{{description}}</h3>
+  </div>
 
-    <div class="card__container" fxLayout="row wrap" fxLayoutAlign="center">
-        <div class="buttonss" fxLayoutAlign="center center" fxFlex="7">
-            <button mat-mini-fab *ngIf="buttonPrevius" (click)="previusPage()">
+  <div class="card__container" fxLayout="row wrap" fxLayoutAlign="center">
+    <div class="buttonss" fxLayoutAlign="center center" fxFlex="7">
+      <button mat-mini-fab *ngIf="buttonPrevius" (click)="previusPage()">
         <mat-icon>keyboard_arrow_left</mat-icon>
       </button>
         </div>
@@ -31,35 +33,39 @@
                 </ng-container>
                 {{prof.name}}
               </button>
-                            <button *ngIf="prof.level.length === 0" (click)="redirectToTemplateProfile(prof.name, item.profiles); optionClicked = prof.id" class="option" mat-button>
+              <button *ngIf="prof.level.length === 0"
+                (click)="redirectToTemplateProfile(prof.name, item.profiles); optionClicked = prof.id" class="option"
+                mat-button>
                 {{prof.name}}
               </button>
-                            <div class="pannel__level-buttons" *ngIf="optionClicked === prof.id" fxLayout="row" fxLayoutAlign="start center">
-                                <button type="button" class="panel__level-button" *ngFor="let level of prof.level" mat-button (click)="redirectToTemplateProfile(prof.name, item.profiles, level)">{{level | uppercase}}</button>
-                            </div>
-                        </div>
-                        <!-- <ng-container *ngIf="item.type">
-                            <p *ngIf="item.type=='subGrupoOP' " class="card-void">Subgrupo</p>
-                        </ng-container>
-                        {{item | json}} -->
-                        <p *ngIf="!item.submenu && item.profile.length < 1" class="card-void">Aún no hay registros disponibles</p>
-                        <button class="btn-manage" [routerLink]="['/manage-base-teams', item._id]">Gestionar</button>
-                    </div>
-
-                    <img [ngClass]="{'card__image--open': cardClicked === item._id && !item.submenu}" class="card__image" src="{{ API_MASTER_INFO }}{{ item.imagePath }}" alt="" appNotImage>
-                </mat-card>
+              <div class="pannel__level-buttons" *ngIf="optionClicked === prof.id" fxLayout="row"
+                fxLayoutAlign="start center">
+                <button type="button" class="panel__level-button" *ngFor="let level of prof.level" mat-button
+                  (click)="redirectToTemplateProfile(prof.name, item.profiles, level)">{{level | uppercase}}</button>
+              </div>
             </div>
-        </div>
-        <div class="buttonss" fxLayoutAlign="center center" fxFlex="7">
-            <button mat-mini-fab *ngIf="buttonNext" (click)="nextPage()">
+            <!-- <p *ngIf="item.type" class="card-void">Subgrupo</p> -->
+            <p *ngIf="item.submenu == false && item.profile.length < 1" class="card-void">Aún no hay registros
+              disponibles</p>
+            <button *ngIf="item.submenu == false" class="btn-manage"
+              [routerLink]="['/manage-base-teams', item._id]">Gestionar</button>
+          </div>
+
+          <img [ngClass]="{'card__image--open': cardClicked === item._id && !item.submenu}" class="card__image"
+            src="{{ API_MASTER_INFO }}{{ item.imagePath }}" alt="" appNotImage>
+        </mat-card>
+      </div>
+    </div>
+    <div class="buttonss" fxLayoutAlign="center center" fxFlex="7">
+      <button mat-mini-fab *ngIf="buttonNext" (click)="nextPage()">
         <mat-icon>keyboard_arrow_right</mat-icon>
       </button>
-        </div>
-        <div class="carrusel" fxLayout="row" fxLayoutAlign="center" fxFlex="100" fxLayoutGap="10px">
-            <ng-container *ngIf="pageCont > 1">
-                <div class="carrusel__items" *ngFor="let item of pageContArr" [ngClass]="{ 'carrusel__items--active': item== pageNumber }"></div>
-            </ng-container>
-        </div>
     </div>
-
+    <div class="carrusel" fxLayout="row" fxLayoutAlign="center" fxFlex="100" fxLayoutGap="10px">
+      <ng-container *ngIf="pageCont > 1">
+        <div class="carrusel__items" *ngFor="let item of pageContArr"
+          [ngClass]="{ 'carrusel__items--active': item== pageNumber }"></div>
+      </ng-container>
+    </div>
+  </div>
 </body>

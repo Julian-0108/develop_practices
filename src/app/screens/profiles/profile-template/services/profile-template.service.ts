@@ -439,7 +439,7 @@ export class ProfileTemplateService {
   }
   async getAllTalents() {
     return await this.httpClient
-      .get(`${environment.API_MASTER_INFO}/skills?status=true`)
+      .get(`${environment.API_MASTER_INFO}/skills?status=true&type=Talentos`)
       .pipe(pluck('payload'))
       .toPromise();
   }
