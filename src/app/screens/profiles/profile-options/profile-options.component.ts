@@ -227,13 +227,14 @@ export class ProfileOptionsComponent implements OnInit {
     let finalArray: any = [];
     items.forEach((element: any) => {
       newarray = [...newarray, element];
-      if (newarray.length === 2) {
+      if (newarray.length === 4) {
         finalArray = [...finalArray, newarray];
         newarray = [];
       }
     });
     finalArray = [...finalArray, newarray];
     this.rowsArray = finalArray;
+    console.log(finalArray);
   }
 
   async getBaseTeams() {

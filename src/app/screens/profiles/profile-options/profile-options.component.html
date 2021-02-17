@@ -14,13 +14,13 @@
         <mat-icon>keyboard_arrow_left</mat-icon>
       </button>
         </div>
-        <div class="cards" fxLayout="row" fxLayoutAlign="center">
+        <div class="cards" fxLayout="column" fxLayoutAlign="center center">
 
-            <div *ngFor="let items1 of rowsArray">
+            <div *ngFor="let items1 of rowsArray" fxLayout="row">
                 <mat-card *ngFor="let item of items1" #card (click)="onCardClicked(item)" [ngClass]="{'card--open': cardClicked === item._id && !item.submenu }" fxLayout="column" fxLayoutAlign="start" class="card-base-team">
                     <h1 class="card__tittle" [ngClass]="{'card__title-large':item.name.length >= 26, 'card__title-short':item.name.length <= 25 }">
                         {{item.name}}</h1>
-                    <div *ngIf="item.submenu == false" [ngStyle]="{'display': cardClicked === item._id ? 'block' : 'none'}" fxLayout="column" fxLayoutAlign="start start">
+                    <div *ngIf="!item.submenu" [ngStyle]="{'display': cardClicked === item._id ? 'block' : 'none'}" fxLayout="column" fxLayoutAlign="start start">
                         <div *ngFor="let prof of item.profile">
                             <button *ngIf="prof.level.length !== 0" (click)="optionClicked = prof.id" class="option" mat-button>
                 <ng-container>
@@ -38,9 +38,12 @@
                                 <button type="button" class="panel__level-button" *ngFor="let level of prof.level" mat-button (click)="redirectToTemplateProfile(prof.name, item.profiles, level)">{{level | uppercase}}</button>
                             </div>
                         </div>
-                        <!-- <p *ngIf="item.type" class="card-void">Subgrupo</p> -->
-                        <p *ngIf="item.submenu == false && item.profile.length < 1" class="card-void">Aún no hay registros disponibles</p>
-                        <button *ngIf="item.submenu == false" class="btn-manage" [routerLink]="['/manage-base-teams', item._id]">Gestionar</button>
+                        <!-- <ng-container *ngIf="item.type">
+                            <p *ngIf="item.type=='subGrupoOP' " class="card-void">Subgrupo</p>
+                        </ng-container>
+                        {{item | json}} -->
+                        <p *ngIf="!item.submenu && item.profile.length < 1" class="card-void">Aún no hay registros disponibles</p>
+                        <button class="btn-manage" [routerLink]="['/manage-base-teams', item._id]">Gestionar</button>
                     </div>
 
                     <img [ngClass]="{'card__image--open': cardClicked === item._id && !item.submenu}" class="card__image" src="{{ API_MASTER_INFO }}{{ item.imagePath }}" alt="" appNotImage>
@@ -58,6 +61,5 @@
             </ng-container>
         </div>
     </div>
-
 
 </body>
