@@ -9,7 +9,6 @@ interface userData {
 }
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-
   private readonly NAME_LOCAL_DATA = 'MSauthData';
   constructor(private http: HttpClient) {}
 
@@ -18,26 +17,35 @@ export class AuthService {
     const headers = new HttpHeaders({
       Authorization: `Basic ${authData}`,
     });
-    return this.http.post<Response>(`${environment.API_SECURITY}/auth/login`, null, { headers })
-    .pipe(
-      map((response: any) => {
-        localStorage.setItem(this.NAME_LOCAL_DATA, JSON.stringify({user: response.payload.profile, token: response.payload.token}));
-      })
-    )
-    .toPromise();
+    return this.http
+      .post<Response>(`${environment.API_SECURITY}/auth/login`, null, { headers })
+      .pipe(
+        map((response: any) => {
+          localStorage.setItem(
+            this.NAME_LOCAL_DATA,
+            JSON.stringify({ user: response.payload.profile, token: response.payload.token })
+          );
+        })
+      )
+      .toPromise();
   }
 
-  isLoggedIn() {
-    return !!this.getToken();
+  isLoggedIn(): boolean {
+    const authData: any =  this.getToken();
+
+    if (authData) {
+      const token: any = JSON.parse(atob(JSON.parse(authData).token.split('.')[1]));
+      return Math.floor(new Date().getTime() / 1000) < token.exp;
+    }
+
+    return false;
   }
 
-  getToken() {
-    let authData = localStorage.getItem(this.NAME_LOCAL_DATA);
-    return authData == null ? undefined : authData;
+  getToken(): string | null {
+    return localStorage.getItem(this.NAME_LOCAL_DATA);
   }
 
   logout() {
     localStorage.removeItem(this.NAME_LOCAL_DATA);
   }
-
 }

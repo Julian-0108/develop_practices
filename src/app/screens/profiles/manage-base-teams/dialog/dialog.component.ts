@@ -18,8 +18,9 @@ export class DialogComponent implements OnInit {
   form: FormGroup;
   CoursesCertifications!: any;
   specificKnowledge!: any;
+  profiles!: any;
 
-  constructor( @Inject(MAT_DIALOG_DATA) public data: any,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
     fb: FormBuilder,
     private datePipe: DatePipe,
     private notificationService: NotificationService,
@@ -31,9 +32,9 @@ export class DialogComponent implements OnInit {
       _id: new FormControl(''),
       charge: new FormControl('', [Validators.required]),
       level: new FormControl(''),
-      createdAt: new FormControl({value: '', disabled: true}),
-      updatedAt: new FormControl({value: '', disabled: true}),
-      status: new FormControl({value: ''},[Validators.required]),
+      createdAt: new FormControl({ value: '', disabled: true }),
+      updatedAt: new FormControl({ value: '', disabled: true }),
+      status: new FormControl({ value: '' }, [Validators.required]),
     });
 
     this.editForm();
@@ -44,10 +45,10 @@ export class DialogComponent implements OnInit {
   }
 
 
-/**
- * @author Wilmer
- * @description se asignan los valores a los inputs del formulario
- */
+  /**
+   * @author Wilmer
+   * @description se asignan los valores a los inputs del formulario
+   */
   editForm() {
 
     this.form.get('status')?.patchValue(true);
@@ -70,16 +71,30 @@ export class DialogComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
+  
+    /**
+     * @author Wilmer
+     * @description se valida que no se cree un registro que ya existe comparando los registros del servicio con los inputs del formulario
+     */
+    const alreadyExist = this.data.profiles.some((profile: any) => profile.charge.toLowerCase() == this.form.value.charge.toLowerCase() && profile.level.toLowerCase() == this.form.value.level.toLowerCase() && profile.status == this.form.value.status );
+    if (alreadyExist) {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Error.',
+        message: 'este registro ya fue creado',
+        type: 'error'
+      });
+      return;
+    }
 
     this.data?.element ? this.updateProfile(this.form.get('_id')?.value, this.form.value) : this.addProfile(this.form.value);
 
   }
 
   addProfile(formData: any) {
-    const data = {...formData, idBaseTeam: this.data.idBaseTeams};
+    const data = { ...formData, idBaseTeam: this.data.idBaseTeams };
     delete data['_id'];
     this.manageBaseTeamsService.addProfile(data)
-      .then((response : any)=> {
+      .then((response: any) => {
         this.notificationService.openSimpleSnackBar({
           title: 'Proceso exitoso',
           message: response.message,
@@ -87,7 +102,7 @@ export class DialogComponent implements OnInit {
         });
         this.closeDialog({ data: response.payload });
       })
-      .catch((response:any)=>{
+      .catch((response: any) => {
         this.notificationService.openSimpleSnackBar({
           title: 'Error',
           message: response.message,
@@ -97,9 +112,9 @@ export class DialogComponent implements OnInit {
   }
 
   updateProfile(id: any, formData: any) {
-    const data = {...formData, idBaseTeam: this.data.idBaseTeams};
+    const data = { ...formData, idBaseTeam: this.data.idBaseTeams };
     this.manageBaseTeamsService.updateProfile(id, data)
-      .then((response:any) => {
+      .then((response: any) => {
         this.notificationService.openSimpleSnackBar({
           title: 'Proceso exitoso',
           message: response.message,
@@ -107,7 +122,7 @@ export class DialogComponent implements OnInit {
         });
         this.closeDialog({ data: response.payload });
       })
-      .catch((response:any)=>{
+      .catch((response: any) => {
         this.notificationService.openSimpleSnackBar({
           title: 'Error',
           message: response.message,
@@ -116,7 +131,7 @@ export class DialogComponent implements OnInit {
       });
   }
 
-  closeDialog(data: any = null){
+  closeDialog(data: any = null) {
     this.dialogRef.close(data);
   }
 

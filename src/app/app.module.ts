@@ -2,8 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import {
   NgModule,
   LOCALE_ID,
-  CUSTOM_ELEMENTS_SCHEMA,
-  NO_ERRORS_SCHEMA
 } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,7 +24,7 @@ registerLocaleData(localeEsCo, 'es-CO');
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -40,10 +38,6 @@ registerLocaleData(localeEsCo, 'es-CO');
       provide: LOCALE_ID,
       useValue: 'es-CO'
     }
-  ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA,
-    NO_ERRORS_SCHEMA
   ],
   bootstrap: [AppComponent]
 })

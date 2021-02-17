@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ManageBaseTeamsService } from './service/manage-base-teams.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { NotificationService } from '@shared/components/notification/services/notification.service';
@@ -15,7 +15,6 @@ import { NotificationService } from '@shared/components/notification/services/no
 
 export class ManageBaseTeamsComponent implements OnInit {
 
-  isLoadingResults = false;
   name!: string;
   CoursesCertifications! : any;
 
@@ -33,10 +32,11 @@ export class ManageBaseTeamsComponent implements OnInit {
     public dialog: MatDialog, 
     private title: Title,
     private router: ActivatedRoute,
+    private rout: Router,
     private manageBaseTeamsService: ManageBaseTeamsService,
     private notificationService: NotificationService
   ) {
-    this.title.setTitle("Mundo SETI - administrar equipos base");
+    this.title.setTitle("Mundo SETI - gestionar equipos base");
   }
   
   ngOnInit(): void {
@@ -75,15 +75,19 @@ export class ManageBaseTeamsComponent implements OnInit {
       data: {
         element,
         idBaseTeams: this.router.snapshot.params['id'],
-        title: element ? 'Editar' : 'Agregar'
+        title: element ? 'Editar' : 'Agregar',
+        profiles: this.dataSource.data
       },
     }).afterClosed().toPromise().then(( response: any) => {
       if (response.data) {
         this.getBaseTeams();
       }
     });
+  }
 
-    
+  redirectToProfileTemplate(id : any){
+    const url = this.rout.createUrlTree([`/profile-template/${id}`]);
+    window.open(url.toString(), '_blank');
   }
 
 }
