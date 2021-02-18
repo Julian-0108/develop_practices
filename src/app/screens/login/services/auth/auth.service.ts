@@ -45,7 +45,7 @@ export class AuthService {
     return localStorage.getItem(this.NAME_LOCAL_DATA);
   }
 
-  logout() {
+  logout(): void {
     localStorage.removeItem(this.NAME_LOCAL_DATA);
   }
 }
