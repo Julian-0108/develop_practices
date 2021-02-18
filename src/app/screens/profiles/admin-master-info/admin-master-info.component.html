@@ -13,7 +13,8 @@
             <div class="item" fxFlex="20">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Seleccionar maestra</mat-label>
-                    <mat-select [(ngModel)]="masterSeleted" (selectionChange)="getDataMaster()">
+                    <!-- <mat-icon aria-hidden="false" class="select__icon">search</mat-icon> -->
+                    <mat-select placeholder="Click para activar la lista" [(ngModel)]="masterSeleted" (selectionChange)="getDataMaster()">
                         <mat-option *ngFor="let master of masters" [value]="master.url">
                             {{ master.name }}
                         </mat-option>

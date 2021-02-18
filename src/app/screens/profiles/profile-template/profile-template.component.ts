@@ -11,12 +11,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProfileFormHistoryComponent } from './profile-form-history/profile-form-history.component';
 import { SnackOptionsInterface } from '@shared/interfaces/notification.interface';
 import { ActivatedRoute } from '@angular/router';
+import { OnlyNumbers } from '@shared/functions/onlyNumbers';
 
 @Component({
   selector: 'app-profile-template',
   templateUrl: './profile-template.component.html',
   styleUrls: ['./profile-template.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileTemplateComponent implements OnInit {
   @ViewChild('education') education!: MatSelectionList;
@@ -25,7 +25,6 @@ export class ProfileTemplateComponent implements OnInit {
   @ViewChild('rolResponsabilities') rolResponsabilities!: MatSelectionList;
   @ViewChild('talents') talents!: MatSelectionList;
   @ViewChild('securityResponsabilities') securityResponsabilities!: MatSelectionList;
-  // @ViewChild('assertiveComunicationTable') assertiveComunicationTable!: CdkTable<Tables>;
   dataAssertiveComunication!: MatTableDataSource<Tables>;
   dataAchievementOrientation!: MatTableDataSource<Tables>;
   dataServiceOrientation!: MatTableDataSource<Tables>;
@@ -33,14 +32,14 @@ export class ProfileTemplateComponent implements OnInit {
   percent: any = {};
   data: any = [];
   securityResponsabilitiesData!: any;
-  getAllData: any;
+
 
   contentPagesEducation = [];
-  // contentPagesSecurityResp: any;
   contentPagesSpecificKnowledge = [];
   contentPagesRequiredCertificates = [];
   contentPagesRolResponsabilities = [];
   contentPagesTalents = [];
+  contentPagesTalentsReadOnly = [];
   contentPagesSecurityResponsabilities = [];
   isEditable = false;
   nextPageButtonDisabledEducation = false;
@@ -48,6 +47,7 @@ export class ProfileTemplateComponent implements OnInit {
   nextPageButtonDisabledSpecificKnowledge = false;
   nextPageButtonDisabledRolResponsabilities = false;
   nextPageButtonDisabledTalents = false;
+  nextPageButtonDisabledTalentsReadOnly = false;
   nextPageButtonDisabledSecurityResp: any;
   beforePageButtonDisabledSecurityResp: any;
   beforePageButtonDisabledEducation = true;
@@ -55,20 +55,36 @@ export class ProfileTemplateComponent implements OnInit {
   beforePageButtonDisabledSpecificKnowledge = true;
   beforePageButtonDisabledRolResponsabilities = true;
   beforePageButtonDisabledTalents = true;
+  beforePageButtonDisabledTalentsReadOnly = true;
   selectedOptions: any = [];
   public tabIndexEducation = 0;
   public tabIndexSpecificKnowledge = 0;
   public tabIndexRequiredCertificates = 0;
   public tabIndexRolResponsabilities = 0;
   public tabIndexTalents = 0;
+  public tabIndexTalentsReadOnly = 0;
   public tabIndexSecurityResp = 0;
+  monthNames = [
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre',
+  ];
 
   formObjective = new FormGroup({
     objective: new FormControl(null, [Validators.required]),
   });
   formExperience = new FormGroup({
-    professionalExperience: new FormControl(null),
-    chargeExperience: new FormControl(null),
+    professionalExperience: new FormControl(0),
+    chargeExperience: new FormControl(0),
   });
   formFilterHistory = new FormGroup({
     startDate: new FormControl(),
@@ -82,10 +98,8 @@ export class ProfileTemplateComponent implements OnInit {
   rolResponsabilitiesError = false;
   talentsError = false;
   securityRespError = false;
-  // idBaseTeam = this.activatedRoute.snapshot.params.idBaseTeam;
-  // charge = this.activatedRoute.snapshot.params.charge;
   idProfile = this.activatedRoute.snapshot.params.idProfile;
-  // level = this.activatedRoute.snapshot.params.level;
+  onlyNumbers = new OnlyNumbers();
   /* History */
   i: any;
   historyId!: string;
@@ -161,7 +175,7 @@ export class ProfileTemplateComponent implements OnInit {
   }
 
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Función que muestra como estaba el perfil en determinado tiempo,
    * dependiendo de lo que se selecione es la sección historial.
    */
@@ -173,7 +187,7 @@ export class ProfileTemplateComponent implements OnInit {
     drawer.toggle();
   }
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Función que filtra el contenido del historial con la
    * fecha inicial digitada y como fecha final, la fecha actual por defecto.
    */
@@ -191,7 +205,7 @@ export class ProfileTemplateComponent implements OnInit {
     );
   }
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Función que filtra el contenido del historial con la
    * fecha inicial digitada y la fecha final digitada.
    */
@@ -211,7 +225,7 @@ export class ProfileTemplateComponent implements OnInit {
     drawer.toggle();
   }
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Las funciones "nextTab" & "beforeTab", son funciones que
    * controlan la navegación de los tabs, en las listas en cada sección.
    */
@@ -262,6 +276,15 @@ export class ProfileTemplateComponent implements OnInit {
           this.nextPageButtonDisabledTalents = true;
         }
         break;
+      case 'talentsReadOnly':
+        this.tabIndexTalentsReadOnly = this.tabIndexTalentsReadOnly + 1;
+        if (this.tabIndexTalentsReadOnly > 0) {
+          this.beforePageButtonDisabledTalentsReadOnly = false;
+        }
+        if (this.tabIndexTalentsReadOnly === length - 1) {
+          this.nextPageButtonDisabledTalentsReadOnly = true;
+        }
+        break;
       case 'securityResponsabilities':
         this.tabIndexSecurityResp = this.tabIndexSecurityResp + 1;
         if (this.tabIndexSecurityResp > 0) {
@@ -310,6 +333,13 @@ export class ProfileTemplateComponent implements OnInit {
           this.beforePageButtonDisabledTalents = true;
         }
         break;
+      case 'talentsReadOnly':
+        this.tabIndexTalentsReadOnly = this.tabIndexTalentsReadOnly - 1;
+        this.nextPageButtonDisabledTalentsReadOnly = false;
+        if (this.tabIndexTalentsReadOnly === 0) {
+          this.beforePageButtonDisabledTalentsReadOnly = true;
+        }
+        break;
       case 'securityResponsabilities':
         this.tabIndexSecurityResp = this.tabIndexSecurityResp - 1;
         this.nextPageButtonDisabledSecurityResp = false;
@@ -323,15 +353,14 @@ export class ProfileTemplateComponent implements OnInit {
     return [table, 'measureApproval'];
   }
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Esta función consulta el json de la información de la aplicación y
    * la asigna a sus respectivas variables.
    */
   getData() {
-    // (this.idBaseTeam, this.charge, this.level ? this.level : null
     this.profileTemplateService.getData(this.idProfile).then((res: any) => {
-      console.log(res);
       this.data = res[0];
+      this.buildTalentsReadOnly(this.data);
       this.dataAssertiveComunication = new MatTableDataSource(res[0].assertiveComunication);
       res[0].assertiveComunication.forEach((el: any) => {
         this.percent[el._id] = el.measureApproval;
@@ -360,7 +389,7 @@ export class ProfileTemplateComponent implements OnInit {
     });
   }
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Esta función muestra las fechas en la sección de historial,
    * omitiendo los rangos de fechas que se repitan.
    */
@@ -374,7 +403,7 @@ export class ProfileTemplateComponent implements OnInit {
     }
   }
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Función que asigna los valores actuales a cada sección, cuando
    * está en el estado de editar.
    */
@@ -408,30 +437,26 @@ export class ProfileTemplateComponent implements OnInit {
     this.profileTemplateService.getAllSecurityResponsabilities().then((res: any) => {
       this.buildPagesAndColumnsList(res, 'securityResponsabilities');
     });
-
     this.isEditable = true;
   }
 
-  buildColumns(res: any) {
+  buildTalentsReadOnly(data: any) {
     let newarray: any = [];
     let finalArray: any = [];
-    res.forEach((element: any) => {
-      element.forEach((el: any) => {
-        newarray = [...newarray, el];
-        if (newarray.length === 7) {
+    data.talents.forEach((element: any) => {
+        newarray = [...newarray, element];
+        if (newarray.length === 12) {
           finalArray = [...finalArray, newarray];
           newarray = [];
         }
-      });
     });
-    finalArray = [...finalArray, newarray];
-    this.getAllData = finalArray;
-    console.log(this.getAllData);
-
-    // this.isEditable = item;
+    if (newarray.length !== 0) {
+      finalArray = [...finalArray, newarray];
+    }
+    this.contentPagesTalentsReadOnly = finalArray;
   }
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Función que construye las columnas de las opciones que se mostrarán en
    * cada página o tab de las secciones que contengan listas.Esta función arma un máximo
    * de 3 columnas. La función "buildPagesAndColumnsList2", por ser secciones de menor tamaño,
@@ -471,7 +496,6 @@ export class ProfileTemplateComponent implements OnInit {
         break;
       case 'securityResponsabilities':
         this.contentPagesSecurityResponsabilities = finalArrayPages;
-        // console.log(this.contentPagesSecurityResponsabilities);
 
         break;
     }
@@ -489,7 +513,6 @@ export class ProfileTemplateComponent implements OnInit {
     if (newarrayPages.length !== 0) {
       finalArrayPages = [...finalArrayPages, newarrayPages];
     }
-    console.log(finalArrayPages);
     switch (section) {
       case 'requiredCertificates':
         this.contentPagesRequiredCertificates = finalArrayPages;
@@ -504,7 +527,7 @@ export class ProfileTemplateComponent implements OnInit {
   }
 
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Esta función inicializa las listas, marcando visualmente las opciones
    * que ya se están usando.
    */
@@ -517,15 +540,15 @@ export class ProfileTemplateComponent implements OnInit {
   }
   onSave() {
     if (
-      this.onSaveObjective() === true &&
-      this.onSaveEperience() === true &&
-      this.onSaveeEucation() === true &&
-      this.onSaveRequiredCertificates() === true &&
-      this.onSaveSpecificKnowledge() === true &&
-      this.onSaveRolResponsabilities() === true &&
-      this.onSaveTalents() === true &&
-      this.onSaveSecurityResp() === true &&
-      this.onSaveCorporativeCompetences() === true
+      this.onSaveObjective() &&
+      this.onSaveEperience() &&
+      this.onSaveeEucation() &&
+      this.onSaveRequiredCertificates() &&
+      this.onSaveSpecificKnowledge() &&
+      this.onSaveRolResponsabilities() &&
+      this.onSaveTalents() &&
+      this.onSaveSecurityResp() &&
+      this.onSaveCorporativeCompetences()
     ) {
       const saveHistorial: SnackOptionsInterface = {
         title: 'Guardar en Historial',
@@ -538,79 +561,90 @@ export class ProfileTemplateComponent implements OnInit {
         .openComplexSnackBar(saveHistorial)
         .afterClosed()
         .subscribe((resp) => {
-          if (resp === 'close') {
-            return;
-          }
+          if (resp === 'close') return;
           if (resp) {
-            this._dialog
-              .open(ProfileFormHistoryComponent, {
-                data: {
-                  ...this.sendInformation,
-                },
-                autoFocus: false,
-              })
-              .afterClosed()
-              .subscribe((resp: any) => {
-                resp = {
-                  ...resp,
-                  idBaseTeam: this.data.idBaseTeam,
-                  idBaseProfile: this.data._id,
-                  charge: this.data.charge,
-                  teamName: this.data.teamName,
-                  status: this.data.status,
-                  // securityResponsabilities: this.data.securityResponsabilities,
-                };
-                console.log('reporte Historial', resp);
-                delete resp[`_id`];
-                this.profileTemplateService
-                  .updateProfile(this.idProfile, resp)
-                  ?.then(() =>
-                    this.profileTemplateService.historyActions('post', this.idProfile, resp)
-                  )
-                  .then(() => {
-                    this.notificationService.openSimpleSnackBar({
-                      title: 'Operación Finalizada',
-                      message:
-                        'La información se ha actualizado con éxito y su historial fue creado.',
-                      type: 'success',
-                    });
-                    this.existentDate = '';
-                    this.getData();
-                    this.isEditable = false;
-                  })
-                  .catch((error) => {
-                    this.notificationService.openSimpleSnackBar({
-                      title: 'Ocurrió un Error',
-                      message: error.message,
-                      type: 'error',
-                    });
-                  });
-              });
+            this.onSavewithHistory();
           } else {
-            this.sendInformation = {
-              ...this.sendInformation,
-              idBaseTeam: this.data.idBaseTeam,
-              idBaseProfile: this.data._id,
-              charge: this.data.charge,
-              teamName: this.data.teamName,
-              // securityResponsabilities: this.data.securityResponsabilities,
-              status: this.data.status,
-            };
-            this.profileTemplateService
-              .updateProfile(this.idProfile, this.sendInformation)
-              .then(() => {
-                this.notificationService.openSimpleSnackBar({
-                  title: 'Operación Finalizada',
-                  message: 'La información se ha actualizado con éxito.',
-                  type: 'success',
-                });
-                this.existentDate = '';
-                this.getData();
-                this.isEditable = false;
-              });
+            this.onSaveWithOutHistory();
           }
         });
     }
+  }
+
+  onSavewithHistory() {
+    /*
+     * Se abre el formulario donde se ingresa la descripción de los cambios,
+     * que se guardarán en el historial.
+     */
+    this._dialog
+      .open(ProfileFormHistoryComponent, {
+        data: {
+          ...this.sendInformation,
+        },
+        autoFocus: false,
+      })
+      .afterClosed()
+      .subscribe((resp: any) => {
+        /*
+         * Acciones que se activan al dar click en el botón "guardar" del formulario.
+         */
+        resp = {
+          ...resp,
+          idBaseTeam: this.data.idBaseTeam,
+          idBaseProfile: this.data._id,
+          charge: this.data.charge,
+          teamName: this.data.teamName,
+          status: this.data.status,
+        };
+        delete resp[`_id`];
+        /*
+         * Se Guarda la información en historial y se actualiza la información del
+         * perfil.
+         */
+        this.profileTemplateService
+          .updateProfile(this.idProfile, resp)
+          ?.then(() => this.profileTemplateService.historyActions('post', this.idProfile, resp))
+          .then(() => {
+            this.notificationService.openSimpleSnackBar({
+              title: 'Operación Finalizada',
+              message: 'La información se ha actualizado con éxito y su historial fue creado.',
+              type: 'success',
+            });
+            this.existentDate = '';
+            this.getData();
+            this.isEditable = false;
+          })
+          .catch((error) => {
+            this.notificationService.openSimpleSnackBar({
+              title: 'Ocurrió un Error',
+              message: error.message,
+              type: 'error',
+            });
+          });
+      });
+  }
+  onSaveWithOutHistory() {
+    this.sendInformation = {
+      ...this.sendInformation,
+      idBaseTeam: this.data.idBaseTeam,
+      idBaseProfile: this.data._id,
+      charge: this.data.charge,
+      teamName: this.data.teamName,
+      status: this.data.status,
+    };
+    /*
+     *Actualiza la información del perfil.
+     */
+    this.profileTemplateService.updateProfile(this.idProfile, this.sendInformation).then(() => {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Operación Finalizada',
+        message: 'La información se ha actualizado con éxito.',
+        type: 'success',
+      });
+      this.existentDate = '';
+      this.getData();
+      this.isEditable = false;
+    });
   }
   onSaveObjective() {
     if (this.formObjective.invalid) {
@@ -627,7 +661,6 @@ export class ProfileTemplateComponent implements OnInit {
       ...this.sendInformation,
       objective: this.formObjective.value.objective,
     };
-    // console.log(this.formObjective.value.objective);
     return true;
   }
   onSaveEperience() {
@@ -657,7 +690,6 @@ export class ProfileTemplateComponent implements OnInit {
       ...this.sendInformation,
       education: this.education.selectedOptions.selected.map((value) => value.value),
     };
-    console.log(this.education.selectedOptions.selected.map((value) => value.value));
     return true;
   }
   onSaveRequiredCertificates() {
@@ -677,7 +709,6 @@ export class ProfileTemplateComponent implements OnInit {
         (value) => value.value
       ),
     };
-    // console.log(this.requiredCertificates.selectedOptions.selected.map((value) => value.value));
     return true;
   }
   onSaveSpecificKnowledge() {
@@ -697,7 +728,6 @@ export class ProfileTemplateComponent implements OnInit {
         (value) => value.value
       ),
     };
-    // console.log(this.specificKnowledge.selectedOptions.selected.map((value) => value.value));
     return true;
   }
   onSaveRolResponsabilities() {
@@ -717,7 +747,6 @@ export class ProfileTemplateComponent implements OnInit {
         (value) => value.value
       ),
     };
-    // console.log(this.rolResponsabilities.selectedOptions.selected.map((value) => value.value));
     return true;
   }
   onSaveTalents() {
@@ -735,7 +764,6 @@ export class ProfileTemplateComponent implements OnInit {
       ...this.sendInformation,
       talents: this.talents.selectedOptions.selected.map((value) => value.value),
     };
-    console.log(this.talents.selectedOptions.selected.map((value) => value.value));
     return true;
   }
   onSaveSecurityResp() {
@@ -756,7 +784,6 @@ export class ProfileTemplateComponent implements OnInit {
         (value) => value.value
       ),
     };
-    console.log(this.securityResponsabilities.selectedOptions.selected.map((value) => value.value));
     return true;
   }
   onSaveCorporativeCompetences() {
@@ -776,18 +803,9 @@ export class ProfileTemplateComponent implements OnInit {
     this.sendInformation = {};
     this.isEditable = false;
   }
-  /**
-   * @autor Hanna
-   * @description Esta función limita los campos a que solo reciban números,
-   * impidiendo al usuario escribir letras.
-   */
-  soloNumeros(value: any) {
-    /*
-     * La expresión regular valida que el valor ingresado sea numérico de 0-9.
-     */
-    /^[0-9]+$/.test(value.key.toString())
-      ? (value.returnValue = true)
-      : (value.returnValue = false);
+
+  onlyNumbersFunction(value: any) {
+    this.onlyNumbers.classicOnlyNumbers(value);
   }
 
   fieldExperienceValidation(field: string) {
@@ -802,46 +820,15 @@ export class ProfileTemplateComponent implements OnInit {
   }
 
   pipeYears(year: number = 0) {
-    return year > 1 ? `${year} años` : `${year} año`;
-  }
-
-  onStepClicked(id: any) {
-    // this.historyId = this.history[id.selectedIndex].id;
+    return year > 1 || year === 0 ? `${year} años` : `${year} año`;
   }
 
   /**
-   * @autor Hanna
+   * @author Hanna
    * @description Esta función le da un formato más diciente, a las fechas de
-   * la sección de historial.
+   * la sección de historial. (ejemplo: Febrero 2021)
    */
   onTransformDate(date: string) {
-    switch (new Date(date).getMonth() + 1) {
-      case 1:
-        return `Enero ${new Date(date).getFullYear()}`;
-      case 2:
-        return `Febrero ${new Date(date).getFullYear()}`;
-      case 3:
-        return `Marzo ${new Date(date).getFullYear()}`;
-      case 4:
-        return `Abril ${new Date(date).getFullYear()}`;
-      case 5:
-        return `Mayo ${new Date(date).getFullYear()}`;
-      case 6:
-        return `Junio ${new Date(date).getFullYear()}`;
-      case 7:
-        return `Julio ${new Date(date).getFullYear()}`;
-      case 8:
-        return `Agosto ${new Date(date).getFullYear()}`;
-      case 9:
-        return `Septiembre ${new Date(date).getFullYear()}`;
-      case 10:
-        return `Octubre ${new Date(date).getFullYear()}`;
-      case 11:
-        return `Noviembre ${new Date(date).getFullYear()}`;
-      case 12:
-        return `Diciembre ${new Date(date).getFullYear()}`;
-      default:
-        break;
-    }
+    return `${this.monthNames[new Date(date).getMonth()]} ${new Date(date).getFullYear()}`;
   }
 }
