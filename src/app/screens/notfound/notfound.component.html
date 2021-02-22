@@ -1,8 +1,10 @@
 <div class="container">
     <div class="img-number">
-        <img src="../../../assets/images/error_404_number.svg" height="380x" alt="error 404 not found">
-        <h1>Upps!</h1>
-        <p>Página no encontrada</p>
+      <div class="img">
+        <ng-lottie  [options]="options"></ng-lottie>
+      </div>
+        <h1> Upps!</h1>
+        <p>Lo sentimos, no encontramos la página que buscas.</p>
         <button mat-button class="main-button" (click)="onBack()"> Regresar</button>
     </div>
 </div>

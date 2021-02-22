@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Title } from "@angular/platform-browser";
+import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-error',
@@ -8,7 +9,9 @@ import { Title } from "@angular/platform-browser";
   styleUrls: ['./error.component.scss']
 })
 export class ErrorComponent implements OnInit {
-
+  options: AnimationOptions = {
+    path: 'assets/error500.json',
+  };
   constructor(
     private _location: Location,
     private _title: Title
