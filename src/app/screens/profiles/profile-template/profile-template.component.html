@@ -37,24 +37,28 @@
         <div class="item" fxFlex="50">
           <mat-form-field floatLabel="always" appearance="none">
             <mat-label>Fecha Inicial</mat-label>
-            <input placeholder="dd/mm/yyyy" (dateInput)="onSelectStartDate($event)" matInput class="disabled"
+            <input [disabled]="historyFilter.length === 0" placeholder="dd/mm/yyyy" (dateInput)="onSelectStartDate($event)" matInput class="disabled"
               [matDatepicker]="pickerStart" readonly formControlName="startDate" (click)="pickerStart.open()">
-            <mat-datepicker-toggle matSuffix [for]="pickerStart" class="datePicker__icon"></mat-datepicker-toggle>
+            <mat-datepicker-toggle [disabled]="historyFilter.length === 0" matSuffix [for]="pickerStart" class="datePicker__icon"></mat-datepicker-toggle>
             <mat-datepicker #pickerStart disabled="false"></mat-datepicker>
           </mat-form-field>
         </div>
         <div class="item" fxFlex="50">
           <mat-form-field floatLabel="always" appearance="none">
             <mat-label>Fecha Final</mat-label>
-            <input placeholder="dd/mm/yyyy" (dateInput)="onSelectEndDate($event)" matInput [matDatepicker]="pickerEnd"
+            <input [disabled]="historyFilter.length === 0" placeholder="dd/mm/yyyy" (dateInput)="onSelectEndDate($event)" matInput [matDatepicker]="pickerEnd"
               class="disabled" readonly formControlName="endDate" (click)="pickerEnd.open()">
-            <mat-datepicker-toggle matSuffix [for]="pickerEnd" class="datePicker__icon"></mat-datepicker-toggle>
+            <mat-datepicker-toggle [disabled]="historyFilter.length === 0" matSuffix [for]="pickerEnd" class="datePicker__icon"></mat-datepicker-toggle>
             <mat-datepicker #pickerEnd disabled="false"></mat-datepicker>
           </mat-form-field>
 
         </div>
       </form>
       <div class="stepper__container">
+        <div *ngIf="historyFilter.length === 0">
+          <div class="not-found__image"></div>
+          <h1 class="not-found__title">No hay registros disponibles.</h1>
+        </div>
         <mat-vertical-stepper #stepper [disableRipple]="true">
           <mat-step *ngFor="let step of historyFilter">
             <ng-template matStepLabel class="step__label">{{step.showDate}}</ng-template>

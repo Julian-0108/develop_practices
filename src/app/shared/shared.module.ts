@@ -17,6 +17,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { LoaderService } from './components/loader/loader.service';
 import { LoaderInterceptor } from './components/loader/loader.interceptor';
 
+
 @NgModule({
   declarations: [
     ToolbarComponent,
@@ -27,7 +28,11 @@ import { LoaderInterceptor } from './components/loader/loader.interceptor';
     NotImageDirective,
     LoaderComponent,
   ],
-  imports: [CommonModule, RouterModule, MaterialModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MaterialModule,
+  ],
   exports: [
     CommonModule,
     RouterModule,
@@ -39,16 +44,13 @@ import { LoaderInterceptor } from './components/loader/loader.interceptor';
     FooterComponent,
     ValidatorComponent,
     LoaderComponent,
-    NotImageDirective
+    NotImageDirective,
   ],
   providers: [
     LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
-    DatePipe
+    DatePipe,
   ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA,
-    NO_ERRORS_SCHEMA
-  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 })
 export class SharedModule {}
