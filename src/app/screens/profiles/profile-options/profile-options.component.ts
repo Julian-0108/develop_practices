@@ -84,7 +84,6 @@ export class ProfileOptionsComponent implements OnInit {
       finalArray = [...finalArray, newarray];
     }
     this.rowsArray = finalArray;
-    console.log(finalArray);
   }
 
   async getBaseTeams() {
@@ -172,8 +171,6 @@ export class ProfileOptionsComponent implements OnInit {
 
   redirectToTemplateProfile(charge: any,idProfile: any = [], level?: string) {
     const id = idProfile.find((el: any) => (el.level === level && el.charge === charge) || el.charge === charge)
-    console.log(id);
-    console.log(id._id);
     this.router.navigate([`/profile-template/${id._id}`]);
   }
 }
