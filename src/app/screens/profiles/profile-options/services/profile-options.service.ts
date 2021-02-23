@@ -18,9 +18,10 @@ export class ProfileOptionsService {
   getSubBaseTeams(source: string) {
     console.log(source);
     return this.httpClient
-      .get(`${environment.API_MASTER_INFO}/base-teams-categories?status=true&type=subGrupo${source}`)
+      .get(
+        `${environment.API_MASTER_INFO}/base-teams-categories?status=true&type=subGrupo${source}`
+      )
       .pipe(pluck('payload'))
       .toPromise();
   }
-
 }
