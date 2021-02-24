@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { Router, ActivatedRouteSnapshot } from '@angular/router';
 import { CanActivate } from '@angular/router';
 import { AuthService } from '@app/screens/login/services/auth/auth.service';
 
@@ -15,12 +15,18 @@ export class AuthGuard implements CanActivate {
     private router: Router
   ) { }
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivate(route: ActivatedRouteSnapshot): boolean {
 
-    // If the user is not logged in we'll send them back to the home page
     if (!this.authService.isLoggedIn()) {
       this.authService.logout();
       this.router.navigate(['/login']);
+      return false;
+    }
+
+    const path = route.url[0].path.replace('/', '').toLowerCase();
+
+    if (!this.authService.validateAccessPage(path)) {
+      this.router.navigate(['/notPermits']);
       return false;
     }
 
