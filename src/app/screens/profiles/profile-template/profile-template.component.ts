@@ -402,6 +402,7 @@ export class ProfileTemplateComponent implements OnInit {
       return null;
     }
   }
+
   /**
    * @author Hanna
    * @description Función que asigna los valores actuales a cada sección, cuando

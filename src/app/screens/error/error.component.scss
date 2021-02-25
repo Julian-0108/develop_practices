@@ -11,20 +11,29 @@
 .img-error {
     text-align: center;
 
+    .img {
+      height: 20em !important;
+    }
+
     h1 {
-        font-size: 60px;
+      color: #de1920;
+      font-size: 30px !important;
+      font-weight: 600;
+      margin: 20px 0 !important;
     }
 
     p {
-        font-size: 20px;
-        margin-top: 30px;
-        color: #707070;
+      font-size: 18px;
+      color: #a9a9a9;
     }
 
     .main-button {
-        background-color: var(--primary-color);
-        color: white;
-        border-radius: 20px;
-        padding: 0 2em;
+      background-color: #ffffff;
+      color: #de1920;
+      border-radius: 20px;
+      padding: 0 2em;
+      border: solid 1px;
+      font-size: 15px;
+      margin-top: 30px;
     }
 }

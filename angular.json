@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "app-sitios-web": {
+    "mundo-seti": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/app-sitios-web",
+            "outputPath": "dist/mundo-seti",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -72,18 +72,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "app-sitios-web:build"
+            "browserTarget": "mundo-seti:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "app-sitios-web:build:production"
+              "browserTarget": "mundo-seti:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "app-sitios-web:build"
+            "browserTarget": "mundo-seti:build"
           }
         },
         "test": {
@@ -121,18 +121,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "app-sitios-web:serve"
+            "devServerTarget": "mundo-seti:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "app-sitios-web:serve:production"
+              "devServerTarget": "mundo-seti:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "app-sitios-web",
+  "defaultProject": "mundo-seti",
   "cli": {
     "analytics": false
   }
