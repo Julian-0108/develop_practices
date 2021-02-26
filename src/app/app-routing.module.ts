@@ -69,20 +69,22 @@ const routes: Routes = [
       canActivate: [AuthGuard]
   },
   {
-    path: 'admin-profiles',
-    loadChildren: () =>
-      import('./screens/profiles/adminprofiles/adminprofiles.module').then(
-        (m) => m.AdminprofilesModule
-      ),
-      canActivate: [AuthGuard]
-  },
-  {
     path: 'manage-base-teams/:id',
     loadChildren: () =>
       import('./screens/profiles/manage-base-teams/manage-base-teams.module').then(
         (m) => m.ManageBaseTeamsModule
       ),
       canActivate: [AuthGuard]
+  },
+  {
+    path: 'manage-roles',
+    loadChildren: () => import('./screens/permission-management/manage-roles/manage-roles.module').then((m) => m.ManageRolesModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'manage-users',
+    loadChildren: () => import('./screens/permission-management/manage-users/manage-users.module').then((m) => m.ManageUsersModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'error',
