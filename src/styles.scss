@@ -40,6 +40,60 @@ body {
     padding: 1em 2em 0;
 }
 
+.layer {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    background: #de1920;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+.layer2 {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    border: solid 1px #de1920;
+    font-size: 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin: 10px 10px 0 0;
+}
+
+.layer2:hover {
+    justify-content: space-between;
+    animation-name: hover;
+    animation-duration: 100ms;
+    animation-delay: 100ms;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes hover {
+    0% {
+        width: 30px;
+    }
+    50% {
+        width: 50px;
+    }
+    100% {
+        width: 75px;
+        border-radius: 17px;
+        font-size: 13px;
+        font-weight: 550;
+        color: #de1920;
+        padding: 0 12px 0 0;
+    }
+}
+
+.button__container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
 
 /* Notification Styles */
 
@@ -114,6 +168,15 @@ body {
 
 .edit {
     color: #3392e4;
+    background-color: #3392e42e;
+    border-radius: 100%;
+    box-shadow: 0px 0px 6px #3392e42e;
+    font-size: 17px;
+    padding: 3px;
+}
+
+.delete {
+    color: var(--primary-color);
     background-color: #3392e42e;
     border-radius: 100%;
     box-shadow: 0px 0px 6px #3392e42e;
@@ -215,10 +278,6 @@ body {
 
 
 /* Card Styles */
-
-mat-card:hover {
-    cursor: pointer;
-}
 
 .card {
     margin: 10px;
