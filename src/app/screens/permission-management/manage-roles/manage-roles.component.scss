@@ -1,0 +1,24 @@
+.background {
+    background-color: #fff !important;
+    background-image: url('../../../../assets/images/background_adminMasters.svg');
+    background-size: 90% 100%;
+    background-position: top;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 100px;
+}
+
+
+.main {
+    margin: 10px 30px;
+}
+
+.list-title {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    height: 100%;
+}

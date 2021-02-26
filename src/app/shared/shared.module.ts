@@ -16,6 +16,7 @@ import { NotImageDirective } from './directives/not-image.directive';
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoaderService } from './components/loader/loader.service';
 import { LoaderInterceptor } from './components/loader/loader.interceptor';
+import { CardsPipe } from './pipes/cards.pipe';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { LoaderInterceptor } from './components/loader/loader.interceptor';
     ValidatorComponent,
     NotImageDirective,
     LoaderComponent,
+    CardsPipe
   ],
   imports: [
     CommonModule,
@@ -45,6 +47,7 @@ import { LoaderInterceptor } from './components/loader/loader.interceptor';
     ValidatorComponent,
     LoaderComponent,
     NotImageDirective,
+    CardsPipe
   ],
   providers: [
     LoaderService,

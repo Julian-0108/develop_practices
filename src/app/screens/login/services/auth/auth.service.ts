@@ -10,6 +10,7 @@ interface userData {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly NAME_LOCAL_DATA = 'MSauthData';
+
   constructor(private http: HttpClient) {}
 
   login({ username, password }: userData) {
@@ -34,7 +35,7 @@ export class AuthService {
     const authData: any =  this.getToken();
 
     if (authData) {
-      const token: any = JSON.parse(atob(JSON.parse(authData).token.split('.')[1]));
+      const token: any = this.decodeToken(JSON.parse(authData).token);
       return Math.floor(new Date().getTime() / 1000) < token.exp;
     }
 
@@ -45,7 +46,22 @@ export class AuthService {
     return localStorage.getItem(this.NAME_LOCAL_DATA);
   }
 
+  decodeToken(token: string) {
+    return JSON.parse(atob(token.split('.')[1]));
+  }
+
+  validateAccessPage(page: string) {
+    const authData = this.getToken();
+    if (authData) {
+      const user = this.decodeToken(JSON.parse(authData).token);
+      return user.accessPage.includes(page);
+    }
+
+    return false;
+  }
+
   logout(): void {
     localStorage.removeItem(this.NAME_LOCAL_DATA);
   }
+
 }
