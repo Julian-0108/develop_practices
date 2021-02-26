@@ -27,7 +27,7 @@
                 Guardar
               </div>
             </div>
-            <mat-selection-list #listCtrl>
+            <mat-selection-list *ngIf="rolSelected else messageRol" #listCtrl>
               <div *ngFor="let category of categories">
                 <p class="list-title">{{category}}</p>
                 <mat-list-option #optionCtrl *ngFor="let option of filterOptions(category)" [value]="option.name">
@@ -39,14 +39,14 @@
           <mat-tab label="Usuarios">
             <div class="mat-elevation-z8">
               <div class="button__container">
-                <div class="layer2">
+                <div class="layer2" (click)="addUser()">
                   <div mat-button class="layer">
                     <mat-icon>add</mat-icon>
                   </div>
                   Agregar
                 </div>
               </div>
-
+              <div *ngIf="rolSelected else messageRol">
               <div fxLayout="row" fxLayoutAlign="center none">
                 <table mat-table fxFlex="100" [dataSource]="dataSourceUsers">
                   <!-- Nombre Column -->
@@ -76,18 +76,19 @@
                       </button>
                     </td>
                   </ng-container>
-  
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
               </div>
-              <!-- <div fxLayout="row" >
+              <div fxLayout="row" >
                 <mat-paginator fxFlex="100" [pageSize]="4"></mat-paginator>
-            </div> -->
+            </div>
+          </div>
             </div>
           </mat-tab>
         </mat-tab-group>
       </mat-card-content>
+      <ng-template #messageRol><div>Debes de seleccionar un rol</div></ng-template>
     </mat-card>
   </div>
 </div>

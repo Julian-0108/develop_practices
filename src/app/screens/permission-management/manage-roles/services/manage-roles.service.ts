@@ -29,4 +29,8 @@ export class ManageRolesService {
   updateUserRoles(email: string, roles: string[]) {
     return this.http.put<Response>(`${environment.API_SECURITY}/users/${email}`, { roles }).toPromise();
   }
+
+  getUsers() {
+    return this.http.get<Response>(`${environment.API_SECURITY}/users/all`).toPromise();
+  }
 }

@@ -3,6 +3,10 @@ import { Location } from '@angular/common';
 import { ManageRolesService } from './services/manage-roles.service';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
 import { NotificationService } from '@shared/components/notification/services/notification.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { AddUserComponent } from './add-user/add-user.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-manage-users',
@@ -10,6 +14,7 @@ import { NotificationService } from '@shared/components/notification/services/no
   styleUrls: ['./manage-roles.component.scss'],
 })
 export class ManageRolesComponent implements OnInit {
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild('listCtrl', { static: true }) listCtrl!: MatSelectionList;
   @ViewChildren('optionCtrl') optionsCtrl!: QueryList<MatListOption>;
 
@@ -18,11 +23,12 @@ export class ManageRolesComponent implements OnInit {
   roles: any = [];
   rolSelected!: any;
 
-  dataSourceUsers = [];
+  dataSourceUsers!: MatTableDataSource<any[]>;
   displayedColumns: string[] = ['nombre', 'correo', 'area', 'opciones'];
   constructor(
     public location: Location,
     private rolesService: ManageRolesService,
+    private dialog: MatDialog,
     private notificationService: NotificationService
   ) {}
 
@@ -60,7 +66,8 @@ export class ManageRolesComponent implements OnInit {
       .getUsersByRol(this.rolSelected._id)
       .then((response) => {
         if (response.payload.length > 0) {
-          this.dataSourceUsers = response.payload[0].users;
+          this.dataSourceUsers = new MatTableDataSource(response.payload[0].users);
+          this.dataSourceUsers.paginator = this.paginator;
         }
       })
       .catch();
@@ -68,17 +75,17 @@ export class ManageRolesComponent implements OnInit {
 
   selectRol(rol: any) {
     this.rolSelected = rol;
-    this.optionsCtrl.forEach((element) => {
-      element.selected = rol.access.includes(element.value);
-    });
-    this.getUsersByRol();
+    setTimeout(() => {
+      this.optionsCtrl.forEach((element) => {
+        element.selected = rol.access.includes(element.value);
+      });
+      this.getUsersByRol();
+    }, 100);
   }
 
   filterOptions(category: string) {
     return this.options.filter((data: any) => data.category === category);
   }
-
-
 
   deleteUser(user: any) {
     const roles = user.roles.filter((rol: string) => rol !== this.rolSelected._id);
@@ -90,9 +97,13 @@ export class ManageRolesComponent implements OnInit {
           title: 'Operación exitosa',
           message: 'Rol eliminado del usuario',
         });
-        this.dataSourceUsers = this.dataSourceUsers.filter(
+
+        const newData = this.dataSourceUsers.data.filter(
           (element: any) => element._id !== user._id
         );
+
+        this.dataSourceUsers = new MatTableDataSource(newData);
+        this.dataSourceUsers.paginator = this.paginator;
       })
       .catch();
   }
@@ -107,6 +118,29 @@ export class ManageRolesComponent implements OnInit {
       .afterClosed()
       .toPromise()
       .then((response) =>  { if(response && response !== 'close') { this.deleteUser(user)} })
+  }
+
+  addUser() {
+
+    if(!this.rolSelected) {
+      this.notificationService.openSimpleSnackBar({type: 'info', title: 'Agregar usuario', message: 'No tiene un rol seleccionado'});
+      return;
+    }
+    this.dialog
+      .open(AddUserComponent, {
+        width: '30%',
+        data: {
+          rolSelected: this.rolSelected,
+          dataSourceUsers: this.dataSourceUsers.data
+        },
+      })
+      .afterClosed()
+      .toPromise()
+      .then((response: any) => {
+      if (response?.success) {
+        this.getUsersByRol();
+      }
+    });
   }
 
   onSave() {
@@ -134,6 +168,7 @@ export class ManageRolesComponent implements OnInit {
           title: 'Actualización de roles',
           message: 'Permisos guardados correctamente',
         });
+
       })
       .catch();
   }
