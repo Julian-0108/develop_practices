@@ -21,7 +21,7 @@ export class ErrorComponent implements OnInit {
       buttonMessage: 'Regresar'
     },
     notPermits: {
-      options: { path: 'assets/data.json' },
+      options: { path: 'assets/notPermissionsPage.json' },
       message: 'Lo sentimos, no tienes permiso para acceder.',
       buttonMessage: 'Regresar'
     }
