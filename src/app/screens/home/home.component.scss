@@ -76,9 +76,12 @@
   min-height: 80vh;
   padding-bottom: 3em;
 }
-
 mat-card {
   outline: none !important;
+}
+
+mat-card:hover {
+  cursor: pointer;
 }
 
 .text {
