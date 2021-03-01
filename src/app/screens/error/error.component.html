@@ -1,11 +1,10 @@
 <div class="container">
     <div class="img-error">
       <div class="img">
-        <ng-lottie  [options]="options"></ng-lottie>
+        <ng-lottie  [options]="pages[pageError].options"></ng-lottie>
       </div>
         <h1>Upps!</h1>
-        <p>Ocurrió un error inesperado en la aplicación.</p>
-        <p>Por favor intente nuevamente más tarde.</p>
-        <button mat-button class="main-button" (click)="onBack()"> Reintentar la solicitud</button>
+        <p>{{ pages[pageError].message }}</p>
+        <button mat-button class="main-button" (click)="onBack()"> {{ pages[pageError].buttonMessage }}</button>
     </div>
 </div>

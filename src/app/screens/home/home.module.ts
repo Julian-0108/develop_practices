@@ -7,7 +7,6 @@ import { HomeComponent } from './home.component';
 
 // Custom Imports
 import { SharedModule } from 'src/app/shared/shared.module';
-import { HomeService } from './services/home.service';
 
 
 @NgModule({

@@ -23,6 +23,10 @@
     transition: all 0.5s;
 }
 
+mat-card:hover {
+    cursor: pointer;
+}
+
 @media screen and (min-width: 1450px) {
     .card__container {
         margin-top: 4em;

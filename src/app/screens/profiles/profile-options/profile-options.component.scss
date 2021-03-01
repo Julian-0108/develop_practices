@@ -135,6 +135,10 @@
     background-color: #DE1920;
 }
 
+mat-card:hover {
+  cursor: pointer;
+}
+
 .card__image {
     width: 199.3px;
     height: 99.7px;

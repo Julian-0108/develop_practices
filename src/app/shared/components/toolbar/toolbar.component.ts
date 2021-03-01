@@ -23,10 +23,12 @@ export class ToolbarComponent implements OnInit {
   }
 
   hideMenuSites() {
+    if (!this.authService.isLoggedIn()) { return false; }
     return this.SITES_SETI.includes(this.router.url);
   }
 
   hideOptions() {
+    if (!this.authService.isLoggedIn()) { return false; }
     return this.router.url !== '/login';
   }
 

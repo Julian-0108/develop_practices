@@ -83,53 +83,8 @@ td {
     background-color: #71de8e;
 }
 
-.layer {
-    width: 30px;
-    height: 30px;
-    border-radius: 100%;
-    background: #de1920;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-}
-
-.layer2 {
-    width: 30px;
-    height: 30px;
-    border-radius: 100%;
-    border: solid 1px #de1920;
-    font-size: 0;
-    display: flex;
-    align-items: center;
+mat-card:hover {
     cursor: pointer;
-    margin: 10px 10px 0 0;
-}
-
-.layer2:hover {
-    justify-content: space-between;
-    animation-name: hover;
-    animation-duration: 100ms;
-    animation-delay: 100ms;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-}
-
-@keyframes hover {
-    0% {
-        width: 30px;
-    }
-    50% {
-        width: 50px;
-    }
-    100% {
-        width: 75px;
-        border-radius: 17px;
-        font-size: 13px;
-        font-weight: 550;
-        color: #de1920;
-        padding: 0 12px 0 0;
-    }
 }
 
 .button__container {
