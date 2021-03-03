@@ -13,20 +13,16 @@
             <button mat-mini-fab *ngIf="buttonPrevius" (click)="previusPage()">
         <mat-icon>keyboard_arrow_left</mat-icon>
       </button>
-    </div>
-    <div class="cards" fxLayout="column" fxLayoutAlign="center center">
+        </div>
+        <div class="cards" fxLayout="column" fxLayoutAlign="center center">
 
-      <div *ngFor="let items1 of rowsArray" fxLayout="row">
-        <mat-card *ngFor="let item of items1" #card (click)="onCardClicked(item)"
-          [ngClass]="{'card--open': cardClicked === item._id && !item.submenu }" fxLayout="column" fxLayoutAlign="start"
-          class="card-base-team">
-          <h1 class="card__tittle"
-            [ngClass]="{'card__title-large':item.name.length >= 26, 'card__title-short':item.name.length <= 25 }">
-            {{item.name}}</h1>
-          <div *ngIf="!item.submenu" [ngStyle]="{'display': cardClicked === item._id ? 'block' : 'none'}"
-            fxLayout="column" fxLayoutAlign="start start">
-            <div *ngFor="let prof of item.profile">
-              <button *ngIf="prof.level.length !== 0" (click)="optionClicked = prof.id" class="option" mat-button>
+            <div *ngFor="let items1 of rowsArray" fxLayout="row" fxLayoutAlign="space-around start">
+                <mat-card *ngFor="let item of items1" #card (click)="onCardClicked(item)" [ngClass]="{'card--open': cardClicked === item._id && !item.submenu }" fxLayout="column" fxLayoutAlign="start" class="card-base-team">
+                    <h1 class="card__tittle" [ngClass]="{'card__title-large':item.name.length >= 26, 'card__title-short':item.name.length <= 25 }">
+                        {{item.name}}</h1>
+                    <div *ngIf="!item.submenu" [ngStyle]="{'display': cardClicked === item._id ? 'block' : 'none'}" fxLayout="column" fxLayoutAlign="start start">
+                        <div *ngFor="let prof of item.profile">
+                            <button *ngIf="prof.level.length !== 0" (click)="optionClicked = prof.id" class="option" mat-button>
                 <ng-container>
                   <mat-icon [ngStyle]="{'display': optionClicked !== prof.id ? 'none' : 'inline'}" aria-hidden="false"
                     class="option__icon" aria-label="row down">keyboard_arrow_down</mat-icon>
