@@ -5,7 +5,9 @@ import { MovementsComponent } from './movements.component';
 import { AuthGuard } from '@core/guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: MovementsComponent, canActivate: [AuthGuard] }
+  { path: '', component: MovementsComponent
+  // , canActivate: [AuthGuard] 
+}
 ];
 
 @NgModule({

@@ -12,10 +12,10 @@
         <div fxLayout="row" fxLayoutAlign="start end">
             <div class="item" fxFlex="20">
                 <mat-form-field floatLabel="always" appearance="none">
-                    <mat-label class="label">Seleccionar maestra</mat-label>
+                    <mat-label class="label">Seleccionar maestro</mat-label>
                     <!-- <mat-icon aria-hidden="false" class="select__icon">search</mat-icon> -->
                     <mat-select placeholder="Click para activar la lista" [(ngModel)]="masterSeleted" (selectionChange)="getDataMaster()">
-                        <mat-option *ngFor="let master of masters" [value]="master.url">
+                        <mat-option *ngFor="let master of masters | orderAlphabetically" [value]="master.url">
                             {{ master.name }}
                         </mat-option>
                     </mat-select>

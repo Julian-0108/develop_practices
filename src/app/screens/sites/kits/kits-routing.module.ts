@@ -5,7 +5,9 @@ import { KitsComponent } from './kits.component';
 import { AuthGuard } from '@core/guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: KitsComponent, canActivate: [AuthGuard] }
+  { path: '', component: KitsComponent
+  // , canActivate: [AuthGuard] 
+}
 ];
 
 @NgModule({

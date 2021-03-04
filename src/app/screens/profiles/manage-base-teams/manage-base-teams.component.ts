@@ -55,7 +55,7 @@ export class ManageBaseTeamsComponent implements OnInit {
         return;
       }
         this.name = response[0].name;
-        this.dataSource = new MatTableDataSource(response[0].profiles);
+        this.dataSource = new MatTableDataSource(this.sort(response[0].profiles));
     })
     .catch((error: any)=> {
       if (error.error?.statusCode !== 400) {
@@ -88,6 +88,19 @@ export class ManageBaseTeamsComponent implements OnInit {
   redirectToProfileTemplate(id : any){
     const url = this.rout.createUrlTree([`/profile-template/${id}`]);
     window.open(url.toString(), '_blank');
+  }
+
+  sort(value: any[]){
+    return value.sort( (a, b): any=> {
+      let x= a.charge.toLowerCase();
+      let y= b.charge.toLowerCase();
+      if (x < y) {
+        return -1;
+      } else {
+        return 1
+      }
+      return 0;
+    });
   }
 
 }
