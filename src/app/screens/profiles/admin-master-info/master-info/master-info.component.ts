@@ -69,6 +69,10 @@ export class MasterInfoComponent implements OnInit {
   }
 
   initForm(): void {
+    console.log(this.data)
+    if (this.data.element && this.data.element.type !== 'Habilidad') {
+      this.form.get('submenu')?.disable();
+    }
     if (this.data.url !== 'types') {
       this.form.controls.type?.setValidators([Validators.required]);
       this.form.controls.type?.updateValueAndValidity();
