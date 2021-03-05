@@ -44,7 +44,7 @@ export class MasterInfoComponent implements OnInit {
       .getTypes(this.data)
       .then((response: any) => {
         if (response.length === 0 && this.data.url === 'base-teams-categories') {
-          this.types = [{ name: 'EQUIPO_BASE' },{ name: 'subGrupoOP' }];
+          this.types = [{ name: 'Habilidad' },{ name: 'Subgrupo' }];
           return;
         }
         this.types = response;
@@ -140,6 +140,7 @@ export class MasterInfoComponent implements OnInit {
   }
 
   addRegisterToMaster() {
+    console.log(this.data.url, this.form.value);
     this.masterInfoService
       .addRegisterToMaster(this.data.url, this.form.value)
       .then((response: any) => this.showNotification(response))
@@ -203,7 +204,7 @@ export class MasterInfoComponent implements OnInit {
     if (
       this.form.get('submenu')?.value === null &&
       this.data.url === 'base-teams-categories' &&
-      this.form.value.type === 'EQUIPO_BASE'
+      this.form.value.type === 'Habilidad'
     ) {
       this.notificationService.openSimpleSnackBar({
         title: 'Campo Obligatorio',
@@ -235,13 +236,15 @@ export class MasterInfoComponent implements OnInit {
       : this.addRegisterToMaster();
   }
 
-  submenuDisabled() {
+  submenuDisabled(ev: any) {
     if (this.data.url === 'base-teams-categories') {
-      if (this.data.element && this.data.element.type !== 'EQUIPO_BASE') {
-        return true;
+      if (ev.value !== 'Habilidad') {
+        this.form.get('submenu')?.disable();
+        return;
       }
-      return false;
+      this.form.get('submenu')?.enable();
+      return;
     }
-    return true;
+    this.form.get('submenu')?.disable();
   }
 }
