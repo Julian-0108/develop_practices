@@ -1,160 +1,157 @@
 <div>
-  <button routerLink="/admin-profiles" class="button-back" mat-mini-fab aria-label="back button"></button>
-  <div class="header background">
-    <div class="title__container">
-      <h1 class="main-title">Administrar Maestros</h1>
+    <button routerLink="/admin-profiles" class="button-back" mat-mini-fab aria-label="back button"></button>
+    <div class="header background">
+        <div class="title__container">
+            <h1 class="main-title">Administrar Maestros</h1>
+        </div>
     </div>
-  </div>
-  <button class="button-back" routerLink="/admin-profiles" mat-icon-button>
+    <button class="button-back" routerLink="/admin-profiles" mat-icon-button>
     <mat-icon class="button-back__icon"></mat-icon>
   </button>
-  <div class="main">
-    <div fxLayout="row" fxLayoutAlign="start end">
-      <div class="item" fxFlex="20">
-        <mat-form-field floatLabel="always" appearance="none">
-          <mat-label class="label">Seleccionar maestra</mat-label>
-          <!-- <mat-icon aria-hidden="false" class="select__icon">search</mat-icon> -->
-          <mat-select placeholder="Click para activar la lista" [(ngModel)]="masterSeleted"
-            (selectionChange)="getDataMaster()">
-            <mat-option *ngFor="let master of masters" [value]="master.url">
-              {{ master.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div>
-    <div>
-
-      <div class="mat-elevation-z8">
-        <div class="button__container">
-          <div *ngIf="masterSeleted !== ''" class="layer2" (click)="openDialog()">
-            <div mat-button class="layer">
-              <mat-icon>add</mat-icon>
+    <div class="main">
+        <div fxLayout="row" fxLayoutAlign="start end">
+            <div class="item" fxFlex="20">
+                <mat-form-field floatLabel="always" appearance="none">
+                    <mat-label class="label">Seleccionar maestra</mat-label>
+                    <!-- <mat-icon aria-hidden="false" class="select__icon">search</mat-icon> -->
+                    <mat-select placeholder="Click para activar la lista" [(ngModel)]="masterSeleted" (selectionChange)="getDataMaster()">
+                        <mat-option *ngFor="let master of masters" [value]="master.url">
+                            {{ master.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
-            Añadir
-          </div>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center none">
-          <table fxFlex="100" [dataSource]="dataSource" matSort mat-table>
+        <div>
 
-            <!-- Reference Column -->
-            <ng-container matColumnDef="reference">
-              <th mat-header-cell *matHeaderCellDef> Maestra
-                <div class="filter-inputs">
-                  <mat-form-field floatLabel="always" appearance="none">
-                    <input matInput class="filter" (keyup)="applyFilter($event)" type="text">
-                  </mat-form-field>
+            <div class="mat-elevation-z8">
+                <div class="button__container">
+                    <div *ngIf="masterSeleted !== ''" class="layer2" (click)="openDialog()">
+                        <div mat-button class="layer">
+                            <mat-icon>add</mat-icon>
+                        </div>
+                        Añadir
+                    </div>
                 </div>
-              </th>
-              <td mat-cell *matCellDef="let element"> {{element.masterReference}} </td>
-            </ng-container>
+                <div fxLayout="row" fxLayoutAlign="center none">
+                    <table fxFlex="100" [dataSource]="dataSource" matSort mat-table>
 
-            <!-- Name Column -->
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> Nombre
-                <div class="filter-inputs">
-                  <mat-form-field floatLabel="always" appearance="none">
-                    <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
-                  </mat-form-field>
-                </div>
-              </th>
-              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-            </ng-container>
+                        <!-- Reference Column -->
+                        <ng-container matColumnDef="reference">
+                            <th mat-header-cell *matHeaderCellDef> Maestra
+                                <div class="filter-inputs">
+                                    <mat-form-field floatLabel="always" appearance="none">
+                                        <input matInput class="filter" (keyup)="applyFilter($event)" type="text">
+                                    </mat-form-field>
+                                </div>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.masterReference}} </td>
+                        </ng-container>
 
-            <!-- Description Column -->
-            <ng-container matColumnDef="description">
-              <th mat-header-cell *matHeaderCellDef> Descripción
-                <div class="filter-inputs">
-                  <mat-form-field floatLabel="always" appearance="none">
-                    <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
-                  </mat-form-field>
-                </div>
-              </th>
-              <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-            </ng-container>
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef> Nombre
+                                <div class="filter-inputs">
+                                    <mat-form-field floatLabel="always" appearance="none">
+                                        <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
+                                    </mat-form-field>
+                                </div>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
 
-            <!-- Type Column -->
-            <ng-container matColumnDef="type">
-              <th mat-header-cell *matHeaderCellDef> Tipo
-                <div class="filter-inputs">
-                  <mat-form-field floatLabel="always" appearance="none">
-                    <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
-                  </mat-form-field>
-                </div>
-              </th>
-              <td mat-cell *matCellDef="let element"> {{element.type}} </td>
-            </ng-container>
+                        <!-- Description Column -->
+                        <ng-container matColumnDef="description">
+                            <th mat-header-cell *matHeaderCellDef> Descripción
+                                <div class="filter-inputs">
+                                    <mat-form-field floatLabel="always" appearance="none">
+                                        <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
+                                    </mat-form-field>
+                                </div>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+                        </ng-container>
+
+                        <!-- Type Column -->
+                        <ng-container matColumnDef="type">
+                            <th mat-header-cell *matHeaderCellDef> Tipo
+                                <div class="filter-inputs">
+                                    <mat-form-field floatLabel="always" appearance="none">
+                                        <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
+                                    </mat-form-field>
+                                </div>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                        </ng-container>
 
 
-            <!-- CreatedAt Column -->
-            <ng-container matColumnDef="createdAt">
-              <th mat-header-cell *matHeaderCellDef matSort> Fecha de creación
-                <div class="filter-inputs">
-                  <mat-form-field floatLabel="always" appearance="none">
-                    <input matInput class="filter" (keyup)="applyFilter($event)" type="date">
-                  </mat-form-field>
-                </div>
-              </th>
-              <td mat-cell *matCellDef="let element"> {{element.createdAt | date: 'dd/MM/yyyy' }} </td>
-            </ng-container>
+                        <!-- CreatedAt Column -->
+                        <ng-container matColumnDef="createdAt">
+                            <th mat-header-cell *matHeaderCellDef matSort> Fecha de creación
+                                <div class="filter-inputs">
+                                    <mat-form-field floatLabel="always" appearance="none">
+                                        <input matInput class="filter" (keyup)="applyFilter($event)" type="date">
+                                    </mat-form-field>
+                                </div>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.createdAt | date: 'dd/MM/yyyy' }} </td>
+                        </ng-container>
 
-            <!-- UpdatedAt Column -->
-            <ng-container matColumnDef="updatedAt">
-              <th mat-header-cell *matHeaderCellDef matSort>Fecha de actualización
-                <div class="filter-inputs">
-                  <mat-form-field floatLabel="always" appearance="none">
-                    <input matInput class="filter" (keyup)="applyFilter($event)" type="date">
-                  </mat-form-field>
-                </div>
-              </th>
-              <td mat-cell *matCellDef="let element"> {{element.updatedAt | date: 'dd/MM/yyyy' }} </td>
-            </ng-container>
+                        <!-- UpdatedAt Column -->
+                        <ng-container matColumnDef="updatedAt">
+                            <th mat-header-cell *matHeaderCellDef matSort>Fecha de actualización
+                                <div class="filter-inputs">
+                                    <mat-form-field floatLabel="always" appearance="none">
+                                        <input matInput class="filter" (keyup)="applyFilter($event)" type="date">
+                                    </mat-form-field>
+                                </div>
+                            </th>
+                            <td mat-cell *matCellDef="let element"> {{element.updatedAt | date: 'dd/MM/yyyy' }} </td>
+                        </ng-container>
 
-            <!-- Status Column -->
-            <ng-container matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef> Estado
-                <div class="filter-inputs"></div>
-              </th>
-              <td mat-cell *matCellDef="let element">
-                <div>
-                  <label class="chip__status"
-                    [ngClass]="{'chip__status--active':element.status,'chip__status--inactive':!element.status}">{{element.status ? 'Activo' : 'Inactivo'}}</label>
-                </div>
-              </td>
-            </ng-container>
+                        <!-- Status Column -->
+                        <ng-container matColumnDef="status">
+                            <th mat-header-cell *matHeaderCellDef> Estado
+                                <div class="filter-inputs"></div>
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div>
+                                    <label class="chip__status" [ngClass]="{'chip__status--active':element.status,'chip__status--inactive':!element.status}">{{element.status ? 'Activo' : 'Inactivo'}}</label>
+                                </div>
+                            </td>
+                        </ng-container>
 
-            <!-- subMenu Column -->
-            <ng-container matColumnDef="submenu">
-              <th mat-header-cell *matHeaderCellDef> Submenú
-                <div class="filter-inputs"> </div>
-              </th>
-              <td mat-cell *matCellDef="let element" class="submenu">
-                <div>
-                  <label class="chip__status"
-                    [ngClass]="{'chip__status--active':element.submenu,'chip__status--inactive':!element.submenu}">{{element.submenu ? 'Sí' : 'No'}}</label>
-                </div>
-              </td>
-            </ng-container>
+                        <!-- subMenu Column -->
+                        <ng-container matColumnDef="submenu">
+                            <th mat-header-cell *matHeaderCellDef> Submenú
+                                <div class="filter-inputs"> </div>
+                            </th>
+                            <td mat-cell *matCellDef="let element" class="submenu">
+                                <div>
+                                    <label class="chip__status" [ngClass]="{'chip__status--active':element.submenu,'chip__status--inactive':!element.submenu}">{{element.submenu ? 'Sí' : 'No'}}</label>
+                                </div>
+                            </td>
+                        </ng-container>
 
-            <!-- Actions Column -->
-            <ng-container matColumnDef="actions" stickyEnd>
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let element">
-                <button mat-icon-button (click)="openDialog(element)">
+                        <!-- Actions Column -->
+                        <ng-container matColumnDef="actions" stickyEnd>
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element">
+                                <button mat-icon-button (click)="openDialog(element)">
                   <mat-icon class="edit">edit</mat-icon>
                 </button>
-              </td>
-            </ng-container>
+                            </td>
+                        </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
-            <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();"></tr>
-          </table>
+                        <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
+                        <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();"></tr>
+                    </table>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="center none">
+                    <mat-paginator [pageSize]="4"></mat-paginator>
+                    <!-- <mat-paginator fxFlex="100" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
+                </div>
+            </div>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center none">
-          <mat-paginator [pageSize]="4"></mat-paginator>
-          <!-- <mat-paginator fxFlex="100" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
-        </div>
-      </div>
     </div>
-  </div>
 </div>
