@@ -3,6 +3,10 @@
   <span>Mundo SETI</span>
   <span class="spacer"></span>
 
+  <div fxLayout="row" fxLayoutAlign="center" *ngIf="hideOptions()">
+    <mat-icon class="user__icon">account_circle</mat-icon>
+    <span class="user__name">{{userName}}</span>
+  </div>
   <div *ngIf="hideMenuSites()">
 
     <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Reportes">
@@ -33,10 +37,6 @@
 
     </mat-menu>
 
-  </div>
-  <div fxLayout="row" fxLayoutAlign="center" *ngIf="hideOptions()">
-    <mat-icon class="user__icon">account_circle</mat-icon>
-    <span class="user__name">{{userName}}</span>
   </div>
   <div *ngIf="hideOptions()">
     <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Menú">
