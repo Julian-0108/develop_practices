@@ -313,7 +313,7 @@ body {
     // height: calc(100% + 70px); // JFVNRSJVNRJRNV
     padding-bottom: 70px !important;
     // min-height: 18em !important; // JFVNRSJVNRJRNV
-    max-width: 20em;
+    min-width: 17em !important;
     animation-name: cardOpen;
     animation-duration: 200ms;
     animation-delay: 100ms;
@@ -550,9 +550,9 @@ mat-dialog-actions {
 }
 
 .custom-tooltip {
-  background-color: #83afe2 !important;
-  color: #fff !important;
-  font-size: 12px !important;
+    background-color: #83afe2 !important;
+    color: #fff !important;
+    font-size: 12px !important;
 }
 
 // div.mat-slider-disabled, .mat-accent .mat-slider-thumb, .mat-slider-track-fill {
