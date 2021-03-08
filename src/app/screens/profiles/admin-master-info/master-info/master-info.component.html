@@ -25,22 +25,22 @@
             <mat-option *ngFor="let master of masters" [value]="master.name">
               {{master.name }}
             </mat-option>
-        </mat-select>
+          </mat-select>
           <app-validator [form]="form" name="masterReference" [otherIcon]="true"></app-validator>
         </mat-form-field>
       </div>
       <div *ngIf="data?.url !== 'types'" class="item" fxFlex="25">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Tipo</mat-label>
-          <mat-select formControlName="type">
+          <mat-select formControlName="type" (selectionChange)="submenuDisabled($event)">
             <mat-option *ngFor="let type of types" [value]="type.name">
               {{type.name}}
             </mat-option>
             <mat-option *ngIf="types?.length === 0" disabled>
               <i>No hay tipos disponibles</i>
             </mat-option>
-        </mat-select>
-        <app-validator [form]="form" name="type" [otherIcon]="true"></app-validator>
+          </mat-select>
+          <app-validator [form]="form" name="type" [otherIcon]="true"></app-validator>
         </mat-form-field>
       </div>
     </div>
@@ -48,13 +48,15 @@
       <div class="item" fxFlex="20">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Fecha de creación</mat-label>
-          <input matInput type="date" formControlName="createdAt" matTooltip="Fecha de creación del registro" placeholder="Fecha de creación" readonly>
+          <input matInput type="date" formControlName="createdAt" matTooltip="Fecha de creación del registro"
+            placeholder="Fecha de creación" readonly>
         </mat-form-field>
       </div>
       <div class="item" fxFlex="20">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Fecha de modificación</mat-label>
-          <input matInput type="date" formControlName="updatedAt" matTooltip="Fecha de modificación del registro" placeholder="Fecha de modificación" readonly>
+          <input matInput type="date" formControlName="updatedAt" matTooltip="Fecha de modificación del registro"
+            placeholder="Fecha de modificación" readonly>
         </mat-form-field>
       </div>
 
@@ -75,8 +77,9 @@
       &nbsp;
       <div class="item" fxFlex="25">
         <mat-form-field floatLabel="always" appearance="none">
-          <mat-label class="label">Submenú</mat-label>
-          <mat-button-toggle-group [disabled]="submenuDisabled()" matTooltip="Indica si el equipo base tiene submenú / subcategoria " formControlName="submenu">
+          <mat-label class="label">Subgrupo</mat-label>
+          <mat-button-toggle-group
+            matTooltip="Indica si el equipo base tiene submenú / subcategoria " formControlName="submenu">
             <mat-button-toggle [value]="true">
               Sí
             </mat-button-toggle>
@@ -92,7 +95,8 @@
       <div class="item" fxFlex="50">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">URL</mat-label>
-          <input matInput type="text" matTooltip="Indica a donde se quiere redirigir dentro de la app Mundo SETI" formControlName="url" placeholder="Url del módulo">
+          <input matInput type="text" matTooltip="Indica a donde se quiere redirigir dentro de la app Mundo SETI"
+            formControlName="url" placeholder="Url del módulo">
           <app-validator [form]="form" name="url"></app-validator>
         </mat-form-field>
       </div>
@@ -103,7 +107,8 @@
         </button>
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Imagen</mat-label>
-          <input class="file__input" matInput type="text" matTooltip="Imagen para mostrar en el menú" formControlName="imagePath" readonly>
+          <input class="file__input" matInput type="text" matTooltip="Imagen para mostrar en el menú"
+            formControlName="imagePath" readonly>
         </mat-form-field>
       </div>
     </div>
