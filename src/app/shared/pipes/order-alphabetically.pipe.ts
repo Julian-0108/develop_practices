@@ -11,13 +11,16 @@ export class OrderAlphabeticallyPipe implements PipeTransform {
    * @param value tipo Array. 
    */
   transform(value: any[]): any {
+    
+    if (!value) return []
+    
     return value.sort( (a, b): any=> {
-      let x= a.name.toLowerCase();
-      let y= b.name.toLowerCase();
-      if (x < y) {
+      
+      if (a.name < b.name) {
         return -1;
+        
       } else {
-        return 1
+        return 1;
       }
       return 0;
     });

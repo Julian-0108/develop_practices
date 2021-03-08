@@ -106,4 +106,10 @@ export class AdminMasterInfoComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+   
+applyDirectFilter(e:any) {​​​​​​​​
+  this.dataSource.filter= e.value;
+    }​​​​​​​​
+  
 }

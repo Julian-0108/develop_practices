@@ -4,6 +4,7 @@ import { ManageProfileService } from './services/manage-profile.service';
 import { Master } from '@shared/interfaces/master.interface';
 import { environment } from '@environments/environment';
 import { NotificationService } from '../../../shared/components/notification/services/notification.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-adminprofiles',
@@ -16,7 +17,8 @@ export class AdminprofilesComponent implements OnInit {
   constructor(
     private titleService: Title,
     private manageProfileService: ManageProfileService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private router: Router
   ) {
     this.titleService.setTitle('Mundo SETI - administrar perfiles');
   }
@@ -29,6 +31,15 @@ export class AdminprofilesComponent implements OnInit {
     this.manageProfileService.getData()
     .then( response => this.cards = response)
     .catch( err => this.notificationService.openSimpleSnackBar({ title: 'Error', type: 'error', message: 'Error cargando el menú. Vuelve a intentar'}));
+  }
+
+  redirect(){
+    // this.router.navigate([`/home`]).then( ()=>{
+    //   // const cardsHTML = document.getElementById('cardsHTML');
+    //   document.getElementById('cardsHTML')?.scrollIntoView({behavior:'smooth'});
+    // });
+
+    this.router.navigate([`/home#cardsHTML`]);
   }
 
 }
