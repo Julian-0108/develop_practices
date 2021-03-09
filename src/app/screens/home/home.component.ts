@@ -8,7 +8,14 @@ import { environment } from '@environments/environment';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+<<<<<<< HEAD
   @ViewChild('cardsHTML') cardsHTML: ElementRef | undefined;
+=======
+
+  @ViewChild('cardsHTML') cardsHTML : ElementRef | undefined;
+  @ViewChild('home') home : ElementRef | undefined;
+
+>>>>>>> fdc6e50f3c1f9b596b401eba8b1296434af0c237
   public cards: any;
   public API_MASTER_INFO = environment.API_MASTER_INFO;
   // sortOrder: any = [];
@@ -32,7 +39,18 @@ export class HomeComponent implements OnInit {
       .catch((err) => console.log(err));
   }
 
+<<<<<<< HEAD
   scroll() {
     this.cardsHTML?.nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
+=======
+  scrollDown(){
+    this.cardsHTML?.nativeElement.scrollIntoView({behavior:'smooth'});
+  }
+
+  scrollUp(){
+    this.home?.nativeElement.scrollIntoView({behavior:'smooth'});
+  }
+
+>>>>>>> fdc6e50f3c1f9b596b401eba8b1296434af0c237
 }
