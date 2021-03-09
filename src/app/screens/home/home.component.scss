@@ -61,7 +61,6 @@
 }
 
 .separator__circle {
-<<<<<<< HEAD
   width: 1em;
   height: 1em;
   border-radius: 100%;
@@ -76,22 +75,6 @@
   flex-wrap: wrap;
   min-height: 80vh;
   // padding-top: 12px;
-=======
-    width: 1em;
-    height: 1em;
-    border-radius: 100%;
-    background-color: #de1920;
-    margin: 0 1em;
-}
-
-.cards {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    min-height: 80vh;
-    padding-bottom: 3em;
->>>>>>> fdc6e50f3c1f9b596b401eba8b1296434af0c237
 }
 
 mat-card {
@@ -103,7 +86,6 @@ mat-card:hover {
 }
 
 .text {
-<<<<<<< HEAD
   max-width: 700px;
   line-height: normal;
   font-size: 15px;
@@ -111,14 +93,6 @@ mat-card:hover {
   text-align: center;
   margin: 12px 16em;
   position: absolute;
-=======
-    max-width: 700px;
-    line-height: normal;
-    font-size: 1.7em;
-    color: #707070;
-    text-align: center;
-    margin: 1em auto;
->>>>>>> fdc6e50f3c1f9b596b401eba8b1296434af0c237
 }
 
 mat-card {
