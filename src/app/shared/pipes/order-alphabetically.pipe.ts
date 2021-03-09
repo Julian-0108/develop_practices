@@ -10,20 +10,33 @@ export class OrderAlphabeticallyPipe implements PipeTransform {
    * @description este pipe cumple la funcion de ordenar alfabeticamente dependiendo al name.
    * @param value tipo Array. 
    */
-  transform(value: any[]): any {
+  transform(value: any[], args: string): any {
     
     if (!value) return []
-    
-    return value.sort( (a, b): any=> {
+
+    if (args=='name') {
+      return value.sort( (a, b): any=> {
+        if (a.name < b.name) {
+          return -1;
+        } else {
+          return 1;
+        }
+        return 0;
+      });
+    }
+  
+    if (args=='charge') {
+      return value.sort( (a, b): any=> {
+        if (a.charge < b.charge) {
+          return -1;
+        } else {
+          return 1;
+        }
+        return 0;
+      });
       
-      if (a.name < b.name) {
-        return -1;
-        
-      } else {
-        return 1;
-      }
-      return 0;
-    });
+    }
+
   }
 
 }

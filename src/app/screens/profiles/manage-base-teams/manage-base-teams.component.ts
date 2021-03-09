@@ -103,13 +103,13 @@ export class ManageBaseTeamsComponent implements OnInit {
     });
   }
 
-applyFilter(event:Event) {​​​​​​​​
-const filterValue:string=(event.target as HTMLInputElement).value;
-this.dataSource.filter= filterValue.trim().toLowerCase();
+  applyFilter(event:Event) {​​​​​​​​
+    const filterValue:string=(event.target as HTMLInputElement).value;
+    this.dataSource.filter= filterValue.trim().toLowerCase();
   }​​​​​​​​
  
-applyDirectFilter(e:any) {​​​​​​​​
-this.dataSource.filter= e.value;
+  applyDirectFilter(e:any) {​​​​​​​​
+    this.dataSource.filter= e.value;
   }​​​​​​​​
 
 
