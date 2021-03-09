@@ -36,4 +36,12 @@ export class ToolbarComponent implements OnInit {
     this.userName = JSON.parse(String(localStorage.getItem('MSauthData'))).user.displayName;
     return this.router.url !== '/login';
   }
+
+  redirect(){
+    this.router.navigate(['/home']).then( (res) => {
+      window.scrollTo(0, 10000)
+      // console.log('home');
+    });
+    
+  }
 }
