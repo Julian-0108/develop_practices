@@ -1,10 +1,10 @@
-<div #homeHTML class="component">
+<div #home class="component">
     <div  class="description">
         <img src="../../../assets/images/home-mundo-seti.png" appNotImage>
         <div class="description__content">
             <p class="description__content--tittle">Bienvenido a Mundo Seti</p>
             <p class="description__content--text">Nuestro portal de gestión para el talento SETI. Aquí encontrarás el acceso a nuestra aplicación de Sitios, Perfiles de cargo y nuestra Universidad SETI</p>
-            <button class="button_home" mat-mini-fab  (click)="scroll()">
+            <button class="button_home" mat-mini-fab  (click)="scrollDown()">
                 <mat-icon>south</mat-icon>
             </button>
         </div>
@@ -13,7 +13,7 @@
     
    
     <div #cardsHTML class="separator">
-        <button class="button_home" mat-mini-fab  (click)="scrollup()" >
+        <button class="button_home" mat-mini-fab  (click)="scrollUp()" >
             <mat-icon>north</mat-icon>
         </button>
     </div> 

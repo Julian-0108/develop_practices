@@ -10,10 +10,9 @@ import { environment } from "@environments/environment";
 })
 export class HomeComponent implements OnInit {
 
-  @ViewChild('homeHTML') homeHTML : ElementRef | undefined;
-  
-
   @ViewChild('cardsHTML') cardsHTML : ElementRef | undefined;
+  @ViewChild('home') home : ElementRef | undefined;
+
   public cards: any;
   public API_MASTER_INFO = environment.API_MASTER_INFO;
 
@@ -31,13 +30,12 @@ export class HomeComponent implements OnInit {
     .catch(err => console.log(err))
   }
 
-  scroll(){
+  scrollDown(){
     this.cardsHTML?.nativeElement.scrollIntoView({behavior:'smooth'});
   }
 
-
-  scrollup(){
-    this.homeHTML?.nativeElement.scrollIntoView({behavior:'smooth'});
+  scrollUp(){
+    this.home?.nativeElement.scrollIntoView({behavior:'smooth'});
   }
 
 

@@ -6,6 +6,7 @@ import { TemperatureService } from './services/temperature.service';
 import { TemperatureModels } from './models/temperature.models';
 import { DatePipe } from '@angular/common';
 import { map } from 'rxjs/operators';
+import { Location} from '@angular/common';
 
 @Component({
   selector: 'app-temperature',
@@ -27,7 +28,8 @@ export class TemperatureComponent implements OnInit {
   @ViewChild(MatSort, { static: true, read: MatSort }) sort!: MatSort
 
   constructor(
-    private _temperatureService: TemperatureService
+    private _temperatureService: TemperatureService,
+    private loc: Location
   ) {}
 
   ngOnInit(): void {
@@ -66,6 +68,10 @@ export class TemperatureComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  redirect(){
+    this.loc.back();
   }
 
 }
