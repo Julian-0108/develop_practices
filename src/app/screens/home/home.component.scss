@@ -65,7 +65,7 @@
   height: 1em;
   border-radius: 100%;
   background-color: #de1920;
-  margin: 0 1em;
+  margin: 0 5px;
 }
 
 .cards {
@@ -74,7 +74,7 @@
   align-items: center;
   flex-wrap: wrap;
   min-height: 80vh;
-  padding-bottom: 3em;
+  // padding-top: 12px;
 }
 mat-card {
   outline: none !important;
@@ -87,10 +87,11 @@ mat-card:hover {
 .text {
   max-width: 700px;
   line-height: normal;
-  font-size: 1.7em;
+  font-size: 15px;
   color: #707070;
   text-align: center;
-  margin: 1em auto;
+  margin: 12px 16em;
+  position: absolute;
 }
 
 mat-card {
