@@ -21,14 +21,12 @@
                     <h1 class="card__tittle" [ngClass]="{'card__title-large':item.name.length >= 26, 'card__title-short':item.name.length <= 25 }">
                         {{item.name}}</h1>
                     <div *ngIf="!item.submenu" [ngStyle]="{'display': cardClicked === item._id ? 'block' : 'none'}" fxLayout="column" fxLayoutAlign="start start">
-                        <div *ngFor="let prof of item.profile">
+                        <div *ngFor="let prof of item.profile | orderAlphabetically:'name'">
                             <button *ngIf="prof.level.length !== 0" (click)="optionClicked = prof.id" class="option" mat-button>
-                <ng-container>
                   <mat-icon [ngStyle]="{'display': optionClicked !== prof.id ? 'none' : 'inline'}" aria-hidden="false"
                     class="option__icon" aria-label="row down">keyboard_arrow_down</mat-icon>
                   <mat-icon [ngStyle]="{'display': optionClicked === prof.id ? 'none' : 'inline'}" aria-hidden="false"
                     class="option__icon" aria-label="row right">keyboard_arrow_right</mat-icon>
-                </ng-container>
                 {{prof.name}}
               </button>
                             <button *ngIf="prof.level.length === 0" (click)="redirectToTemplateProfile(prof.name, item.profiles); optionClicked = prof.id" class="option" mat-button>

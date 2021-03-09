@@ -29,9 +29,9 @@ export class AdminMasterInfoComponent implements OnInit {
 
 
   public readonly masters: Masters[] = [
-    { name: 'Equipos base', url: 'base-teams-categories' },
+    { name: 'Habilidades de equipo', url: 'base-teams-categories' },
     { name: 'Cursos y certificaciones', url: 'courses-certifications' },
-    { name: 'Habilidades', url: 'skills' },
+    { name: 'Competencias corporativas', url: 'skills' },
     { name: 'Funciones', url: 'functions' },
     { name: 'Módulos', url: 'modules' },
     { name: 'Conocimientos específicos', url: 'specific-knowledge' },
@@ -106,4 +106,10 @@ export class AdminMasterInfoComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+   
+applyDirectFilter(e:any) {​​​​​​​​
+  this.dataSource.filter= e.value;
+    }​​​​​​​​
+  
 }

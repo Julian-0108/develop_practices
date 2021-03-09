@@ -6,6 +6,7 @@ import { KitsService } from './services/kits.service';
 import { map } from 'rxjs/operators';
 import { KitsModels } from './models/kits.models';
 import { DatePipe } from '@angular/common';
+import { Location} from '@angular/common';
 
 @Component({
   selector: 'app-kits',
@@ -26,7 +27,8 @@ export class KitsComponent implements OnInit {
   @ViewChild(MatSort, { static: true, read: MatSort }) sort!: MatSort
 
   constructor(
-    private kitService: KitsService
+    private kitService: KitsService,
+    private loc: Location
   ) {}
 
   ngOnInit(): void {
@@ -64,6 +66,10 @@ export class KitsComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  redirect(){
+    this.loc.back();
   }
 
 }
