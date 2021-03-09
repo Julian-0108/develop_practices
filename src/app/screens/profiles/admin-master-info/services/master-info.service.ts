@@ -30,6 +30,12 @@ export class MasterInfoService {
       .toPromise();
   }
 
+  getSkills() {
+    return this.http
+      .get(`${environment.API_MASTER_INFO}/base-teams-categories?status=true&type=Habilidad&submenu=true`)
+      .pipe(pluck('payload'))
+      .toPromise();
+  }
   addRegisterToMaster(url: string, register: any) {
     return this.http.post(`${environment.API_MASTER_INFO}/${url}`, register).toPromise();
   }
