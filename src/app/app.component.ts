@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import { Location, ViewportScroller } from '@angular/common';
+import { Router, Scroll } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +13,24 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class AppComponent implements OnInit {
 
   title = 'sitios';
-  constructor(private router: Router, private newIcon: MatIconRegistry, private dom:DomSanitizer) {
+  constructor(private newIcon: MatIconRegistry, private dom:DomSanitizer,
+    private loc: Location, private router: Router, private viewportScroller: ViewportScroller) {
     // Icons
     this.newIcon.addSvgIcon('seti', this.dom.bypassSecurityTrustResourceUrl('./assets/images/logo-seti-blanco.svg'));
+    // Router
+    // this.router.events.pipe(filter(e => e instanceof Scroll)).subscribe((e: any) => {
+    //   setTimeout(() => {
+    //     // if (e.position) {
+    //     //   this.viewportScroller.scrollToPosition(e.position);
+    //     // } else if (e.anchor) {
+    //     //   this.viewportScroller.scrollToAnchor(e.anchor);
+    //     // }else {
+    //     //   this.viewportScroller.scrollToPosition([0, 200]);
+    //     // }
+    //       // this.viewportScroller.scrollToPosition([0, 200]);
+    //   }
+    //   );
+    // });
   }
 
   ngOnInit () {

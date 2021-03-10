@@ -11,15 +11,15 @@ export class ProfileOptionsService {
 
   getBaseTeams() {
     return this.httpClient
-      .get(`${environment.API_MASTER_INFO}/base-teams-categories?status=true&type=EQUIPO_BASE`)
+      .get(`${environment.API_MASTER_INFO}/base-teams-categories?status=true&type=Habilidad`)
       .pipe(pluck('payload'))
       .toPromise();
   }
-  getSubBaseTeams(source: string) {
-    console.log(source);
+  getSubBaseTeams(idParent: string) {
+    console.log(idParent);
     return this.httpClient
       .get(
-        `${environment.API_MASTER_INFO}/base-teams-categories?status=true&type=subGrupo${source}`
+        `${environment.API_MASTER_INFO}/base-teams-categories?status=true&type=Subgrupo&idParent=${idParent}`
       )
       .pipe(pluck('payload'))
       .toPromise();

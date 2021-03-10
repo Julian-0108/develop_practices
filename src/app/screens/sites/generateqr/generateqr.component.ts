@@ -4,6 +4,8 @@ import { VenuesService } from './services/venues/venues.service';
 import { OfficeService } from './services/office/office.service';
 import { formatDate } from '@angular/common';
 import Swal from 'sweetalert2';
+import { Router, Scroll } from '@angular/router';
+import { Location} from '@angular/common';
 
 const TOAST = Swal.mixin({
   toast: true,
@@ -53,6 +55,8 @@ export class GenerateqrComponent implements OnInit {
     private _venuesService: VenuesService,
     private _officeService: OfficeService,
     private _sitesService: SitesService,
+    private router: Router,
+    private loc: Location
   ) {}
 
   ngOnInit() {
@@ -111,6 +115,14 @@ export class GenerateqrComponent implements OnInit {
   onSubmitKit() {
     this.myDate = formatDate(new Date(), 'yyyy-MM-dd-h:mm-a', 'en')
     this.qrKit = `${this.myDate}` + ':kit';
+  }
+
+  redirect(){
+    this.router.navigate(['/home']).then(
+      (res) => {
+        window.scrollTo(0, 10000)
+      }
+    );
   }
 
 }

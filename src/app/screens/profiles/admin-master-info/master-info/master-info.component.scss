@@ -2,9 +2,10 @@
   height: 25px !important;
   display: flex;
   align-items: center;
-  font-size: 15px;
+  font-size: 12px;
+  font-weight: 500;
   color: #707070;
-  width: 5.9em !important;
+  width: 5em !important;
 }
 
 .mat-button-toggle-disabled {
@@ -58,4 +59,9 @@
 
 .mat-dialog-title {
   font-weight: 600;
+}
+
+.disabled{
+  background-color: #efefef;
+  border-color: #efefef;
 }

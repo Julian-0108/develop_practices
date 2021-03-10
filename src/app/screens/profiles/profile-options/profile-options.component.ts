@@ -57,10 +57,7 @@ export class ProfileOptionsComponent implements OnInit {
     this.cardClicked = item._id;
     if (item.submenu) {
       this.itemsOld = this.items;
-      this.items = await this.profileOptionsService.getSubBaseTeams(
-        item.name.substring(0, 2).toUpperCase()
-      );
-      // this.buildRows(this.items);
+      this.items = await this.profileOptionsService.getSubBaseTeams(item._id);
       this.paginate();
       this.showBackButton = true;
       this.title = 'Habilidades de Operación';
@@ -95,7 +92,7 @@ export class ProfileOptionsComponent implements OnInit {
   onClickbuttonBack() {
     this.items = this.itemsOld;
     // this.buildRows(this.itemsOld);
-    this.pageNumber=1;
+    this.pageNumber = 1;
     this.paginate();
     this.showBackButton = false;
     this.title = 'Habilidades';
@@ -170,8 +167,10 @@ export class ProfileOptionsComponent implements OnInit {
     this.paginate();
   }
 
-  redirectToTemplateProfile(charge: any,idProfile: any = [], level?: string) {
-    const id = idProfile.find((el: any) => (el.level === level && el.charge === charge) || el.charge === charge)
+  redirectToTemplateProfile(charge: any, idProfile: any = [], level?: string) {
+    const id = idProfile.find(
+      (el: any) => (el.level === level && el.charge === charge) || el.charge === charge
+    );
     this.router.navigate([`/profile-template/${id._id}`]);
   }
 }

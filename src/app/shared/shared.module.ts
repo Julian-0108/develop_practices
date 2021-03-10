@@ -17,6 +17,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { LoaderService } from './components/loader/loader.service';
 import { LoaderInterceptor } from './components/loader/loader.interceptor';
 import { CardsPipe } from './pipes/cards.pipe';
+import { OrderAlphabeticallyPipe } from './pipes/order-alphabetically.pipe';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { CardsPipe } from './pipes/cards.pipe';
     ValidatorComponent,
     NotImageDirective,
     LoaderComponent,
-    CardsPipe
+    CardsPipe,
+    OrderAlphabeticallyPipe
   ],
   imports: [
     CommonModule,
@@ -47,7 +49,8 @@ import { CardsPipe } from './pipes/cards.pipe';
     ValidatorComponent,
     LoaderComponent,
     NotImageDirective,
-    CardsPipe
+    CardsPipe,
+    OrderAlphabeticallyPipe
   ],
   providers: [
     LoaderService,

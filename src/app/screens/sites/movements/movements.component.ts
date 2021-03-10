@@ -6,6 +6,7 @@ import { MovementsModels } from './models/movements.models';
 import { MovementsService } from './services/movements.service';
 import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
+import { Location} from '@angular/common';
 
 @Component({
   selector: 'app-movements',
@@ -26,7 +27,8 @@ export class MovementsComponent implements OnInit {
   @ViewChild(MatSort, { static: true, read: MatSort }) sort!: MatSort
 
   constructor(
-    private _movementsService: MovementsService
+    private _movementsService: MovementsService,
+    private loc: Location
   ) { }
 
   ngOnInit(): void {
@@ -65,6 +67,11 @@ export class MovementsComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  redirect(){
+    this.loc.back();
+  }
+
 }
 
 
