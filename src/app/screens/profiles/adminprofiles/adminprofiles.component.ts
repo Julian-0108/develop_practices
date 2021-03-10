@@ -41,7 +41,10 @@ export class AdminprofilesComponent implements OnInit {
   redirect(){
     this.router.navigate(['/home']).then(
       (res) => {
-        window.scrollTo(0, 10000)
+        window.scrollTo({
+          top: 10000,
+          behavior: "smooth"
+        })
       }
     );
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, Scroll } from '@angular/router';
 import { AuthService } from '@app/screens/login/services/auth/auth.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-toolbar',
@@ -36,12 +37,8 @@ export class ToolbarComponent implements OnInit {
     this.userName = JSON.parse(String(localStorage.getItem('MSauthData'))).user.displayName;
     return this.router.url !== '/login';
   }
-
+  
   redirect(){
-    this.router.navigate(['/home']).then( (res) => {
-      window.scrollTo(0, 10000)
-      // console.log('home');
-    });
-    
+    this.router.navigate(['/home'])
   }
 }
