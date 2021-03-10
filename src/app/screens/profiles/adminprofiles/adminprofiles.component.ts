@@ -5,7 +5,7 @@ import { Master } from '@shared/interfaces/master.interface';
 import { environment } from '@environments/environment';
 import { NotificationService } from '../../../shared/components/notification/services/notification.service';
 import { Router } from '@angular/router';
-import { Location} from '@angular/common';
+import { Location, ViewportScroller} from '@angular/common';
 
 @Component({
   selector: 'app-adminprofiles',
@@ -20,7 +20,8 @@ export class AdminprofilesComponent implements OnInit {
     private manageProfileService: ManageProfileService,
     private notificationService: NotificationService,
     private router: Router,
-    private loc: Location
+    private loc: Location, 
+    private viewportScroller: ViewportScroller
   ) {
     this.titleService.setTitle('Mundo SETI - administrar perfiles');
   }
@@ -38,7 +39,14 @@ export class AdminprofilesComponent implements OnInit {
   //import { Location} from '@angular/common';
   //private loc: Location
   redirect(){
-    this.loc.back();
+    this.router.navigate(['/home']).then(
+      (res) => {
+        window.scrollTo({
+          top: 10000,
+          behavior: "smooth"
+        })
+      }
+    );
   }
 
 }

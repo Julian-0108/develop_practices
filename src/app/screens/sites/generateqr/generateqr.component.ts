@@ -118,7 +118,11 @@ export class GenerateqrComponent implements OnInit {
   }
 
   redirect(){
-    this.loc.back();
+    this.router.navigate(['/home']).then(
+      (res) => {
+        window.scrollTo(0, 10000)
+      }
+    );
   }
 
 }
