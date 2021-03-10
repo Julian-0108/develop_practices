@@ -18,20 +18,19 @@ export class AppComponent implements OnInit {
     // Icons
     this.newIcon.addSvgIcon('seti', this.dom.bypassSecurityTrustResourceUrl('./assets/images/logo-seti-blanco.svg'));
     // Router
-    this.router.events.pipe(filter(e => e instanceof Scroll)).subscribe((e: any) => {
-      console.log(e);
-
-      // this is fix for dynamic generated(loaded..?) content
-      setTimeout(() => {
-        if (e.position) {
-          this.viewportScroller.scrollToPosition(e.position);
-        } else if (e.anchor) {
-          this.viewportScroller.scrollToAnchor(e.anchor);
-        } else {
-          this.viewportScroller.scrollToPosition([0, 0]);
-        }
-      });
-    });
+    // this.router.events.pipe(filter(e => e instanceof Scroll)).subscribe((e: any) => {
+    //   setTimeout(() => {
+    //     // if (e.position) {
+    //     //   this.viewportScroller.scrollToPosition(e.position);
+    //     // } else if (e.anchor) {
+    //     //   this.viewportScroller.scrollToAnchor(e.anchor);
+    //     // }else {
+    //     //   this.viewportScroller.scrollToPosition([0, 200]);
+    //     // }
+    //       // this.viewportScroller.scrollToPosition([0, 200]);
+    //   }
+    //   );
+    // });
   }
 
   ngOnInit () {
@@ -39,14 +38,6 @@ export class AppComponent implements OnInit {
 
   hideNavbar() {
     return this.router.url !== '/login';
-  }
-
-  locationBack() {
-    window.history.back();
-  }
-
-  locationBackAngular() {
-    this.loc.back();
   }
 
 }
