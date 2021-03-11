@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
@@ -6,6 +6,9 @@ import { MasterInfoService } from '../services/master-info.service';
 import { MasterInfoDialog, Masters } from '../interfaces/master-info-dialog';
 import { NotificationService } from '@shared/components/notification/services/notification.service';
 import { CustomValidatorService } from '@shared/utils/custom-validator.service';
+import { ProfileOptionsService } from '../../profile-options/services/profile-options.service';
+import { SnackOptionsInterface } from '@shared/interfaces/notification.interface';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'app-master-info',
@@ -14,6 +17,7 @@ import { CustomValidatorService } from '@shared/utils/custom-validator.service';
 })
 export class MasterInfoComponent implements OnInit {
   form!: FormGroup;
+  @ViewChild('ej') ej: MatSelect | any;
 
   /* Rutas que manejan imagenes */
   public manage_images = ['modules', 'base-teams-categories'];
@@ -28,6 +32,7 @@ export class MasterInfoComponent implements OnInit {
     private formBuilder: FormBuilder,
     private notificationService: NotificationService,
     private masterInfoService: MasterInfoService,
+    private profileOptionsService: ProfileOptionsService,
     private customValidator: CustomValidatorService,
     private dialogRef: MatDialogRef<MasterInfoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: MasterInfoDialog
@@ -40,13 +45,12 @@ export class MasterInfoComponent implements OnInit {
     this.fillSkillsList();
   }
 
-
   fillTypesList() {
     this.masterInfoService
       .getTypes(this.data)
       .then((response: any) => {
         if (response.length === 0 && this.data.url === 'base-teams-categories') {
-          this.types = [{ name: 'Habilidad' },{ name: 'Subgrupo' }];
+          this.types = [{ name: 'Habilidad' }, { name: 'Subgrupo' }];
           return;
         }
         this.types = response;
@@ -55,19 +59,23 @@ export class MasterInfoComponent implements OnInit {
   }
 
   fillSkillsList() {
-    this.masterInfoService
-    .getSkills()
-    .then((response: any) => {
+    this.masterInfoService.getSkills().then((response: any) => {
       this.skills = response;
-    })
+    });
   }
 
   createForm(): FormGroup {
     return this.formBuilder.group({
       _id: new FormControl(),
       name: new FormControl('', [Validators.required, this.customValidator.noWhitespaceValidator]),
-      description: new FormControl({ value: '', disabled: this.data?.url === 'types' || this.data?.url === 'security-responsabilities' }),
-      type: new FormControl({ value: '', disabled: this.data?.url === 'security-responsabilities'}),
+      description: new FormControl({
+        value: '',
+        disabled: this.data?.url === 'types' || this.data?.url === 'security-responsabilities',
+      }),
+      type: new FormControl({
+        value: '',
+        disabled: this.data?.url === 'security-responsabilities',
+      }),
       masterReference: new FormControl(null),
       idParent: new FormControl({ value: '', disabled: true }),
       createdAt: new FormControl({ value: '', disabled: true }),
@@ -80,16 +88,18 @@ export class MasterInfoComponent implements OnInit {
   }
 
   initForm(): void {
-    console.log(this.data)
+    console.log(this.data);
     if (this.data.element && this.data.element.type !== 'Habilidad') {
       this.form.get('submenu')?.disable();
       this.form.get('idParent')?.enable();
-
     }
     if (this.data.url !== 'types') {
       this.form.controls.type?.setValidators([Validators.required]);
       this.form.controls.type?.updateValueAndValidity();
-      this.form.controls.description?.setValidators([Validators.required, this.customValidator.noWhitespaceValidator]);
+      this.form.controls.description?.setValidators([
+        Validators.required,
+        this.customValidator.noWhitespaceValidator,
+      ]);
       this.form.controls.description?.updateValueAndValidity();
       this.form.controls.masterReference?.clearValidators();
       if (this.data.url === 'security-responsabilities') {
@@ -97,7 +107,7 @@ export class MasterInfoComponent implements OnInit {
         this.form.controls.description?.updateValueAndValidity();
       }
     } else {
-      this.masters = this.data.masters.filter(master => master.name !== 'Tipos');
+      this.masters = this.data.masters.filter((master) => master.name !== 'Tipos');
       this.form.controls.masterReference?.setValidators([Validators.required]);
       this.form.controls.masterReference?.updateValueAndValidity();
       this.form.controls.type?.clearValidators();
@@ -130,7 +140,9 @@ export class MasterInfoComponent implements OnInit {
   createFormData() {
     const data = new FormData();
     data.append('image', this.archivo);
-    data.append('body', JSON.stringify(this.form.value));
+    data.append('body', JSON.stringify(this.form.getRawValue()));
+    console.log(JSON.stringify(this.form.value));
+    console.log(JSON.stringify(this.form.getRawValue()));
     return data;
   }
 
@@ -185,6 +197,7 @@ export class MasterInfoComponent implements OnInit {
   }
 
   updateRegisterWithImageToMaster() {
+    console.log(this.data.url, this.data.element._id, this.createFormData());
     this.masterInfoService
       .updateToMasterWithImages(this.data.url, this.data.element._id, this.createFormData())
       .then((response: any) => this.showNotification(response))
@@ -255,23 +268,93 @@ export class MasterInfoComponent implements OnInit {
   }
 
   submenuDisabled(ev: any) {
+    if (ev.value !== 'Habilidad') {
+      this.form.get('submenu')?.disable();
+      this.form.get('submenu')?.patchValue(false);
+      this.form.get('idParent')?.enable();
+      console.log('FORM',this.form.value)
+      console.log('FORM2',this.form.getRawValue())
+      this.form.controls.idParent?.setValidators([Validators.required]);
+      this.form.controls.idParent?.updateValueAndValidity();
+      return;
+    }
+    this.form.get('idParent')?.patchValue(null);
+    this.form.get('submenu')?.enable();
+    this.form.get('idParent')?.disable();
+    this.form.controls.idParent?.clearValidators();
+  }
+
+  changeSubgroupOption(event: any){
+    if (this.data.element) {
+      const id: any = this.data.element._id;
+      this.profileOptionsService.getSubBaseTeams(id).then((res: any) => {
+        if (res.map((item: any) => item.status === true).length !== 0 && !event.value) {
+          this.notificationService.openSimpleSnackBar({
+            title: 'Acción no Válida',
+            message: 'No puede cambiar el valor de "Subgrupo", porque la habilidad ya tiene subgrupos asignados.',
+            type: 'error',
+          });
+          this.form.get('submenu')?.patchValue(true);
+        };
+    })
+  }
+  }
+
+  changeStatusOption(event: any) {
+    if (this.data.element) {
+      this.masterInfoService.getData(this.data.url, this.data.element.idParent).then((res: any) => {
+        if (this.form.value.type === 'Subgrupo') {
+          if (res.type !== 'Habilidad' || !res.submenu) {
+            this.notificationService.openSimpleSnackBar({
+              title: 'Acción no Válida',
+              message: 'No puede cambiar el valor del estado. La habilidad a la que pertenecía el subgrupo no está disponible o no incluye subgrupos.',
+              type: 'error',
+            });
+            this.form.get('status')?.patchValue(false);
+          }
+        }
+      });
+    }
+  }
+
+  typeValidation(ev: any) {
     if (this.data.url === 'base-teams-categories') {
-      if (ev.value !== 'Habilidad') {
-        this.form.get('submenu')?.disable();
-        this.form.get('idParent')?.enable();
+      if (this.data.element) {
+        const id: any = this.data.element._id;
+        if (ev.value === 'Subgrupo') {
+          this.profileOptionsService.getSubBaseTeams(id).then((res: any) => {
+            if (res.map((item: any) => item.status === true).length !== 0) {
+              this.notificationService
+                .openComplexSnackBar({
+                  title: 'Cambiar Tipo',
+                  message:
+                    'La habilidad que está tratando de cambiar, ya tiene subgrupos asignados; debe inhabilitarlos para continuar.',
+                  type: 'error',
+                  action: 'Aceptar',
+                  contraryAction: 'Cancelar',
+                })
+                .afterClosed()
+                .subscribe((resp: boolean | string) => {
+                  if (resp === 'close') return;
+                  if (resp) return;
+                });
+              this.ej.value = 'Habilidad';
+              return;
+            }
+            this.skills = this.skills.filter((el: any) => el._id !== this.data.element._id);
+            this.submenuDisabled(ev);
+          });
+        } else if (ev.value === 'Habilidad') {
 
-        this.form.controls.idParent?.setValidators([Validators.required]);
-        this.form.controls.idParent?.updateValueAndValidity();
-        return;
+          this.form.get('idParent')?.patchValue(null);
+          this.submenuDisabled(ev);
+        }
+      } else {
+        this.submenuDisabled(ev);
       }
-      this.form.get('submenu')?.enable();
-      this.form.get('idParent')?.disable();
-
-      this.form.controls.idParent?.clearValidators();
       return;
     }
     this.form.get('submenu')?.disable();
     this.form.get('idParent')?.disable();
-
   }
 }
