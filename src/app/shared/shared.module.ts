@@ -18,6 +18,7 @@ import { LoaderService } from './components/loader/loader.service';
 import { LoaderInterceptor } from './components/loader/loader.interceptor';
 import { CardsPipe } from './pipes/cards.pipe';
 import { OrderAlphabeticallyPipe } from './pipes/order-alphabetically.pipe';
+import { HistoryComponent } from './components/history/history.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { OrderAlphabeticallyPipe } from './pipes/order-alphabetically.pipe';
     NotImageDirective,
     LoaderComponent,
     CardsPipe,
-    OrderAlphabeticallyPipe
+    OrderAlphabeticallyPipe,
+    HistoryComponent
   ],
   imports: [
     CommonModule,
@@ -50,7 +52,8 @@ import { OrderAlphabeticallyPipe } from './pipes/order-alphabetically.pipe';
     LoaderComponent,
     NotImageDirective,
     CardsPipe,
-    OrderAlphabeticallyPipe
+    OrderAlphabeticallyPipe,
+    HistoryComponent
   ],
   providers: [
     LoaderService,

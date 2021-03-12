@@ -239,7 +239,7 @@ export class MasterInfoComponent implements OnInit {
     ) {
       this.notificationService.openSimpleSnackBar({
         title: 'Campo Obligatorio',
-        message: 'El campo "SubMenú" debe estar marcado.',
+        message: 'El campo "Subgrupo" debe estar marcado.',
         type: 'error',
       });
       return;
