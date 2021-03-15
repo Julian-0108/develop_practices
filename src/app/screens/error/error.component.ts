@@ -26,8 +26,8 @@ export class ErrorComponent implements OnInit {
       buttonMessage: 'Regresar'
     },
     underConstruction:{
-      options: { path: '' },
-      message: 'Lo sentimos, no encontamos un mensaje original para decirte que estamos trabajando en esta página',
+      options: { path: 'assets/notPermissionsPage.json'},
+      message: 'Lo sentimos, estamos trabajando para que pronto puedas ver esta página',
       buttonMessage: 'Regresar'
     }
   }
