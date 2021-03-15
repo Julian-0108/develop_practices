@@ -15,6 +15,9 @@ import { Masters } from './interfaces/master-info-dialog';
   styleUrls: ['./admin-master-info.component.scss'],
 })
 export class AdminMasterInfoComponent implements OnInit {
+
+  
+
   public displayedColumns: string[] = [
     'name',
     'reference',
@@ -29,16 +32,16 @@ export class AdminMasterInfoComponent implements OnInit {
 
 
   public readonly masters: Masters[] = [
-    { name: 'Habilidades de equipo', url: 'base-teams-categories' },
-    { name: 'Cursos y certificaciones', url: 'courses-certifications' },
-    { name: 'Competencias corporativas', url: 'skills' },
-    { name: 'Funciones', url: 'functions' },
-    { name: 'Módulos', url: 'modules' },
-    { name: 'Conocimientos específicos', url: 'specific-knowledge' },
-    { name: 'Estudios', url: 'studies' },
-    { name: 'Herramientas de trabajo', url: 'work-tools' },
-    { name: 'Tipos', url: 'types' },
-    { name: 'Responsabilidades de seguridad', url: 'security-responsabilities' },
+    { name: 'Habilidades de equipo', url: 'base-teams-categories', sumary: 'Hola Wiil' },
+    { name: 'Cursos y certificaciones', url: 'courses-certifications' , sumary: 'Gracias Wiil'  },
+    { name: 'Competencias corporativas', url: 'skills' , sumary: 'sumary of skills'  },
+    { name: 'Funciones', url: 'functions' , sumary: 'sumary of functions'  },
+    { name: 'Módulos', url: 'modules' , sumary: 'sumary of base-teams-categories'  },
+    { name: 'Conocimientos específicos', url: 'specific-knowledge' , sumary: 'sumary of base-teams-categories'  },
+    { name: 'Estudios', url: 'studies' , sumary: 'sumary of base-teams-categories'  },
+    { name: 'Herramientas de trabajo', url: 'work-tools' , sumary: 'sumary of base-teams-categories'  },
+    { name: 'Tipos', url: 'types' , sumary: 'sumary of base-teams-categories'  },
+    { name: 'Responsabilidades de seguridad', url: 'security-responsabilities' , sumary: 'sumary of base-teams-categories'  },
   ];
 
   public masterSeleted: string = '';

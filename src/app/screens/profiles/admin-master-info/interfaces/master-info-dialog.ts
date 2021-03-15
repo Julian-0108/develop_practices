@@ -7,6 +7,7 @@ import { Master } from '@shared/interfaces/master.interface';
 export interface Masters {
   name?: string;
   url?: string;
+  sumary?: string;
 }
 export interface MasterInfoDialog {
   element: Master;

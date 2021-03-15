@@ -178,19 +178,35 @@ mat-card-content p {
         width: 800px;
     }
 }
-.button_home{
-   border: solid 1.5px #de1920;
-   background-color: #fff;
-   color: #de1920;
-   // align-self: center;
-   // transition: ease-in-out 0.4s;
-   // margin-top: 13px;
-   
-  }
   
-  mat-icon{
+.button_home{
+    border: solid 1.5px #de1920;
+    background-color: #fff;
+    color: #de1920;
+    height: 26px;
+    padding: 0 1em !important;
+    border-radius: 20px !important;
+    line-height: 0px !important;
+    width: 7em;
+    align-self: center;
+    margin-top: 13px;
+    transition: ease-in-out 0.4s;
+}
+
+.button_home:hover {
+    box-shadow: inset 400px 0 0 0 #de1920;
+    //box-shadow: inset 400px 0 0 0 #fff;
+    color: #fff;
+    border: solid 1px #de1920;
+}
+
+.icon{
   font-weight: bold;
-  // position: relative;
-  // margin: 0 30% 40% -20%; 
-  // font-size: 22px;
+  margin-right: 3px;
+  font-size: 15px;
+  height: 15px;
+}
+
+.icon.arrow-down{
+    width: 19px;
 }

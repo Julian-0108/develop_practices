@@ -13,10 +13,14 @@
             <div class="item" fxFlex="20">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Seleccionar maestro</mat-label>
-                    <!-- <mat-icon aria-hidden="false" class="select__icon">search</mat-icon> -->
+                    <mat-icon aria-hidden="false" class="select__icon">search</mat-icon> 
                     <mat-select placeholder="Click para activar la lista" [(ngModel)]="masterSeleted" (selectionChange)="getDataMaster()">
                         <mat-option *ngFor="let master of masters | orderAlphabetically:'name'" [value]="master.url">
-                            {{ master.name }}
+                                {{ master.name }}
+
+                            <mat-icon [matTooltip]="master.sumary" class="content__icon" aria-hidden="false"> 
+                                help 
+                            </mat-icon>
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
