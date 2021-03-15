@@ -1,35 +1,52 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { environment } from "@environments/environment";
-import { pluck } from "rxjs/operators";
-import { Master } from "@shared/interfaces/master.interface";
-import { Response } from "@app/shared/interfaces/response.interface";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '@environments/environment';
+import { pluck } from 'rxjs/operators';
+import { Master } from '@shared/interfaces/master.interface';
+import { Response } from '@app/shared/interfaces/response.interface';
 import { AuthService } from '@app/screens/login/services/auth/auth.service';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class MasterInfoService {
-  constructor(
-    private http: HttpClient,
-    private authService: AuthService
-  ) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
-  getData(url: string): Promise<Master[]>{
+  getData(url: string, id?: string): Promise<Master[]> {
+    // if (id) {
     return this.http
-      .get<Response>(`${environment.API_MASTER_INFO}/${url}`)
-      .pipe(pluck<Response, Master[]>('payload') )
+      .get<Response>(
+        id ? `${environment.API_MASTER_INFO}/${url}/${id}` : `${environment.API_MASTER_INFO}/${url}`
+      )
+      .pipe(pluck<Response, Master[]>('payload'))
       .toPromise();
+    // }
+    // return this.http
+    //   .get<Response>(`${environment.API_MASTER_INFO}/${url}`)
+    //   .pipe(pluck<Response, Master[]>('payload') )
+    //   .toPromise();
   }
 
-  getTypes(param: any): Promise<any>{
+  getTypes(param: any): Promise<any> {
     const url = param.name[0].name;
     return this.http
-      .get(`${environment.API_MASTER_INFO}/types?masterReference=${encodeURIComponent(url)}&status=true`)
+      .get(
+        `${environment.API_MASTER_INFO}/types?masterReference=${encodeURIComponent(
+          url
+        )}&status=true`
+      )
       .pipe(pluck('payload'))
       .toPromise();
   }
 
+  getSkills() {
+    return this.http
+      .get(
+        `${environment.API_MASTER_INFO}/base-teams-categories?status=true&type=Habilidad&submenu=true`
+      )
+      .pipe(pluck('payload'))
+      .toPromise();
+  }
   addRegisterToMaster(url: string, register: any) {
     return this.http.post(`${environment.API_MASTER_INFO}/${url}`, register).toPromise();
   }

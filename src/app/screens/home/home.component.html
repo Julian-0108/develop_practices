@@ -13,8 +13,8 @@
         <div class="separator__circle"></div>
     </div>
     <div class="cards">
+        <!-- *ngFor="let card of cards | cards"  (CON PIPE, no borrar)-->
         <ng-container *ngFor="let card of cards">
-            <!-- *ngFor="let card of cards | cards"  (CON PIPE, no borrar)-->
             <mat-card [routerLink]="card.url" *ngIf="card.status" matRipple matRippleCentered="centered" matRippleColor="#ff000019">
                 <img mat-card-image src="{{ API_MASTER_INFO }}{{ card.imagePath }}" appNotImage>
                 <mat-card-content>

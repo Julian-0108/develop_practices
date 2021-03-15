@@ -1,0 +1,118 @@
+<div fxLayout="column" fxLayoutAlign="center">
+  <h1 class="history__title">Historial</h1>
+  <form [formGroup]="formFilterHistory" novalidate autocomplete="off" fxLayout="row" class="history__form">
+    <div class="item" fxFlex="50">
+      <mat-form-field floatLabel="always" appearance="none">
+        <mat-label>Fecha Inicial</mat-label>
+        <input [disabled]="historyFilter.length === 0" placeholder="dd/mm/yyyy" (dateInput)="onSelectStartDate($event)"
+          matInput class="disabled" [matDatepicker]="pickerStart" readonly formControlName="startDate"
+          (click)="pickerStart.open()">
+        <mat-datepicker-toggle [disabled]="historyFilter.length === 0" matSuffix [for]="pickerStart"
+          class="datePicker__icon"></mat-datepicker-toggle>
+        <mat-datepicker #pickerStart disabled="false"></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="item" fxFlex="50">
+      <mat-form-field floatLabel="always" appearance="none">
+        <mat-label>Fecha Final</mat-label>
+        <input [disabled]="historyFilter.length === 0" placeholder="dd/mm/yyyy" (dateInput)="onSelectEndDate($event)"
+          matInput [matDatepicker]="pickerEnd" class="disabled" readonly formControlName="endDate"
+          (click)="pickerEnd.open()">
+        <mat-datepicker-toggle [disabled]="historyFilter.length === 0" matSuffix [for]="pickerEnd"
+          class="datePicker__icon"></mat-datepicker-toggle>
+        <mat-datepicker #pickerEnd disabled="false"></mat-datepicker>
+      </mat-form-field>
+
+    </div>
+  </form>
+  <div class="stepper__container">
+    <div *ngIf="historyFilter.length === 0">
+      <div class="not-found__image"></div>
+      <h1 class="not-found__title">No hay registros disponibles.</h1>
+    </div>
+    <mat-vertical-stepper #stepper [disableRipple]="true">
+      <mat-step *ngFor="let step of historyFilter">
+        <ng-template *ngIf="" matStepLabel class="step__label">{{step.showDate}}</ng-template>
+        <mat-card class="history">
+          <ng-container>
+            <div class="history__information">
+              <p class="history-information__pagraph">
+                <mat-label class="history-information__title">Autor del cambio: </mat-label>{{step.author}}
+              </p>
+            </div>
+            <div class="history__section">
+              <p class="history-information__pagraph">
+                <mat-label class="history-information__title">Descripción: </mat-label>{{step.descriptionChanges}}
+              </p>
+            </div>
+            <div class="history__section">
+              <p class="history-information__pagraph">
+                <mat-label class="history-information__title">Fecha: </mat-label>
+                {{step.createdAt | date: 'dd/MM/yyyy'}}
+              </p>
+            </div>
+            <!-- <div class="history__preview-container">
+              <button mat-icon-button class="history__preview-button" (click)="onPreview(step._id)"
+                [disableRipple]="true">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </div> -->
+          </ng-container>
+          <ng-container>
+            <mat-icon matTooltipPosition="right" matTooltipClass="custom-tooltip__history" class="description__icon"
+            aria-hidden="false" matTooltip="Esta previsualización corresponde a la modificación que se realizó el día">
+            info</mat-icon>
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z0">
+
+              <!-- Position Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Nombre</th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="levels">
+                <th mat-header-cell *matHeaderCellDef> Niveles </th>
+                <td mat-cell *matCellDef="let element">
+                  <div fxLayout="row" fxLayoutAlign="space-around center">
+                    <span *ngFor="let level of element.levels">
+                      <div class="chip"
+                        [ngClass]="{'chip__level--n1' : level === 'N1', 'chip__level--n2' : level === 'N2', 'chip__level--n3' : level === 'N3'}">
+                        {{level}}</div>
+                    </span>
+                  </div>
+                </td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Estado </th>
+                <td mat-cell *matCellDef="let element">
+                  <div fxLayout="row" fxLayoutAlign="space-around center">
+                    <span>
+                      <div class="chip chip__status"
+                      [ngClass]="{'chip__status--active': element.status, 'chip__status--inactive':!element.status}">
+                      {{element.status ? 'Activo' : 'Inactivo'}}</div>
+                    </span>
+                  </div>
+                 </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </ng-container>
+          <div class="history__preview-container">
+            <button mat-icon-button class="history__preview-button" (click)="onPreview(step._id)"
+              [disableRipple]="true">
+              <mat-icon>visibility</mat-icon>
+            </button>
+          </div>
+
+        </mat-card>
+      </mat-step>
+      <ng-template matStepperIcon="number"></ng-template>
+      <ng-template matStepperIcon="edit"></ng-template>
+    </mat-vertical-stepper>
+  </div>
+</div>

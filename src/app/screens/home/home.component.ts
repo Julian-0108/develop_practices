@@ -8,7 +8,7 @@ import { ViewportScroller } from '@angular/common';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
 
@@ -17,6 +17,8 @@ export class HomeComponent implements OnInit {
 
   public cards: any;
   public API_MASTER_INFO = environment.API_MASTER_INFO;
+  // sortOrder: any = [];
+  sortOrder: any = ['Sitios SETI', 'Perfilamiento', 'Universidad SETI', 'Administrar Recursos'];
 
   constructor(private homeService: HomeService, private router: Router, private viewportScroller: ViewportScroller) {
     this.router.events.pipe(filter((evt: any) => evt instanceof RoutesRecognized), pairwise()).subscribe((events: RoutesRecognized[]) => {
@@ -43,11 +45,15 @@ export class HomeComponent implements OnInit {
   }
 
   getModules(): void {
-    this.homeService.getModules()
-    .then( res => {
-      this.cards = res;
-    })
-    .catch(err => console.log(err))
+    this.homeService
+      .getModules()
+      .then((res) => {
+        res.sort((a: any, b: any) => {
+          return this.sortOrder.indexOf(a.name) - this.sortOrder.indexOf(b.name);
+        });
+        this.cards = res;
+      })
+      .catch((err) => console.log(err));
   }
 
   scrollDown(){
