@@ -26,6 +26,7 @@
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@ngtools/webpack": "^9.1.8",
     "angularx-qrcode": "^2.1.1",
+    "dayjs": "^1.10.4",
     "lottie-web": "^5.7.6",
     "moment": "^2.29.1",
     "ng-lottie": "^0.3.2",

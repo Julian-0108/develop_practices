@@ -4,7 +4,7 @@
     <div class="item" fxFlex="50">
       <mat-form-field floatLabel="always" appearance="none">
         <mat-label>Fecha Inicial</mat-label>
-        <input [disabled]="historyFilter.length === 0" placeholder="dd/mm/yyyy" (dateInput)="onSelectStartDate($event)"
+        <input placeholder="dd/mm/yyyy" (dateInput)="onSelectStartDate($event)"
           matInput class="disabled" [matDatepicker]="pickerStart" readonly formControlName="startDate"
           (click)="pickerStart.open()">
         <mat-datepicker-toggle [disabled]="historyFilter.length === 0" matSuffix [for]="pickerStart"
@@ -15,7 +15,7 @@
     <div class="item" fxFlex="50">
       <mat-form-field floatLabel="always" appearance="none">
         <mat-label>Fecha Final</mat-label>
-        <input [disabled]="historyFilter.length === 0" placeholder="dd/mm/yyyy" (dateInput)="onSelectEndDate($event)"
+        <input placeholder="dd/mm/yyyy" (dateInput)="onSelectEndDate($event)"
           matInput [matDatepicker]="pickerEnd" class="disabled" readonly formControlName="endDate"
           (click)="pickerEnd.open()">
         <mat-datepicker-toggle [disabled]="historyFilter.length === 0" matSuffix [for]="pickerEnd"
@@ -32,9 +32,9 @@
     </div>
     <mat-vertical-stepper #stepper [disableRipple]="true">
       <mat-step *ngFor="let step of historyFilter">
-        <ng-template *ngIf="" matStepLabel class="step__label">{{step.showDate}}</ng-template>
+        <ng-template *ngIf="" matStepLabel class="step__label">{{step.showDate}}</ng-template >
         <mat-card class="history">
-          <ng-container>
+          <ng-container *ngIf="step._id !== historySelected">
             <div class="history__information">
               <p class="history-information__pagraph">
                 <mat-label class="history-information__title">Autor del cambio: </mat-label>{{step.author}}
@@ -48,7 +48,7 @@
             <div class="history__section">
               <p class="history-information__pagraph">
                 <mat-label class="history-information__title">Fecha: </mat-label>
-                {{step.createdAt | date: 'dd/MM/yyyy'}}
+                {{step.updatedAt | date: 'dd/MM/yyyy'}}
               </p>
             </div>
             <!-- <div class="history__preview-container">
@@ -58,9 +58,9 @@
               </button>
             </div> -->
           </ng-container>
-          <ng-container>
+          <ng-container *ngIf="step._id === historySelected">
             <mat-icon matTooltipPosition="right" matTooltipClass="custom-tooltip__history" class="description__icon"
-            aria-hidden="false" matTooltip="Esta previsualización corresponde a la modificación que se realizó el día">
+            aria-hidden="false" matTooltip="Esta previsualización corresponde a la modificación que se realizó el día: {{step.updatedAt}}">
             info</mat-icon>
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z0">
 
@@ -103,9 +103,13 @@
             </table>
           </ng-container>
           <div class="history__preview-container">
-            <button mat-icon-button class="history__preview-button" (click)="onPreview(step._id)"
+            <button *ngIf="step._id === historySelected" mat-icon-button class="history__preview-button" (click)="outPreview()"
               [disableRipple]="true">
               <mat-icon>visibility</mat-icon>
+            </button>
+            <button *ngIf="historySelected !== step._id" mat-icon-button class="history__preview-button" (click)="onPreview(step._id)"
+              [disableRipple]="true">
+              <mat-icon>visibility_off</mat-icon>
             </button>
           </div>
 
