@@ -95,6 +95,7 @@ body {
     justify-content: flex-end;
 }
 
+
 /* Notification Styles */
 
 .mat-snack-bar-container {
@@ -393,10 +394,6 @@ mat-form-field .mat-form-field-wrapper {
     padding-bottom: 0;
 }
 
-mat-form-field .mat-form-field-infix {
-    padding: 5px 0 0 0;
-}
-
 .mat-form-field-invalid .mat-input-element {
     border-color: #d28588 !important;
 }
@@ -422,7 +419,7 @@ mat-label {
 }
 
 .filter {
-    margin-top: -15px !important;
+    // margin-top: -15px !important;
     width: 95% !important;
 }
 
