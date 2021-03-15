@@ -12,4 +12,5 @@ export interface Master {
   imagePath?: string;
   createdAt?: string;
   updatedAt?: string;
+  idParent?: string;
 }

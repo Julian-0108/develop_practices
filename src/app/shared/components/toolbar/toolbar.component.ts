@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router} from '@angular/router';
 import { AuthService } from '@app/screens/login/services/auth/auth.service';
 
 @Component({
@@ -35,5 +35,9 @@ export class ToolbarComponent implements OnInit {
     }
     this.userName = JSON.parse(String(localStorage.getItem('MSauthData'))).user.displayName;
     return this.router.url !== '/login';
+  }
+  
+  redirect(){
+    this.router.navigate(['/home'])
   }
 }

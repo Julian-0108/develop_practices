@@ -33,7 +33,7 @@ button {
 }
 
 .filter-inputs {
-    min-height: 36.8px;
+    min-height: 53.8px;
 }
 
 .chip__status {
@@ -120,6 +120,11 @@ button {
     text-align: center !important;
 }
 
+.mat-form-field-infix {
+    // padding: 0px 0px !important;
+    border-top: 1px solid transparent !important;
+}
+
 @media screen and (min-width: 1450px) {
     table {
         font-size: 1.2em !important;
@@ -148,14 +153,12 @@ button {
 }
 
 .select__icon {
-  position: absolute;
+    position: absolute;
     right: 12px;
     color: #c3c3c3;
 }
 
-
-
-.icon{
+.icon {
     position: absolute;
     top: -22px;
     font-size: 21px;

@@ -22,7 +22,8 @@
     
     <!-- <p class="text">Selecciona una opción de las siguientes, para continuar explorando.</p> -->
     <div class="cards">
-        <ng-container *ngFor="let card of cards | cards">
+        <!-- *ngFor="let card of cards | cards"  (CON PIPE, no borrar)-->
+        <ng-container *ngFor="let card of cards">
             <mat-card [routerLink]="card.url" *ngIf="card.status" matRipple matRippleCentered="centered" matRippleColor="#ff000019">
                 <img mat-card-image src="{{ API_MASTER_INFO }}{{ card.imagePath }}" appNotImage>
                 <mat-card-content>
