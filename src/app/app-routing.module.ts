@@ -95,6 +95,10 @@ const routes: Routes = [
     loadChildren: () => import('./screens/error/error.module').then((m) => m.ErrorModule),
   },
   {
+    path: 'underConstruction',
+    loadChildren: () => import('./screens/error/error.module').then((m) => m.ErrorModule),
+  },
+  {
     path: '**',
     loadChildren: () => import('./screens/error/error.module').then((m) => m.ErrorModule),
   },

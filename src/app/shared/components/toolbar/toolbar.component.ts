@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, Scroll } from '@angular/router';
+import { Router} from '@angular/router';
 import { AuthService } from '@app/screens/login/services/auth/auth.service';
-import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-toolbar',

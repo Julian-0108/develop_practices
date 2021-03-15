@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HomeService } from './services/home.service';
 import { environment } from "@environments/environment";
-import { Router, Scroll } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { Location, ViewportScroller } from '@angular/common';
+import { Router, RoutesRecognized, Scroll } from '@angular/router';
+import { filter, pairwise } from 'rxjs/operators';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -21,12 +21,23 @@ export class HomeComponent implements OnInit {
   sortOrder: any = ['Sitios SETI', 'Perfilamiento', 'Universidad SETI', 'Administrar Recursos'];
 
   constructor(private homeService: HomeService, private router: Router, private viewportScroller: ViewportScroller) {
-    this.router.events.pipe(filter(e => e instanceof Scroll)).subscribe((e: any) => {
-        setTimeout(() => {
-          this.viewportScroller.scrollToPosition([0, 10000]);
-        }
-        );
-      });
+    this.router.events.pipe(filter((evt: any) => evt instanceof RoutesRecognized), pairwise()).subscribe((events: RoutesRecognized[]) => {
+      if (events[0].urlAfterRedirects !== "/login") {
+        this.router.events.pipe(filter(e => e instanceof Scroll)).subscribe((e: any) => {
+          setTimeout(() => {
+            this.viewportScroller.scrollToPosition([0, 10000]);
+          }
+          );
+        });
+      }else if (events[0].urlAfterRedirects == "/login") {
+        this.router.events.pipe(filter(e => e instanceof Scroll)).subscribe((e: any) => {
+          setTimeout(() => {
+            this.viewportScroller.scrollToPosition([0, 0]);
+          }
+          );
+        });
+      }
+    });
   }
 
   ngOnInit(): void {
