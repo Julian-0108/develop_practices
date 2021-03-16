@@ -16,7 +16,7 @@ import { Masters } from './interfaces/master-info-dialog';
 })
 export class AdminMasterInfoComponent implements OnInit {
 
-  
+  otherIcon!: boolean;
 
   public displayedColumns: string[] = [
     'name',
@@ -33,15 +33,15 @@ export class AdminMasterInfoComponent implements OnInit {
 
   public readonly masters: Masters[] = [
     { name: 'Habilidades de equipo', url: 'base-teams-categories', sumary: 'Hola Wiil' },
-    { name: 'Cursos y certificaciones', url: 'courses-certifications' , sumary: 'Gracias Wiil'  },
-    { name: 'Competencias corporativas', url: 'skills' , sumary: 'sumary of skills'  },
-    { name: 'Funciones', url: 'functions' , sumary: 'sumary of functions'  },
-    { name: 'Módulos', url: 'modules' , sumary: 'sumary of base-teams-categories'  },
-    { name: 'Conocimientos específicos', url: 'specific-knowledge' , sumary: 'sumary of base-teams-categories'  },
-    { name: 'Estudios', url: 'studies' , sumary: 'sumary of base-teams-categories'  },
-    { name: 'Herramientas de trabajo', url: 'work-tools' , sumary: 'sumary of base-teams-categories'  },
-    { name: 'Tipos', url: 'types' , sumary: 'sumary of base-teams-categories'  },
-    { name: 'Responsabilidades de seguridad', url: 'security-responsabilities' , sumary: 'sumary of base-teams-categories'  },
+    { name: 'Cursos y certificaciones', url: 'courses-certifications' , sumary: 'Wiiiiiil'  },
+    { name: 'Competencias corporativas', url: 'skills' , sumary: 'Holi Hanni'  },
+    { name: 'Funciones', url: 'functions' , sumary: '****'  },
+    { name: 'Módulos', url: 'modules' , sumary: '****'},
+    { name: 'Conocimientos específicos', url: 'specific-knowledge' , sumary: 'Gracias Hanni'  },
+    { name: 'Estudios', url: 'studies' , sumary: '****'  },
+    { name: 'Herramientas de trabajo', url: 'work-tools' , sumary: '****'  },
+    { name: 'Tipos', url: 'types' , sumary: '****s'  },
+    { name: 'Responsabilidades de seguridad', url: 'security-responsabilities' , sumary: '****'  },
   ];
 
   public masterSeleted: string = '';
