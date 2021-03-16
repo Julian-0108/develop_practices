@@ -17,6 +17,8 @@ import { Masters } from './interfaces/master-info-dialog';
 export class AdminMasterInfoComponent implements OnInit {
 
   otherIcon!: boolean;
+  open: boolean = false;
+  help: string = "help";
 
   public displayedColumns: string[] = [
     'name',
@@ -33,7 +35,7 @@ export class AdminMasterInfoComponent implements OnInit {
 
   public readonly masters: Masters[] = [
     { name: 'Habilidades de equipo', url: 'base-teams-categories', sumary: 'Hola Wiil' },
-    { name: 'Cursos y certificaciones', url: 'courses-certifications' , sumary: 'Wiiiiiil'  },
+    { name: 'Cursos y certificaciones', url: 'courses-certifications' , sumary: 'Wiiiiiil', icon: 'help'},
     { name: 'Competencias corporativas', url: 'skills' , sumary: 'Holi Hanni'  },
     { name: 'Funciones', url: 'functions' , sumary: '****'  },
     { name: 'Módulos', url: 'modules' , sumary: '****'},
@@ -60,6 +62,7 @@ export class AdminMasterInfoComponent implements OnInit {
   ngOnInit(): void {}
 
   getDataMaster() {
+    console.log(this.masterSeleted);
     this.masterInfoService.getData(this.masterSeleted).then((res) => {
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
@@ -110,9 +113,12 @@ export class AdminMasterInfoComponent implements OnInit {
     }
   }
 
-   
-applyDirectFilter(e:any) {​​​​​​​​
-  this.dataSource.filter= e.value;
-    }​​​​​​​​
+  applyDirectFilter(e:any) {​​​​​​​​
+    this.dataSource.filter= e.value;
+  }
+    
+  ​​isOpen(){
+    this.open= true;
+  }​​​​​​
   
 }

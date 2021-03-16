@@ -8,6 +8,7 @@ export interface Masters {
   name?: string;
   url?: string;
   sumary?: string;
+  icon?: string;
 }
 export interface MasterInfoDialog {
   element: Master;

@@ -12,13 +12,13 @@
         <div fxLayout="row" fxLayoutAlign="start end">
             <div class="item" fxFlex="20">
                 <mat-form-field floatLabel="always" appearance="none">
-                    <mat-label class="label">Seleccionar maestro</mat-label>
-                    <!--<mat-icon aria-hidden="false" class="select__icon">search</mat-icon>-->
+                    <mat-label>Seleccionar maestro</mat-label>
                     <mat-select placeholder="Click para activar la lista" [(ngModel)]="masterSeleted" (selectionChange)="getDataMaster()">
                         <mat-option *ngFor="let master of masters | orderAlphabetically:'name'" [value]="master.url">
-                                {{ master.name }}
-                            <mat-icon [matTooltip]="master.sumary">help</mat-icon>
+                            {{master.name}}
+                            <mat-icon matTooltipClass="custom-tooltip" [matTooltip]="master.sumary" class="content__icon">help</mat-icon>
                         </mat-option>
+                        <mat-select-trigger>{{masterSeleted}}</mat-select-trigger>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -56,7 +56,7 @@
                                 <div class="filter-inputs">
                                     <mat-form-field floatLabel="always" appearance="none">
                                         <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
-                                        <mat-icon [ngStyle]="{'margin': otherIcon || true ? '0px -25px': '0 -15px'}" class="icon" matSuffix>search</mat-icon>
+                                        <mat-icon [ngStyle]="{'margin': otherIcon || true ? '0px -50px': '0 -15px'}" class="icon" matSuffix>search</mat-icon>
                                     </mat-form-field>
                                 </div>
                             </th>
