@@ -61,7 +61,10 @@ export class HomeComponent implements OnInit {
   }
 
   scrollUp(){
-    this.home?.nativeElement.scrollIntoView({behavior:'smooth'});
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
   }
 
 

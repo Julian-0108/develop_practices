@@ -9,6 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Masters } from './interfaces/master-info-dialog';
 
+
 @Component({
   selector: 'app-admin-master-info',
   templateUrl: './admin-master-info.component.html',
@@ -50,6 +51,7 @@ export class AdminMasterInfoComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true, read: MatSort }) sort!: MatSort;
   dataSource!: MatTableDataSource<Master>;
+  result!: any;
 
   constructor(
     private title: Title,
@@ -62,7 +64,6 @@ export class AdminMasterInfoComponent implements OnInit {
   ngOnInit(): void {}
 
   getDataMaster() {
-    console.log(this.masterSeleted);
     this.masterInfoService.getData(this.masterSeleted).then((res) => {
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
@@ -119,6 +120,16 @@ export class AdminMasterInfoComponent implements OnInit {
     
   ​​isOpen(){
     this.open= true;
+  }
+  
+  getSelectedValue() { 
+ 
+    const resultmaster = this.masters.find( (resp)=>{
+      return resp.url == this.masterSeleted;
+    });
+ 
+    this.result = resultmaster?.name;
+ 
   }​​​​​​
   
 }
