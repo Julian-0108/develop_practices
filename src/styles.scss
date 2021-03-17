@@ -35,7 +35,7 @@ body {
     background-color: #555;
 }
 
-.button-back__icon {
+.back__icon {
     transform: scale(2);
     padding: 1em 2em 0;
 }
@@ -143,6 +143,7 @@ body {
     line-height: 0px !important;
     width: 7em;
 }
+
 
 .button--accept {
     background-color: var(--primary-color) !important;

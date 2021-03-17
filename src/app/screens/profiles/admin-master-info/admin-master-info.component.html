@@ -12,13 +12,15 @@
         <div fxLayout="row" fxLayoutAlign="start end">
             <div class="item" fxFlex="20">
                 <mat-form-field floatLabel="always" appearance="none">
-                    <mat-label class="label">Seleccionar maestro</mat-label>
-                    <!-- <mat-icon aria-hidden="false" class="select__icon">search</mat-icon> -->
-                    <mat-select placeholder="Click para activar la lista" [(ngModel)]="masterSeleted" (selectionChange)="getDataMaster()">
-                        <mat-option *ngFor="let master of masters | orderAlphabetically:'name'" [value]="master.url">
-                            {{ master.name }}
+                    <mat-label>Seleccionar maestro</mat-label>
+                    <mat-select #ej placeholder="Click para activar la lista" [(ngModel)]="masterSeleted" (selectionChange)="getDataMaster()">
+                        <mat-select-trigger>{{result}}</mat-select-trigger>
+                        <mat-option *ngFor="let master of masters | orderAlphabetically:'name'" [value]="master.url" (click)="getSelectedValue()">       
+                            {{master.name}} 
+                              
+                            <mat-icon  [matTooltip]="master.sumary" class="content__icon" >help</mat-icon>
                         </mat-option>
-                    </mat-select>
+                    </mat-select>           
                 </mat-form-field>
             </div>
         </div>
@@ -42,6 +44,7 @@
                                 <div class="filter-inputs">
                                     <mat-form-field floatLabel="always" appearance="none">
                                         <input matInput class="filter" (keyup)="applyFilter($event)" type="text">
+                                        <mat-icon [ngStyle]="{'margin': otherIcon || true ? '0px -30px': '0 -15px'}" class="icon" matSuffix>search</mat-icon>
                                     </mat-form-field>
                                 </div>
                             </th>
@@ -54,7 +57,7 @@
                                 <div class="filter-inputs">
                                     <mat-form-field floatLabel="always" appearance="none">
                                         <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
-                                        <mat-icon [ngStyle]="{'margin':'0 -25px'}" class="icon" matSuffix>search</mat-icon>
+                                            <mat-icon class="icon" [ngStyle]="{'margin': masterSeleted == 'security-responsabilities' ? '0 -50px': '0 -25px'}" matSuffix>search</mat-icon>
                                     </mat-form-field>
                                 </div>
                             </th>
