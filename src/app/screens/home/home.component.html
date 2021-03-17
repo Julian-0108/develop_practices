@@ -1,17 +1,26 @@
-<div class="component" #home>
-    <div class="description">
+<div  class="component">
+    <div #home class="description">
         <img src="../../../assets/images/home-mundo-seti.png" appNotImage>
         <div class="description__content">
             <p class="description__content--tittle">Bienvenido a Mundo Seti</p>
             <p class="description__content--text">Nuestro portal de gestión para el talento SETI. Aquí encontrarás el acceso a nuestra aplicación de Sitios, Perfiles de cargo y nuestra Universidad SETI</p>
-            <button mat-button (click)="scrollDown()" class="button button__hover">Continuar</button>
+            <button class="button" mat-button (click)="scrollDown()" > 
+                <span>Continuar</span> 
+                <mat-icon class="icon arrow-down">south</mat-icon>
+            </button>
         </div>
     </div>
+
+    
+   
     <div #cardsHTML class="separator">
-        <div class="separator__circle"></div>
-        <div class="separator__circle"></div>
-        <div class="separator__circle"></div>
-    </div>
+        <button  class="button2"  mat-button (click)="scrollUp()">
+            <span>Regresar</span> 
+            <mat-icon class="icon arrow-up">north</mat-icon>
+        </button>
+    </div> 
+    
+    <!-- <p class="text">Selecciona una opción de las siguientes, para continuar explorando.</p> -->
     <div class="cards">
         <!-- *ngFor="let card of cards | cards"  (CON PIPE, no borrar)-->
         <ng-container *ngFor="let card of cards">
