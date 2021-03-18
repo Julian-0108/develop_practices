@@ -1,6 +1,6 @@
 <mat-drawer-container>
   <mat-drawer #drawer class="example-sidenav" mode="over" position="end">
-    <app-history></app-history>
+    <app-history-base-teams [idHistory]="idHistory"></app-history-base-teams>
   </mat-drawer>
 
   <body>
@@ -22,7 +22,7 @@
         </div>
       </div>
 
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <table #e mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
         <ng-container matColumnDef="profiles">
           <th mat-header-cell *matHeaderCellDef class="rowheader"> Perfiles
@@ -107,7 +107,7 @@
             <button mat-icon-button (click)="redirectToProfileTemplate(element._id)" class="button-visualize">
               <mat-icon class="visualize">person</mat-icon>
             </button>
-            <button mat-icon-button (click)="drawer.toggle()" class="button-visualize">
+            <button mat-icon-button (click)="setIdHistory(element);drawer.toggle()" class="button-visualize">
               <mat-icon class="history">history</mat-icon>
             </button>
           </td>

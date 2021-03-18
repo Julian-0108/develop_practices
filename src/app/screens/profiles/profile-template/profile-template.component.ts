@@ -593,7 +593,7 @@ export class ProfileTemplateComponent implements OnInit {
           ...resp,
           idBaseTeam: this.data.idBaseTeam,
           idBaseProfile: this.data._id,
-          charge: this.data.charge,
+          name: this.data.name,
           teamName: this.data.teamName,
           status: this.data.status,
         };
@@ -629,7 +629,7 @@ export class ProfileTemplateComponent implements OnInit {
       ...this.sendInformation,
       idBaseTeam: this.data.idBaseTeam,
       idBaseProfile: this.data._id,
-      charge: this.data.charge,
+      name: this.data.name,
       teamName: this.data.teamName,
       status: this.data.status,
     };
