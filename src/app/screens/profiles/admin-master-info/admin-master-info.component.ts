@@ -20,6 +20,7 @@ export class AdminMasterInfoComponent implements OnInit {
   otherIcon!: boolean;
   open: boolean = false;
   help: string = "help";
+  idHistory!: string;
 
   public displayedColumns: string[] = [
     'name',
@@ -32,7 +33,6 @@ export class AdminMasterInfoComponent implements OnInit {
     'submenu',
     'actions',
   ];
-
 
   public readonly masters: Masters[] = [
     { name: 'Habilidades de equipo', url: 'base-teams-categories', sumary: 'Hola Wiil' },
@@ -78,7 +78,7 @@ export class AdminMasterInfoComponent implements OnInit {
       );
     } else if (this.masterSeleted === 'security-responsabilities') {
       return this.displayedColumns.filter(
-        (el) => el !== 'type' && el !== 'description' && el !== 'submenu' && el !=='reference'
+        (el) => el !== 'type' && el !== 'description' && el !== 'submenu' && el !== 'reference'
       );
     } else {
       return this.displayedColumns.filter((el) => el !== 'reference');
@@ -94,12 +94,12 @@ export class AdminMasterInfoComponent implements OnInit {
           title: element ? 'Editar' : 'Agregar',
           url: this.masterSeleted,
           name: this.masters.filter((el: any) => el.url === this.masterSeleted),
-          masters: this.masters
+          masters: this.masters,
         },
       })
       .afterClosed();
     dialogRef.toPromise().then((response: any) => {
-      if (response?.data) {
+      if (response) {
         this.getDataMaster();
       }
     });
@@ -114,22 +114,25 @@ export class AdminMasterInfoComponent implements OnInit {
     }
   }
 
-  applyDirectFilter(e:any) {​​​​​​​​
-    this.dataSource.filter= e.value;
+  applyDirectFilter(e: any) {
+    this.dataSource.filter = e.value;
   }
-    
+  setId(el: any) {
+    this.idHistory = el;
+  }
+
   ​​isOpen(){
     this.open= true;
   }
-  
-  getSelectedValue() { 
- 
+
+  getSelectedValue() {
+
     const resultmaster = this.masters.find( (resp)=>{
       return resp.url == this.masterSeleted;
     });
- 
+
     this.result = resultmaster?.name;
- 
+
   }​​​​​​
-  
+
 }

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { MasterInfoService } from '../services/master-info.service';
 import { MasterInfoDialog, Masters } from '../interfaces/master-info-dialog';
@@ -9,6 +9,8 @@ import { CustomValidatorService } from '@shared/utils/custom-validator.service';
 import { ProfileOptionsService } from '../../profile-options/services/profile-options.service';
 import { SnackOptionsInterface } from '@shared/interfaces/notification.interface';
 import { MatSelect } from '@angular/material/select';
+import { ProfileFormHistoryComponent } from '../../profile-template/profile-form-history/profile-form-history.component';
+import { HistoryMastersService } from '../history/service/history-master.service';
 
 @Component({
   selector: 'app-master-info',
@@ -35,6 +37,8 @@ export class MasterInfoComponent implements OnInit {
     private profileOptionsService: ProfileOptionsService,
     private customValidator: CustomValidatorService,
     private dialogRef: MatDialogRef<MasterInfoComponent>,
+    private _dialog: MatDialog,
+    private historyMastersService: HistoryMastersService,
     @Inject(MAT_DIALOG_DATA) public data: MasterInfoDialog
   ) {}
 
@@ -184,7 +188,122 @@ export class MasterInfoComponent implements OnInit {
   }
 
   updateRegisterToMaster() {
-    this.masterInfoService
+  this.updateRegister(false);
+  }
+  updateRegisterWithImageToMaster() {
+    this.updateRegister(true);
+  }
+
+  updateRegister(haveImage: boolean) {
+    console.log(this.data.url, this.data.element._id, this.createFormData());
+    const saveHistorial: SnackOptionsInterface = {
+      title: 'Guardar en Historial',
+      message: '¿Desea que el registro de los cambios se guarde en el historial?',
+      type: 'warning',
+      action: 'Con Historial',
+      contraryAction: 'Sin Historial',
+    };
+    this.notificationService
+      .openComplexSnackBar(saveHistorial)
+      .afterClosed()
+      .subscribe((resp) => {
+        if (resp === 'close') return;
+        if (resp) {
+          this.onUpdatewithHistory(this.data.element._id, this.createFormData(), haveImage);
+        } else {
+          this.onUpdateWithOutHistory(haveImage);
+        }
+      });
+  }
+  onUpdatewithHistory(id: any, data: any, withImage: boolean) {
+    /*
+     * Se abre el formulario donde se ingresa la descripción de los cambios,
+     * que se guardarán en el historial.
+     */
+    this._dialog
+      .open(ProfileFormHistoryComponent, {
+        data: {
+          ...data,
+        },
+        autoFocus: false,
+      })
+      .afterClosed()
+      .subscribe((resp: any) => {
+        /*
+         * Acciones que se activan al dar click en el botón "guardar" del formulario.
+         */
+        resp = {
+          ...resp,
+          idMaster: id,
+          ...withImage ? this.form.getRawValue() : this.form.value,
+        };
+        delete resp[`_id`];
+        /*
+         * Se Guarda la información en historial y se actualiza la información del
+         * perfil.
+         */
+        if (withImage){
+          this.masterInfoService
+            .updateToMasterWithImages(this.data.url, this.data.element._id, this.createFormData())
+            ?.then(() => {
+              this.historyMastersService.hitoryActionsAdminMaster('post', id, resp);
+            })
+            .then((response: any) => {
+              console.log(response);
+              this.notificationService.openSimpleSnackBar({
+                title: 'Operación Finalizada',
+                message: 'La información se ha actualizado con éxito y su historial fue creado.',
+                type: 'success',
+              });
+              this.onClose();
+            })
+            .catch((error) => {
+              this.notificationService.openSimpleSnackBar({
+                title: 'Ocurrió un Error',
+                message: error.message,
+                type: 'error',
+              });
+            });
+        } else {
+          this.masterInfoService
+          .updateRegisterToMaster(this.data.url, this.data.element._id, this.form.value)
+          ?.then(() => {
+            this.historyMastersService.hitoryActionsAdminMaster('post', id, resp);
+          })
+          .then((response: any) => {
+            console.log(response);
+            this.notificationService.openSimpleSnackBar({
+              title: 'Operación Finalizada',
+              message: 'La información se ha actualizado con éxito y su historial fue creado.',
+              type: 'success',
+            });
+            this.onClose();
+          })
+          .catch((error) => {
+            this.notificationService.openSimpleSnackBar({
+              title: 'Ocurrió un Error',
+              message: error.message,
+              type: 'error',
+            });
+          });
+        }
+      });
+  }
+
+  onUpdateWithOutHistory(withImage: boolean) {
+    if (withImage) {
+      this.masterInfoService
+        .updateToMasterWithImages(this.data.url, this.data.element._id, this.createFormData())
+        .then((response: any) => this.showNotification(response))
+        .catch((err) => {
+          this.notificationService.openSimpleSnackBar({
+            title: 'Error Inesperado',
+            message: err.message,
+            type: 'error',
+          });
+        });
+    } else {
+      this.masterInfoService
       .updateRegisterToMaster(this.data.url, this.data.element._id, this.form.value)
       .then((response: any) => this.showNotification(response))
       .catch((err) => {
@@ -194,22 +313,8 @@ export class MasterInfoComponent implements OnInit {
           type: 'error',
         });
       });
+    }
   }
-
-  updateRegisterWithImageToMaster() {
-    console.log(this.data.url, this.data.element._id, this.createFormData());
-    this.masterInfoService
-      .updateToMasterWithImages(this.data.url, this.data.element._id, this.createFormData())
-      .then((response: any) => this.showNotification(response))
-      .catch((err) => {
-        this.notificationService.openSimpleSnackBar({
-          title: 'Error Inesperado',
-          message: err.message,
-          type: 'error',
-        });
-      });
-  }
-
   onFileChange(event: any) {
     this.form.get('imagePath')?.patchValue(event.target.files[0].name);
 
@@ -227,7 +332,7 @@ export class MasterInfoComponent implements OnInit {
     });
   }
 
-  onClose(data: any = null): void {
+  onClose(data: any = {}): void {
     this.dialogRef.close(data);
   }
 
@@ -272,8 +377,8 @@ export class MasterInfoComponent implements OnInit {
       this.form.get('submenu')?.disable();
       this.form.get('submenu')?.patchValue(false);
       this.form.get('idParent')?.enable();
-      console.log('FORM',this.form.value)
-      console.log('FORM2',this.form.getRawValue())
+      console.log('FORM', this.form.value);
+      console.log('FORM2', this.form.getRawValue());
       this.form.controls.idParent?.setValidators([Validators.required]);
       this.form.controls.idParent?.updateValueAndValidity();
       return;
@@ -284,20 +389,21 @@ export class MasterInfoComponent implements OnInit {
     this.form.controls.idParent?.clearValidators();
   }
 
-  changeSubgroupOption(event: any){
+  changeSubgroupOption(event: any) {
     if (this.data.element) {
       const id: any = this.data.element._id;
       this.profileOptionsService.getSubBaseTeams(id).then((res: any) => {
         if (res.map((item: any) => item.status === true).length !== 0 && !event.value) {
           this.notificationService.openSimpleSnackBar({
             title: 'Acción no Válida',
-            message: 'No puede cambiar el valor de "Subgrupo", porque la habilidad ya tiene subgrupos asignados.',
+            message:
+              'No puede cambiar el valor de "Subgrupo", porque la habilidad ya tiene subgrupos asignados.',
             type: 'error',
           });
           this.form.get('submenu')?.patchValue(true);
-        };
-    })
-  }
+        }
+      });
+    }
   }
 
   changeStatusOption(event: any) {
@@ -307,7 +413,8 @@ export class MasterInfoComponent implements OnInit {
           if (res.type !== 'Habilidad' || !res.submenu) {
             this.notificationService.openSimpleSnackBar({
               title: 'Acción no Válida',
-              message: 'No puede cambiar el valor del estado. La habilidad a la que pertenecía el subgrupo no está disponible o no incluye subgrupos.',
+              message:
+                'No puede cambiar el valor del estado. La habilidad a la que pertenecía el subgrupo no está disponible o no incluye subgrupos.',
               type: 'error',
             });
             this.form.get('status')?.patchValue(false);
@@ -345,7 +452,6 @@ export class MasterInfoComponent implements OnInit {
             this.submenuDisabled(ev);
           });
         } else if (ev.value === 'Habilidad') {
-
           this.form.get('idParent')?.patchValue(null);
           this.submenuDisabled(ev);
         }

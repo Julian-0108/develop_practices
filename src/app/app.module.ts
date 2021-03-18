@@ -19,8 +19,7 @@ registerLocaleData(localeEsCo, 'es-CO');
 
 @NgModule({
   declarations: [
-    AppComponent,
-  ],
+    AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
