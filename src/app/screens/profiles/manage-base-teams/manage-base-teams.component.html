@@ -11,7 +11,8 @@
         <h2 class="main-subtitle">{{ name }}</h2>
       </div>
     </div>
-    <div class="content">
+
+    <table #e mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
       <div class="button__container">
         <div class="layer2" (click)="openDialog()">
@@ -22,101 +23,101 @@
         </div>
       </div>
 
-      <table #e mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8"> -->
 
-        <ng-container matColumnDef="profiles">
-          <th mat-header-cell *matHeaderCellDef class="rowheader"> Perfiles
-            <div class="filter-inputs">
-              <mat-form-field floatLabel="always" appearance="none">
-                <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
-              </mat-form-field>
-            </div>
-          </th>
-          <td mat-cell *matCellDef="let element" class="row"> {{element.charge}} </td>
-        </ng-container>
+      <ng-container matColumnDef="profiles">
+        <th mat-header-cell *matHeaderCellDef class="rowheader"> Perfiles
+          <div class="filter-inputs">
+            <mat-form-field floatLabel="always" appearance="none">
+              <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
+            </mat-form-field>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="row"> {{element.charge}} </td>
+      </ng-container>
 
-        <ng-container matColumnDef="levels">
-          <th mat-header-cell *matHeaderCellDef class="rowheader"> Niveles
-            <div class="filter-inputs">
-              <mat-form-field floatLabel="always" appearance="none">
-                <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
-              </mat-form-field>
-            </div>
-          </th>
-          <td mat-cell *matCellDef="let element" class="row">
-            <div class="level"
-              [ngClass]="{'none': !element.level, 'chip__level--n1': element.level=='n1',  'chip__level--n2': element.level=='n2', 'chip__level--n3': element.level=='n3'}">
-              {{element.level | uppercase}}
-            </div>
-          </td>
-        </ng-container>
-
-
-        <ng-container matColumnDef="createdAt">
-          <th mat-header-cell *matHeaderCellDef class="rowheader"> Fecha De Creacion
-            <div class="filter-inputs">
-              <mat-form-field floatLabel="always" appearance="none">
-                <input matInput class="filter" (keyup)="applyFilter($event)" type="date">
-              </mat-form-field>
-            </div>
-          </th>
-          <td mat-cell *matCellDef="let element" class="row"> {{element?.createdAt | date: 'dd/MM/yyyy'}} </td>
-        </ng-container>
+      <ng-container matColumnDef="levels">
+        <th mat-header-cell *matHeaderCellDef class="rowheader"> Niveles
+          <div class="filter-inputs">
+            <mat-form-field floatLabel="always" appearance="none">
+              <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
+            </mat-form-field>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="row">
+          <div class="level"
+            [ngClass]="{'none': !element.level, 'chip__level--n1': element.level=='n1',  'chip__level--n2': element.level=='n2', 'chip__level--n3': element.level=='n3'}">
+            {{element.level | uppercase}}
+          </div>
+        </td>
+      </ng-container>
 
 
-        <ng-container matColumnDef="updatedAt">
-          <th mat-header-cell *matHeaderCellDef class="rowheader"> Fecha De Actualizacion
-            <div class="filter-inputs">
-              <mat-form-field floatLabel="always" appearance="none">
-                <input matInput class="filter" (keyup)="applyFilter($event)" type="date">
-              </mat-form-field>
-            </div>
-          </th>
-          <td mat-cell *matCellDef="let element" class="row"> {{element?.updatedAt | date: 'dd/MM/yyyy'}} </td>
-        </ng-container>
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef class="rowheader"> Fecha De Creacion
+          <div class="filter-inputs">
+            <mat-form-field floatLabel="always" appearance="none">
+              <input matInput class="filter" (keyup)="applyFilter($event)" type="date">
+            </mat-form-field>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="row"> {{element?.createdAt | date: 'dd/MM/yyyy'}} </td>
+      </ng-container>
 
 
-        <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef class="rowheader"> Estado
-            <div class="filter-inputs">
-              <mat-form-field floatLabel="always" appearance="none">
-                <mat-select class="filter" (selectionChange)="applyDirectFilter($event)">
-                  <mat-option value="true">Activo</mat-option>
-                  <mat-option value="false">Inactivo</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </th>
-          <td mat-cell *matCellDef="let element" class="row">
-            <div>
-              <label class="chip__status"
-                [ngClass]="{'chip__status--active':element.status,'chip__status--inactive':!element.status}">{{element?.status ? 'Activo' : 'Inactivo'}}</label>
-            </div>
-          </td>
-        </ng-container>
+      <ng-container matColumnDef="updatedAt">
+        <th mat-header-cell *matHeaderCellDef class="rowheader"> Fecha De Actualizacion
+          <div class="filter-inputs">
+            <mat-form-field floatLabel="always" appearance="none">
+              <input matInput class="filter" (keyup)="applyFilter($event)" type="date">
+            </mat-form-field>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="row"> {{element?.updatedAt | date: 'dd/MM/yyyy'}} </td>
+      </ng-container>
 
 
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef class="rowheader"> Acciones
-            <div class="filter-inputs"></div>
-          </th>
-          <td mat-cell *matCellDef="let element" class="row">
-            <button (click)="openDialog(element)" mat-icon-button class="button-edit">
-              <mat-icon class="edit">edit</mat-icon>
-            </button>
-            <button mat-icon-button (click)="redirectToProfileTemplate(element._id)" class="button-visualize">
-              <mat-icon class="visualize">person</mat-icon>
-            </button>
-            <button mat-icon-button (click)="setIdHistory(element);drawer.toggle()" class="button-visualize">
-              <mat-icon class="history">history</mat-icon>
-            </button>
-          </td>
-        </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef class="rowheader"> Estado
+          <div class="filter-inputs">
+            <mat-form-field floatLabel="always" appearance="none">
+              <mat-select class="filter" (selectionChange)="applyDirectFilter($event)">
+                <mat-option value="true">Activo</mat-option>
+                <mat-option value="false">Inactivo</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="row">
+          <div>
+            <label class="chip__status"
+              [ngClass]="{'chip__status--active':element.status,'chip__status--inactive':!element.status}">{{element?.status ? 'Activo' : 'Inactivo'}}</label>
+          </div>
+        </td>
+      </ng-container>
 
-        <tr class="tr-rowheader" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr class="tr-rows" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-    </div>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="rowheader"> Acciones
+          <div class="filter-inputs"></div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="row">
+          <button (click)="openDialog(element)" mat-icon-button class="button-edit">
+            <mat-icon class="edit">edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="redirectToProfileTemplate(element._id)" class="button-visualize">
+            <mat-icon class="visualize">person</mat-icon>
+          </button>
+          <button mat-icon-button (click)="setIdHistory(element);drawer.toggle()" class="button-visualize">
+            <mat-icon class="history">history</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr class="tr-rowheader" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr class="tr-rows" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <!-- </div> -->
 
   </body>
 </mat-drawer-container>

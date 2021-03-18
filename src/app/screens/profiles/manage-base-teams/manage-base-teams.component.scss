@@ -2,6 +2,10 @@ body {
   padding: 0 20px ;
   height: calc(100vh - 75px) ;
 }
+
+.button-back {
+    top: 10px !important;
+}
 .head {
     display: flex;
     padding-top: 2em;
@@ -75,15 +79,12 @@ td {
 // .blue {
 //     background-color: #a1d2e8;
 // }
-
 // .orange {
 //     background-color: #f9aa6d;
 // }
-
 // .green {
 //     background-color: #71de8e;
 // }
-
 mat-card:hover {
     cursor: pointer;
 }
@@ -105,31 +106,32 @@ mat-card:hover {
 //     color: #68BC6C;
 //     padding: 3px 14px;
 // }
-
 // .chip__status--inactive {
 //     background-color: #F5CFCC;
 //     color: #E06055;
 // }
-
-.visualize, .history {
+.visualize,
+.history {
     border-radius: 100%;
     font-size: 18px;
     padding: 3px;
     font-weight: 600;
 }
+
 .visualize {
     background-color: #F2E3B8;
     color: #DE8219;
     box-shadow: 0px 0px 6px #F2E3B8;
 }
+
 .history {
-  background-color: #eccec7;
-  color: #d88874;
+    background-color: #eccec7;
+    color: #d88874;
     box-shadow: 0px 0px 6px #F2E3B8;
 }
 
 .filter-inputs {
-    min-height: 36.8px;
+    min-height: 53.8px;
 }
 
 select .mat-form-field-infix {

@@ -9,13 +9,19 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Masters } from './interfaces/master-info-dialog';
 
+
 @Component({
   selector: 'app-admin-master-info',
   templateUrl: './admin-master-info.component.html',
   styleUrls: ['./admin-master-info.component.scss'],
 })
 export class AdminMasterInfoComponent implements OnInit {
+
+  otherIcon!: boolean;
+  open: boolean = false;
+  help: string = "help";
   idHistory!: string;
+
   public displayedColumns: string[] = [
     'name',
     'reference',
@@ -29,22 +35,23 @@ export class AdminMasterInfoComponent implements OnInit {
   ];
 
   public readonly masters: Masters[] = [
-    { name: 'Habilidades de equipo', url: 'base-teams-categories' },
-    { name: 'Cursos y certificaciones', url: 'courses-certifications' },
-    { name: 'Competencias corporativas', url: 'skills' },
-    { name: 'Funciones', url: 'functions' },
-    { name: 'Módulos', url: 'modules' },
-    { name: 'Conocimientos específicos', url: 'specific-knowledge' },
-    { name: 'Estudios', url: 'studies' },
-    { name: 'Herramientas de trabajo', url: 'work-tools' },
-    { name: 'Tipos', url: 'types' },
-    { name: 'Responsabilidades de seguridad', url: 'security-responsabilities' },
+    { name: 'Habilidades de equipo', url: 'base-teams-categories', sumary: 'Hola Wiil' },
+    { name: 'Cursos y certificaciones', url: 'courses-certifications' , sumary: 'Wiiiiiil', icon: 'help'},
+    { name: 'Competencias corporativas', url: 'skills' , sumary: 'Holi Hanni'  },
+    { name: 'Funciones', url: 'functions' , sumary: '****'  },
+    { name: 'Módulos', url: 'modules' , sumary: '****'},
+    { name: 'Conocimientos específicos', url: 'specific-knowledge' , sumary: 'Gracias Hanni'  },
+    { name: 'Estudios', url: 'studies' , sumary: '****'  },
+    { name: 'Herramientas de trabajo', url: 'work-tools' , sumary: '****'  },
+    { name: 'Tipos', url: 'types' , sumary: '****s'  },
+    { name: 'Responsabilidades de seguridad', url: 'security-responsabilities' , sumary: '****'  },
   ];
 
   public masterSeleted: string = '';
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true, read: MatSort }) sort!: MatSort;
   dataSource!: MatTableDataSource<Master>;
+  result!: any;
 
   constructor(
     private title: Title,
@@ -113,4 +120,19 @@ export class AdminMasterInfoComponent implements OnInit {
   setId(el: any) {
     this.idHistory = el;
   }
+
+  ​​isOpen(){
+    this.open= true;
+  }
+
+  getSelectedValue() {
+
+    const resultmaster = this.masters.find( (resp)=>{
+      return resp.url == this.masterSeleted;
+    });
+
+    this.result = resultmaster?.name;
+
+  }​​​​​​
+
 }
