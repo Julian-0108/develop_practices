@@ -68,12 +68,10 @@ export class HistoryMasterComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     this.existentDate = '';
     if (changes.idHistory.currentValue !== undefined) {
-      console.log(changes.idHistory.currentValue._id);
       this.idHistoryassigned = changes.idHistory.currentValue._id;
       this.historyMastersService.hitoryActionsAdminMaster('get', this.idHistoryassigned)
         .then((res: any) => {
           this.historyFilter = res.map((item: any) => {
-            // delete item.showDate;
             item.updatedAt = dayjs.default(item.updatedAt).format('YYYY-MM-DD');
             item[`showDate`] = this.showDate(item.updatedAt);
             return item;
