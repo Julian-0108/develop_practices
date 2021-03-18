@@ -2,8 +2,12 @@ import { Component, OnInit, SimpleChanges, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import * as dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import { HistoryMastersService } from './service/history-master.service';
 dayjs.extend(isBetween);
+dayjs.extend(isSameOrBefore);
+dayjs.extend(isSameOrAfter);
 
 @Component({
   selector: 'app-history-master',
