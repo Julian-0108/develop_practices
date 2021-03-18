@@ -238,6 +238,8 @@ export class MasterInfoComponent implements OnInit {
           ...withImage ? this.form.getRawValue() : this.form.value,
         };
         delete resp[`_id`];
+        delete resp[`updatedAt`];
+        delete resp[`createdAt`];
         /*
          * Se Guarda la información en historial y se actualiza la información del
          * perfil.
