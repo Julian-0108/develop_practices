@@ -9,17 +9,15 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Masters } from './interfaces/master-info-dialog';
 
-
 @Component({
   selector: 'app-admin-master-info',
   templateUrl: './admin-master-info.component.html',
   styleUrls: ['./admin-master-info.component.scss'],
 })
 export class AdminMasterInfoComponent implements OnInit {
-
   otherIcon!: boolean;
   open: boolean = false;
-  help: string = "help";
+  help: string = 'help';
   idHistory!: string;
 
   public displayedColumns: string[] = [
@@ -35,16 +33,53 @@ export class AdminMasterInfoComponent implements OnInit {
   ];
 
   public readonly masters: Masters[] = [
-    { name: 'Habilidades de equipo', url: 'base-teams-categories', sumary: 'Lorem Ipsum is simply dummy text of the printing ' },
-    { name: 'Cursos y certificaciones', url: 'courses-certifications' , sumary: 'Lorem Ipsum is simply dummy text of the printing ', icon: 'help'},
-    { name: 'Competencias corporativas', url: 'skills' , sumary: 'Lorem Ipsum is simply dummy text of the printing '  },
-    { name: 'Funciones', url: 'functions' , sumary: 'Lorem Ipsum is simply dummy text of the printing '  },
-    { name: 'Módulos', url: 'modules' , sumary: 'Lorem Ipsum is simply dummy text of the printing '},
-    { name: 'Conocimientos específicos', url: 'specific-knowledge' , sumary: 'Lorem Ipsum is simply dummy text of the printing '  },
-    { name: 'Estudios', url: 'studies' , sumary: 'Lorem Ipsum is simply dummy text of the printing '  },
-    { name: 'Herramientas de trabajo', url: 'work-tools' , sumary: 'Lorem Ipsum is simply dummy text of the printing '  },
-    { name: 'Tipos', url: 'types' , sumary: 'Lorem Ipsum is simply dummy text of the printing '  },
-    { name: 'Responsabilidades de seguridad', url: 'security-responsabilities' , sumary: 'Lorem Ipsum is simply dummy text of the printing '  },
+    {
+      name: 'Habilidades de equipo',
+      url: 'base-teams-categories',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    {
+      name: 'Cursos y certificaciones',
+      url: 'courses-certifications',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      icon: 'help',
+    },
+    {
+      name: 'Competencias corporativas',
+      url: 'skills',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    {
+      name: 'Funciones',
+      url: 'functions',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    {
+      name: 'Módulos',
+      url: 'modules',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    {
+      name: 'Conocimientos específicos',
+      url: 'specific-knowledge',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    {
+      name: 'Estudios',
+      url: 'studies',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    {
+      name: 'Herramientas de trabajo',
+      url: 'work-tools',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    { name: 'Tipos', url: 'types', sumary: 'Lorem Ipsum is simply dummy text of the printing ' },
+    {
+      name: 'Responsabilidades de seguridad',
+      url: 'security-responsabilities',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
   ];
 
   public masterSeleted: string = '';
@@ -121,18 +156,15 @@ export class AdminMasterInfoComponent implements OnInit {
     this.idHistory = el;
   }
 
-  ​​isOpen(){
-    this.open= true;
+  isOpen() {
+    this.open = true;
   }
 
   getSelectedValue() {
-
-    const resultmaster = this.masters.find( (resp)=>{
+    const resultmaster = this.masters.find((resp) => {
       return resp.url == this.masterSeleted;
     });
 
     this.result = resultmaster?.name;
-
-  }​​​​​​
-
+  }
 }
