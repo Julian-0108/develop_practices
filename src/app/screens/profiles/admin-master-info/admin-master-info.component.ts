@@ -35,16 +35,16 @@ export class AdminMasterInfoComponent implements OnInit {
   ];
 
   public readonly masters: Masters[] = [
-    { name: 'Habilidades de equipo', url: 'base-teams-categories', sumary: 'Hola Wiil' },
-    { name: 'Cursos y certificaciones', url: 'courses-certifications' , sumary: 'Wiiiiiil', icon: 'help'},
-    { name: 'Competencias corporativas', url: 'skills' , sumary: 'Holi Hanni'  },
-    { name: 'Funciones', url: 'functions' , sumary: '****'  },
-    { name: 'Módulos', url: 'modules' , sumary: '****'},
-    { name: 'Conocimientos específicos', url: 'specific-knowledge' , sumary: 'Gracias Hanni'  },
-    { name: 'Estudios', url: 'studies' , sumary: '****'  },
-    { name: 'Herramientas de trabajo', url: 'work-tools' , sumary: '****'  },
-    { name: 'Tipos', url: 'types' , sumary: '****s'  },
-    { name: 'Responsabilidades de seguridad', url: 'security-responsabilities' , sumary: '****'  },
+    { name: 'Habilidades de equipo', url: 'base-teams-categories', sumary: 'Lorem Ipsum is simply dummy text of the printing ' },
+    { name: 'Cursos y certificaciones', url: 'courses-certifications' , sumary: 'Lorem Ipsum is simply dummy text of the printing ', icon: 'help'},
+    { name: 'Competencias corporativas', url: 'skills' , sumary: 'Lorem Ipsum is simply dummy text of the printing '  },
+    { name: 'Funciones', url: 'functions' , sumary: 'Lorem Ipsum is simply dummy text of the printing '  },
+    { name: 'Módulos', url: 'modules' , sumary: 'Lorem Ipsum is simply dummy text of the printing '},
+    { name: 'Conocimientos específicos', url: 'specific-knowledge' , sumary: 'Lorem Ipsum is simply dummy text of the printing '  },
+    { name: 'Estudios', url: 'studies' , sumary: 'Lorem Ipsum is simply dummy text of the printing '  },
+    { name: 'Herramientas de trabajo', url: 'work-tools' , sumary: 'Lorem Ipsum is simply dummy text of the printing '  },
+    { name: 'Tipos', url: 'types' , sumary: 'Lorem Ipsum is simply dummy text of the printing '  },
+    { name: 'Responsabilidades de seguridad', url: 'security-responsabilities' , sumary: 'Lorem Ipsum is simply dummy text of the printing '  },
   ];
 
   public masterSeleted: string = '';
