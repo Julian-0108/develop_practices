@@ -45,7 +45,7 @@ export class AdminMasterInfoComponent implements OnInit {
       icon: 'help',
     },
     {
-      name: 'Competencias corporativas',
+      name: 'Competencias corporativas y talentos',
       url: 'skills',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
@@ -65,7 +65,7 @@ export class AdminMasterInfoComponent implements OnInit {
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
     {
-      name: 'Estudios',
+      name: 'Formación académica',
       url: 'studies',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
@@ -76,7 +76,7 @@ export class AdminMasterInfoComponent implements OnInit {
     },
     { name: 'Tipos', url: 'types', sumary: 'Lorem Ipsum is simply dummy text of the printing ' },
     {
-      name: 'Responsabilidades de seguridad',
+      name: 'Responsabilidades de seguridad (SST)',
       url: 'security-responsabilities',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
@@ -113,7 +113,7 @@ export class AdminMasterInfoComponent implements OnInit {
       );
     } else if (this.masterSeleted === 'security-responsabilities') {
       return this.displayedColumns.filter(
-        (el) => el !== 'type' && el !== 'description' && el !== 'submenu' && el !== 'reference'
+        (el) => el !== 'description' && el !== 'submenu' && el !== 'reference'
       );
     } else {
       return this.displayedColumns.filter((el) => el !== 'reference');

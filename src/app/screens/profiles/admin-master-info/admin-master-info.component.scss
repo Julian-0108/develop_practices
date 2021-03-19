@@ -1,7 +1,7 @@
 body {
-  // padding: 0 20px ;
-  height: calc(100vh - 75px) ;
-  background-color: #fff !important;
+    // padding: 0 20px ;
+    height: calc(100vh - 75px);
+    background-color: #fff !important;
 }
 
 .background {
@@ -30,8 +30,9 @@ body {
 }
 
 .table__container {
-height: 25em;
-overflow-y: auto;
+    margin-top: 10px;
+    height: 25em;
+    overflow-y: auto;
 }
 
 table {
@@ -41,7 +42,6 @@ table {
 // button {
 //     margin: 0 8px 8px 0;
 // }
-
 .filter-inputs {
     min-height: 53.8px;
 }
@@ -115,28 +115,30 @@ table {
 
 .button__container {
     width: 100%;
-    position: absolute;
     right: 20px;
-    top: 9em;
+    // position: absolute;
+    // top: 9em;
 }
 
 .mat-column-description {
     width: 25em !important;
 }
+
 .mat-column-actions {
     padding: 0 !important;
     width: 12em;
 }
-.filter-inputs__status, .mat-column-status {
-  width: 8em;
+
+.filter-inputs__status,
+.mat-column-status {
+    width: 8em;
 }
 
 .submenu,
 .mat-column-createdAt,
 .mat-column-updatedAt,
 .mat-column-type,
-.mat-column-status
- {
+.mat-column-status {
     text-align: center !important;
 }
 
@@ -155,6 +157,28 @@ table {
     .chip__status {
         margin-left: 0px;
     }
+    .filter-inputs {
+        min-height: 58.9px;
+    }
+    /// KCBKDJBCJKBCKSA
+    .icon-search {
+        margin: 0 -35px !important;
+    }
+    .icon-description {
+        margin: 0 -43px !important;
+    }
+    .icon-search-security {
+        margin: 0 -60px !important;
+    }
+    .mat-input-element {
+        padding: 2px;
+    }
+    .mat-select {
+        height: 29px !important;
+    }
+    .table__container {
+        height: 40em;
+    }
 }
 
 @media screen and (min-width: 1750px) {
@@ -168,7 +192,23 @@ table {
         margin-left: 0px;
     }
     .filter-inputs {
-        min-height: 45.8px;
+        min-height: 64.3px;
+    }
+    /// KCBKDJBCJKBCKSA
+    .icon-search {
+        margin: 0 -37px !important;
+    }
+    .icon-description {
+        margin: 0 -49px !important;
+    }
+    .icon-search-security {
+        margin: 0 -65px !important;
+    }
+    .mat-input-element {
+        padding: 4px;
+    }
+    .mat-select {
+        height: 33px !important;
     }
 }
 
@@ -190,6 +230,22 @@ table {
     top: 5px;
 }
 
+.icon-search {
+    margin: 0 -30px;
+}
+
+.icon-description {
+    margin: 0 -35px;
+}
+
+.icon-search-security {
+    margin: 0 -45px;
+}
+
 .button-back {
-  top: 1em
+    top: 1em
+}
+
+.actions {
+    text-align: center;
 }
