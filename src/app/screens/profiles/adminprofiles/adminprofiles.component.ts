@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 export class AdminprofilesComponent implements OnInit {
   public cards!: Master[];
   public API_MASTER_INFO: string = environment.API_MASTER_INFO;
+  sortOrder: any = ['Administrar Maestras', 'Construcción Perfiles', 'Evaluar Perfil'];
   constructor(
     private titleService: Title,
     private manageProfileService: ManageProfileService,
@@ -29,7 +30,12 @@ export class AdminprofilesComponent implements OnInit {
 
   getData(): void {
     this.manageProfileService.getData()
-    .then( response => this.cards = response)
+    .then( response => {
+      response.sort((a: any, b: any) => {
+        return this.sortOrder.indexOf(a.name) - this.sortOrder.indexOf(b.name);
+      });
+      this.cards = response;
+    })
     .catch( err => this.notificationService.openSimpleSnackBar({ title: 'Error', type: 'error', message: 'Error cargando el menú. Vuelve a intentar'}));
   }
 
