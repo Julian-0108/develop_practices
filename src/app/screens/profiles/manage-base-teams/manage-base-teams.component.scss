@@ -1,5 +1,5 @@
 body {
-  padding: 0 20px ;
+  // padding: 0 20px ;
   height: calc(100vh - 75px) ;
 }
 
@@ -9,6 +9,8 @@ body {
 .head {
     display: flex;
     padding-top: 2em;
+    background-image: url(../../../../assets/images/backgroundRombos.svg);
+    background-size: cover;
 }
 
 .text {
@@ -17,7 +19,7 @@ body {
 }
 
 .content {
-    width: 100%;
+  margin: 0px 19px;
 }
 
 .button--accept {
@@ -27,11 +29,15 @@ body {
 
 // TABLA
 table {
-    margin-top: 1em;
+    // margin-top: 1em;
     width: 100%;
-    border-radius: 20px 20px 20px 20px;
-    box-shadow: 3px 6px 10px 3px #00000029;
+    // border-radius: 20px 20px 20px 20px;
+    // box-shadow: 3px 6px 10px 3px #00000029;
 }
+.table__container {
+  height: 25em;
+  overflow-y: auto;
+  }
 
 th {
     border-color: transparent transparent #707070 transparent;
@@ -93,6 +99,7 @@ mat-card:hover {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    box-shadow: none !important;
 }
 
 .chip__status {
