@@ -9,17 +9,16 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Masters } from './interfaces/master-info-dialog';
 
-
 @Component({
   selector: 'app-admin-master-info',
   templateUrl: './admin-master-info.component.html',
   styleUrls: ['./admin-master-info.component.scss'],
 })
 export class AdminMasterInfoComponent implements OnInit {
-
   otherIcon!: boolean;
   open: boolean = false;
-  help: string = "help";
+  help: string = 'help';
+  idHistory!: string;
 
   public displayedColumns: string[] = [
     'name',
@@ -33,18 +32,54 @@ export class AdminMasterInfoComponent implements OnInit {
     'actions',
   ];
 
-
   public readonly masters: Masters[] = [
-    { name: 'Habilidades de equipo', url: 'base-teams-categories', sumary: 'Hola Wiil' },
-    { name: 'Cursos y certificaciones', url: 'courses-certifications' , sumary: 'Wiiiiiil', icon: 'help'},
-    { name: 'Competencias corporativas', url: 'skills' , sumary: 'Holi Hanni'  },
-    { name: 'Funciones', url: 'functions' , sumary: '****'  },
-    { name: 'Módulos', url: 'modules' , sumary: '****'},
-    { name: 'Conocimientos específicos', url: 'specific-knowledge' , sumary: 'Gracias Hanni'  },
-    { name: 'Formación academica', url: 'studies' , sumary: '****'  },
-    { name: 'Herramientas de trabajo', url: 'work-tools' , sumary: '****'  },
-    { name: 'Tipos', url: 'types' , sumary: '****s'  },
-    { name: 'Responsabilidades de seguridad (SST)', url: 'security-responsabilities' , sumary: '****'  },
+    {
+      name: 'Habilidades de equipo',
+      url: 'base-teams-categories',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    {
+      name: 'Cursos y certificaciones',
+      url: 'courses-certifications',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      icon: 'help',
+    },
+    {
+      name: 'Competencias corporativas y talentos',
+      url: 'skills',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    {
+      name: 'Funciones',
+      url: 'functions',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    {
+      name: 'Módulos',
+      url: 'modules',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    {
+      name: 'Conocimientos específicos',
+      url: 'specific-knowledge',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    {
+      name: 'Formación académica',
+      url: 'studies',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    {
+      name: 'Herramientas de trabajo',
+      url: 'work-tools',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    { name: 'Tipos', url: 'types', sumary: 'Lorem Ipsum is simply dummy text of the printing ' },
+    {
+      name: 'Responsabilidades de seguridad (SST)',
+      url: 'security-responsabilities',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
   ];
 
   public masterSeleted: string = '';
@@ -78,7 +113,7 @@ export class AdminMasterInfoComponent implements OnInit {
       );
     } else if (this.masterSeleted === 'security-responsabilities') {
       return this.displayedColumns.filter(
-        (el) => el !== 'type' && el !== 'description' && el !== 'submenu' && el !=='reference'
+        (el) => el !== 'description' && el !== 'submenu' && el !== 'reference'
       );
     } else {
       return this.displayedColumns.filter((el) => el !== 'reference');
@@ -94,12 +129,12 @@ export class AdminMasterInfoComponent implements OnInit {
           title: element ? 'Editar' : 'Agregar',
           url: this.masterSeleted,
           name: this.masters.filter((el: any) => el.url === this.masterSeleted),
-          masters: this.masters
+          masters: this.masters,
         },
       })
       .afterClosed();
     dialogRef.toPromise().then((response: any) => {
-      if (response?.data) {
+      if (response) {
         this.getDataMaster();
       }
     });
@@ -114,22 +149,22 @@ export class AdminMasterInfoComponent implements OnInit {
     }
   }
 
-  applyDirectFilter(e:any) {​​​​​​​​
-    this.dataSource.filter= e.value;
+  applyDirectFilter(e: any) {
+    this.dataSource.filter = e.value;
   }
-    
-  ​​isOpen(){
-    this.open= true;
+  setId(el: any) {
+    this.idHistory = el;
   }
-  
-  getSelectedValue() { 
- 
-    const resultmaster = this.masters.find( (resp)=>{
+
+  isOpen() {
+    this.open = true;
+  }
+
+  getSelectedValue() {
+    const resultmaster = this.masters.find((resp) => {
       return resp.url == this.masterSeleted;
     });
- 
+
     this.result = resultmaster?.name;
- 
-  }​​​​​​
-  
+  }
 }

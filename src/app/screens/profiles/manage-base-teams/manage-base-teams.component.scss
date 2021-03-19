@@ -1,6 +1,7 @@
 body {
-    padding: 0 20px;
+    // padding: 0 20px ;
     height: calc(100vh - 75px);
+    background-color: #FFFF !important;
 }
 
 .button-back {
@@ -10,6 +11,8 @@ body {
 .head {
     display: flex;
     padding-top: 2em;
+    background-image: url(../../../../assets/images/backgroundRombos.svg);
+    background-size: cover;
 }
 
 .text {
@@ -18,7 +21,7 @@ body {
 }
 
 .content {
-    width: 100%;
+    margin: 0px 19px;
 }
 
 .button--accept {
@@ -28,10 +31,15 @@ body {
 
 // TABLA
 table {
-    margin-top: 1em;
+    // margin-top: 1em;
     width: 100%;
-    border-radius: 20px 20px 20px 20px;
-    box-shadow: 3px 6px 10px 3px #00000029;
+    // border-radius: 20px 20px 20px 20px;
+    // box-shadow: 3px 6px 10px 3px #00000029;
+}
+
+.table__container {
+    height: 25em;
+    overflow-y: auto;
 }
 
 th {
@@ -94,6 +102,7 @@ mat-card:hover {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    box-shadow: none !important;
 }
 
 .chip__status {
@@ -122,12 +131,6 @@ mat-card:hover {
 .visualize {
     background-color: #F2E3B8;
     color: #DE8219;
-    box-shadow: 0px 0px 6px #F2E3B8;
-}
-
-.history {
-    background-color: #eccec7;
-    color: #d88874;
     box-shadow: 0px 0px 6px #F2E3B8;
 }
 
@@ -187,9 +190,3 @@ select .mat-form-field-infix {
         }
     }
 }
-
-// @media screen and (min-width: 1450px) {
-//     .icon-search {
-//         margin: 0 -45px !important;
-//     }
-// }

@@ -18,7 +18,8 @@ import { LoaderService } from './components/loader/loader.service';
 import { LoaderInterceptor } from './components/loader/loader.interceptor';
 import { CardsPipe } from './pipes/cards.pipe';
 import { OrderAlphabeticallyPipe } from './pipes/order-alphabetically.pipe';
-import { HistoryComponent } from './components/history/history.component';
+import { ProfileFormHistoryComponent } from '@app/screens/profiles/profile-template/profile-form-history/profile-form-history.component';
+
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { HistoryComponent } from './components/history/history.component';
     LoaderComponent,
     CardsPipe,
     OrderAlphabeticallyPipe,
-    HistoryComponent
+
+    ProfileFormHistoryComponent
   ],
   imports: [
     CommonModule,
@@ -53,7 +55,8 @@ import { HistoryComponent } from './components/history/history.component';
     NotImageDirective,
     CardsPipe,
     OrderAlphabeticallyPipe,
-    HistoryComponent
+
+    ProfileFormHistoryComponent,
   ],
   providers: [
     LoaderService,

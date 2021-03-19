@@ -1,8 +1,13 @@
-.background {
+body {
+    // padding: 0 20px ;
+    height: calc(100vh - 75px);
     background-color: #fff !important;
+}
+
+.background {
+    // background-color: #fff !important;
     background-image: url('../../../../assets/images/background_adminMasters.svg');
-    background-size: 90% 100%;
-    background-position: top;
+    background-size: cover;
 }
 
 .header {
@@ -21,17 +26,22 @@
 }
 
 .main {
-    margin: 0px 30px;
+    margin: 0px 19px;
+}
+
+.table__container {
+    margin-top: 10px;
+    height: 25em;
+    overflow-y: auto;
 }
 
 table {
     width: 100%;
 }
 
-button {
-    margin: 0 8px 8px 0;
-}
-
+// button {
+//     margin: 0 8px 8px 0;
+// }
 .filter-inputs {
     min-height: 53.8px;
 }
@@ -105,18 +115,30 @@ button {
 
 .button__container {
     width: 100%;
-    display: flex;
-    justify-content: flex-end;
+    right: 20px;
+    // position: absolute;
+    // top: 9em;
 }
 
 .mat-column-description {
     width: 25em !important;
 }
 
+.mat-column-actions {
+    padding: 0 !important;
+    width: 12em;
+}
+
+.filter-inputs__status,
+.mat-column-status {
+    width: 8em;
+}
+
 .submenu,
 .mat-column-createdAt,
 .mat-column-updatedAt,
-.mat-column-type {
+.mat-column-type,
+.mat-column-status {
     text-align: center !important;
 }
 
@@ -153,6 +175,9 @@ button {
     }
     .mat-select {
         height: 29px !important;
+    }
+    .table__container {
+        height: 40em;
     }
 }
 
@@ -214,5 +239,13 @@ button {
 }
 
 .icon-search-security {
-    margin: 0 -55px;
+    margin: 0 -45px;
+}
+
+.button-back {
+    top: 1em
+}
+
+.actions {
+    text-align: center;
 }

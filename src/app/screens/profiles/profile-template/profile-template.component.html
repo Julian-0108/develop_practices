@@ -37,18 +37,22 @@
         <div class="item" fxFlex="50">
           <mat-form-field floatLabel="always" appearance="none">
             <mat-label>Fecha Inicial</mat-label>
-            <input [disabled]="historyFilter.length === 0" placeholder="dd/mm/yyyy" (dateInput)="onSelectStartDate($event)" matInput class="disabled"
-              [matDatepicker]="pickerStart" readonly formControlName="startDate" (click)="pickerStart.open()">
-            <mat-datepicker-toggle [disabled]="historyFilter.length === 0" matSuffix [for]="pickerStart" class="datePicker__icon"></mat-datepicker-toggle>
+            <input placeholder="dd/mm/yyyy"
+              (dateInput)="onSelectStartDate($event)" matInput class="disabled" [matDatepicker]="pickerStart" readonly
+              formControlName="startDate" (click)="pickerStart.open()">
+            <mat-datepicker-toggle matSuffix [for]="pickerStart"
+              class="datePicker__icon"></mat-datepicker-toggle>
             <mat-datepicker #pickerStart disabled="false"></mat-datepicker>
           </mat-form-field>
         </div>
         <div class="item" fxFlex="50">
           <mat-form-field floatLabel="always" appearance="none">
             <mat-label>Fecha Final</mat-label>
-            <input [disabled]="historyFilter.length === 0" placeholder="dd/mm/yyyy" (dateInput)="onSelectEndDate($event)" matInput [matDatepicker]="pickerEnd"
-              class="disabled" readonly formControlName="endDate" (click)="pickerEnd.open()">
-            <mat-datepicker-toggle [disabled]="historyFilter.length === 0" matSuffix [for]="pickerEnd" class="datePicker__icon"></mat-datepicker-toggle>
+            <input placeholder="dd/mm/yyyy"
+              (dateInput)="onSelectEndDate($event)" matInput [matDatepicker]="pickerEnd" class="disabled" readonly
+              formControlName="endDate" (click)="pickerEnd.open()">
+            <mat-datepicker-toggle matSuffix [for]="pickerEnd"
+              class="datePicker__icon"></mat-datepicker-toggle>
             <mat-datepicker #pickerEnd disabled="false"></mat-datepicker>
           </mat-form-field>
 
@@ -70,7 +74,7 @@
               </div>
               <div class="history__section">
                 <p class="history-information__pagraph">
-                  <mat-label class="history-information__title">Descripción: </mat-label>{{step.descriptionChanges}}
+                  <mat-label class="history-information__title">Descripción: </mat-label>{{step.commentary}}
                 </p>
               </div>
               <div class="history__section">
@@ -110,7 +114,8 @@
             <form [formGroup]="formObjective" novalidate autocomplete="off">
               <div class="item" fxFlex="100">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <textarea placeholder="Escriba aquí el Objetivo." formControlName="objective" matInput class="profile__textarea"></textarea>
+                  <textarea placeholder="Escriba aquí el Objetivo." formControlName="objective" matInput
+                    class="profile__textarea"></textarea>
                   <app-validator [form]="formObjective" name="objective"></app-validator>
                 </mat-form-field>
               </div>
@@ -286,8 +291,8 @@
               </div>
               <div class="item" fxFlex="50">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input placeholder="0 años" (blur)="fieldExperienceValidation('chargeExperience')" (keypress)="onlyNumbersFunction($event)"
-                    formControlName="chargeExperience" matInput>
+                  <input placeholder="0 años" (blur)="fieldExperienceValidation('chargeExperience')"
+                    (keypress)="onlyNumbersFunction($event)" formControlName="chargeExperience" matInput>
                   <app-validator [form]="formExperience" name="chargeExperience"></app-validator>
                 </mat-form-field>
               </div>
