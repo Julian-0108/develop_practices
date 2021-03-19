@@ -93,6 +93,7 @@ body {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    box-shadow: none !important;
 }
 
 
@@ -555,6 +556,7 @@ mat-dialog-actions {
 
 .mat-drawer-content {
   overflow-x: hidden !important;
+  background-color: #fff;
 }
 
 .chip__status--active {

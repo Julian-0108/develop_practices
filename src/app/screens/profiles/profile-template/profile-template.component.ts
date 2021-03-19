@@ -359,6 +359,7 @@ export class ProfileTemplateComponent implements OnInit {
    */
   getData() {
     this.profileTemplateService.getData(this.idProfile).then((res: any) => {
+      console.log('res[0] =>>',res[0])
       this.data = res[0];
       this.buildTalentsReadOnly(this.data);
       this.dataAssertiveComunication = new MatTableDataSource(res[0].assertiveComunication);
@@ -593,7 +594,8 @@ export class ProfileTemplateComponent implements OnInit {
           ...resp,
           idBaseTeam: this.data.idBaseTeam,
           idBaseProfile: this.data._id,
-          name: this.data.name,
+          name: this.data.charge,
+          charge: this.data.charge,
           teamName: this.data.teamName,
           status: this.data.status,
         };
@@ -625,11 +627,13 @@ export class ProfileTemplateComponent implements OnInit {
       });
   }
   onSaveWithOutHistory() {
+    console.log(this.data)
     this.sendInformation = {
       ...this.sendInformation,
       idBaseTeam: this.data.idBaseTeam,
       idBaseProfile: this.data._id,
-      name: this.data.name,
+      name: this.data.charge,
+      charge: this.data.charge,
       teamName: this.data.teamName,
       status: this.data.status,
     };
