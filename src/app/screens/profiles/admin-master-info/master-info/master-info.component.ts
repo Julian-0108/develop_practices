@@ -81,19 +81,19 @@ export class MasterInfoComponent implements OnInit {
         disabled: this.data?.url === 'security-responsabilities',
       }),
       masterReference: new FormControl(null),
-      idParent: new FormControl({ value: '', disabled: true }),
+      idParent: new FormControl({value: null, disabled: this.data?.url !== 'base-teams-categories' || true}),
       createdAt: new FormControl({ value: '', disabled: true }),
       updatedAt: new FormControl({ value: '', disabled: true }),
       url: new FormControl({ value: null, disabled: this.data?.url === 'base-teams-categories' }),
       status: new FormControl(''),
-      submenu: new FormControl(''),
+      submenu: new FormControl({value: null, disabled: this.data?.url !== 'base-teams-categories'}),
       imagePath: new FormControl({ value: '', disabled: true }),
     });
   }
 
   initForm(): void {
     console.log(this.data);
-    if (this.data.element && this.data.element.type !== 'Habilidad') {
+    if (this.data.element && this.data.element.type !== 'Habilidad' && this.data?.url === 'base-teams-categories') {
       this.form.get('submenu')?.disable();
       this.form.get('idParent')?.enable();
     }

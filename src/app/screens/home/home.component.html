@@ -1,36 +1,36 @@
-<div  class="component">
-    <div #home class="description">
-        <img src="../../../assets/images/home-mundo-seti.png" appNotImage>
-        <div class="description__content">
-            <p class="description__content--tittle">Bienvenido a Mundo Seti</p>
-            <p class="description__content--text">Nuestro portal de gestión para el talento SETI. Aquí encontrarás el acceso a nuestra aplicación de Sitios, Perfiles de cargo y nuestra Universidad SETI</p>
-            <button class="button" mat-button (click)="scrollDown()" > 
-                <span>Continuar</span> 
-                <mat-icon class="icon arrow-down">south</mat-icon>
-            </button>
-        </div>
+<div class="component">
+  <div #home class="description">
+    <img src="../../../assets/images/home-mundo-seti.png" appNotImage>
+    <div class="description__content">
+      <p class="description__content--tittle">Bienvenido a Mundo Seti</p>
+      <p class="description__content--text">Nuestro portal de gestión para el talento SETI. Aquí encontrarás el acceso a
+        nuestra aplicación de Sitios, Perfiles de cargo y nuestra Universidad SETI</p>
+      <button class="button" mat-button (click)="scrollDown()">
+        <span>Continuar</span>
+        <mat-icon class="icon arrow-down">south</mat-icon>
+      </button>
     </div>
+  </div>
 
-    
-   
-    <div #cardsHTML class="separator">
-        <button  class="button2"  mat-button (click)="scrollUp()">
-            <span>Regresar</span> 
-            <mat-icon class="icon arrow-up">north</mat-icon>
-        </button>
-    </div> 
-    
-    <!-- <p class="text">Selecciona una opción de las siguientes, para continuar explorando.</p> -->
-    <div class="cards">
-        <!-- *ngFor="let card of cards | cards"  (CON PIPE, no borrar)-->
-        <ng-container *ngFor="let card of cards">
-            <mat-card [routerLink]="card.url" *ngIf="card.status" matRipple matRippleCentered="centered" matRippleColor="#ff000019">
-                <img mat-card-image src="{{ API_MASTER_INFO }}{{ card.imagePath }}" appNotImage>
-                <mat-card-content>
-                    <mat-card-title>{{card.name}}</mat-card-title>
-                    <p>{{card.description}}</p>
-                </mat-card-content>
-            </mat-card>
-        </ng-container>
-    </div>
+  <div #cardsHTML class="separator">
+    <button class="button2" mat-button (click)="scrollUp()">
+      <span>Regresar</span>
+      <mat-icon class="icon arrow-up">north</mat-icon>
+    </button>
+  </div>
+
+  <!-- <p class="text">Selecciona una opción de las siguientes, para continuar explorando.</p> -->
+  <div class="cards">
+    <!-- *ngFor="let card of cards | cards"  (CON PIPE, no borrar)-->
+    <ng-container *ngFor="let card of cards">
+      <mat-card [routerLink]="card.url" *ngIf="card.status" matRipple matRippleCentered="centered"
+        matRippleColor="#ff000019">
+        <img mat-card-image src="{{ API_MASTER_INFO }}{{ card.imagePath }}" appNotImage>
+        <mat-card-content>
+          <mat-card-title>{{card.name}}</mat-card-title>
+          <p>{{card.description}}</p>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+  </div>
 </div>
