@@ -139,6 +139,10 @@ select .mat-form-field-infix {
     border-top: 0.1px solid transparent;
 }
 
+.icon-search {
+    margin: 0 -30px;
+}
+
 @media screen and (min-width: 1450px) {
     .content {
         font-size: 1.4em;
@@ -156,7 +160,20 @@ select .mat-form-field-infix {
         border-radius: 15px;
     }
     .filter-inputs {
-        min-height: 45.8px;
+        min-height: 64.1px;
+    }
+    .icon-search {
+        margin: 0 -41px !important;
+    }
+    .mat-input-element {
+        padding: 5px !important;
+    }
+    .mat-select {
+        height: 35px !important;
+    }
+    mat-form-field .mat-input-element,
+    .mat-select {
+        font-size: 16px;
     }
     @keyframes hover {
         0% {
@@ -170,3 +187,9 @@ select .mat-form-field-infix {
         }
     }
 }
+
+// @media screen and (min-width: 1450px) {
+//     .icon-search {
+//         margin: 0 -45px !important;
+//     }
+// }

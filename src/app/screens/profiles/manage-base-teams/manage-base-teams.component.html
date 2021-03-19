@@ -29,6 +29,7 @@
                         <div class="filter-inputs">
                             <mat-form-field floatLabel="always" appearance="none">
                                 <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
+                                <mat-icon class="icon-search" matSuffix>search</mat-icon>
                             </mat-form-field>
                         </div>
                     </th>
@@ -39,7 +40,12 @@
                     <th mat-header-cell *matHeaderCellDef class="rowheader"> Niveles
                         <div class="filter-inputs">
                             <mat-form-field floatLabel="always" appearance="none">
-                                <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
+                                <mat-select class="filter" (selectionChange)="applyDirectFilter($event)">
+                                    <mat-option value="">No Aplica</mat-option>
+                                    <mat-option value="n1">N1</mat-option>
+                                    <mat-option value="n2">N2</mat-option>
+                                    <mat-option value="n3">N3</mat-option>
+                                </mat-select>
                             </mat-form-field>
                         </div>
                     </th>

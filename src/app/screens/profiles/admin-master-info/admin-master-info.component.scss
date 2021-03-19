@@ -135,6 +135,25 @@ button {
     .chip__status {
         margin-left: 0px;
     }
+    .filter-inputs {
+        min-height: 58.9px;
+    }
+    /// KCBKDJBCJKBCKSA
+    .icon-search {
+        margin: 0 -35px !important;
+    }
+    .icon-description {
+        margin: 0 -43px !important;
+    }
+    .icon-search-security {
+        margin: 0 -60px !important;
+    }
+    .mat-input-element {
+        padding: 2px;
+    }
+    .mat-select {
+        height: 29px !important;
+    }
 }
 
 @media screen and (min-width: 1750px) {
@@ -148,7 +167,23 @@ button {
         margin-left: 0px;
     }
     .filter-inputs {
-        min-height: 45.8px;
+        min-height: 64.3px;
+    }
+    /// KCBKDJBCJKBCKSA
+    .icon-search {
+        margin: 0 -37px !important;
+    }
+    .icon-description {
+        margin: 0 -49px !important;
+    }
+    .icon-search-security {
+        margin: 0 -65px !important;
+    }
+    .mat-input-element {
+        padding: 4px;
+    }
+    .mat-select {
+        height: 33px !important;
     }
 }
 
@@ -170,3 +205,14 @@ button {
     top: 5px;
 }
 
+.icon-search {
+    margin: 0 -30px;
+}
+
+.icon-description {
+    margin: 0 -35px;
+}
+
+.icon-search-security {
+    margin: 0 -55px;
+}

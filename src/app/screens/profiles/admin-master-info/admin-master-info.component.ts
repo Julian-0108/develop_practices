@@ -41,10 +41,10 @@ export class AdminMasterInfoComponent implements OnInit {
     { name: 'Funciones', url: 'functions' , sumary: '****'  },
     { name: 'Módulos', url: 'modules' , sumary: '****'},
     { name: 'Conocimientos específicos', url: 'specific-knowledge' , sumary: 'Gracias Hanni'  },
-    { name: 'Estudios', url: 'studies' , sumary: '****'  },
+    { name: 'Formación academica', url: 'studies' , sumary: '****'  },
     { name: 'Herramientas de trabajo', url: 'work-tools' , sumary: '****'  },
     { name: 'Tipos', url: 'types' , sumary: '****s'  },
-    { name: 'Responsabilidades de seguridad', url: 'security-responsabilities' , sumary: '****'  },
+    { name: 'Responsabilidades de seguridad (SST)', url: 'security-responsabilities' , sumary: '****'  },
   ];
 
   public masterSeleted: string = '';
