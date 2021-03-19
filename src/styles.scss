@@ -563,7 +563,8 @@ mat-dialog-actions {
 
 .mat-drawer-content {
   overflow-x: hidden !important;
-  background-color: #fff;
+  background-color: #FFFF;
+  height: calc(100vh - 75px) !important;
 }
 
 .chip__status--active {
