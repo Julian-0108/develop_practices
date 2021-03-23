@@ -1,9 +1,9 @@
 <div class="container">
     <div class="img-error">
-      <div class="img">
-        <ng-lottie  [options]="pages[pageError].options"></ng-lottie>
-      </div>
-        <h1>Upps!</h1>
+        <div class="img">
+            <ng-lottie [options]="pages[pageError].options"></ng-lottie>
+        </div>
+        <h1>{{pages[pageError].title || "Upps!"}}</h1>
         <p>{{ pages[pageError].message }}</p>
         <button mat-button class="main-button" (click)="onBack()"> {{ pages[pageError].buttonMessage }}</button>
     </div>

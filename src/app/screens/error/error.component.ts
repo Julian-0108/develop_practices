@@ -23,12 +23,14 @@ export class ErrorComponent implements OnInit {
     notPermits: {
       options: { path: 'assets/notPermissionsPage.json' },
       message: 'Lo sentimos, no tienes permiso para acceder.',
-      buttonMessage: 'Regresar'
+      buttonMessage: 'Regresar',
+      title: 'Acceso Denegado'
     },
     underConstruction:{
       options: { path: 'assets/notPermissionsPage.json'},
       message: 'Lo sentimos, estamos trabajando para que pronto puedas ver esta página',
-      buttonMessage: 'Regresar'
+      buttonMessage: 'Regresar',
+      title: 'Pagina En Construcción'
     }
   }
 
