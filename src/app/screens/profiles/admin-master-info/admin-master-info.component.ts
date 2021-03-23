@@ -19,7 +19,7 @@ export class AdminMasterInfoComponent implements OnInit {
   open: boolean = false;
   help: string = 'help';
   idHistory!: string;
-  subtitle = '';
+  subtitle: any = '';
 
   public displayedColumns: string[] = [
     'name',
@@ -46,7 +46,7 @@ export class AdminMasterInfoComponent implements OnInit {
       icon: 'help',
     },
     {
-      name: 'Competencias corporativas',
+      name: 'Competencias corporativas y talentos',
       url: 'skills',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
@@ -66,7 +66,7 @@ export class AdminMasterInfoComponent implements OnInit {
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
     {
-      name: 'Estudios',
+      name: 'Formación académica',
       url: 'studies',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
@@ -77,7 +77,7 @@ export class AdminMasterInfoComponent implements OnInit {
     },
     { name: 'Tipos', url: 'types', sumary: 'Lorem Ipsum is simply dummy text of the printing ' },
     {
-      name: 'SST',
+      name: 'Responsabilidades de seguridad (SST)',
       url: 'security-responsabilities',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },

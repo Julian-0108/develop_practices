@@ -23,21 +23,23 @@
                 (click)="getSelectedValue()">
                 {{master.name}}
 
-                <mat-icon matTooltipClass="custom-tooltip" [matTooltip]="master.sumary" class="content__icon">help</mat-icon>
+                <mat-icon matTooltipClass="custom-tooltip" [matTooltip]="master.sumary" class="content__icon">help
+                </mat-icon>
               </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
-      </div>
 
-      <div *ngIf="masterSeleted !== ''" class="button__container">
-        <div class="layer2" (click)="openDialog()">
-          <div mat-button class="layer">
-            <mat-icon>add</mat-icon>
+        <div *ngIf="masterSeleted !== ''" class="button__container" fxLayoutAlign="end end">
+          <div class="layer2" (click)="openDialog()">
+            <div mat-button class="layer">
+              <mat-icon>add</mat-icon>
+            </div>
+            Añadir
           </div>
-          Añadir
         </div>
       </div>
+
       <div class="table__container">
 
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -48,8 +50,7 @@
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
                   <input matInput class="filter" (keyup)="applyFilter($event)" type="text">
-                  <mat-icon [ngStyle]="{'margin': otherIcon || true ? '0px -30px': '0 -15px'}" class="icon" matSuffix>
-                    search</mat-icon>
+                  <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
             </th>
@@ -62,8 +63,8 @@
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
                   <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
-                  <mat-icon class="icon"
-                    [ngStyle]="{'margin': masterSeleted == 'security-responsabilities' ? '0 -50px': '0 -25px'}"
+                  <mat-icon
+                    [ngClass]="{'icon-search-security' : masterSeleted == 'security-responsabilities', 'icon-search' : masterSeleted != 'security-responsabilities'}"
                     matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -77,7 +78,7 @@
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
                   <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
-                  <mat-icon [ngStyle]="{'margin':'0 -33px'}" class="icon" matSuffix>search</mat-icon>
+                  <mat-icon class="icon-description" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
             </th>
@@ -90,7 +91,7 @@
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
                   <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
-                  <mat-icon [ngStyle]="{'margin':'0 -25px'}" class="icon" matSuffix>search</mat-icon>
+                  <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
             </th>
@@ -167,7 +168,7 @@
             <th mat-header-cell *matHeaderCellDef>Acciones
               <div class="filter-inputs filter-inputs__status"></div>
             </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="actions">
               <button mat-icon-button (click)="openDialog(element)">
                 <mat-icon class="table__buttons edit">edit</mat-icon>
               </button>
@@ -181,8 +182,6 @@
           <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();"></tr>
         </table>
       </div>
-
-
 
     </div>
 

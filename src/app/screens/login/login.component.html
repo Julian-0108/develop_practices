@@ -1,69 +1,44 @@
 <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
-  <mat-card class="box mat-elevation-z7">
+    <mat-card class="box mat-elevation-z7">
 
-    <div fxLayoutAlign="center center">
-      <img src="../../../assets/images/Logo-seti.png" style="width: 140px;" alt="logo-seti">
-    </div>
+        <div fxLayoutAlign="center center">
+            <img src="../../../assets/images/Logo-seti.png" style="width: 140px;" alt="logo-seti">
+        </div>
 
-    <div style="height: 20px;"></div>
+        <div style="height: 20px;"></div>
 
-    <mat-card-header>
-      <mat-card-subtitle>
-        <h1><strong>Iniciar Sesión</strong></h1>
-      </mat-card-subtitle>
-    </mat-card-header>
-    <form
-      class="form"
-      [formGroup]="loginFormGroup"
-      novalidate
-      (ngSubmit)="onSubmit()"
-    >
-      <mat-card-content>
+        <mat-card-header>
+            <mat-card-subtitle>
+                <h1><strong>Iniciar Sesión</strong></h1>
+            </mat-card-subtitle>
+        </mat-card-header>
+        <form class="form" [formGroup]="loginFormGroup" novalidate (ngSubmit)="onSubmit()">
+            <mat-card-content>
 
-        <mat-form-field floatLabel="always" appearance="none">
-          <mat-label class="label">Email</mat-label>
-          <input
-            matInput
-            type="text"
-            placeholder="Email"
-            (keyup.enter)="onSubmit()"
-            formControlName="username"
-            autocomplete="off"
-            required
-          />
-          <!-- <mat-icon matSuffix >mail_outline</mat-icon> -->
-          <app-validator [form]="loginFormGroup" name="username"></app-validator>
-        </mat-form-field>
+                <mat-form-field floatLabel="always" appearance="none">
+                    <mat-label class="label">Email</mat-label>
+                    <input matInput type="text" placeholder="Email" (keyup.enter)="onSubmit()" formControlName="username" autocomplete="off" required />
+                    <!-- <mat-icon matSuffix >mail_outline</mat-icon> -->
+                    <app-validator [form]="loginFormGroup" name="username"></app-validator>
+                </mat-form-field>
 
-        <div style="height: 30px;"></div>
+                <div style="height: 30px;"></div>
 
-        <mat-form-field floatLabel="always" appearance="none">
-          <mat-label class="label">Contraseña</mat-label>
-          <input
-            matInput
-            placeholder="Contraseña"
-            (keyup.enter)="onSubmit()"
-            [type]="hide ? 'password' : 'text'"
-            formControlName="password"
-            required
-          />
-          <mat-icon class="visibility-icon"   matSuffix (click)="hide = !hide">
-            {{ hide ? "visibility_off" : "visibility" }}
-            
-          </mat-icon>
-          <app-validator [form]="loginFormGroup" name="password"></app-validator>
+                <mat-form-field floatLabel="always" appearance="none">
+                    <mat-label class="label">Contraseña</mat-label>
+                    <input matInput placeholder="Contraseña" (keyup.enter)="onSubmit()" [type]="hide ? 'password' : 'text'" formControlName="password" required />
+                    <mat-icon class="visibility-icon" matSuffix (click)="hide = !hide">
+                        {{ hide ? "visibility_off" : "visibility" }}
 
-        </mat-form-field>
-      </mat-card-content>
+                    </mat-icon>
+                    <app-validator [form]="loginFormGroup" name="password"></app-validator>
 
-      <div style="height: 20px;"></div>
+                </mat-form-field>
+            </mat-card-content>
 
-      <button
-        mat-flat-button
-        class="btn-block mat-elevation-z6"
-        style="width: 60%;"
-        fxLayoutAlign="center center"
-      >
+            <div style="height: 20px;"></div>
+
+            <button mat-flat-button class="btn-block mat-elevation-z6" style="width: 60%;" fxLayoutAlign="center center">
 
         <span *ngIf="!isLoading; else loading">
           Ingresar
@@ -74,7 +49,7 @@
         </ng-template>
 
       </button>
-    </form>
+        </form>
 
-  </mat-card>
+    </mat-card>
 </div>
