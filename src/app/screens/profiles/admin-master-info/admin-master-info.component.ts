@@ -19,6 +19,7 @@ export class AdminMasterInfoComponent implements OnInit {
   open: boolean = false;
   help: string = 'help';
   idHistory!: string;
+  subtitle: any = '';
 
   public displayedColumns: string[] = [
     'name',
@@ -103,6 +104,7 @@ export class AdminMasterInfoComponent implements OnInit {
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.subtitle = this.masters.find((el: any) => el.url === this.masterSeleted);
     });
   }
 
@@ -115,6 +117,8 @@ export class AdminMasterInfoComponent implements OnInit {
       return this.displayedColumns.filter(
         (el) => el !== 'description' && el !== 'submenu' && el !== 'reference'
       );
+    } else if (this.masterSeleted !== 'base-teams-categories') {
+      return this.displayedColumns.filter((el) => el !== 'submenu' && el !== 'reference');
     } else {
       return this.displayedColumns.filter((el) => el !== 'reference');
     }
