@@ -4,14 +4,22 @@
 <mat-dialog-content>
   <form [formGroup]="form" novalidate autocomplete="off">
     <div fxLayout="row">
-      <div class="item" fxFlex="25">
+
+      <div class="item" *ngIf="data?.url === 'security-responsabilities'" fxFlex="75">
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label class="label">Description</mat-label>
+          <input matInput type="text" formControlName="name" placeholder="Nombre">
+          <app-validator [form]="form" name="name"></app-validator>
+        </mat-form-field>
+      </div>
+      <div *ngIf="data?.url !== 'security-responsabilities'" class="item" fxFlex="25">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Nombre</mat-label>
           <input matInput type="text" formControlName="name" placeholder="Nombre">
           <app-validator [form]="form" name="name"></app-validator>
         </mat-form-field>
       </div>
-      <div class="item" fxFlex="50">
+      <div *ngIf="data?.url !== 'security-responsabilities'" class="item" fxFlex="50">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Descripción</mat-label>
           <input matInput formControlName="description" placeholder="Descripción">

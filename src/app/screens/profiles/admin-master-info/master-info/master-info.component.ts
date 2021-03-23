@@ -47,6 +47,7 @@ export class MasterInfoComponent implements OnInit {
     this.initForm();
     this.fillTypesList();
     this.fillSkillsList();
+    console.log(this.data)
   }
 
   fillTypesList() {
@@ -76,10 +77,7 @@ export class MasterInfoComponent implements OnInit {
         value: '',
         disabled: this.data?.url === 'types' || this.data?.url === 'security-responsabilities',
       }),
-      type: new FormControl({
-        value: '',
-        disabled: this.data?.url === 'security-responsabilities',
-      }),
+      type: new FormControl(null),
       masterReference: new FormControl(null),
       idParent: new FormControl({value: null, disabled: this.data?.url !== 'base-teams-categories' || true}),
       createdAt: new FormControl({ value: '', disabled: true }),
