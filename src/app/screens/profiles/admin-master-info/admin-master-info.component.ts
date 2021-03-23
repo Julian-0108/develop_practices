@@ -19,6 +19,7 @@ export class AdminMasterInfoComponent implements OnInit {
   open: boolean = false;
   help: string = 'help';
   idHistory!: string;
+  subtitle = '';
 
   public displayedColumns: string[] = [
     'name',
@@ -76,7 +77,7 @@ export class AdminMasterInfoComponent implements OnInit {
     },
     { name: 'Tipos', url: 'types', sumary: 'Lorem Ipsum is simply dummy text of the printing ' },
     {
-      name: 'Responsabilidades de seguridad',
+      name: 'SST',
       url: 'security-responsabilities',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
@@ -103,6 +104,7 @@ export class AdminMasterInfoComponent implements OnInit {
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.subtitle = this.masters.find((el: any) => el.url === this.masterSeleted);
     });
   }
 
@@ -113,8 +115,10 @@ export class AdminMasterInfoComponent implements OnInit {
       );
     } else if (this.masterSeleted === 'security-responsabilities') {
       return this.displayedColumns.filter(
-        (el) => el !== 'type' && el !== 'description' && el !== 'submenu' && el !== 'reference'
+        (el) => el !== 'description' && el !== 'submenu' && el !== 'reference'
       );
+    } else if (this.masterSeleted !== 'base-teams-categories') {
+      return this.displayedColumns.filter((el) => el !== 'submenu' && el !== 'reference');
     } else {
       return this.displayedColumns.filter((el) => el !== 'reference');
     }
