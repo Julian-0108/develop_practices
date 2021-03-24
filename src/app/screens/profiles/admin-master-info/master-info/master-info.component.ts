@@ -108,6 +108,10 @@ export class MasterInfoComponent implements OnInit {
         this.form.controls.description?.clearValidators();
         this.form.controls.description?.updateValueAndValidity();
       }
+      // if(this.form.controls.idParent.status=="DISABLED"){
+      //   this.form.controls.idParent?.clearValidators();
+      //   this.form.controls.idParent?.updateValueAndValidity();
+      // }
     } else {
       this.masters = this.data.masters.filter((master) => master.name !== 'Tipos');
       this.form.controls.masterReference?.setValidators([Validators.required]);
