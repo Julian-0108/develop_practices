@@ -1,145 +1,151 @@
 h1 {
-  font-size: 18px;
-  font-weight: 600;
-  color: #9a9a9a;
-  text-align: center;
-  margin: 20px 0;
-  height: 2em;
+    font-size: 18px;
+    font-weight: 600;
+    color: #9a9a9a;
+    text-align: center;
+    margin: 20px 0;
+    height: 2em;
 }
 
 .history__form {
-  padding: 0 0 0 1.5em;
+    padding: 0 0 0 1.5em;
 }
 
 .stepper__container {
-  // margin: 3em 3em;
-  overflow-y: scroll;
-  height: 65vh;
+    // margin: 3em 3em;
+    overflow-y: scroll;
+    height: 65vh;
 }
 
 .not-found__image {
-  background-image: url(../../../../../assets/Astronaut-01.svg);
-  width: 7em;
-  height: 7em;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  margin: 2em 13em 0;
+    background-image: url(../../../../../assets/Astronaut-01.svg);
+    width: 7em;
+    height: 7em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 2em 13em 0;
 }
 
 .not-found__title {
-  font-size: 17px;
-  text-align: center;
-  color: #adadad;
+    font-size: 17px;
+    text-align: center;
+    color: #adadad;
 }
 
 .history {
-  height: auto;
-
-  cursor: default;
-  border-radius: 9px;
-  box-shadow: rgb(130 130 169 / 25%) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-
+    height: auto;
+    cursor: default;
+    border-radius: 9px;
+    box-shadow: rgb(130 130 169 / 25%) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 
 .history-information__title {
-  font-size: 12px;
-  color: #707070;
-  font-weight: 550;
+    font-size: 12px;
+    color: #707070;
+    font-weight: 550;
 }
 
 .history-information__pagraph {
-  font-size: 12px;
-  color: #959595;
+    font-size: 12px;
+    color: #959595;
 }
 
 .history__preview-container {
-  width: 100%;
-  text-align: end;
-  height: 25px;
+    width: 100%;
+    text-align: end;
+    height: 25px;
 }
 
 .history__preview-button {
-  width: 20px;
-  height: 20px;
-  color: #6f6f6f;
+    width: 20px;
+    height: 20px;
+    color: #6f6f6f;
 }
 
 ::ng-deep .mat-step-header .mat-step-icon {
-  background-color: #fff;
-  border: 1px solid #de1920;
+    background-color: #fff;
+    border: 1px solid #de1920;
 }
 
 ::ng-deep .mat-step-header .mat-step-icon-selected {
-  background-color: #de1920;
-  border-style: none;
-  background-image: url(../../../../../assets/images/marca-de-verificacion.svg);
-  background-size: 14px;
-  background-position: center;
-  background-repeat: no-repeat;
+    background-color: #de1920;
+    border-style: none;
+    background-image: url(../../../../../assets/images/marca-de-verificacion.svg);
+    background-size: 14px;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 ::ng-deep .mat-step-header .mat-step-icon-state-edit {
-  background-color: #fff;
-  border: 1px solid #de1920;
+    background-color: #fff;
+    border: 1px solid #de1920;
 }
 
 ::ng-deep .mat-step-label {
-  color: #b7b7b7 !important;
-  font-weight: 500;
-  font-size: 15px;
+    color: #b7b7b7 !important;
+    font-weight: 500;
+    font-size: 15px;
 }
 
 ::ng-deep .mat-step-label-selected {
-  color: #707070 !important;
-  font-weight: 600;
+    color: #707070 !important;
+    font-weight: 600;
 }
 
 ::ng-deep .mat-step-header:hover {
-  background-color: transparent
+    background-color: transparent
 }
 
 table.mat-table {
-  width: 100%;
-  margin: 10px 0;
+    width: 100%;
+    margin: 10px 0;
 }
 
 .chip {
-  font-size: 10px;
-  padding: 0 12px;
-  height: 19px;
-  border-radius: 10px;
-  margin: 2px;
-  ;
+    font-size: 10px;
+    padding: 0 12px;
+    height: 19px;
+    border-radius: 10px;
+    margin: 2px;
+    ;
 }
 
 .chip__status {
-  padding: 0 12px !important;
-  font-size: 11px;
-  font-weight: 500;
+    padding: 0 12px !important;
+    font-size: 11px;
+    font-weight: 500;
 }
 
 .mat-column-levels,
 .mat-column-status {
-  text-align: center !important;
+    text-align: center !important;
 }
 
 .mat-column-name {
-  width: 10em;
-  color: #707070;
+    width: 10em;
+    color: #707070;
 }
+
 .mat-column-description {
-  width: 15em;
+    width: 15em;
 }
 
 .mat-column-status {
-  width: 6em;
+    width: 6em;
 }
 
 .description__icon {
-  color: #6f6f6f;
-  top: 8px;
-  position: absolute;
-  left: 7px;
-  font-size: 15px;
+    color: #6f6f6f;
+    top: 8px;
+    position: absolute;
+    left: 7px;
+    font-size: 15px;
+}
+
+mat-datepicker-toggle {
+    position: absolute;
+    top: -29px;
+    right: -10px;
+    color: #de1920 !important;
 }
