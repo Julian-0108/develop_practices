@@ -4,17 +4,118 @@ import { pluck } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Master } from '@shared/interfaces/master.interface';
 
+export interface AcademicEducation {
+  _id: string;
+  name: string;
+  description: string;
+  status: boolean;
+  type?: string;
+  updatedAt: string;
+  createdAt: string;
+}
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileTemplateService {
   constructor(private httpClient: HttpClient) {}
 
-  async getAllEstudies() {
+  async getAllEstudies(): Promise<AcademicEducation[]> {
     return await this.httpClient
       .get(`${environment.API_MASTER_INFO}/studies?status=true`)
-      .pipe(pluck('payload'))
+      .pipe<AcademicEducation[]>(pluck('payload'))
       .toPromise();
+  }
+  async getAllAreas(): Promise<AcademicEducation[]> {
+    return [
+      {
+        name: 'Sistemas',
+        createdAt: '2021-03-25T21:51:42.741Z',
+        description: 'ejemplo',
+        status: true,
+        updatedAt: '2021-03-25T21:51:42.741Z',
+        _id: '605d05ee90d9e441a0155556',
+      },
+      {
+        name: 'Administración',
+        createdAt: '2021-03-25T21:51:42.741Z',
+        description: 'ejemplo',
+        status: true,
+        updatedAt: '2021-03-25T21:51:42.741Z',
+        _id: '605d05ee90d9e441a0155556',
+      },
+      {
+        name: 'Gestión Humana',
+        createdAt: '2021-03-25T21:51:42.741Z',
+        description: 'ejemplo',
+        status: true,
+        updatedAt: '2021-03-25T21:51:42.741Z',
+        _id: '605d05ee90d9e441a0155556',
+      },
+      {
+        name: 'Gerencia',
+        createdAt: '2021-03-25T21:51:42.741Z',
+        description: 'ejemplo',
+        status: true,
+        updatedAt: '2021-03-25T21:51:42.741Z',
+        _id: '605d05ee90d9e441a0155556',
+      },
+      {
+        name: 'Finanzas',
+        createdAt: '2021-03-25T21:51:42.741Z',
+        description: 'ejemplo',
+        status: true,
+        updatedAt: '2021-03-25T21:51:42.741Z',
+        _id: '605d05ee90d9e441a0155556',
+      },
+      {
+        name: 'Otro',
+        createdAt: '2021-03-25T21:51:42.741Z',
+        description: 'ejemplo',
+        status: true,
+        updatedAt: '2021-03-25T21:51:42.741Z',
+        _id: '605d05ee90d9e441a0155556',
+      },
+      {
+        name: 'Otro1',
+        createdAt: '2021-03-25T21:51:42.741Z',
+        description: 'ejemplo',
+        status: true,
+        updatedAt: '2021-03-25T21:51:42.741Z',
+        _id: '605d05ee90d9e441a0155556',
+      },
+      {
+        name: 'Otro2',
+        createdAt: '2021-03-25T21:51:42.741Z',
+        description: 'ejemplo',
+        status: true,
+        updatedAt: '2021-03-25T21:51:42.741Z',
+        _id: '605d05ee90d9e441a0155556',
+      },
+      {
+        name: 'Otro3',
+        createdAt: '2021-03-25T21:51:42.741Z',
+        description: 'ejemplo',
+        status: true,
+        updatedAt: '2021-03-25T21:51:42.741Z',
+        _id: '605d05ee90d9e441a0155556',
+      },
+      {
+        name: 'Otro4',
+        createdAt: '2021-03-25T21:51:42.741Z',
+        description: 'ejemplo',
+        status: true,
+        updatedAt: '2021-03-25T21:51:42.741Z',
+        _id: '605d05ee90d9e441a0155556',
+      },
+      {
+        name: 'Otro5',
+        createdAt: '2021-03-25T21:51:42.741Z',
+        description: 'ejemplo',
+        status: true,
+        updatedAt: '2021-03-25T21:51:42.741Z',
+        _id: '605d05ee90d9e441a0155556',
+      },
+    ];
   }
   async getAllCertificates() {
     return await this.httpClient
@@ -68,10 +169,12 @@ export class ProfileTemplateService {
   }
 
   async getData(idProfile: string) {
-    return await this.httpClient
+    let data: any = await this.httpClient
       .get(`${environment.API_BASE_PROFILES}/bases-profiles/${idProfile}`)
       .pipe(pluck('payload'))
       .toPromise();
+    data[0]['area'] = [];
+    return data;
   }
   async updateProfile(id: any, body: any) {
     return await this.httpClient

@@ -1,10 +1,7 @@
 mat-drawer-container {
   background-color: #F2F2F2 !important;
   min-height: calc(100vh - (45px + 30px));
-  // padding: 0 10px 40px;
-}
-mat-drawer-content.mat-drawer-content {
-  background-color: #F2F2F2 !important;
+  width: 100%;
 }
 
 
@@ -29,6 +26,12 @@ mat-drawer-content.mat-drawer-content {
   color: #de1920;
   font-size: 15px;
   font-weight: 600;
+}
+
+.education__subtitle {
+  position: absolute;
+  top: 20px;
+  right: 21em;
 }
 
 .profile-card__content {
@@ -56,6 +59,9 @@ td.mat-footer-cell {
 }
 
 table.mat-table {
+  width: 100%;
+}
+table {
   width: 100%;
 }
 
@@ -131,12 +137,22 @@ table.mat-table {
 }
 
 .button-next,
-.button-before {
+.button-before,
+.education__button-next,
+.education__button-before
+ {
   position: absolute;
   top: 10px;
   color: #de1920;
 }
 
+.education__button-next {
+  left: 29em;
+}
+
+.education__button-before {
+  left: 26em;
+}
 .button-next {
   right: 0;
 }
@@ -349,4 +365,34 @@ p.talents {
   background-repeat: no-repeat;
   background-position: center;
   margin: 2em 13em 0;
+}
+.mat-drawer-content {
+  background-color: #F2F2F2 !important;
+}
+.not-select-message {
+  color: #cecece;
+  text-align: center;
+  font-weight: 500;
+  line-height: 11em;
+  margin: 0 !important;
+}
+::ng-deep.mat-option.mat-selected:not(.mat-option-disabled) {
+  color: #000000de !important;
+}
+.mat-column-actions {
+  text-align: center !important;
+}
+.table__container {
+  width: 100%;
+  max-height: 15em;
+  height: auto;
+  overflow-y: auto;
+}
+
+.table-header__button {
+  border: solid 1px #de1920;
+  height: 2em;
+  line-height: initial;
+  color: #de1920;
+  padding: 0 10px 0 0;
 }

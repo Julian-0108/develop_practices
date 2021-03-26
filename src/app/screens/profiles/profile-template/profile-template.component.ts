@@ -12,7 +12,21 @@ import { ProfileFormHistoryComponent } from './profile-form-history/profile-form
 import { SnackOptionsInterface } from '@shared/interfaces/notification.interface';
 import { ActivatedRoute } from '@angular/router';
 import { OnlyNumbers } from '@shared/functions/onlyNumbers';
+import { DataSource } from '@angular/cdk/table';
 
+export interface AcademicEducationTable {
+  education: string;
+  area: string;
+}
+export interface AcademicEducation {
+  _id: string;
+  name: string;
+  description: string;
+  status: boolean;
+  type?: string;
+  updatedAt: string;
+  createdAt: string;
+}
 @Component({
   selector: 'app-profile-template',
   templateUrl: './profile-template.component.html',
@@ -20,6 +34,7 @@ import { OnlyNumbers } from '@shared/functions/onlyNumbers';
 })
 export class ProfileTemplateComponent implements OnInit {
   @ViewChild('education') education!: MatSelectionList;
+  // @ViewChild('area') area!: MatSelectionList;
   @ViewChild('requiredCertificates') requiredCertificates!: MatSelectionList;
   @ViewChild('specificKnowledge') specificKnowledge!: MatSelectionList;
   @ViewChild('rolResponsabilities') rolResponsabilities!: MatSelectionList;
@@ -33,8 +48,10 @@ export class ProfileTemplateComponent implements OnInit {
   data: any = [];
   securityResponsabilitiesData!: any;
 
-
-  contentPagesEducation = [];
+  // contentPagesEducation = [];
+  educationList: AcademicEducation[] = []
+  areasList: AcademicEducation[] = []
+  // contentPagesAreas = [];
   contentPagesSpecificKnowledge = [];
   contentPagesRequiredCertificates = [];
   contentPagesRolResponsabilities = [];
@@ -42,7 +59,8 @@ export class ProfileTemplateComponent implements OnInit {
   contentPagesTalentsReadOnly = [];
   contentPagesSecurityResponsabilities = [];
   isEditable = false;
-  nextPageButtonDisabledEducation = false;
+  // nextPageButtonDisabledEducation = false;
+  // nextPageButtonDisabledArea = false;
   nextPageButtonDisabledRequiredCertificates = false;
   nextPageButtonDisabledSpecificKnowledge = false;
   nextPageButtonDisabledRolResponsabilities = false;
@@ -50,20 +68,27 @@ export class ProfileTemplateComponent implements OnInit {
   nextPageButtonDisabledTalentsReadOnly = false;
   nextPageButtonDisabledSecurityResp: any;
   beforePageButtonDisabledSecurityResp: any;
-  beforePageButtonDisabledEducation = true;
+  // beforePageButtonDisabledEducation = true;
+  // beforePageButtonDisabledArea = true;
   beforePageButtonDisabledRequiredCertificates = true;
   beforePageButtonDisabledSpecificKnowledge = true;
   beforePageButtonDisabledRolResponsabilities = true;
   beforePageButtonDisabledTalents = true;
   beforePageButtonDisabledTalentsReadOnly = true;
   selectedOptions: any = [];
-  public tabIndexEducation = 0;
+  // public tabIndexEducation = 0;
+  // public tabIndexArea = 0;
   public tabIndexSpecificKnowledge = 0;
   public tabIndexRequiredCertificates = 0;
   public tabIndexRolResponsabilities = 0;
   public tabIndexTalents = 0;
   public tabIndexTalentsReadOnly = 0;
   public tabIndexSecurityResp = 0;
+  educationDataSource = new MatTableDataSource<AcademicEducationTable>();
+  educationData: AcademicEducationTable[] = [];
+  public educationColumns: string[] = ['education', 'area', 'actions'];
+
+
   monthNames = [
     'Enero',
     'Febrero',
@@ -101,7 +126,6 @@ export class ProfileTemplateComponent implements OnInit {
   idProfile = this.activatedRoute.snapshot.params.idProfile;
   onlyNumbers = new OnlyNumbers();
   /* History */
-  i: any;
   historyId!: string;
   existentDate!: string;
   historyFilter: any = [];
@@ -117,6 +141,14 @@ export class ProfileTemplateComponent implements OnInit {
 
   ngOnInit(): void {
     this.getData();
+  }
+  addRow() {
+    this.educationData.push({ education: '', area: '' });
+    this.educationDataSource = new MatTableDataSource(this.educationData);
+  }
+  removeRow(index: any) {
+    this.educationData.splice(this.educationData.indexOf(index), 1);
+    this.educationDataSource = new MatTableDataSource(this.educationData);
   }
 
   getTotalPercent(table: any) {
@@ -231,15 +263,24 @@ export class ProfileTemplateComponent implements OnInit {
    */
   nextTab(length: any, section: string) {
     switch (section) {
-      case 'education':
-        this.tabIndexEducation = this.tabIndexEducation + 1;
-        if (this.tabIndexEducation > 0) {
-          this.beforePageButtonDisabledEducation = false;
-        }
-        if (this.tabIndexEducation === length - 1) {
-          this.nextPageButtonDisabledEducation = true;
-        }
-        break;
+      // case 'education':
+      //   this.tabIndexEducation = this.tabIndexEducation + 1;
+      //   if (this.tabIndexEducation > 0) {
+      //     this.beforePageButtonDisabledEducation = false;
+      //   }
+      //   if (this.tabIndexEducation === length - 1) {
+      //     this.nextPageButtonDisabledEducation = true;
+      //   }
+      //   break;
+      // case 'area':
+      //   this.tabIndexArea = this.tabIndexArea + 1;
+      //   if (this.tabIndexArea > 0) {
+      //     this.beforePageButtonDisabledArea = false;
+      //   }
+      //   if (this.tabIndexArea === length - 1) {
+      //     this.nextPageButtonDisabledArea = true;
+      //   }
+      //   break;
       case 'requiredCertificates':
         this.tabIndexRequiredCertificates = this.tabIndexRequiredCertificates + 1;
         if (this.tabIndexRequiredCertificates > 0) {
@@ -298,13 +339,20 @@ export class ProfileTemplateComponent implements OnInit {
   }
   beforeTab(section: string) {
     switch (section) {
-      case 'education':
-        this.tabIndexEducation = this.tabIndexEducation - 1;
-        this.nextPageButtonDisabledEducation = false;
-        if (this.tabIndexEducation === 0) {
-          this.beforePageButtonDisabledEducation = true;
-        }
-        break;
+      // case 'education':
+      //   this.tabIndexEducation = this.tabIndexEducation - 1;
+      //   this.nextPageButtonDisabledEducation = false;
+      //   if (this.tabIndexEducation === 0) {
+      //     this.beforePageButtonDisabledEducation = true;
+      //   }
+      //   break;
+      // case 'area':
+      //   this.tabIndexArea = this.tabIndexArea - 1;
+      //   this.nextPageButtonDisabledArea = false;
+      //   if (this.tabIndexArea === 0) {
+      //     this.beforePageButtonDisabledArea = true;
+      //   }
+      //   break;
       case 'requiredCertificates':
         this.tabIndexRequiredCertificates = this.tabIndexRequiredCertificates - 1;
         this.nextPageButtonDisabledRequiredCertificates = false;
@@ -359,7 +407,7 @@ export class ProfileTemplateComponent implements OnInit {
    */
   getData() {
     this.profileTemplateService.getData(this.idProfile).then((res: any) => {
-      console.log('res[0] =>>',res[0])
+      console.log('res[0] =>>', res[0]);
       this.data = res[0];
       this.buildTalentsReadOnly(this.data);
       this.dataAssertiveComunication = new MatTableDataSource(res[0].assertiveComunication);
@@ -416,8 +464,14 @@ export class ProfileTemplateComponent implements OnInit {
     this.formExperience.get('professionalExperience')?.patchValue(this.data.professionalExperience);
     this.formExperience.get('chargeExperience')?.patchValue(this.data.chargeExperience);
     /* Education */
-    this.profileTemplateService.getAllEstudies().then((res: any) => {
-      this.buildPagesAndColumnsList(res, 'education');
+    this.profileTemplateService.getAllEstudies().then((res: AcademicEducation[]) => {
+      // this.buildPagesAndColumnsList(res, 'education');
+      // this.buildPagesAndColumnsListAcademicEducation(res, 'education');
+      this.educationList = res
+    });
+    /* Areas */
+    this.profileTemplateService.getAllAreas().then((res:  AcademicEducation[]) => {
+      this.areasList = res
     });
     /* Required Certificates */
     this.profileTemplateService.getAllCertificates().then((res: any) => {
@@ -446,11 +500,11 @@ export class ProfileTemplateComponent implements OnInit {
     let newarray: any = [];
     let finalArray: any = [];
     data.talents.forEach((element: any) => {
-        newarray = [...newarray, element];
-        if (newarray.length === 12) {
-          finalArray = [...finalArray, newarray];
-          newarray = [];
-        }
+      newarray = [...newarray, element];
+      if (newarray.length === 12) {
+        finalArray = [...finalArray, newarray];
+        newarray = [];
+      }
     });
     if (newarray.length !== 0) {
       finalArray = [...finalArray, newarray];
@@ -464,6 +518,46 @@ export class ProfileTemplateComponent implements OnInit {
    * de 3 columnas. La función "buildPagesAndColumnsList2", por ser secciones de menor tamaño,
    * arma solo una columna con listas de máximo 6 items.
    */
+
+  // buildPagesAndColumnsListAcademicEducation(res: any, section: string) {
+  //   console.log(res);
+  //   let newarraycolumns: any = [];
+  //   let newarrayPages: any = [];
+  //   let finalArrayPages: any = [];
+  //   let finalArrayColumns: any = [];
+  //   res.forEach((element: any) => {
+  //     newarraycolumns = [...newarraycolumns, element];
+  //     if (newarraycolumns.length === 4) {
+  //       finalArrayColumns = [...finalArrayColumns, newarraycolumns];
+  //       newarraycolumns = [];
+  //     }
+  //   });
+  //   finalArrayColumns = [...finalArrayColumns, newarraycolumns];
+  //   console.log(finalArrayColumns);
+
+  //   finalArrayColumns.forEach((el: any) => {
+  //     newarrayPages = [...newarrayPages, el];
+  //     if (newarrayPages.length === 3) {
+  //       finalArrayPages = [...finalArrayPages, newarrayPages];
+  //       newarrayPages = [];
+  //     }
+  //   });
+  //   console.log(finalArrayPages);
+  //   console.log(newarrayPages);
+  //   if (newarrayPages.length !== 0) {
+  //     finalArrayPages = [...finalArrayPages, newarrayPages];
+  //   }
+  //   console.log(finalArrayPages);
+  //   switch (section) {
+  //     case 'education':
+  //       // this.contentPagesEducation = finalArrayPages;
+  //       // console.log(this.contentPagesEducation);
+  //       break;
+  //     case 'areas':
+  //       this.contentPagesAreas = finalArrayPages;
+  //       break;
+  //   }
+  // }
   buildPagesAndColumnsList(res: any, section: string) {
     let newarraycolumns: any = [];
     let newarrayPages: any = [];
@@ -490,9 +584,9 @@ export class ProfileTemplateComponent implements OnInit {
     }
 
     switch (section) {
-      case 'education':
-        this.contentPagesEducation = finalArrayPages;
-        break;
+      // case 'education':
+      //   this.contentPagesEducation = finalArrayPages;
+      //   break;
       case 'specificKnowledge':
         this.contentPagesSpecificKnowledge = finalArrayPages;
         break;
@@ -627,7 +721,7 @@ export class ProfileTemplateComponent implements OnInit {
       });
   }
   onSaveWithOutHistory() {
-    console.log(this.data)
+    console.log(this.data);
     this.sendInformation = {
       ...this.sendInformation,
       idBaseTeam: this.data.idBaseTeam,
