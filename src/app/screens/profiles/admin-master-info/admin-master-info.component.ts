@@ -75,12 +75,20 @@ export class AdminMasterInfoComponent implements OnInit {
       url: 'work-tools',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
-    { name: 'Tipos', url: 'types', sumary: 'Lorem Ipsum is simply dummy text of the printing ' },
+    { 
+      name: 'Tipos', 
+      url: 'types', 
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ' },
     {
       name: 'Responsabilidades de seguridad (SST)',
       url: 'security-responsabilities',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
+    {
+      name: 'Education Area',
+      url: 'education-area',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    }
   ];
 
   public masterSeleted: string = '';
@@ -117,6 +125,8 @@ export class AdminMasterInfoComponent implements OnInit {
       return this.displayedColumns.filter(
         (el) => el !== 'description' && el !== 'submenu' && el !== 'reference'
       );
+    } else if (this.masterSeleted == 'education-area'){
+      return this.displayedColumns.filter((el) => el !== 'type'  && el !== 'submenu');
     } else if (this.masterSeleted !== 'base-teams-categories') {
       return this.displayedColumns.filter((el) => el !== 'submenu' && el !== 'reference');
     } else {
@@ -168,7 +178,7 @@ export class AdminMasterInfoComponent implements OnInit {
     const resultmaster = this.masters.find((resp) => {
       return resp.url == this.masterSeleted;
     });
-
     this.result = resultmaster?.name;
+    console.log(this.masterSeleted);
   }
 }

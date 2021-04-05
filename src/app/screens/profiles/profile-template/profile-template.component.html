@@ -14,7 +14,7 @@
         </button>
             </div>
             <div class="action" *ngIf="isEditable">
-                <button mat-mini-fab (click)="onSave()" matTooltip="Guardar cambios">
+                <button mat-mini-fab (click)="onSaveEperience()" matTooltip="Guardar cambios">
           <mat-icon>save</mat-icon>
         </button>
             </div>
@@ -261,16 +261,62 @@
                     <mat-card-content *ngIf="isEditable">
                         <form [formGroup]="formExperience" novalidate autocomplete="off" fxLayout="row">
                             <div class="item" fxFlex="50">
-                                <mat-form-field floatLabel="always" appearance="none">
-                                    <input placeholder="0 años" (blur)="fieldExperienceValidation('professionalExperience')" (keypress)="onlyNumbersFunction($event)" formControlName="professionalExperience" matInput>
-                                    <app-validator [form]="formExperience" name="professionalExperience"></app-validator>
+                                <!-- <mat-form-field floatLabel="always" appearance="none">
+                                    <mat-label>Desde</mat-label>
+                                    <input matTooltip="ingrese el año" placeholder="0 años" (blur)="fieldExperienceValidation('minProfessionalExperience')" (keypress)="onlyNumbersFunction($event)" formControlName="minProfessionalExperience" matInput>
+                                    <app-validator [form]="formExperience" name="minProfessionalExperience"></app-validator>
                                 </mat-form-field>
+                                <mat-form-field floatLabel="always" appearance="none">
+                                    <mat-label>Hasta</mat-label>
+                                    <input matTooltip="ingrese el año" placeholder="0 años" (blur)="fieldExperienceValidation('maxProfessionalExperience')" (keypress)="onlyNumbersFunction($event)" formControlName="maxProfessionalExperience" matInput>
+                                    <app-validator [form]="formExperience" name="maxProfessionalExperience"></app-validator>
+                                </mat-form-field> -->
+                                <!-- <mat-menu #years="matMenu">
+                                    <button mat-menu-item [matMenuTriggerFor]="months">1 año</button>
+                                    <button mat-menu-item [matMenuTriggerFor]="months">2 años</button>
+                                    <button mat-menu-item [matMenuTriggerFor]="months">3 años</button>
+                                    <button mat-menu-item [matMenuTriggerFor]="months">4 años</button>
+                                </mat-menu>
+                                <mat-menu #months="matMenu">
+                                    <button mat-menu-item>0 mes</button>
+                                    <button mat-menu-item>1 mes</button>
+                                    <button mat-menu-item>2 meses</button>
+                                    <button mat-menu-item>3 meses</button>
+                                    <button mat-menu-item>4 meses</button>
+                                </mat-menu>
+                                <button mat-flat-button [matMenuTriggerFor]="years">Seleccionar</button> -->
+                                <mat-menu #months="matMenu">
+                                    <button mat-menu-item>item</button>
+                                    <button mat-menu-item>0 meses</button>
+                                    <button mat-menu-item>1 meses</button>
+                                    <button mat-menu-item>item</button>
+                                    <button mat-menu-item>item</button>
+                                </mat-menu>
+                                <mat-menu #years="matMenu">
+                                    <button mat-menu-item [matMenuTriggerFor]="months">1 año</button>
+                                    <button mat-menu-item [matMenuTriggerFor]="months">2 años</button>
+                                    <button mat-menu-item [matMenuTriggerFor]="months">3 años</button>
+                                    <button mat-menu-item [matMenuTriggerFor]="months">4 años</button>
+                                </mat-menu>
+                                <button mat-flat-button [matMenuTriggerFor]="years">Seleccionar</button>
+                                <ul>
+                                    <li *ngFor="let item of months">{{item}}</li>
+                                </ul>
                             </div>
                             <div class="item" fxFlex="50">
-                                <mat-form-field floatLabel="always" appearance="none">
-                                    <input placeholder="0 años" (blur)="fieldExperienceValidation('chargeExperience')" (keypress)="onlyNumbersFunction($event)" formControlName="chargeExperience" matInput>
-                                    <app-validator [form]="formExperience" name="chargeExperience"></app-validator>
+                                <!-- <mat-form-field floatLabel="always" appearance="none">
+                                    <mat-label>Desde</mat-label>
+                                    <input matTooltip="ingrese el año" placeholder="0 años" (blur)="fieldExperienceValidation('minChargeExperience')" (keypress)="onlyNumbersFunction($event)" formControlName="minChargeExperience" matInput>
+                                    <app-validator [form]="formExperience" name="minChargeExperience"></app-validator>
                                 </mat-form-field>
+                                <mat-form-field floatLabel="always" appearance="none">
+                                    <mat-label>Hasta</mat-label>
+                                    <input matTooltip="ingrese el año" placeholder="0 años" (blur)="fieldExperienceValidation('maxChargeExperience')" (keypress)="onlyNumbersFunction($event)" formControlName="maxChargeExperience" matInput>
+                                    <app-validator [form]="formExperience" name="maxChargeExperience"></app-validator>
+                                </mat-form-field> -->
+                                <mat-slider thumbLabel tickInterval="20">
+
+                                </mat-slider>
                             </div>
                         </form>
                     </mat-card-content>
@@ -349,10 +395,10 @@
                     </mat-card-header>
                     <mat-card-content *ngIf="!isEditable">
                         <ng-container>
-                            <button mat-icon-button (click)="nextTab(matTabTalentsReadOnly._tabs.length, 'talentsReadOnly')" class="button-next" *ngIf="data.talents.length > 0" [disabled]="nextPageButtonDisabledTalentsReadOnly">
+                            <button mat-icon-button (click)="nextTab(matTabTalentsReadOnly._tabs.length, 'talentsReadOnly')" class="button-next" *ngIf="data.talents?.length > 0" [disabled]="nextPageButtonDisabledTalentsReadOnly">
                 <mat-icon>navigate_next</mat-icon>
               </button>
-                            <button mat-icon-button (click)="beforeTab('talentsReadOnly')" class="button-before" *ngIf="data.talents.length > 0" [disabled]="beforePageButtonDisabledTalentsReadOnly">
+                            <button mat-icon-button (click)="beforeTab('talentsReadOnly')" class="button-before" *ngIf="data.talents?.length > 0" [disabled]="beforePageButtonDisabledTalentsReadOnly">
                 <mat-icon>navigate_before</mat-icon>
               </button>
                         </ng-container>
