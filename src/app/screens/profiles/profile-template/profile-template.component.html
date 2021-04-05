@@ -94,6 +94,7 @@
         </mat-vertical-stepper>
       </div>
     </mat-drawer>
+    <!-- </mat-card-content> -->
     <div fxLayout="row">
       <div fxLayout="column" style="width: 70%;">
         <mat-card class="profile__card">
@@ -119,6 +120,7 @@
             </form>
           </mat-card-content>
         </mat-card>
+
         <mat-card class="profile__card">
           <mat-card-header>
             <mat-card-title class="profile-card__title">Formación Académica <mat-icon
@@ -137,7 +139,8 @@
                     <div class="filter-inputs">
                       <mat-form-field floatLabel="always" appearance="none">
                         <mat-select class="filter" (selectionChange)="applyFilter($event)">
-                          <mat-option *ngFor="let education of educationList" [value]="education.name"> {{education.name}}
+                          <mat-option *ngFor="let education of educationList" [value]="education.name">
+                            {{education.name}}
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
@@ -174,7 +177,8 @@
                     <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
                       <mat-form-field floatLabel="always" appearance="none">
                         <mat-select placeholder="Click para activar la lista" formControlName="education">
-                          <mat-option *ngFor="let education of educationList" [value]="education._id"> {{education.name}}
+                          <mat-option *ngFor="let education of educationList" [value]="education._id">
+                            {{education.name}}
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
@@ -372,8 +376,7 @@
                 [disabled]="nextPageButtonDisabledEducation">
                 <mat-icon>navigate_next</mat-icon>
               </button>
-              <button mat-icon-button (click)="beforeTab('education')" class="button-before"
-                [disabled]="beforePageButtonDisabledEducation">
+                            <button mat-icon-button (click)="beforeTab('education')" class="button-before" [disabled]="beforePageButtonDisabledEducation">
                 <mat-icon>navigate_before</mat-icon>
               </button>
             </ng-container>
@@ -394,6 +397,7 @@
             </mat-selection-list>
           </mat-card-content> -->
         </mat-card>
+
         <mat-card class="profile__card">
           <mat-card-header>
             <mat-card-title class="profile-card__title">Conocimientos Específicos del Cargo <mat-icon
@@ -435,6 +439,7 @@
             </mat-selection-list>
           </mat-card-content>
         </mat-card>
+
         <mat-card class="profile__card">
           <mat-card-header>
             <mat-card-title class="profile-card__title">Responsabilidades para Seguridad y Salud en el Trabajo
@@ -477,6 +482,7 @@
             </mat-selection-list>
           </mat-card-content>
         </mat-card>
+
         <mat-card class="profile__card">
           <mat-card-header>
             <mat-card-title class="profile-card__title">Valoración Total</mat-card-title>
@@ -532,8 +538,8 @@
         </mat-card>
         <mat-card class="profile__card">
           <mat-card-header>
-            <mat-card-title class="profile-card__title">Certificaciones Requeridas <mat-icon
-                *ngIf="requiredCertificatesError" class="card-error__icon" matSuffix>error</mat-icon>
+            <mat-card-title class="profile-card__title">Certificaciones Requeridas
+              <mat-icon *ngIf="requiredCertificatesError" class="card-error__icon" matSuffix>error</mat-icon>
             </mat-card-title>
           </mat-card-header>
           <mat-card-content fxLayout="row wrap" *ngIf="!isEditable">
@@ -569,8 +575,8 @@
         </mat-card>
         <mat-card class="profile__card">
           <mat-card-header>
-            <mat-card-title class="profile-card__title">Funciones del Rol <mat-icon *ngIf="rolResponsabilitiesError"
-                class="card-error__icon" matSuffix>error</mat-icon>
+            <mat-card-title class="profile-card__title">Funciones del Rol
+              <mat-icon *ngIf="rolResponsabilitiesError" class="card-error__icon" matSuffix>error</mat-icon>
             </mat-card-title>
           </mat-card-header>
           <mat-card-content fxLayout="row wrap" *ngIf="!isEditable">
@@ -606,18 +612,18 @@
         </mat-card>
         <mat-card class="profile__card right-side">
           <mat-card-header>
-            <mat-card-title class="profile-card__title">Talentos <mat-icon *ngIf="talentsError" class="card-error__icon"
-                matSuffix>error</mat-icon>
+            <mat-card-title class="profile-card__title">Talentos
+              <mat-icon *ngIf="talentsError && isEditable" class="card-error__icon" matSuffix>error</mat-icon>
             </mat-card-title>
           </mat-card-header>
           <mat-card-content *ngIf="!isEditable">
             <ng-container>
               <button mat-icon-button (click)="nextTab(matTabTalentsReadOnly._tabs.length, 'talentsReadOnly')"
-                class="button-next" [disabled]="nextPageButtonDisabledTalentsReadOnly">
+                class="button-next" *ngIf="data.talents.length > 0" [disabled]="nextPageButtonDisabledTalentsReadOnly">
                 <mat-icon>navigate_next</mat-icon>
               </button>
               <button mat-icon-button (click)="beforeTab('talentsReadOnly')" class="button-before"
-                [disabled]="beforePageButtonDisabledTalentsReadOnly">
+                *ngIf="data.talents.length > 0" [disabled]="beforePageButtonDisabledTalentsReadOnly">
                 <mat-icon>navigate_before</mat-icon>
               </button>
             </ng-container>
