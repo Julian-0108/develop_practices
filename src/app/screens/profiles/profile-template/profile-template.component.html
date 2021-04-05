@@ -125,16 +125,102 @@
                 *ngIf="educationError && !isEditable" class="card-error__icon" matSuffix>error</mat-icon>
             </mat-card-title>
           </mat-card-header>
-          <mat-card-content *ngIf="isEditable">
-
+          <mat-card-content *ngIf="!isEditable" fxLayout="row wrap">
             <div class="table__container">
-              <table mat-table [dataSource]="educationDataSource" class="mat-elevation-z0">
-                <!-- Education Column -->
+              <table mat-table [dataSource]="readOnlyEducationDatasource" class="mat-elevation-z0">
+
+                <tr mat-header-row *matHeaderRowDef="['education', 'area']; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['education', 'area'];"></tr>
+
+                <ng-container matColumnDef="education">
+                  <th mat-header-cell *matHeaderCellDef> Formación Académica
+                    <div class="filter-inputs">
+                      <mat-form-field floatLabel="always" appearance="none">
+                        <mat-select class="filter" (selectionChange)="applyFilter($event)">
+                          <mat-option *ngFor="let education of educationList" [value]="education.name"> {{education.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </th>
+                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="area">
+                  <th mat-header-cell *matHeaderCellDef> Área de Formación
+                    <div class="filter-inputs filter-inputs--area ">
+
+                    </div>
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    <span>{{concatTableData(element.area)}}</span>
+                  </td>
+                </ng-container>
+              </table>
+            </div>
+
+          </mat-card-content>
+          <mat-card-content *ngIf="isEditable">
+            <form [formGroup]="form">
+              <div class="table__container">
+                <table #educationTable mat-table [dataSource]="educationDataSource" formArrayName="academicEducation">
+                  <!-- Row definitions -->
+                  <tr mat-header-row *matHeaderRowDef="educationColumns; sticky: true"></tr>
+                  <tr mat-row *matRowDef="let row; let i = index; columns: educationColumns;"></tr>
+
+                  <!-- Column definitions -->
+                  <ng-container matColumnDef="education">
+                    <th mat-header-cell *matHeaderCellDef> Formación Académica </th>
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                      <mat-form-field floatLabel="always" appearance="none">
+                        <mat-select placeholder="Click para activar la lista" formControlName="education">
+                          <mat-option *ngFor="let education of educationList" [value]="education._id"> {{education.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="area">
+                    <th mat-header-cell *matHeaderCellDef> Área de Formación </th>
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                      <mat-form-field floatLabel="always" appearance="none">
+                        <mat-select placeholder="Click para activar la lista" multiple formControlName="area">
+                          <mat-option *ngFor="let area of areasList" [value]="area._id"> {{area.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef>
+                      <div class="button__container" fxLayoutAlign="center">
+                        <button mat-flat-button class="table-header__button" (click)="addRowIntoEducationTable()">
+                          <mat-icon style="font-size: 22px;">add</mat-icon> Añadir
+                        </button>
+                      </div>
+                    </th>
+                    <td mat-cell *matCellDef="let element; let i = index">
+                      <button mat-icon-button (click)="removeRow(i)">
+                        <mat-icon class="table__buttons table__buttons--delete">delete</mat-icon>
+                      </button>
+                    </td>
+                  </ng-container>
+                </table>
+              </div>
+            </form>
+            <!-- <form #form [formGroup]="mtformgroup">
+              <mat-table #table [dataSource]="educationDataSource" formArrayName="formarray">
+                <mat-header-row *matHeaderRowDef="['education', 'area', 'actions']"></mat-header-row>
+                <mat-row *matRowDef="let row; columns:['education', 'area', 'actions']; let i=index" #cdkrow>
+                </mat-row>
+
                 <ng-container matColumnDef="education">
                   <th mat-header-cell *matHeaderCellDef>Formación Académica</th>
-                  <td mat-cell *matCellDef="let element">
+                  <td mat-cell *matCellDef="let element; let i = index" [formGroupName]="i">
                     <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select placeholder="Click para activar la lista">
+                      <mat-select (selectionChange)="selectedEucationAndArea($event, i, 'education')"
+                        placeholder="Click para activar la lista">
                         <mat-option *ngFor="let education of educationList" [value]="education._id"> {{education.name}}
                         </mat-option>
                       </mat-select>
@@ -142,12 +228,12 @@
                   </td>
                 </ng-container>
 
-                <!-- Area Column -->
                 <ng-container matColumnDef="area">
                   <th mat-header-cell *matHeaderCellDef> Área de Formación </th>
-                  <td mat-cell *matCellDef="let element">
+                  <td mat-cell *matCellDef="let element; let i = index" [formGroupName]="i">
                     <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select placeholder="Click para activar la lista" multiple panelClass="exa">
+                      <mat-select (selectionChange)="selectedEucationAndArea($event, i, 'area')"
+                        placeholder="Click para activar la lista" multiple panelClass="exa">
                         <mat-option *ngFor="let area of areasList" [value]="area._id"> {{area.name}}
                         </mat-option>
                       </mat-select>
@@ -155,7 +241,6 @@
                   </td>
                 </ng-container>
 
-                <!-- Actions Column -->
                 <ng-container matColumnDef="actions">
                   <th mat-header-cell *matHeaderCellDef>
                     <div class="button__container" fxLayoutAlign="center">
@@ -170,12 +255,110 @@
                     </button>
                   </td>
                 </ng-container>
+              </mat-table>
+            </form> -->
+            <!-- <form [formGroup]="exampleForm" novalidate>
+              <div class="button__container" fxLayoutAlign="center">
+                <button mat-flat-button class="table-header__button" (click)="addRow()">
+                  <mat-icon style="font-size: 22px;">add</mat-icon> Añadir
+                </button>
+              </div>
+              <div *ngFor="let unit of getControls(); let i=index" formArrayName="academicEducation">
+                <mat-divider *ngIf="getControls().length > 1 && i > 0"></mat-divider><br />
+                <div [formGroupName]="i">
+                  <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="3.5%" fxLayoutAlign="center">
+
+                    <mat-form-field floatLabel="always" appearance="none">
+                      <mat-select placeholder="Click para activar la lista" formControlName="education">
+                        <mat-option *ngFor="let education of educationList" [value]="education._id"> {{education.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+
+                    <mat-form-field floatLabel="always" appearance="none">
+                      <mat-select placeholder="Click para activar la lista" multiple formControlName="area">
+                        <mat-option *ngFor="let area of areasList" [value]="area._id"> {{area.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <div fxLayout.xs="row">
+
+                      <button mat-icon-button (click)="removeRow(i)">
+                        <mat-icon class="table__buttons table__buttons--delete">delete</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form> -->
+          </mat-card-content>
+
+          <!-- <div class="table__container">
+              <table #educationTable mat-table [dataSource]="educationDataSource" class="mat-elevation-z0">
+
+                <ng-container *ngFor="let column of educationColumns" [matColumnDef]="column !== 'actions' ? column : null">
+                  <th mat-header-cell *matHeaderCellDef> {{ column }} </th>
+                  <td mat-cell *matCellDef="let element; let i = index" [formControl]="education.controls[i]">
+                    <mat-form-field floatLabel="always" appearance="none">
+                      <mat-select placeholder="Click para activar la lista">
+                        <mat-option *ngFor="let education of educationList" [value]="education._id"> {{education.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="education">
+                  <th mat-header-cell *matHeaderCellDef>Formación Académica</th>
+                  <td mat-cell *matCellDef="let element; let i = index">
+                    <mat-form-field floatLabel="always" appearance="none">
+                      <mat-select (selectionChange)="selectedEucationAndArea($event, i, 'education')"
+                        placeholder="Click para activar la lista">
+                        <mat-option *ngFor="let education of educationList" [value]="education._id"> {{education.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="area">
+                  <th mat-header-cell *matHeaderCellDef> Área de Formación </th>
+                  <td mat-cell *matCellDef="let element; let i = index">
+                    <mat-form-field floatLabel="always" appearance="none">
+                      <mat-select (selectionChange)="selectedEucationAndArea($event, i, 'area')"
+                        placeholder="Click para activar la lista" multiple panelClass="exa">
+                        <mat-option *ngFor="let area of areasList" [value]="area._id"> {{area.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <div class="button__container" fxLayoutAlign="center">
+                      <button mat-flat-button class="table-header__button" (click)="addRow()">
+                        <mat-icon style="font-size: 22px;">add</mat-icon> Añadir
+                      </button>
+                    </div>
+                  </th>
+                  <td mat-cell *matCellDef="let element; let i = index">
+                    <button mat-icon-button (click)="removeRow(element, i)">
+                      <mat-icon class="table__buttons table__buttons--delete">delete</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="educationColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: educationColumns;"></tr>
               </table>
-            </div>
-          </mat-card-content>
+            </div> -->
+
+          <!-- </mat-card-content> -->
           <!-- <mat-card-content fxLayout="row wrap" *ngIf="!isEditable">
             <div class="profile-card__content" *ngFor="let item of data.education">
               <p>

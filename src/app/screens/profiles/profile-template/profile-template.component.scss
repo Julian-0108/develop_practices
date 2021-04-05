@@ -42,6 +42,14 @@ mat-drawer-container {
   margin: 3px;
   flex: auto;
 }
+.profile-card__expansion-panel {
+background-color: #f6f6f6;
+margin: 3px;
+box-shadow: none;
+}
+mat-expansion-panel-header:hover {
+background-color: #f6f6f6 !important;
+}
 
 p {
   margin: 0;
@@ -379,7 +387,9 @@ p.talents {
 ::ng-deep.mat-option.mat-selected:not(.mat-option-disabled) {
   color: #000000de !important;
 }
-.mat-column-actions {
+.mat-column-actions,
+.mat-column-education,
+.mat-column-area {
   text-align: center !important;
 }
 .table__container {
@@ -395,4 +405,13 @@ p.talents {
   line-height: initial;
   color: #de1920;
   padding: 0 10px 0 0;
+}
+
+.listitem {
+  margin: 0 !important;
+  color: #707070;
+}
+
+.filter-inputs--area {
+  height: 20px;
 }
