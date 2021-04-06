@@ -77,7 +77,7 @@ export class MasterInfoComponent implements OnInit {
         value: '',
         disabled: this.data?.url === 'types' || this.data?.url === 'security-responsabilities',
       }),
-      type: new FormControl({value: null, disabled: this.data?.url === 'education-area' || true}),
+      type: new FormControl({value: null, disabled: this.data?.url === 'education-area'}),
       masterReference: new FormControl(null),
       idParent: new FormControl({value: null, disabled: this.data?.url !== 'base-teams-categories' || true}),
       createdAt: new FormControl({ value: '', disabled: true }),
@@ -108,10 +108,6 @@ export class MasterInfoComponent implements OnInit {
         this.form.controls.description?.clearValidators();
         this.form.controls.description?.updateValueAndValidity();
       }
-      // if(this.form.controls.idParent.status=="DISABLED"){
-      //   this.form.controls.idParent?.clearValidators();
-      //   this.form.controls.idParent?.updateValueAndValidity();
-      // }
     } else {
       this.masters = this.data.masters.filter((master) => master.name !== 'Tipos');
       this.form.controls.masterReference?.setValidators([Validators.required]);

@@ -1,67 +1,71 @@
 .mat-button-toggle {
-  height: 25px !important;
-  display: flex;
-  align-items: center;
-  font-size: 12px;
-  font-weight: 500;
-  color: #707070;
-  width: 5em !important;
+    height: 25px !important;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: #707070;
+    width: 5em !important;
 }
 
 .mat-button-toggle-disabled {
-  background-color: #efefef;
-  color: #cccccc;
+    background-color: #efefef;
+    color: #cccccc;
 }
 
 .mat-button-toggle-checked {
-  color: #ffffff !important;
-  background-color: #de1920;
-
+    color: #ffffff !important;
+    background-color: #de1920;
 }
 
 //input file styles
 .file__button {
-  border: solid 1.5px #de1920;
-  border-radius: 5px 0 0 5px;
-  background-color: #fff;
-  color: #de1920;
-  height: 28px;
-  align-self: center;
-  cursor: pointer;
-  outline: none;
-  margin-top: 13px;
+    border: solid 1.5px #de1920;
+    border-radius: 5px 0 0 5px;
+    background-color: #fff;
+    color: #de1920;
+    height: 28px;
+    align-self: center;
+    cursor: pointer;
+    outline: none;
+    margin-top: 13px;
 }
 
 .file__button:hover {
-  background-color: #ffe2e3;
+    background-color: #ffe2e3;
 }
 
 .file__icon {
-  font-size: 22px;
+    font-size: 22px;
 }
 
 .file__container {
-  display: flex !important;
-  align-content: center;
+    display: flex !important;
+    align-content: center;
 }
 
 .file__input {
-  border-left-style: none !important;
-  border-radius: 0 5px 5px 0 !important;
+    border-left-style: none !important;
+    border-radius: 0 5px 5px 0 !important;
 }
 
 .file__label {
-  position: absolute;
-  font-size: 13px;
-  bottom: 19.5em;
-  font-weight: 500;
+    position: absolute;
+    font-size: 13px;
+    bottom: 19.5em;
+    font-weight: 500;
 }
 
 .mat-dialog-title {
-  font-weight: 600;
+    font-weight: 600;
 }
 
-.disabled{
-  background-color: #efefef;
-  border-color: #efefef;
+.disabled {
+    background-color: #efefef;
+    border-color: #efefef;
+}
+
+.mat-select-disabled {
+    background-color: #efefef;
+    border-color: #efefef;
 }
