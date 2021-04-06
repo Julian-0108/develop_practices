@@ -349,10 +349,10 @@
                     </mat-card-header>
                     <mat-card-content *ngIf="!isEditable">
                         <ng-container>
-                            <button mat-icon-button (click)="nextTab(matTabTalentsReadOnly._tabs.length, 'talentsReadOnly')" class="button-next" *ngIf="data.talents.length > 0" [disabled]="nextPageButtonDisabledTalentsReadOnly">
+                            <button mat-icon-button (click)="nextTab(matTabTalentsReadOnly._tabs.length, 'talentsReadOnly')" class="button-next" *ngIf="data.talents?.length > 0" [disabled]="nextPageButtonDisabledTalentsReadOnly">
                 <mat-icon>navigate_next</mat-icon>
               </button>
-                            <button mat-icon-button (click)="beforeTab('talentsReadOnly')" class="button-before" *ngIf="data.talents.length > 0" [disabled]="beforePageButtonDisabledTalentsReadOnly">
+                            <button mat-icon-button (click)="beforeTab('talentsReadOnly')" class="button-before" *ngIf="data.talents?.length > 0" [disabled]="beforePageButtonDisabledTalentsReadOnly">
                 <mat-icon>navigate_before</mat-icon>
               </button>
                         </ng-container>
