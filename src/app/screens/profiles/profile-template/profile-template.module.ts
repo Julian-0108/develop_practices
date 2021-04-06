@@ -5,11 +5,12 @@ import { ProfileTemplateRoutingModule } from './profile-template-routing.module'
 import { ProfileTemplateComponent } from './profile-template.component';
 import { SharedModule } from '@shared/shared.module';
 import { TitleCasePipe } from '@angular/common';
+import { ResponsabilitiesDescComponent } from './responsabilitiesDesc/responsabilities-desc.component';
 // import { ProfileFormHistoryComponent } from './profile-form-history/profile-form-history.component';
 
 
 @NgModule({
-  declarations: [ProfileTemplateComponent], //ProfileFormHistoryComponent
+  declarations: [ProfileTemplateComponent, ResponsabilitiesDescComponent], //ProfileFormHistoryComponent
   imports: [
     CommonModule,
     ProfileTemplateRoutingModule,
