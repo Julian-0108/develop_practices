@@ -159,6 +159,13 @@
                   </td>
                 </ng-container>
               </table>
+
+            </div>
+            <div class="not-found-data__container" *ngIf="showNotFoundMessage">
+              <img class="not-found-data__image" src="../../../../assets/images/notFoundData.svg" alt="Not found data">
+              <div class="not-found-data__message">
+                No se ha encontrado información.
+              </div>
             </div>
 
           </mat-card-content>
@@ -183,6 +190,8 @@
                       </mat-form-field>
                     </td>
                   </ng-container>
+
+
 
                   <ng-container matColumnDef="area">
                     <th mat-header-cell *matHeaderCellDef> Área de Formación </th>
@@ -486,6 +495,12 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
+            </div>
+            <div class="not-found-data__container" *ngIf="contentPagesSecurityResponsabilities.length === 0">
+              <img class="not-found-data__image" src="../../../../assets/images/notFoundData.svg" alt="Not found data">
+              <div class="not-found-data__message">
+                No ha seleccionado ningún item de la lista.
+              </div>
             </div>
             <mat-selection-list #securityResponsabilities fxLayout="row">
               <mat-tab-group #matTabSecurityResponsabilities mat-align-tabs="start" animationDuration="0ms"

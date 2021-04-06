@@ -428,3 +428,19 @@ margin: 5px 0 0 5px;
   align-items: center;
   padding: 0 16px 0;
 }
+.not-found-data__container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.not-found-data__image {
+width: 12em;
+margin-top: 10px;
+}
+.not-found-data__message {
+  color: #a9a9a9;
+  font-style: italic;
+  font-size: 15px;
+  margin-top: 10px;
+}

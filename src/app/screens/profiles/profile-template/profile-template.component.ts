@@ -151,7 +151,7 @@ export class ProfileTemplateComponent implements OnInit {
 
   public responsabilitySeleted = '';
   showEducationFilter = true;
-
+  showNotFoundMessage = false;
   constructor(
     private profileTemplateService: ProfileTemplateService,
     private notificationService: NotificationService,
@@ -163,7 +163,6 @@ export class ProfileTemplateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     // this.exampleForm = this.formBuilder.group({
     //   academicEducation: this.formBuilder.array([this.createFormEducation()]),
     // });
@@ -1060,14 +1059,13 @@ export class ProfileTemplateComponent implements OnInit {
     return area.join(', ');
   }
   applyFilter(event: any) {
-    console.log(this.readOnlyEducationDatasource.filter)
+    console.log(this.readOnlyEducationDatasource.filter);
     this.readOnlyEducationDatasource.filter = event.value;
-    // if(this.dataSource.filteredData.length==0){
-    //   this.displayNoRecords=true;
-    // }else{
-    //   this.displayNoRecords=false;
-
-    // }
+    if (this.readOnlyEducationDatasource.filteredData.length === 0) {
+      this.showNotFoundMessage = true;
+    } else {
+      this.showNotFoundMessage = false;
+    }
   }
 
   selectedResponsability(event: any) {
