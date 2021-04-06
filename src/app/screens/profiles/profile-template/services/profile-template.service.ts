@@ -141,9 +141,9 @@ export class ProfileTemplateService {
       .pipe(pluck('payload'))
       .toPromise();
   }
-  async getAllSecurityResponsabilities() {
+  async getAllSecurityResponsabilities(type: string) {
     return await this.httpClient
-      .get(`${environment.API_MASTER_INFO}/security-responsabilities?status=true`)
+      .get(`${environment.API_MASTER_INFO}/security-responsabilities?status=true&type=${type}`)
       .pipe(pluck('payload'))
       .toPromise();
   }
@@ -169,29 +169,30 @@ export class ProfileTemplateService {
   }
 
   async getData(idProfile: string) {
+    // let responsabilitiesGroupbyType: any = {};
     let data: any = await this.httpClient
       .get(`${environment.API_BASE_PROFILES}/bases-profiles/${idProfile}`)
       .pipe(pluck('payload'))
       .toPromise();
     data[0]['area'] = [
-      [
-        {
-          _id: '605d05ee90d9e441a0155556',
-          name: 'Sistemas',
-          createdAt: '2021-03-25T21:51:42.741Z',
-          description: 'ejemplo',
-          status: true,
-          updatedAt: '2021-03-25T21:51:42.741Z',
-        },
-        {
-          _id: '605d05ee90d9e441a0155557',
-          name: 'Administración',
-          createdAt: '2021-03-25T21:51:42.741Z',
-          description: 'ejemplo',
-          status: true,
-          updatedAt: '2021-03-25T21:51:42.741Z',
-        },
-      ],
+      // [
+      //   {
+      //     _id: '605d05ee90d9e441a0155556',
+      //     name: 'Sistemas',
+      //     createdAt: '2021-03-25T21:51:42.741Z',
+      //     description: 'ejemplo',
+      //     status: true,
+      //     updatedAt: '2021-03-25T21:51:42.741Z',
+      //   },
+      //   {
+      //     _id: '605d05ee90d9e441a0155557',
+      //     name: 'Administración',
+      //     createdAt: '2021-03-25T21:51:42.741Z',
+      //     description: 'ejemplo',
+      //     status: true,
+      //     updatedAt: '2021-03-25T21:51:42.741Z',
+      //   },
+      // ],
       [
         {
           _id: '605d05ee90d9e441a0155558',
@@ -199,11 +200,12 @@ export class ProfileTemplateService {
           createdAt: '2021-03-25T21:51:42.741Z',
           description: 'ejemplo',
           status: true,
-          updatedAt: '2021-03-25T21:51:42.741Z'
+          updatedAt: '2021-03-25T21:51:42.741Z',
         },
-      ]
+      ],
     ];
     data[0]['educationAndAreaMerge'] = [];
+    data[0]['responsabilitiesGroupbyType'] = {};
     // for (let i = 0; i < data[0].education.length; i++) {
     //   // const element = data[0].education[i];
     //   data[0]['educationAndAreaMerge'].push({
@@ -211,23 +213,38 @@ export class ProfileTemplateService {
     //     area: data[0].area[i]
     //   })
     // }
-    data[0]['education'].push({
-      _id: '605d05ee90d9e441a0155556',
-      createdAt: '2021-03-25T21:51:42.741Z',
-      description: 'ejemplo',
-      name: 'Ingeniero 2',
-      status: true,
-      type: 'Profesional',
-      updatedAt: '2021-03-25T21:51:42.741Z',
-    }
-    );
+    // ------------
+    // data[0]['education'].push({
+    //   _id: '605d05ee90d9e441a0155556',
+    //   createdAt: '2021-03-25T21:51:42.741Z',
+    //   description: 'ejemplo',
+    //   name: 'Ingeniero 2',
+    //   status: true,
+    //   type: 'Profesional',
+    //   updatedAt: '2021-03-25T21:51:42.741Z',
+    // });
+    // data[0]['education'] = []
     for (let i of data[0].education) {
-      data[0]['educationAndAreaMerge'].push({
-        education: i._id,
-        area: data[0].area[data[0].education.indexOf(i)].map((res: any) => Object({_id: res._id, name: res.name})),
-        name: i.name
-      });
+      if (data[0].education.length !== 0) {
+        data[0]['educationAndAreaMerge'].push({
+          education: i._id,
+          area: data[0].area[data[0].education.indexOf(i)].map((res: any) =>
+            Object({ _id: res._id, name: res.name })
+          ),
+          name: i.name,
+        });
+      }
     }
+    /* SecurityResponsabilities */
+    data[0].securityResponsabilities.forEach((resp: any) => {
+      if (!data[0].responsabilitiesGroupbyType.hasOwnProperty(resp.type)) {
+        data[0].responsabilitiesGroupbyType[resp.type] = data[0].securityResponsabilities.map(
+          (type: any) => {
+            if (type.type === resp.type) return type
+          }
+        );
+      }
+    });
     console.log(data);
     return data;
   }

@@ -94,12 +94,11 @@
         </mat-vertical-stepper>
       </div>
     </mat-drawer>
-    <!-- </mat-card-content> -->
     <div fxLayout="row">
       <div fxLayout="column" style="width: 70%;">
         <mat-card class="profile__card">
           <mat-card-header>
-            <mat-card-title class="profile-card__title">Objetivo del Rol</mat-card-title>
+            <mat-card-title class="profile-card__title">Objetivo del Cargo</mat-card-title>
           </mat-card-header>
           <mat-card-content fxLayout="row" *ngIf="!isEditable">
             <div class="profile-card__content">
@@ -124,19 +123,19 @@
         <mat-card class="profile__card">
           <mat-card-header>
             <mat-card-title class="profile-card__title">Formación Académica <mat-icon
-                *ngIf="educationError && !isEditable" class="card-error__icon" matSuffix>error</mat-icon>
+                *ngIf="educationError && isEditable" class="card-error__icon" matSuffix>error</mat-icon>
             </mat-card-title>
           </mat-card-header>
           <mat-card-content *ngIf="!isEditable" fxLayout="row wrap">
             <div class="table__container">
-              <table mat-table [dataSource]="readOnlyEducationDatasource" class="mat-elevation-z0">
+              <table #e mat-table [dataSource]="readOnlyEducationDatasource" class="mat-elevation-z0">
 
                 <tr mat-header-row *matHeaderRowDef="['education', 'area']; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: ['education', 'area'];"></tr>
 
                 <ng-container matColumnDef="education">
                   <th mat-header-cell *matHeaderCellDef> Formación Académica
-                    <div class="filter-inputs">
+                    <div class="filter-inputs" *ngIf="showEducationFilter">
                       <mat-form-field floatLabel="always" appearance="none">
                         <mat-select class="filter" (selectionChange)="applyFilter($event)">
                           <mat-option *ngFor="let education of educationList" [value]="education.name">
@@ -442,17 +441,29 @@
 
         <mat-card class="profile__card">
           <mat-card-header>
-            <mat-card-title class="profile-card__title">Responsabilidades para Seguridad y Salud en el Trabajo
+            <mat-card-title class="profile-card__title">Responsabilidades Corporativas
               <mat-icon *ngIf="securityRespError" class="card-error__icon" matSuffix>error</mat-icon>
             </mat-card-title>
           </mat-card-header>
           <mat-card-content fxLayout="row wrap" *ngIf="!isEditable">
+            <mat-selection-list (click)="selectedResponsability(resp.selectedOptions.selected[0]?.value)" style="flex: auto;" #resp
+              [multiple]="false">
+              <mat-list-option *ngFor="let resp of data.responsabilitiesGroupbyType | keyvalue"
+                [value]="{title:resp.key ,content:resp.value}">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                  {{resp.key}}
+                  <mat-icon class="security-responsabilities__icon">description</mat-icon>
+                </div>
+              </mat-list-option>
+            </mat-selection-list>
+          </mat-card-content>
+          <!-- <mat-card-content fxLayout="row wrap" *ngIf="!isEditable">
             <div class="profile-card__content" *ngFor="let item of data.securityResponsabilities">
               <p>
                 {{item.name}}
               </p>
             </div>
-          </mat-card-content>
+          </mat-card-content> -->
           <mat-card-content *ngIf="isEditable">
             <ng-container *ngIf="contentPagesSecurityResponsabilities.length > 1">
               <button mat-icon-button
@@ -465,6 +476,17 @@
                 <mat-icon>navigate_before</mat-icon>
               </button>
             </ng-container>
+            <div class="select-responsabilities">
+              <mat-form-field fxFlex="30" floatLabel="always" appearance="none">
+                <mat-label>Responsabilidades</mat-label>
+                <mat-select placeholder="Click para activar la lista" [(ngModel)]="responsabilitySeleted"
+                  (selectionChange)="getFilterResponsabilities()">
+                  <mat-option *ngFor="let item of data.responsabilitiesGroupbyType | keyvalue" [value]="item.key">
+                    {{item.key}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
             <mat-selection-list #securityResponsabilities fxLayout="row">
               <mat-tab-group #matTabSecurityResponsabilities mat-align-tabs="start" animationDuration="0ms"
                 [(selectedIndex)]="tabIndexSecurityResp">
@@ -538,7 +560,7 @@
         </mat-card>
         <mat-card class="profile__card">
           <mat-card-header>
-            <mat-card-title class="profile-card__title">Certificaciones Requeridas
+            <mat-card-title class="profile-card__title">Cursos y Certificaciones
               <mat-icon *ngIf="requiredCertificatesError" class="card-error__icon" matSuffix>error</mat-icon>
             </mat-card-title>
           </mat-card-header>
@@ -575,7 +597,7 @@
         </mat-card>
         <mat-card class="profile__card">
           <mat-card-header>
-            <mat-card-title class="profile-card__title">Funciones del Rol
+            <mat-card-title class="profile-card__title">Funciones del Cargo
               <mat-icon *ngIf="rolResponsabilitiesError" class="card-error__icon" matSuffix>error</mat-icon>
             </mat-card-title>
           </mat-card-header>
@@ -619,11 +641,11 @@
           <mat-card-content *ngIf="!isEditable">
             <ng-container>
               <button mat-icon-button (click)="nextTab(matTabTalentsReadOnly._tabs.length, 'talentsReadOnly')"
-                class="button-next" *ngIf="data.talents.length > 0" [disabled]="nextPageButtonDisabledTalentsReadOnly">
+                class="button-next" [disabled]="nextPageButtonDisabledTalentsReadOnly">
                 <mat-icon>navigate_next</mat-icon>
               </button>
               <button mat-icon-button (click)="beforeTab('talentsReadOnly')" class="button-before"
-                *ngIf="data.talents.length > 0" [disabled]="beforePageButtonDisabledTalentsReadOnly">
+                 [disabled]="beforePageButtonDisabledTalentsReadOnly">
                 <mat-icon>navigate_before</mat-icon>
               </button>
             </ng-container>

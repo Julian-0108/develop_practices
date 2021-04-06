@@ -21,6 +21,7 @@ import { ActivatedRoute } from '@angular/router';
 import { OnlyNumbers } from '@shared/functions/onlyNumbers';
 import { DataSource } from '@angular/cdk/table';
 import { BehaviorSubject } from 'rxjs';
+import { ResponsabilitiesDescComponent } from './responsabilitiesDesc/responsabilities-desc.component';
 
 export interface AcademicEducationTable {
   education: string;
@@ -148,20 +149,25 @@ export class ProfileTemplateComponent implements OnInit {
 
   readOnlyEducationDatasource!: MatTableDataSource<AcademicEducationTable>;
 
+  public responsabilitySeleted = '';
+  showEducationFilter = true;
+
   constructor(
     private profileTemplateService: ProfileTemplateService,
     private notificationService: NotificationService,
     private _dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.getData();
+  }
 
   ngOnInit(): void {
+
     // this.exampleForm = this.formBuilder.group({
     //   academicEducation: this.formBuilder.array([this.createFormEducation()]),
     // });
-    this.getData();
-
+    // this.getData();
     // this.mtformarray=this.formBuilder.array([]);
     // this.mtformgroup=this.formBuilder.group({formarray: this.mtformarray});
     // this.educationDataSource = (this.mtformgroup.controls.formarray as FormArray).value
@@ -255,9 +261,9 @@ export class ProfileTemplateComponent implements OnInit {
   //   // console.log('En el add =>>', this.educationDataSource);
   // }
   removeRow(index: number) {
-    const control = (this.form.get('academicEducation') as FormArray).controls;
-    const control2 = <FormArray>this.form.controls['academicEducation'];
-    control2.removeAt(index);
+    // const control = (this.form.get('academicEducation') as FormArray).controls;
+    const control = <FormArray>this.form.controls['academicEducation'];
+    control.removeAt(index);
     // control.splice(index, 1);
     this._educationTable.renderRows();
   }
@@ -516,14 +522,15 @@ export class ProfileTemplateComponent implements OnInit {
    * @description Esta función consulta el json de la información de la aplicación y
    * la asigna a sus respectivas variables.
    */
-  getData() {
-    this.profileTemplateService.getData(this.idProfile).then((res: any) => {
-      console.log('res[0] =>>', res[0]);
+  async getData() {
+    await this.profileTemplateService.getData(this.idProfile).then((res: any) => {
       this.data = res[0];
+      if (res[0].educationAndAreaMerge.length === 0) {
+        this.showEducationFilter = false;
+      }
       this.readOnlyEducationDatasource = new MatTableDataSource(res[0].educationAndAreaMerge);
-      this.profileTemplateService.getAllEstudies().then((res: AcademicEducation[]) => {
-
-        this.educationList = res;
+      this.profileTemplateService.getAllEstudies().then((resp: AcademicEducation[]) => {
+        this.educationList = resp;
       });
       this.buildTalentsReadOnly(this.data);
       this.dataAssertiveComunication = new MatTableDataSource(res[0].assertiveComunication);
@@ -580,6 +587,8 @@ export class ProfileTemplateComponent implements OnInit {
     this.formExperience.get('professionalExperience')?.patchValue(this.data.professionalExperience);
     this.formExperience.get('chargeExperience')?.patchValue(this.data.chargeExperience);
     /* Education */
+    const control = this.form.controls['academicEducation'] as FormArray;
+    control.clear();
     this.data.educationAndAreaMerge.forEach((el: AcademicEducationTable) =>
       this.addRowIntoEducationTable(el, false)
     );
@@ -612,10 +621,7 @@ export class ProfileTemplateComponent implements OnInit {
     this.profileTemplateService.getAllTalents().then((res: any) => {
       this.buildPagesAndColumnsList2(res, 'talents');
     });
-    /* Security Responsabilities */
-    this.profileTemplateService.getAllSecurityResponsabilities().then((res: any) => {
-      this.buildPagesAndColumnsList(res, 'securityResponsabilities');
-    });
+
     this.isEditable = true;
     // this.getProfileEducation(this.data.educationAndAreaMerge);
   }
@@ -744,6 +750,7 @@ export class ProfileTemplateComponent implements OnInit {
 
   onSave() {
     console.log(this.form.value);
+    this.onSaveeEucation();
     return;
     if (
       this.onSaveObjective() &&
@@ -885,21 +892,28 @@ export class ProfileTemplateComponent implements OnInit {
     return true;
   }
   onSaveeEucation() {
-    // if (this.educationDataSource.length === 0) {
-    //   this.notificationService.openSimpleSnackBar({
-    //     title: 'Acción Incorrecta',
-    //     message: 'La sección de "Formación Académica" no puede estar vacía.',
-    //     type: 'error',
-    //   });
-    //   this.educationError = true;
-    //   return;
-    // }
-    // this.educationError = false;
+    let emptyFields: object[] = [];
+    for (const i of this.form.value.academicEducation) {
+      if (i.education === null || i.area === null) {
+        emptyFields.push(i);
+      }
+    }
+    if (this.form.value.academicEducation.length === 0 || emptyFields.length !== 0) {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Acción Incorrecta',
+        message: 'La sección de "Formación Académica" no puede estar vacía.',
+        type: 'error',
+      });
+      this.educationError = true;
+      return;
+    }
+
+    this.educationError = false;
     // this.sendInformation = {
     //   ...this.sendInformation,
     //   education: this.educationDataSource,
     // };
-    // return true;
+    return true;
   }
   onSaveRequiredCertificates() {
     if (this.requiredCertificates.selectedOptions.selected.length === 0) {
@@ -1046,6 +1060,35 @@ export class ProfileTemplateComponent implements OnInit {
     return area.join(', ');
   }
   applyFilter(event: any) {
+    console.log(this.readOnlyEducationDatasource.filter)
     this.readOnlyEducationDatasource.filter = event.value;
+    // if(this.dataSource.filteredData.length==0){
+    //   this.displayNoRecords=true;
+    // }else{
+    //   this.displayNoRecords=false;
+
+    // }
+  }
+
+  selectedResponsability(event: any) {
+    console.log(event);
+    this._dialog
+      .open(ResponsabilitiesDescComponent, {
+        data: event,
+        autoFocus: false,
+      })
+      .afterClosed()
+      .subscribe((resp: any) => {});
+  }
+  d(e: any) {
+    console.log(e);
+  }
+
+  getFilterResponsabilities() {
+    this.profileTemplateService
+      .getAllSecurityResponsabilities(this.responsabilitySeleted)
+      .then((res: any) => {
+        this.buildPagesAndColumnsList(res, 'securityResponsabilities');
+      });
   }
 }
