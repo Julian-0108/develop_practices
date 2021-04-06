@@ -19,9 +19,6 @@ import { OnlyNumbers } from '@shared/functions/onlyNumbers';
   styleUrls: ['./profile-template.component.scss'],
 })
 export class ProfileTemplateComponent implements OnInit {
-
-  months= ['enero', 'febrero', 'marzo'];
-  
   @ViewChild('education') education!: MatSelectionList;
   @ViewChild('requiredCertificates') requiredCertificates!: MatSelectionList;
   @ViewChild('specificKnowledge') specificKnowledge!: MatSelectionList;
@@ -86,10 +83,8 @@ export class ProfileTemplateComponent implements OnInit {
     objective: new FormControl(null, [Validators.required]),
   });
   formExperience = new FormGroup({
-    minProfessionalExperience: new FormControl(0),
-    maxProfessionalExperience: new FormControl(0),
-    minChargeExperience: new FormControl(0),
-    maxChargeExperience: new FormControl(0),
+    professionalExperience: new FormControl(0),
+    chargeExperience: new FormControl(0),
   });
   formFilterHistory = new FormGroup({
     startDate: new FormControl(),
@@ -674,18 +669,15 @@ export class ProfileTemplateComponent implements OnInit {
     return true;
   }
   onSaveEperience() {
-    // if (this.formExperience.invalid) {
-    //   this.formExperience.markAllAsTouched();
-    //   return;
-    // }
+    if (this.formExperience.invalid) {
+      this.formExperience.markAllAsTouched();
+      return;
+    }
     this.sendInformation = {
       ...this.sendInformation,
-      minProfessionalExperience: Number(this.formExperience.value.minProfessionalExperience),
-      maxProfessionalExperience: Number(this.formExperience.value.maxProfessionalExperience),
-      minChargeExperience: Number(this.formExperience.value.minChargeExperience),
-      maxChargeExperience: Number(this.formExperience.value.maxChargeExperience),
+      professionalExperience: Number(this.formExperience.value.professionalExperience),
+      chargeExperience: Number(this.formExperience.value.chargeExperience),
     };
-    console.log(this.sendInformation);
     return true;
   }
   onSaveeEucation() {

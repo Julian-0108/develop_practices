@@ -85,7 +85,7 @@ export class AdminMasterInfoComponent implements OnInit {
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
     {
-      name: 'Education Area',
+      name: 'Area de educación',
       url: 'education-area',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     }
@@ -126,7 +126,7 @@ export class AdminMasterInfoComponent implements OnInit {
         (el) => el !== 'description' && el !== 'submenu' && el !== 'reference'
       );
     } else if (this.masterSeleted == 'education-area'){
-      return this.displayedColumns.filter((el) => el !== 'type'  && el !== 'submenu');
+      return this.displayedColumns.filter((el) => el !== 'type'  && el !== 'submenu' && el !== 'reference');
     } else if (this.masterSeleted !== 'base-teams-categories') {
       return this.displayedColumns.filter((el) => el !== 'submenu' && el !== 'reference');
     } else {
