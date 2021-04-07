@@ -455,8 +455,8 @@
             </mat-card-title>
           </mat-card-header>
           <mat-card-content fxLayout="row wrap" *ngIf="!isEditable">
-            <mat-selection-list (click)="selectedResponsability(resp.selectedOptions.selected[0]?.value)" style="flex: auto;" #resp
-              [multiple]="false">
+            <mat-selection-list (click)="selectedResponsability(resp.selectedOptions.selected[0]?.value)"
+              style="flex: auto;" #resp [multiple]="false">
               <mat-list-option *ngFor="let resp of data.responsabilitiesGroupbyType | keyvalue"
                 [value]="{title:resp.key ,content:resp.value}">
                 <div fxLayout="row" fxLayoutAlign="start center">
@@ -488,15 +488,15 @@
             <div class="select-responsabilities">
               <mat-form-field fxFlex="30" floatLabel="always" appearance="none">
                 <mat-label>Responsabilidades</mat-label>
-                <mat-select placeholder="Click para activar la lista" [(ngModel)]="responsabilitySeleted"
-                  (selectionChange)="getFilterResponsabilities()">
-                  <mat-option *ngFor="let item of data.responsabilitiesGroupbyType | keyvalue" [value]="item.key">
-                    {{item.key}}
+                <mat-select [(ngModel)]="responsabilitySeleted">
+                  <mat-option value="" disabled slected> Seleccione una opción </mat-option>
+                  <mat-option *ngFor="let item of corporativeRespList" [value]="item">
+                    {{item}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="not-found-data__container" *ngIf="contentPagesSecurityResponsabilities.length === 0">
+            <div class="not-found-data__container" *ngIf="responsabilitySeleted === ''">
               <img class="not-found-data__image" src="../../../../assets/images/notFoundData.svg" alt="Not found data">
               <div class="not-found-data__message">
                 No ha seleccionado ningún item de la lista.
@@ -508,8 +508,9 @@
                 <mat-tab label="First" *ngFor="let contentPage of contentPagesSecurityResponsabilities">
                   <div fxLayout="row">
                     <div fxLayout="column" *ngFor="let data of contentPage">
-                      <mat-list-option [selected]="onInitList(item, 'securityResponsabilities')"
-                        *ngFor="let item of data" [value]="item">
+                      <mat-list-option [ngStyle]="{display: (item.type !== responsabilitySeleted ? 'none' : 'block')}"
+                        [selected]="onInitList(item, 'securityResponsabilities')" *ngFor="let item of data"
+                        [value]="item">
                         {{item.name}}
                       </mat-list-option>
                     </div>
@@ -660,7 +661,7 @@
                 <mat-icon>navigate_next</mat-icon>
               </button>
               <button mat-icon-button (click)="beforeTab('talentsReadOnly')" class="button-before"
-                 [disabled]="beforePageButtonDisabledTalentsReadOnly">
+                [disabled]="beforePageButtonDisabledTalentsReadOnly">
                 <mat-icon>navigate_before</mat-icon>
               </button>
             </ng-container>

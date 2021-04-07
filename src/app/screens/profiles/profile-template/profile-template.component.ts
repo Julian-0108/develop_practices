@@ -152,6 +152,7 @@ export class ProfileTemplateComponent implements OnInit {
   public responsabilitySeleted = '';
   showEducationFilter = true;
   showNotFoundMessage = false;
+  corporativeRespList: string[] = [];
   constructor(
     private profileTemplateService: ProfileTemplateService,
     private notificationService: NotificationService,
@@ -620,6 +621,17 @@ export class ProfileTemplateComponent implements OnInit {
     this.profileTemplateService.getAllTalents().then((res: any) => {
       this.buildPagesAndColumnsList2(res, 'talents');
     });
+    /* Corporative Responsabilities */
+    this.profileTemplateService
+    .getAllSecurityResponsabilities()
+    .then((res: any) => {
+      this.buildPagesAndColumnsList(res, 'securityResponsabilities');
+      res.forEach((responsability: any) => {
+        if (!this.corporativeRespList.includes(responsability.type)) {
+          this.corporativeRespList.push(responsability.type)
+        }
+      });
+    });
 
     this.isEditable = true;
     // this.getProfileEducation(this.data.educationAndAreaMerge);
@@ -748,13 +760,13 @@ export class ProfileTemplateComponent implements OnInit {
   }
 
   onSave() {
-    console.log(this.form.value);
-    this.onSaveeEucation();
-    return;
+    // console.log(this.form.value);
+    // this.onSaveeEucation();
+    // return;
     if (
       this.onSaveObjective() &&
       this.onSaveEperience() &&
-      // this.onSaveeEucation() &&
+      this.onSaveeEucation() &&
       this.onSaveRequiredCertificates() &&
       this.onSaveSpecificKnowledge() &&
       this.onSaveRolResponsabilities() &&
@@ -908,10 +920,20 @@ export class ProfileTemplateComponent implements OnInit {
     }
 
     this.educationError = false;
-    // this.sendInformation = {
-    //   ...this.sendInformation,
-    //   education: this.educationDataSource,
-    // };
+    this.sendInformation = {
+      ...this.sendInformation,
+      education: [
+        {
+          _id: '60550ac03571872db47680f8',
+          name: 'Tecnólogo 2',
+          description: 'Tecnico',
+          type: 'ejemplo',
+          status: true,
+          createdAt: '2021-03-19T20:34:08.646Z',
+          updatedAt: '2021-03-25T21:49:24.517Z',
+        },
+      ],
+    };
     return true;
   }
   onSaveRequiredCertificates() {
@@ -1069,6 +1091,7 @@ export class ProfileTemplateComponent implements OnInit {
   }
 
   selectedResponsability(event: any) {
+    event.content = event.content.filter((el: any) => el !== undefined);
     console.log(event);
     this._dialog
       .open(ResponsabilitiesDescComponent, {
@@ -1080,13 +1103,14 @@ export class ProfileTemplateComponent implements OnInit {
   }
   d(e: any) {
     console.log(e);
+    console.log(this.securityResponsabilities.selectedOptions)
+    console.log(this.securityResponsabilities.selectedOptions.selected)
+    // if (e.option._selected) {
+    //   this.securityResponsabilities.selectedOptions.selected.push(e.option);
+    // }
   }
 
   getFilterResponsabilities() {
-    this.profileTemplateService
-      .getAllSecurityResponsabilities(this.responsabilitySeleted)
-      .then((res: any) => {
-        this.buildPagesAndColumnsList(res, 'securityResponsabilities');
-      });
+
   }
 }
