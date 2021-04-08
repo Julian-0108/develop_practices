@@ -141,11 +141,18 @@ export class ProfileTemplateService {
       .pipe(pluck('payload'))
       .toPromise();
   }
-  async getAllSecurityResponsabilities(type: string) {
+  async getAllSecurityResponsabilities(type?: string) {
+    if (type) {
+      return await this.httpClient
+        .get(`${environment.API_MASTER_INFO}/security-responsabilities?status=true&type=${type}`)
+        .pipe(pluck('payload'))
+        .toPromise();
+    }
     return await this.httpClient
-      .get(`${environment.API_MASTER_INFO}/security-responsabilities?status=true&type=${type}`)
-      .pipe(pluck('payload'))
-      .toPromise();
+    .get(`${environment.API_MASTER_INFO}/security-responsabilities?status=true`)
+    .pipe(pluck('payload'))
+    .toPromise();
+
   }
 
   historyPreview(id: any) {
