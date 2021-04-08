@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { Tables } from '@app/shared/interfaces/profile-competences.interface';
 import { ProfileTemplateService } from './services/profile-template.service';
@@ -12,14 +12,13 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { NotificationService } from '@app/shared/components/notification/services/notification.service';
-import { MatSlider, MatSliderChange } from '@angular/material/slider';
+import { MatSliderChange } from '@angular/material/slider';
 import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileFormHistoryComponent } from './profile-form-history/profile-form-history.component';
 import { SnackOptionsInterface } from '@shared/interfaces/notification.interface';
 import { ActivatedRoute } from '@angular/router';
 import { OnlyNumbers } from '@shared/functions/onlyNumbers';
-import { DataSource } from '@angular/cdk/table';
 import { BehaviorSubject } from 'rxjs';
 import { ResponsabilitiesDescComponent } from './responsabilitiesDesc/responsabilities-desc.component';
 
@@ -42,7 +41,6 @@ export interface AcademicEducation {
   styleUrls: ['./profile-template.component.scss'],
 })
 export class ProfileTemplateComponent implements OnInit {
-  // @ViewChild('education') education!: MatSelectionList;
   @ViewChild('educationTable') _educationTable!: MatTable<any>;
   @ViewChild('requiredCertificates') requiredCertificates!: MatSelectionList;
   @ViewChild('specificKnowledge') specificKnowledge!: MatSelectionList;
@@ -60,7 +58,6 @@ export class ProfileTemplateComponent implements OnInit {
   contentPagesEducation = [];
   educationList: AcademicEducation[] = [];
   areasList: AcademicEducation[] = [];
-  // contentPagesAreas = [];
   contentPagesSpecificKnowledge = [];
   contentPagesRequiredCertificates = [];
   contentPagesRolResponsabilities = [];
@@ -68,8 +65,6 @@ export class ProfileTemplateComponent implements OnInit {
   contentPagesTalentsReadOnly = [];
   contentPagesSecurityResponsabilities = [];
   isEditable = false;
-  // nextPageButtonDisabledEducation = false;
-  // nextPageButtonDisabledArea = false;
   nextPageButtonDisabledRequiredCertificates = false;
   nextPageButtonDisabledSpecificKnowledge = false;
   nextPageButtonDisabledRolResponsabilities = false;
@@ -77,26 +72,18 @@ export class ProfileTemplateComponent implements OnInit {
   nextPageButtonDisabledTalentsReadOnly = false;
   nextPageButtonDisabledSecurityResp: any;
   beforePageButtonDisabledSecurityResp: any;
-  // beforePageButtonDisabledEducation = true;
-  // beforePageButtonDisabledArea = true;
   beforePageButtonDisabledRequiredCertificates = true;
   beforePageButtonDisabledSpecificKnowledge = true;
   beforePageButtonDisabledRolResponsabilities = true;
   beforePageButtonDisabledTalents = true;
   beforePageButtonDisabledTalentsReadOnly = true;
   selectedOptions: any = [];
-  // public tabIndexEducation = 0;
-  // public tabIndexArea = 0;
   public tabIndexSpecificKnowledge = 0;
   public tabIndexRequiredCertificates = 0;
   public tabIndexRolResponsabilities = 0;
   public tabIndexTalents = 0;
   public tabIndexTalentsReadOnly = 0;
   public tabIndexSecurityResp = 0;
-  // educationData: AcademicEducationTable[] = [];
-  // educationData: any;
-  // education = new FormArray([]);
-  // education: any = [];
   monthNames = [
     'Enero',
     'Febrero',
@@ -146,13 +133,12 @@ export class ProfileTemplateComponent implements OnInit {
   public educationColumns: string[] = ['education', 'area', 'actions'];
   public rows: FormArray = this.formBuilder.array([]);
   public form: FormGroup = this.formBuilder.group({ academicEducation: this.rows });
-
   readOnlyEducationDatasource!: MatTableDataSource<AcademicEducationTable>;
-
   public responsabilitySeleted = '';
   showEducationFilter = true;
   showNotFoundMessage = false;
   corporativeRespList: string[] = [];
+
   constructor(
     private profileTemplateService: ProfileTemplateService,
     private notificationService: NotificationService,
@@ -163,16 +149,7 @@ export class ProfileTemplateComponent implements OnInit {
     this.getData();
   }
 
-  ngOnInit(): void {
-    // this.exampleForm = this.formBuilder.group({
-    //   academicEducation: this.formBuilder.array([this.createFormEducation()]),
-    // });
-    // this.getData();
-    // this.mtformarray=this.formBuilder.array([]);
-    // this.mtformgroup=this.formBuilder.group({formarray: this.mtformarray});
-    // this.educationDataSource = (this.mtformgroup.controls.formarray as FormArray).value
-    // this.getProfileEducation()
-  }
+  ngOnInit(): void {}
 
   addRowIntoEducationTable(d?: AcademicEducationTable, noUpdate?: boolean) {
     const row = this.formBuilder.group({
@@ -200,66 +177,7 @@ export class ProfileTemplateComponent implements OnInit {
       }
     }
   }
-  // getProfileEducation(educationAndAreaMerge: any) {
-  //   console.log(educationAndAreaMerge);
-  //   const control = <FormArray>this.exampleForm.controls['academicEducation'];
-  //   // control.setValue(
-  //   //   [{ education: educationList[0]._id, area: [areasList[0]._id, areasList[1]._id] }]
-  //   // )
-  //   for (const i of this.educationList) {
-  //     for (const item of educationAndAreaMerge) {
-  //       // console.log(i._id, item.education._id);
-  //       if (i._id === item.education._id) {
-  //         control.push(this.createFormEducation());
-  //         this.exampleForm.patchValue({
-  //           academicEducation: [
-  //             { education: item.education._id, area: item.area._id},
-  //           ],
-  //         });
-  //       }
-  //     }
-  //     // educationAndAreaMerge.forEach((item: any) => {
 
-  //     // });
-  //     // console.log(educationList);
-  //     // console.log(i.education);
-  //     // console.log(educationList[educationList.indexOf(i)].includes(i.education));
-  //   }
-
-  //   // if (educationList.includes(i.education)){}
-  //   // for (let i = 1; i < this.data.educationAndAreaMerge.length; i++) {
-  //   //   control.push(this.createFormEducation());
-  //   // }
-
-  //   // console.log(this.exampleForm.get('academicEducation')?.value);
-  //   // console.log(areasList, areasList[0]);
-  //   // console.log(educationList);
-  //   // this.exampleForm.get('academicEducation')?.setValue([{ education: educationList[0]._id, area: [areasList[0]._id, areasList[1]._id] }]);
-  //   console.log(this.exampleForm.get('academicEducation')?.value);
-  // }
-  // getControls() {
-  //   return (this.exampleForm.get('academicEducation') as FormArray).controls;
-  // }
-  // createFormEducation(education?:any, area?:any) {
-  //   return this.formBuilder.group({
-  //     education: education || null,
-  //     area: area || null,
-  //   });
-  // }
-  // selectedEucationAndArea(ev: any, i: number, field: string) {
-  //   console.log(ev);
-  //   field === 'education'
-  //     ? (this.educationDataSource[i].education = ev.value)
-  //     : (this.educationDataSource[i].area = ev.value);
-  // }
-
-  // addRow() {
-  //   const control = <FormArray>this.exampleForm.controls['academicEducation'];
-  //   control.push(this.createFormEducation());
-  //   // this.educationDataSource.push({ education: '', area: ['605d05ee90d9e441a0155556'] });
-  //   // this._educationTable.renderRows();
-  //   // console.log('En el add =>>', this.educationDataSource);
-  // }
   removeRow(index: number) {
     // const control = (this.form.get('academicEducation') as FormArray).controls;
     const control = <FormArray>this.form.controls['academicEducation'];
@@ -587,24 +505,16 @@ export class ProfileTemplateComponent implements OnInit {
     this.formExperience.get('professionalExperience')?.patchValue(this.data.professionalExperience);
     this.formExperience.get('chargeExperience')?.patchValue(this.data.chargeExperience);
     /* Education */
-    const control = this.form.controls['academicEducation'] as FormArray;
+    const control = this.form.controls.academicEducation as FormArray;
     control.clear();
     this.data.educationAndAreaMerge.forEach((el: AcademicEducationTable) =>
       this.addRowIntoEducationTable(el, false)
     );
     this.refreshEducationTable();
-    // await this.profileTemplateService.getAllEstudies().then((res: AcademicEducation[]) => {
-    //   // this.buildPagesAndColumnsList(res, 'education');
-    //   // this.buildPagesAndColumnsListAcademicEducation(res, 'education');
-    //   this.educationList = res;
-    //   // this.getProfileEducation(this.educationList, this.areasList);
-    // });
     /* Areas */
     await this.profileTemplateService.getAllAreas().then((res: AcademicEducation[]) => {
       this.areasList = res;
-      // this.selected = [areas[0]._id]
     });
-
     /* Required Certificates */
     this.profileTemplateService.getAllCertificates().then((res: any) => {
       this.buildPagesAndColumnsList2(res, 'requiredCertificates');
@@ -622,19 +532,16 @@ export class ProfileTemplateComponent implements OnInit {
       this.buildPagesAndColumnsList2(res, 'talents');
     });
     /* Corporative Responsabilities */
-    this.profileTemplateService
-    .getAllSecurityResponsabilities()
-    .then((res: any) => {
+    this.profileTemplateService.getAllSecurityResponsabilities().then((res: any) => {
       this.buildPagesAndColumnsList(res, 'securityResponsabilities');
       res.forEach((responsability: any) => {
         if (!this.corporativeRespList.includes(responsability.type)) {
-          this.corporativeRespList.push(responsability.type)
+          this.corporativeRespList.push(responsability.type);
         }
       });
     });
 
     this.isEditable = true;
-    // this.getProfileEducation(this.data.educationAndAreaMerge);
   }
 
   buildTalentsReadOnly(data: any) {
@@ -660,41 +567,6 @@ export class ProfileTemplateComponent implements OnInit {
    * arma solo una columna con listas de máximo 6 items.
    */
 
-  // buildPagesAndColumnsListAcademicEducation(res: any, section: string) {
-  //   let newarraycolumns: any = [];
-  //   let newarrayPages: any = [];
-  //   let finalArrayPages: any = [];
-  //   let finalArrayColumns: any = [];
-  //   res.forEach((element: any) => {
-  //     newarraycolumns = [...newarraycolumns, element];
-  //     if (newarraycolumns.length === 1) {
-  //       finalArrayColumns = [...finalArrayColumns, newarraycolumns];
-  //       newarraycolumns = [];
-  //     }
-  //   });
-  //   finalArrayColumns = [...finalArrayColumns, newarraycolumns];
-  //   console.log(finalArrayColumns);
-
-  //   finalArrayColumns.forEach((el: any) => {
-  //     newarrayPages = [...newarrayPages, el];
-  //     if (newarrayPages.length === 2) {
-  //       finalArrayPages = [...finalArrayPages, newarrayPages];
-  //       newarrayPages = [];
-  //     }
-  //   });
-  //   console.log(finalArrayPages);
-  //   console.log(newarrayPages);
-  //   if (newarrayPages[0].length !== 0) {
-  //     finalArrayPages = [...finalArrayPages, newarrayPages];
-  //   }
-  //   console.log(finalArrayPages);
-  //   switch (section) {
-  //     case 'education':
-  //       this.contentPagesEducation = finalArrayPages;
-  //       console.log(this.contentPagesEducation);
-  //       break;
-  //   }
-  // }
   buildPagesAndColumnsList(res: any, section: string) {
     let newarraycolumns: any = [];
     let newarrayPages: any = [];
@@ -760,9 +632,6 @@ export class ProfileTemplateComponent implements OnInit {
   }
 
   onSave() {
-    // console.log(this.form.value);
-    // this.onSaveeEucation();
-    // return;
     if (
       this.onSaveObjective() &&
       this.onSaveEperience() &&
@@ -849,7 +718,6 @@ export class ProfileTemplateComponent implements OnInit {
       });
   }
   onSaveWithOutHistory() {
-    console.log(this.data);
     this.sendInformation = {
       ...this.sendInformation,
       idBaseTeam: this.data.idBaseTeam,
@@ -909,6 +777,15 @@ export class ProfileTemplateComponent implements OnInit {
         emptyFields.push(i);
       }
     }
+    if (this.duplicatedEducationItems().length !== 0) {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Información Duplicada',
+        message: 'No se pueden repetir las formaciones académicas.',
+        type: 'error',
+      });
+      this.educationError = true;
+      return;
+    }
     if (this.form.value.academicEducation.length === 0 || emptyFields.length !== 0) {
       this.notificationService.openSimpleSnackBar({
         title: 'Acción Incorrecta',
@@ -935,6 +812,23 @@ export class ProfileTemplateComponent implements OnInit {
       ],
     };
     return true;
+  }
+
+  /**
+   * @author Hanna
+   * @description Esta función valida los campos de formación académica que se repiten y
+   * los devuelve en una lista.
+   */
+  duplicatedEducationItems() {
+    const busqueda = this.form.value.academicEducation.reduce((accumulator: any, obj: any) => {
+      accumulator[obj.education] = ++accumulator[obj.education] || 0;
+      return accumulator;
+    }, {});
+
+    const duplicados = this.form.value.academicEducation.filter((obj: any) => {
+      return busqueda[obj.education];
+    });
+    return duplicados;
   }
   onSaveRequiredCertificates() {
     if (this.requiredCertificates.selectedOptions.selected.length === 0) {
@@ -1081,7 +975,6 @@ export class ProfileTemplateComponent implements OnInit {
     return area.join(', ');
   }
   applyFilter(event: any) {
-    console.log(this.readOnlyEducationDatasource.filter);
     this.readOnlyEducationDatasource.filter = event.value;
     if (this.readOnlyEducationDatasource.filteredData.length === 0) {
       this.showNotFoundMessage = true;
@@ -1092,7 +985,6 @@ export class ProfileTemplateComponent implements OnInit {
 
   selectedResponsability(event: any) {
     event.content = event.content.filter((el: any) => el !== undefined);
-    console.log(event);
     this._dialog
       .open(ResponsabilitiesDescComponent, {
         data: event,
@@ -1101,16 +993,19 @@ export class ProfileTemplateComponent implements OnInit {
       .afterClosed()
       .subscribe((resp: any) => {});
   }
-  d(e: any) {
-    console.log(e);
-    console.log(this.securityResponsabilities.selectedOptions)
-    console.log(this.securityResponsabilities.selectedOptions.selected)
-    // if (e.option._selected) {
-    //   this.securityResponsabilities.selectedOptions.selected.push(e.option);
-    // }
-  }
 
-  getFilterResponsabilities() {
-
+  selectValidation(event: any) {
+    const selectedValueIsDuplicated = this.duplicatedEducationItems().filter(
+      (el: AcademicEducationTable) => el.education === event.value
+    );
+    if (selectedValueIsDuplicated.length !== 0) {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Información Duplicada',
+        message: 'Ya existe esta formación académica.',
+        type: 'warning',
+      });
+      this.educationError = true;
+      return;
+    }
   }
 }
