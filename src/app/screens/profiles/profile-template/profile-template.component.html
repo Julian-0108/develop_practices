@@ -401,7 +401,7 @@
                 <mat-card class="profile__card">
                     <mat-card-header>
                         <mat-card-title class="profile-card__title">Conocimientos Específicos del Cargo
-                            <mat-icon *ngIf="specificKnowledgeError && !isEditable" class="card-error__icon" matSuffix>error</mat-icon>
+                            <mat-icon *ngIf="specificKnowledgeError && isEditable" class="card-error__icon" matSuffix>error</mat-icon>
                         </mat-card-title>
                     </mat-card-header>
                     <mat-card-content fxLayout="row wrap" *ngIf="!isEditable">
@@ -439,7 +439,7 @@
                 <mat-card class="profile__card">
                     <mat-card-header>
                         <mat-card-title class="profile-card__title">Responsabilidades Corporativas
-                            <mat-icon *ngIf="securityRespError" class="card-error__icon" matSuffix>error</mat-icon>
+                            <mat-icon *ngIf="securityRespError  && isEditable" class="card-error__icon" matSuffix>error</mat-icon>
                         </mat-card-title>
                     </mat-card-header>
                     <mat-card-content fxLayout="row wrap" *ngIf="!isEditable">
@@ -548,7 +548,7 @@
                 <mat-card class="profile__card">
                     <mat-card-header>
                         <mat-card-title class="profile-card__title">Cursos y Certificaciones
-                            <mat-icon *ngIf="requiredCertificatesError" class="card-error__icon" matSuffix>error</mat-icon>
+                            <mat-icon *ngIf="requiredCertificatesError  && isEditable" class="card-error__icon" matSuffix>error</mat-icon>
                         </mat-card-title>
                     </mat-card-header>
                     <mat-card-content fxLayout="row wrap" *ngIf="!isEditable">
@@ -581,7 +581,7 @@
                 <mat-card class="profile__card">
                     <mat-card-header>
                         <mat-card-title class="profile-card__title">Funciones del Cargo
-                            <mat-icon *ngIf="rolResponsabilitiesError" class="card-error__icon" matSuffix>error</mat-icon>
+                            <mat-icon *ngIf="rolResponsabilitiesError && isEditable" class="card-error__icon" matSuffix>error</mat-icon>
                         </mat-card-title>
                     </mat-card-header>
                     <mat-card-content fxLayout="row wrap" *ngIf="!isEditable">

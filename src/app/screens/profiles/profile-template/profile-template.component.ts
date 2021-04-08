@@ -789,7 +789,7 @@ export class ProfileTemplateComponent implements OnInit {
     if (this.form.value.academicEducation.length === 0 || emptyFields.length !== 0) {
       this.notificationService.openSimpleSnackBar({
         title: 'Acción Incorrecta',
-        message: 'La sección de "Formación Académica" no puede estar vacía.',
+        message: 'La selección de "Formación Académica" no puede estar vacía.',
         type: 'error',
       });
       this.educationError = true;
@@ -834,7 +834,7 @@ export class ProfileTemplateComponent implements OnInit {
     if (this.requiredCertificates.selectedOptions.selected.length === 0) {
       this.notificationService.openSimpleSnackBar({
         title: 'Acción Incorrecta',
-        message: 'Debe seccionar al menos un item de la lista de "Certificaciones Requeridas". ',
+        message: 'Debe seleccionar al menos un item de la lista de "Certificaciones Requeridas". ',
         type: 'error',
       });
       this.requiredCertificatesError = true;
@@ -853,7 +853,7 @@ export class ProfileTemplateComponent implements OnInit {
     if (this.specificKnowledge.selectedOptions.selected.length === 0) {
       this.notificationService.openSimpleSnackBar({
         title: 'Acción Incorrecta',
-        message: 'Debe seccionar al menos un item de la lista de "Conocimientos Específicos".',
+        message: 'Debe seleccionar al menos un item de la lista de "Conocimientos Específicos".',
         type: 'error',
       });
       this.specificKnowledgeError = true;
@@ -872,7 +872,7 @@ export class ProfileTemplateComponent implements OnInit {
     if (this.rolResponsabilities.selectedOptions.selected.length === 0) {
       this.notificationService.openSimpleSnackBar({
         title: 'Acción Incorrecta',
-        message: 'Debe seccionar al menos un item de la lista de "Funciones del Rol".',
+        message: 'Debe seleccionar al menos un item de la lista de "Funciones del Rol".',
         type: 'error',
       });
       this.rolResponsabilitiesError = true;
@@ -891,7 +891,7 @@ export class ProfileTemplateComponent implements OnInit {
     if (this.talents.selectedOptions.selected.length === 0) {
       this.notificationService.openSimpleSnackBar({
         title: 'Acción Incorrecta',
-        message: 'Debe seccionar al menos un item de la lista de "Talentos".',
+        message: 'Debe seleccionar al menos un item de la lista de "Talentos".',
         type: 'error',
       });
       this.talentsError = true;
@@ -909,7 +909,7 @@ export class ProfileTemplateComponent implements OnInit {
       this.notificationService.openSimpleSnackBar({
         title: 'Acción Incorrecta',
         message:
-          'Debe seccionar al menos un item de la lista de "Responsabilidades para Seguridad y Salud en el Trabajo".',
+          'Debe seleccionar al menos un item de la lista de "Responsabilidades para Seguridad y Salud en el Trabajo".',
         type: 'error',
       });
       this.securityRespError = true;
