@@ -1,0 +1,11 @@
+<div class="container">
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <h1 class="title">{{data.title}}</h1>
+    <button class="close-button" mat-icon-button aria-label="Close" (click)="dialogRef.close()">
+      <mat-icon  class="close-button__icon">clear</mat-icon>
+    </button>
+  </div>
+  <ul class="list">
+    <li class="list__item" *ngFor="let i of data.content">{{i.name}}</li>
+  </ul>
+</div>
