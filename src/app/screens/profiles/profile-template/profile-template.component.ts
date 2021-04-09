@@ -179,10 +179,8 @@ export class ProfileTemplateComponent implements OnInit {
   }
 
   removeRow(index: number) {
-    // const control = (this.form.get('academicEducation') as FormArray).controls;
-    const control = <FormArray>this.form.controls['academicEducation'];
+    const control = this.form.controls.academicEducation as FormArray;
     control.removeAt(index);
-    // control.splice(index, 1);
     this._educationTable.renderRows();
   }
 
@@ -298,24 +296,6 @@ export class ProfileTemplateComponent implements OnInit {
    */
   nextTab(length: any, section: string) {
     switch (section) {
-      // case 'education':
-      //   this.tabIndexEducation = this.tabIndexEducation + 1;
-      //   if (this.tabIndexEducation > 0) {
-      //     this.beforePageButtonDisabledEducation = false;
-      //   }
-      //   if (this.tabIndexEducation === length - 1) {
-      //     this.nextPageButtonDisabledEducation = true;
-      //   }
-      //   break;
-      // case 'area':
-      //   this.tabIndexArea = this.tabIndexArea + 1;
-      //   if (this.tabIndexArea > 0) {
-      //     this.beforePageButtonDisabledArea = false;
-      //   }
-      //   if (this.tabIndexArea === length - 1) {
-      //     this.nextPageButtonDisabledArea = true;
-      //   }
-      //   break;
       case 'requiredCertificates':
         this.tabIndexRequiredCertificates = this.tabIndexRequiredCertificates + 1;
         if (this.tabIndexRequiredCertificates > 0) {
@@ -374,20 +354,6 @@ export class ProfileTemplateComponent implements OnInit {
   }
   beforeTab(section: string) {
     switch (section) {
-      // case 'education':
-      //   this.tabIndexEducation = this.tabIndexEducation - 1;
-      //   this.nextPageButtonDisabledEducation = false;
-      //   if (this.tabIndexEducation === 0) {
-      //     this.beforePageButtonDisabledEducation = true;
-      //   }
-      //   break;
-      // case 'area':
-      //   this.tabIndexArea = this.tabIndexArea - 1;
-      //   this.nextPageButtonDisabledArea = false;
-      //   if (this.tabIndexArea === 0) {
-      //     this.beforePageButtonDisabledArea = true;
-      //   }
-      //   break;
       case 'requiredCertificates':
         this.tabIndexRequiredCertificates = this.tabIndexRequiredCertificates - 1;
         this.nextPageButtonDisabledRequiredCertificates = false;
@@ -517,7 +483,7 @@ export class ProfileTemplateComponent implements OnInit {
     });
     /* Required Certificates */
     this.profileTemplateService.getAllCertificates().then((res: any) => {
-      this.buildPagesAndColumnsList2(res, 'requiredCertificates');
+      this.buildPagesList(res, 'requiredCertificates');
     });
     /* Specific Knowledge */
     this.profileTemplateService.getAllKnowledge().then((res: any) => {
@@ -525,11 +491,11 @@ export class ProfileTemplateComponent implements OnInit {
     });
     /* Rol Responsabilities */
     this.profileTemplateService.getAllFunctions().then((res: any) => {
-      this.buildPagesAndColumnsList2(res, 'rolResponsabilities');
+      this.buildPagesList(res, 'rolResponsabilities');
     });
     /* Talents */
     this.profileTemplateService.getAllTalents().then((res: any) => {
-      this.buildPagesAndColumnsList2(res, 'talents');
+      this.buildPagesList(res, 'talents');
     });
     /* Corporative Responsabilities */
     this.profileTemplateService.getAllSecurityResponsabilities().then((res: any) => {
@@ -563,7 +529,7 @@ export class ProfileTemplateComponent implements OnInit {
    * @author Hanna
    * @description Función que construye las columnas de las opciones que se mostrarán en
    * cada página o tab de las secciones que contengan listas.Esta función arma un máximo
-   * de 3 columnas. La función "buildPagesAndColumnsList2", por ser secciones de menor tamaño,
+   * de 3 columnas. La función "buildPagesList", por ser secciones de menor tamaño,
    * arma solo una columna con listas de máximo 6 items.
    */
 
@@ -593,9 +559,6 @@ export class ProfileTemplateComponent implements OnInit {
     }
 
     switch (section) {
-      // case 'education':
-      //   this.contentPagesEducation = finalArrayPages;
-      //   break;
       case 'specificKnowledge':
         this.contentPagesSpecificKnowledge = finalArrayPages;
         break;
@@ -605,7 +568,7 @@ export class ProfileTemplateComponent implements OnInit {
         break;
     }
   }
-  buildPagesAndColumnsList2(res: any, section: string) {
+  buildPagesList(res: any, section: string) {
     let newarrayPages: any = [];
     let finalArrayPages: any = [];
     res.forEach((element: any) => {
@@ -813,23 +776,6 @@ export class ProfileTemplateComponent implements OnInit {
     };
     return true;
   }
-
-  /**
-   * @author Hanna
-   * @description Esta función valida los campos de formación académica que se repiten y
-   * los devuelve en una lista.
-   */
-  duplicatedEducationItems() {
-    const busqueda = this.form.value.academicEducation.reduce((accumulator: any, obj: any) => {
-      accumulator[obj.education] = ++accumulator[obj.education] || 0;
-      return accumulator;
-    }, {});
-
-    const duplicados = this.form.value.academicEducation.filter((obj: any) => {
-      return busqueda[obj.education];
-    });
-    return duplicados;
-  }
   onSaveRequiredCertificates() {
     if (this.requiredCertificates.selectedOptions.selected.length === 0) {
       this.notificationService.openSimpleSnackBar({
@@ -936,14 +882,26 @@ export class ProfileTemplateComponent implements OnInit {
     };
     return true;
   }
+    /**
+   * @author Hanna
+   * @description Esta función valida los campos de formación académica que se repiten y
+   * los devuelve en una lista.
+   */
+  duplicatedEducationItems() {
+    const busqueda = this.form.value.academicEducation.reduce((accumulator: any, obj: any) => {
+      accumulator[obj.education] = ++accumulator[obj.education] || 0;
+      return accumulator;
+    }, {});
+
+    const duplicados = this.form.value.academicEducation.filter((obj: any) => {
+      return busqueda[obj.education];
+    });
+    return duplicados;
+  }
 
   onCancel() {
     this.sendInformation = {};
     this.isEditable = false;
-  }
-
-  onlyNumbersFunction(value: any) {
-    this.onlyNumbers.classicOnlyNumbers(value);
   }
 
   fieldExperienceValidation(field: string) {
@@ -994,7 +952,7 @@ export class ProfileTemplateComponent implements OnInit {
       .subscribe((resp: any) => {});
   }
 
-  selectValidation(event: any) {
+  selectAcademicEducationValidation(event: any) {
     const selectedValueIsDuplicated = this.duplicatedEducationItems().filter(
       (el: AcademicEducationTable) => el.education === event.value
     );
