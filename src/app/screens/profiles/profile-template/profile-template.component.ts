@@ -135,8 +135,8 @@ export class ProfileTemplateComponent implements OnInit {
   public form: FormGroup = this.formBuilder.group({ academicEducation: this.rows });
   readOnlyEducationDatasource!: MatTableDataSource<AcademicEducationTable>;
   public responsabilitySeleted = '';
-  showEducationFilter = true;
-  showNotFoundMessage = false;
+  showEducationFilter = false;
+  showNotFoundMessage = true;
   corporativeRespList: string[] = [];
 
   constructor(
@@ -409,8 +409,8 @@ export class ProfileTemplateComponent implements OnInit {
   async getData() {
     await this.profileTemplateService.getData(this.idProfile).then((res: any) => {
       this.data = res;
-      if (res.academicEducation.length === 0) {
-        this.showEducationFilter = false;
+      if (res.academicEducation[0].education !== undefined) {
+        this.showEducationFilter = true;
       }
       this.readOnlyEducationDatasource = new MatTableDataSource(res.academicEducation);
       this.profileTemplateService.getAllEstudies().then((resp: AcademicEducation[]) => {

@@ -27,7 +27,7 @@ export class ProfileTemplateService {
   }
   async getAllAreas(): Promise<AcademicEducation[]> {
     return await this.httpClient
-      .get(`${environment.API_MASTER_INFO}/education-area`)
+      .get(`${environment.API_MASTER_INFO}/education-area?status=true`)
       .pipe<AcademicEducation[]>(pluck('payload'))
       .toPromise();
   }

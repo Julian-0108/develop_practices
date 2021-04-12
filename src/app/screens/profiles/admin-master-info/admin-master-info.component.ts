@@ -51,7 +51,7 @@ export class AdminMasterInfoComponent implements OnInit {
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
     {
-      name: 'Funciones',
+      name: 'Funciones del Cargo',
       url: 'functions',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
@@ -75,12 +75,13 @@ export class AdminMasterInfoComponent implements OnInit {
       url: 'work-tools',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
-    { 
-      name: 'Tipos', 
-      url: 'types', 
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ' },
     {
-      name: 'Responsabilidades de seguridad (SST)',
+      name: 'Tipos',
+      url: 'types',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    {
+      name: 'Responsabilidades Corporativas',
       url: 'security-responsabilities',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
@@ -88,7 +89,7 @@ export class AdminMasterInfoComponent implements OnInit {
       name: 'Area de educación',
       url: 'education-area',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
-    }
+    },
   ];
 
   public masterSeleted: string = '';
@@ -117,21 +118,44 @@ export class AdminMasterInfoComponent implements OnInit {
   }
 
   getDisplayedColumns(): string[] {
-    if (this.masterSeleted === 'types') {
-      return this.displayedColumns.filter(
-        (el) => el !== 'type' && el !== 'description' && el !== 'submenu'
-      );
-    } else if (this.masterSeleted === 'security-responsabilities') {
-      return this.displayedColumns.filter(
-        (el) => el !== 'description' && el !== 'submenu' && el !== 'reference'
-      );
-    } else if (this.masterSeleted == 'education-area'){
-      return this.displayedColumns.filter((el) => el !== 'type'  && el !== 'submenu' && el !== 'reference');
-    } else if (this.masterSeleted !== 'base-teams-categories') {
-      return this.displayedColumns.filter((el) => el !== 'submenu' && el !== 'reference');
-    } else {
-      return this.displayedColumns.filter((el) => el !== 'reference');
+    switch (this.masterSeleted) {
+      case 'types':
+        return this.displayedColumns.filter(
+          (el) => el !== 'type' && el !== 'description' && el !== 'submenu'
+        );
+      case 'studies':
+        return this.displayedColumns.filter((el) => el !== 'type' && el !== 'submenu' && el !== 'reference');
+      case 'security-responsabilities':
+        return this.displayedColumns.filter(
+          (el) => el !== 'description' && el !== 'submenu' && el !== 'reference'
+        );
+      case 'education-area':
+        return this.displayedColumns.filter(
+          (el) => el !== 'type' && el !== 'submenu' && el !== 'reference'
+        );
+      case 'base-teams-categories':
+        return this.displayedColumns.filter((el) => el !== 'submenu' && el !== 'reference');
+
+      default:
+        return this.displayedColumns.filter((el) => el !== 'reference');
     }
+    // if (this.masterSeleted === 'types') {
+    //   return this.displayedColumns.filter(
+    //     (el) => el !== 'type' && el !== 'description' && el !== 'submenu'
+    //   );
+    // } else if (this.masterSeleted === 'security-responsabilities') {
+    //   return this.displayedColumns.filter(
+    //     (el) => el !== 'description' && el !== 'submenu' && el !== 'reference'
+    //   );
+    // } else if (this.masterSeleted == 'education-area') {
+    //   return this.displayedColumns.filter(
+    //     (el) => el !== 'type' && el !== 'submenu' && el !== 'reference'
+    //   );
+    // } else if (this.masterSeleted !== 'base-teams-categories') {
+    //   return this.displayedColumns.filter((el) => el !== 'submenu' && el !== 'reference');
+    // } else {
+    //   return this.displayedColumns.filter((el) => el !== 'reference');
+    // }
   }
 
   openDialog(element?: Master) {
