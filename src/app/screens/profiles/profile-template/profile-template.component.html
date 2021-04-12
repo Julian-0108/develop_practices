@@ -89,8 +89,9 @@
                 </mat-vertical-stepper>
             </div>
         </mat-drawer>
+
         <div fxLayout="row">
-            <div fxLayout="column" style="width: 70%;">
+            <div fxLayout="column" style="width: 60%;">
                 <mat-card class="profile__card">
                     <mat-card-header>
                         <mat-card-title class="profile-card__title">Objetivo del Cargo</mat-card-title>
@@ -123,12 +124,12 @@
                     <mat-card-content *ngIf="!isEditable" fxLayout="row wrap">
                         <div class="table__container">
                             <table #e mat-table [dataSource]="readOnlyEducationDatasource" class="mat-elevation-z0">
-
+                                <caption style="display: none;">Visualización de las formaciones académicas del perfil</caption>
                                 <tr mat-header-row *matHeaderRowDef="['education', 'area']; sticky: true"></tr>
                                 <tr mat-row *matRowDef="let row; columns: ['education', 'area'];"></tr>
 
                                 <ng-container matColumnDef="education">
-                                    <th mat-header-cell *matHeaderCellDef> Formación Académica
+                                    <th scope="col" mat-header-cell *matHeaderCellDef> Formación Académica
                                         <div class="filter-inputs" *ngIf="showEducationFilter">
                                             <mat-form-field floatLabel="always" appearance="none">
                                                 <mat-select class="filter" (selectionChange)="applyFilter($event)">
@@ -143,7 +144,7 @@
                                 </ng-container>
 
                                 <ng-container matColumnDef="area">
-                                    <th mat-header-cell *matHeaderCellDef> Área de Formación
+                                    <th scope="col" mat-header-cell *matHeaderCellDef> Área de Formación
                                         <div class="filter-inputs filter-inputs--area ">
 
                                         </div>
@@ -167,16 +168,17 @@
                         <form [formGroup]="form">
                             <div class="table__container">
                                 <table #educationTable mat-table [dataSource]="educationDataSource" formArrayName="academicEducation">
+                                    <caption style="display: none;">Edición de las formaciones académicas del perfil</caption>
                                     <!-- Row definitions -->
                                     <tr mat-header-row *matHeaderRowDef="educationColumns; sticky: true"></tr>
                                     <tr mat-row *matRowDef="let row; let i = index; columns: educationColumns;"></tr>
 
                                     <!-- Column definitions -->
                                     <ng-container matColumnDef="education">
-                                        <th mat-header-cell *matHeaderCellDef> Formación Académica </th>
+                                        <th scope="col" mat-header-cell *matHeaderCellDef> Formación Académica </th>
                                         <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
                                             <mat-form-field floatLabel="always" appearance="none">
-                                                <mat-select (selectionChange)="selectValidation($event)" placeholder="Click para activar la lista" formControlName="education">
+                                                <mat-select (selectionChange)="selectAcademicEducationValidation($event)" placeholder="Click para activar la lista" formControlName="education">
                                                     <mat-option *ngFor="let education of educationList" [value]="education._id">
                                                         {{education.name}}
                                                     </mat-option>
@@ -186,7 +188,7 @@
                                     </ng-container>
 
                                     <ng-container matColumnDef="area">
-                                        <th mat-header-cell *matHeaderCellDef> Área de Formación </th>
+                                        <th scope="col" mat-header-cell *matHeaderCellDef> Área de Formación </th>
                                         <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
                                             <mat-form-field floatLabel="always" appearance="none">
                                                 <mat-select placeholder="Click para activar la lista" multiple formControlName="area">
@@ -197,7 +199,7 @@
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="actions">
-                                        <th mat-header-cell *matHeaderCellDef>
+                                        <th scope="col" mat-header-cell *matHeaderCellDef>
                                             <div class="button__container" fxLayoutAlign="center">
                                                 <button mat-flat-button class="table-header__button" (click)="addRowIntoEducationTable()">
                           <mat-icon style="font-size: 22px;">add</mat-icon> Añadir
@@ -213,189 +215,7 @@
                                 </table>
                             </div>
                         </form>
-                        <!-- <form #form [formGroup]="mtformgroup">
-              <mat-table #table [dataSource]="educationDataSource" formArrayName="formarray">
-                <mat-header-row *matHeaderRowDef="['education', 'area', 'actions']"></mat-header-row>
-                <mat-row *matRowDef="let row; columns:['education', 'area', 'actions']; let i=index" #cdkrow>
-                </mat-row>
-
-                <ng-container matColumnDef="education">
-                  <th mat-header-cell *matHeaderCellDef>Formación Académica</th>
-                  <td mat-cell *matCellDef="let element; let i = index" [formGroupName]="i">
-                    <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select (selectionChange)="selectedEucationAndArea($event, i, 'education')"
-                        placeholder="Click para activar la lista">
-                        <mat-option *ngFor="let education of educationList" [value]="education._id"> {{education.name}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </td>
-                </ng-container>
-
-                <ng-container matColumnDef="area">
-                  <th mat-header-cell *matHeaderCellDef> Área de Formación </th>
-                  <td mat-cell *matCellDef="let element; let i = index" [formGroupName]="i">
-                    <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select (selectionChange)="selectedEucationAndArea($event, i, 'area')"
-                        placeholder="Click para activar la lista" multiple panelClass="exa">
-                        <mat-option *ngFor="let area of areasList" [value]="area._id"> {{area.name}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </td>
-                </ng-container>
-
-                <ng-container matColumnDef="actions">
-                  <th mat-header-cell *matHeaderCellDef>
-                    <div class="button__container" fxLayoutAlign="center">
-                      <button mat-flat-button class="table-header__button" (click)="addRow()">
-                        <mat-icon style="font-size: 22px;">add</mat-icon> Añadir
-                      </button>
-                    </div>
-                  </th>
-                  <td mat-cell *matCellDef="let element; let i = index">
-                    <button mat-icon-button (click)="removeRow(i)">
-                      <mat-icon class="table__buttons table__buttons--delete">delete</mat-icon>
-                    </button>
-                  </td>
-                </ng-container>
-              </mat-table>
-            </form> -->
-                        <!-- <form [formGroup]="exampleForm" novalidate>
-              <div class="button__container" fxLayoutAlign="center">
-                <button mat-flat-button class="table-header__button" (click)="addRow()">
-                  <mat-icon style="font-size: 22px;">add</mat-icon> Añadir
-                </button>
-              </div>
-              <div *ngFor="let unit of getControls(); let i=index" formArrayName="academicEducation">
-                <mat-divider *ngIf="getControls().length > 1 && i > 0"></mat-divider><br />
-                <div [formGroupName]="i">
-                  <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="3.5%" fxLayoutAlign="center">
-
-                    <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select placeholder="Click para activar la lista" formControlName="education">
-                        <mat-option *ngFor="let education of educationList" [value]="education._id"> {{education.name}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-
-
-                    <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select placeholder="Click para activar la lista" multiple formControlName="area">
-                        <mat-option *ngFor="let area of areasList" [value]="area._id"> {{area.name}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-
-                    <div fxLayout.xs="row">
-
-                      <button mat-icon-button (click)="removeRow(i)">
-                        <mat-icon class="table__buttons table__buttons--delete">delete</mat-icon>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form> -->
                     </mat-card-content>
-
-                    <!-- <div class="table__container">
-              <table #educationTable mat-table [dataSource]="educationDataSource" class="mat-elevation-z0">
-
-                <ng-container *ngFor="let column of educationColumns" [matColumnDef]="column !== 'actions' ? column : null">
-                  <th mat-header-cell *matHeaderCellDef> {{ column }} </th>
-                  <td mat-cell *matCellDef="let element; let i = index" [formControl]="education.controls[i]">
-                    <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select placeholder="Click para activar la lista">
-                        <mat-option *ngFor="let education of educationList" [value]="education._id"> {{education.name}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </td>
-                </ng-container>
-
-
-                <ng-container matColumnDef="education">
-                  <th mat-header-cell *matHeaderCellDef>Formación Académica</th>
-                  <td mat-cell *matCellDef="let element; let i = index">
-                    <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select (selectionChange)="selectedEucationAndArea($event, i, 'education')"
-                        placeholder="Click para activar la lista">
-                        <mat-option *ngFor="let education of educationList" [value]="education._id"> {{education.name}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </td>
-                </ng-container>
-
-
-                <ng-container matColumnDef="area">
-                  <th mat-header-cell *matHeaderCellDef> Área de Formación </th>
-                  <td mat-cell *matCellDef="let element; let i = index">
-                    <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select (selectionChange)="selectedEucationAndArea($event, i, 'area')"
-                        placeholder="Click para activar la lista" multiple panelClass="exa">
-                        <mat-option *ngFor="let area of areasList" [value]="area._id"> {{area.name}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </td>
-                </ng-container>
-
-                <ng-container matColumnDef="actions">
-                  <th mat-header-cell *matHeaderCellDef>
-                    <div class="button__container" fxLayoutAlign="center">
-                      <button mat-flat-button class="table-header__button" (click)="addRow()">
-                        <mat-icon style="font-size: 22px;">add</mat-icon> Añadir
-                      </button>
-                    </div>
-                  </th>
-                  <td mat-cell *matCellDef="let element; let i = index">
-                    <button mat-icon-button (click)="removeRow(element, i)">
-                      <mat-icon class="table__buttons table__buttons--delete">delete</mat-icon>
-                    </button>
-                  </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="educationColumns; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: educationColumns;"></tr>
-              </table>
-            </div> -->
-
-                    <!-- </mat-card-content> -->
-                    <!-- <mat-card-content fxLayout="row wrap" *ngIf="!isEditable">
-            <div class="profile-card__content" *ngFor="let item of data.education">
-              <p>
-                {{item.description}}
-              </p>
-            </div>
-          </mat-card-content>
-          <mat-card-content *ngIf="isEditable">
-            <ng-container *ngIf="contentPagesEducation.length > 1">
-              <button mat-icon-button (click)="nextTab(matTabEducation._tabs.length, 'education')" class="button-next"
-                [disabled]="nextPageButtonDisabledEducation">
-                <mat-icon>navigate_next</mat-icon>
-              </button>
-                            <button mat-icon-button (click)="beforeTab('education')" class="button-before" [disabled]="beforePageButtonDisabledEducation">
-                <mat-icon>navigate_before</mat-icon>
-              </button>
-            </ng-container>
-            <mat-selection-list #education fxLayout="row">
-              <mat-tab-group #matTabEducation mat-align-tabs="start" [(selectedIndex)]="tabIndexEducation"
-                animationDuration="0ms">
-                <mat-tab *ngFor="let contentPage of contentPagesEducation">
-                  <div fxLayout="row">
-                    <div fxLayout="column" *ngFor="let data of contentPage">
-                      <mat-list-option [selected]="onInitList(item, 'education')" *ngFor="let item of data"
-                        [value]="item">
-                        {{item.description}}
-                      </mat-list-option>
-                    </div>
-                  </div>
-                </mat-tab>
-              </mat-tab-group>
-            </mat-selection-list>
-          </mat-card-content> -->
                 </mat-card>
 
                 <mat-card class="profile__card">
@@ -439,7 +259,7 @@
                 <mat-card class="profile__card">
                     <mat-card-header>
                         <mat-card-title class="profile-card__title">Responsabilidades Corporativas
-                            <mat-icon *ngIf="securityRespError  && isEditable" class="card-error__icon" matSuffix>error</mat-icon>
+                            <mat-icon *ngIf="securityRespError && isEditable" class="card-error__icon" matSuffix>error</mat-icon>
                         </mat-card-title>
                     </mat-card-header>
                     <mat-card-content fxLayout="row wrap" *ngIf="!isEditable">
@@ -506,7 +326,7 @@
                 </mat-card>
 
             </div>
-            <div fxLayout="column" style="width: 30%;">
+            <div fxLayout="column" style="width: 40%;">
                 <mat-card class="profile__card">
                     <mat-card-header fxLayout="row" fxLayoutAlign="space-evenly">
                         <div style="width: 100%;">
@@ -532,13 +352,13 @@
                         <form [formGroup]="formExperience" novalidate autocomplete="off" fxLayout="row">
                             <div class="item" fxFlex="50">
                                 <mat-form-field floatLabel="always" appearance="none">
-                                    <input placeholder="0 años" (blur)="fieldExperienceValidation('professionalExperience')" (keypress)="onlyNumbersFunction($event)" formControlName="professionalExperience" matInput>
+                                    <input placeholder="0 años" (blur)="fieldExperienceValidation('professionalExperience')" (keypress)="onlyNumbers.classicOnlyNumbers($event)" formControlName="professionalExperience" matInput>
                                     <app-validator [form]="formExperience" name="professionalExperience"></app-validator>
                                 </mat-form-field>
                             </div>
                             <div class="item" fxFlex="50">
                                 <mat-form-field floatLabel="always" appearance="none">
-                                    <input placeholder="0 años" (blur)="fieldExperienceValidation('chargeExperience')" (keypress)="onlyNumbersFunction($event)" formControlName="chargeExperience" matInput>
+                                    <input placeholder="0 años" (blur)="fieldExperienceValidation('chargeExperience')" (keypress)="onlyNumbers.classicOnlyNumbers($event)" formControlName="chargeExperience" matInput>
                                     <app-validator [form]="formExperience" name="chargeExperience"></app-validator>
                                 </mat-form-field>
                             </div>
@@ -548,7 +368,8 @@
                 <mat-card class="profile__card">
                     <mat-card-header>
                         <mat-card-title class="profile-card__title">Cursos y Certificaciones
-                            <mat-icon *ngIf="requiredCertificatesError  && isEditable" class="card-error__icon" matSuffix>error</mat-icon>
+                            <mat-icon *ngIf="requiredCertificatesError && isEditable" class="card-error__icon" matSuffix>error
+                            </mat-icon>
                         </mat-card-title>
                     </mat-card-header>
                     <mat-card-content fxLayout="row wrap" *ngIf="!isEditable">
@@ -581,7 +402,8 @@
                 <mat-card class="profile__card">
                     <mat-card-header>
                         <mat-card-title class="profile-card__title">Funciones del Cargo
-                            <mat-icon *ngIf="rolResponsabilitiesError && isEditable" class="card-error__icon" matSuffix>error</mat-icon>
+                            <mat-icon *ngIf="rolResponsabilitiesError && isEditable" class="card-error__icon" matSuffix>error
+                            </mat-icon>
                         </mat-card-title>
                     </mat-card-header>
                     <mat-card-content fxLayout="row wrap" *ngIf="!isEditable">
@@ -618,7 +440,7 @@
                         </mat-card-title>
                     </mat-card-header>
                     <mat-card-content *ngIf="!isEditable">
-                        <ng-container>
+                        <ng-container *ngIf="contentPagesTalentsReadOnly.length > 1">
                             <button mat-icon-button (click)="nextTab(matTabTalentsReadOnly._tabs.length, 'talentsReadOnly')" class="button-next" [disabled]="nextPageButtonDisabledTalentsReadOnly">
                 <mat-icon>navigate_next</mat-icon>
               </button>
@@ -673,17 +495,18 @@
                                 </mat-expansion-panel-header>
                                 <div fxLayout="row" fxLayoutAlign="center none" style="width: 100%;">
                                     <table #assertiveComunicationTable fxFlex="100" mat-table [dataSource]="dataAssertiveComunication" class="mat-elevation-z0">
+                                        <caption style="display: none;">Visualización y edición de las competencias de comunicación asertiva del perfil</caption>
 
-                                        <!-- Comunicación Asertiva -->
+                                        <!-- assertiveCommunication column -->
                                         <ng-container matColumnDef="assertiveCommunication">
-                                            <th mat-header-cell *matHeaderCellDef> Comunicación Asertiva </th>
+                                            <th scope="col" mat-header-cell *matHeaderCellDef> Comunicación Asertiva </th>
                                             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                                             <td mat-footer-cell *matFooterCellDef>Total</td>
                                         </ng-container>
 
-                                        <!-- Medida de Aprobación -->
+                                        <!-- measureApproval column-->
                                         <ng-container matColumnDef="measureApproval">
-                                            <th mat-header-cell *matHeaderCellDef> Medida de Aprobación </th>
+                                            <th scope="col" mat-header-cell *matHeaderCellDef> Medida de Aprobación </th>
                                             <td mat-cell *matCellDef="let element">
                                                 <mat-slider color="warn" [value]="percent[element._id]" [disabled]="!isEditable" min="0" max="100" (input)="onChangeSliderValue($event, element._id, element)"></mat-slider>
                                                 <label>{{percent[element._id]}}%</label>
@@ -705,17 +528,17 @@
                                 </mat-expansion-panel-header>
                                 <div fxLayout="row" fxLayoutAlign="center none" style="width: 100%;">
                                     <table fxFlex="100" mat-table [dataSource]="dataAchievementOrientation" class="mat-elevation-z0">
-
-                                        <!--  Orientación al Logro -->
+                                        <caption style="display: none;">Visualización y edición de las competencias de orientación al logro del perfil</caption>
+                                        <!--  achievementOrientation column -->
                                         <ng-container matColumnDef="achievementOrientation">
-                                            <th mat-header-cell *matHeaderCellDef> Orientación al Logro </th>
+                                            <th scope="col" mat-header-cell *matHeaderCellDef> Orientación al Logro </th>
                                             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                                             <td mat-footer-cell *matFooterCellDef> Total </td>
                                         </ng-container>
 
-                                        <!-- Medida de Aprobación -->
+                                        <!-- measureApproval column -->
                                         <ng-container matColumnDef="measureApproval">
-                                            <th mat-header-cell *matHeaderCellDef> Medida de Aprobación </th>
+                                            <th scope="col" mat-header-cell *matHeaderCellDef> Medida de Aprobación </th>
                                             <td mat-cell *matCellDef="let element">
                                                 <mat-slider color="warn" [disabled]="!isEditable" [value]="percent[element._id]" min="0" max="100" (input)="onChangeSliderValue($event, element._id, element)"></mat-slider>
                                                 <label>{{percent[element._id]}}%</label>
@@ -737,17 +560,18 @@
                                 </mat-expansion-panel-header>
                                 <div fxLayout="row" fxLayoutAlign="center none" style="width: 100%;">
                                     <table fxFlex="100" mat-table [dataSource]="dataServiceOrientation" class="mat-elevation-z0">
+                                        <caption style="display: none;">Visualización y edición de las competencias de orientación al servicio del perfil</caption>
 
-                                        <!-- Orientación al Servicio -->
+                                        <!-- serviceOrientation column -->
                                         <ng-container matColumnDef="serviceOrientation">
-                                            <th mat-header-cell *matHeaderCellDef> Orientación al Servicio </th>
+                                            <th scope="col" mat-header-cell *matHeaderCellDef> Orientación al Servicio </th>
                                             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                                             <td mat-footer-cell *matFooterCellDef> Total </td>
                                         </ng-container>
 
-                                        <!-- Medida de Aprobación -->
+                                        <!-- measureApproval column -->
                                         <ng-container matColumnDef="measureApproval">
-                                            <th mat-header-cell *matHeaderCellDef> Medida de Aprobación </th>
+                                            <th scope="col" mat-header-cell *matHeaderCellDef> Medida de Aprobación </th>
                                             <td mat-cell *matCellDef="let element">
                                                 <mat-slider color="warn" [disabled]="!isEditable" [value]="percent[element._id]" min="0" max="100" (input)="onChangeSliderValue($event, element._id, element)"></mat-slider>
                                                 <label>{{percent[element._id]}}%</label>
@@ -769,17 +593,18 @@
                                 </mat-expansion-panel-header>
                                 <div fxLayout="row" fxLayoutAlign="center none" style="width: 100%;">
                                     <table fxFlex="100" mat-table [dataSource]="dataTeamwork" class="mat-elevation-z0">
-
-                                        <!-- Trabajo en Equipo -->
+                                        <caption style="display: none;">Visualización y edición de las competencias de trabajo en equipo del perfil
+                                        </caption>
+                                        <!-- teamwork column -->
                                         <ng-container matColumnDef="teamwork">
-                                            <th mat-header-cell *matHeaderCellDef> Trabajo en Equipo </th>
+                                            <th scope="col" mat-header-cell *matHeaderCellDef> Trabajo en Equipo </th>
                                             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                                             <td mat-footer-cell *matFooterCellDef> Total </td>
                                         </ng-container>
 
-                                        <!-- Medida de Aprobación -->
+                                        <!-- measureApproval column -->
                                         <ng-container matColumnDef="measureApproval">
-                                            <th mat-header-cell *matHeaderCellDef> Medida de Aprobación </th>
+                                            <th scope="col" mat-header-cell *matHeaderCellDef> Medida de Aprobación </th>
                                             <td mat-cell *matCellDef="let element">
                                                 <mat-slider color="warn" [disabled]="!isEditable" [value]="percent[element._id]" min="0" max="100" (input)="onChangeSliderValue($event, element._id, element)"></mat-slider>
                                                 <label>{{percent[element._id]}}%</label>

@@ -27,7 +27,7 @@ export class ErrorComponent implements OnInit {
       title: 'Acceso Denegado'
     },
     underConstruction:{
-      options: { path: 'assets/notPermissionsPage.json'},
+      options: 'assets/images/underConstruction.jpg',
       message: 'Lo sentimos, estamos trabajando para que pronto puedas ver esta página',
       buttonMessage: 'Regresar',
       title: 'Pagina En Construcción'
