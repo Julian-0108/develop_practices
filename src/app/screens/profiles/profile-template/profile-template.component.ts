@@ -135,8 +135,8 @@ export class ProfileTemplateComponent implements OnInit {
   public form: FormGroup = this.formBuilder.group({ academicEducation: this.rows });
   readOnlyEducationDatasource!: MatTableDataSource<AcademicEducationTable>;
   public responsabilitySeleted = '';
-  showEducationFilter = true;
-  showNotFoundMessage = false;
+  showEducationFilter = false;
+  showNotFoundMessage = true;
   corporativeRespList: string[] = [];
 
   constructor(
@@ -408,29 +408,29 @@ export class ProfileTemplateComponent implements OnInit {
    */
   async getData() {
     await this.profileTemplateService.getData(this.idProfile).then((res: any) => {
-      this.data = res[0];
-      if (res[0].educationAndAreaMerge.length === 0) {
-        this.showEducationFilter = false;
+      this.data = res;
+      if (res.academicEducation[0].education !== undefined) {
+        this.showEducationFilter = true;
       }
-      this.readOnlyEducationDatasource = new MatTableDataSource(res[0].educationAndAreaMerge);
+      this.readOnlyEducationDatasource = new MatTableDataSource(res.academicEducation);
       this.profileTemplateService.getAllEstudies().then((resp: AcademicEducation[]) => {
         this.educationList = resp;
       });
       this.buildTalentsReadOnly(this.data);
-      this.dataAssertiveComunication = new MatTableDataSource(res[0].assertiveComunication);
-      res[0].assertiveComunication.forEach((el: any) => {
+      this.dataAssertiveComunication = new MatTableDataSource(res.assertiveComunication);
+      res.assertiveComunication.forEach((el: any) => {
         this.percent[el._id] = el.measureApproval;
       });
-      this.dataAchievementOrientation = new MatTableDataSource(res[0].achievementOrientation);
-      res[0].achievementOrientation.forEach((el: any) => {
+      this.dataAchievementOrientation = new MatTableDataSource(res.achievementOrientation);
+      res.achievementOrientation.forEach((el: any) => {
         this.percent[el._id] = el.measureApproval;
       });
-      this.dataServiceOrientation = new MatTableDataSource(res[0].serviceOrientation);
-      res[0].serviceOrientation.forEach((el: any) => {
+      this.dataServiceOrientation = new MatTableDataSource(res.serviceOrientation);
+      res.serviceOrientation.forEach((el: any) => {
         this.percent[el._id] = el.measureApproval;
       });
-      this.dataTeamwork = new MatTableDataSource(res[0].teamwork);
-      res[0].teamwork.forEach((el: any) => {
+      this.dataTeamwork = new MatTableDataSource(res.teamwork);
+      res.teamwork.forEach((el: any) => {
         this.percent[el._id] = el.measureApproval;
       });
     });
@@ -473,12 +473,13 @@ export class ProfileTemplateComponent implements OnInit {
     /* Education */
     const control = this.form.controls.academicEducation as FormArray;
     control.clear();
-    this.data.educationAndAreaMerge.forEach((el: AcademicEducationTable) =>
+    this.data.academicEducation.forEach((el: AcademicEducationTable) =>
       this.addRowIntoEducationTable(el, false)
     );
     this.refreshEducationTable();
     /* Areas */
     await this.profileTemplateService.getAllAreas().then((res: AcademicEducation[]) => {
+      console.log(res);
       this.areasList = res;
     });
     /* Required Certificates */
@@ -508,6 +509,7 @@ export class ProfileTemplateComponent implements OnInit {
     });
 
     this.isEditable = true;
+    this.educationError = false;
   }
 
   buildTalentsReadOnly(data: any) {
@@ -758,21 +760,10 @@ export class ProfileTemplateComponent implements OnInit {
       this.educationError = true;
       return;
     }
-
     this.educationError = false;
     this.sendInformation = {
       ...this.sendInformation,
-      education: [
-        {
-          _id: '60550ac03571872db47680f8',
-          name: 'Tecnólogo 2',
-          description: 'Tecnico',
-          type: 'ejemplo',
-          status: true,
-          createdAt: '2021-03-19T20:34:08.646Z',
-          updatedAt: '2021-03-25T21:49:24.517Z',
-        },
-      ],
+      academicEducation: this.form.value.academicEducation,
     };
     return true;
   }
@@ -882,7 +873,7 @@ export class ProfileTemplateComponent implements OnInit {
     };
     return true;
   }
-    /**
+  /**
    * @author Hanna
    * @description Esta función valida los campos de formación académica que se repiten y
    * los devuelve en una lista.
