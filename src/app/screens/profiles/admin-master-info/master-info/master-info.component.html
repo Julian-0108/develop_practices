@@ -7,7 +7,7 @@
 
             <div class="item" *ngIf="data?.url === 'security-responsabilities'" fxFlex="75">
                 <mat-form-field floatLabel="always" appearance="none">
-                    <mat-label class="label">Description</mat-label>
+                    <mat-label class="label">Nombre</mat-label>
                     <input matInput type="text" formControlName="name" placeholder="Nombre">
                     <app-validator [form]="form" name="name"></app-validator>
                 </mat-form-field>
@@ -28,7 +28,7 @@
             </div>
             <div *ngIf="data?.url === 'types'" class="item" fxFlex="25">
                 <mat-form-field floatLabel="always" appearance="none">
-                    <mat-label class="label">Maestra</mat-label>
+                    <mat-label class="label">Maestro</mat-label>
                     <mat-select formControlName="masterReference">
                         <mat-option *ngFor="let master of masters" [value]="master.name">
                             {{master.name }}
