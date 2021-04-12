@@ -26,96 +26,10 @@ export class ProfileTemplateService {
       .toPromise();
   }
   async getAllAreas(): Promise<AcademicEducation[]> {
-    return [
-      {
-        name: 'Sistemas',
-        createdAt: '2021-03-25T21:51:42.741Z',
-        description: 'ejemplo',
-        status: true,
-        updatedAt: '2021-03-25T21:51:42.741Z',
-        _id: '605d05ee90d9e441a0155556',
-      },
-      {
-        name: 'Administración',
-        createdAt: '2021-03-25T21:51:42.741Z',
-        description: 'ejemplo',
-        status: true,
-        updatedAt: '2021-03-25T21:51:42.741Z',
-        _id: '605d05ee90d9e441a0155557',
-      },
-      {
-        name: 'Gestión Humana',
-        createdAt: '2021-03-25T21:51:42.741Z',
-        description: 'ejemplo',
-        status: true,
-        updatedAt: '2021-03-25T21:51:42.741Z',
-        _id: '605d05ee90d9e441a0155558',
-      },
-      {
-        name: 'Gerencia',
-        createdAt: '2021-03-25T21:51:42.741Z',
-        description: 'ejemplo',
-        status: true,
-        updatedAt: '2021-03-25T21:51:42.741Z',
-        _id: '605d05ee90d9e441a0155559',
-      },
-      {
-        name: 'Finanzas',
-        createdAt: '2021-03-25T21:51:42.741Z',
-        description: 'ejemplo',
-        status: true,
-        updatedAt: '2021-03-25T21:51:42.741Z',
-        _id: '605d05ee90d9e441a01555510',
-      },
-      {
-        name: 'Otro',
-        createdAt: '2021-03-25T21:51:42.741Z',
-        description: 'ejemplo',
-        status: true,
-        updatedAt: '2021-03-25T21:51:42.741Z',
-        _id: '605d05ee90d9e441a01555511',
-      },
-      {
-        name: 'Otro1',
-        createdAt: '2021-03-25T21:51:42.741Z',
-        description: 'ejemplo',
-        status: true,
-        updatedAt: '2021-03-25T21:51:42.741Z',
-        _id: '605d05ee90d9e441a01555512',
-      },
-      {
-        name: 'Otro2',
-        createdAt: '2021-03-25T21:51:42.741Z',
-        description: 'ejemplo',
-        status: true,
-        updatedAt: '2021-03-25T21:51:42.741Z',
-        _id: '605d05ee90d9e441a01555513',
-      },
-      {
-        name: 'Otro3',
-        createdAt: '2021-03-25T21:51:42.741Z',
-        description: 'ejemplo',
-        status: true,
-        updatedAt: '2021-03-25T21:51:42.741Z',
-        _id: '605d05ee90d9e441a01555514',
-      },
-      {
-        name: 'Otro4',
-        createdAt: '2021-03-25T21:51:42.741Z',
-        description: 'ejemplo',
-        status: true,
-        updatedAt: '2021-03-25T21:51:42.741Z',
-        _id: '605d05ee90d9e441a01555515',
-      },
-      {
-        name: 'Otro5',
-        createdAt: '2021-03-25T21:51:42.741Z',
-        description: 'ejemplo',
-        status: true,
-        updatedAt: '2021-03-25T21:51:42.741Z',
-        _id: '605d05ee90d9e441a01555516',
-      },
-    ];
+    return await this.httpClient
+      .get(`${environment.API_MASTER_INFO}/education-area?status=true`)
+      .pipe<AcademicEducation[]>(pluck('payload'))
+      .toPromise();
   }
   async getAllCertificates() {
     return await this.httpClient
@@ -149,10 +63,9 @@ export class ProfileTemplateService {
         .toPromise();
     }
     return await this.httpClient
-    .get(`${environment.API_MASTER_INFO}/security-responsabilities?status=true`)
-    .pipe(pluck('payload'))
-    .toPromise();
-
+      .get(`${environment.API_MASTER_INFO}/security-responsabilities?status=true`)
+      .pipe(pluck('payload'))
+      .toPromise();
   }
 
   historyPreview(id: any) {
@@ -176,78 +89,22 @@ export class ProfileTemplateService {
   }
 
   async getData(idProfile: string) {
-    // let responsabilitiesGroupbyType: any = {};
     let data: any = await this.httpClient
       .get(`${environment.API_BASE_PROFILES}/bases-profiles/${idProfile}`)
       .pipe(pluck('payload'))
       .toPromise();
-    data[0]['area'] = [
-      // [
-      //   {
-      //     _id: '605d05ee90d9e441a0155556',
-      //     name: 'Sistemas',
-      //     createdAt: '2021-03-25T21:51:42.741Z',
-      //     description: 'ejemplo',
-      //     status: true,
-      //     updatedAt: '2021-03-25T21:51:42.741Z',
-      //   },
-      //   {
-      //     _id: '605d05ee90d9e441a0155557',
-      //     name: 'Administración',
-      //     createdAt: '2021-03-25T21:51:42.741Z',
-      //     description: 'ejemplo',
-      //     status: true,
-      //     updatedAt: '2021-03-25T21:51:42.741Z',
-      //   },
-      // ],
-      [
-        {
-          _id: '605d05ee90d9e441a0155558',
-          name: 'Gestión Humana',
-          createdAt: '2021-03-25T21:51:42.741Z',
-          description: 'ejemplo',
-          status: true,
-          updatedAt: '2021-03-25T21:51:42.741Z',
-        },
-      ],
-    ];
-    data[0]['educationAndAreaMerge'] = [];
-    data[0]['responsabilitiesGroupbyType'] = {};
-    // for (let i = 0; i < data[0].education.length; i++) {
-    //   // const element = data[0].education[i];
-    //   data[0]['educationAndAreaMerge'].push({
-    //     education: data[0].education[i],
-    //     area: data[0].area[i]
-    //   })
-    // }
-    // ------------
-    // data[0]['education'].push({
-    //   _id: '605d05ee90d9e441a0155556',
-    //   createdAt: '2021-03-25T21:51:42.741Z',
-    //   description: 'ejemplo',
-    //   name: 'Ingeniero 2',
-    //   status: true,
-    //   type: 'Profesional',
-    //   updatedAt: '2021-03-25T21:51:42.741Z',
-    // });
-    // data[0]['education'] = []
-    for (let i of data[0].education) {
-      if (data[0].education.length !== 0) {
-        data[0]['educationAndAreaMerge'].push({
-          education: i._id,
-          area: data[0].area[data[0].education.indexOf(i)].map((res: any) =>
-            Object({ _id: res._id, name: res.name })
-          ),
-          name: i.name,
-        });
-      }
-    }
+
+    data.academicEducation = data.academicEducation.map((item: any) => {
+      return { education: item._id, name: item.name, area: item.area };
+    });
+
     /* SecurityResponsabilities */
-    data[0].securityResponsabilities.forEach((resp: any) => {
-      if (!data[0].responsabilitiesGroupbyType.hasOwnProperty(resp.type)) {
-        data[0].responsabilitiesGroupbyType[resp.type] = data[0].securityResponsabilities.map(
+    data.responsabilitiesGroupbyType = {};
+    data.securityResponsabilities.forEach((resp: any) => {
+      if (!data.responsabilitiesGroupbyType.hasOwnProperty(resp.type)) {
+        data.responsabilitiesGroupbyType[resp.type] = data.securityResponsabilities.map(
           (type: any) => {
-            if (type.type === resp.type) return type
+            if (type.type === resp.type) return type;
           }
         );
       }
