@@ -145,7 +145,6 @@ body {
     width: 7em;
 }
 
-
 .button--accept {
     background-color: var(--primary-color) !important;
     color: white !important;
@@ -168,11 +167,13 @@ body {
 
 
 /* Icons */
+
 .table__buttons {
-  border-radius: 100%;
-  font-size: 17px;
-  padding: 3px;
+    border-radius: 100%;
+    font-size: 17px;
+    padding: 3px;
 }
+
 .edit {
     color: #3392e4;
     background-color: #3392e42e;
@@ -191,9 +192,9 @@ body {
 
 
 .history {
-  color: #d88874;
-  background-color: #eccec7;
-  box-shadow: 0px 0px 6px #F2E3B8;
+    color: #d88874;
+    background-color: #eccec7;
+    box-shadow: 0px 0px 6px #F2E3B8;
 }
 
 .delete {
@@ -425,6 +426,11 @@ mat-label {
     color: #707070;
 }
 
+.mat-form-field-infix {
+    padding: 7px 0 !important;
+    border-top: 11px solid transparent !important;
+}
+
 
 /* Mat table */
 
@@ -574,41 +580,45 @@ mat-dialog-actions {
 }
 
 .mat-drawer-content {
-  overflow-x: hidden !important;
-  background-color: #FFFF;
-  height: calc(100vh - 75px) !important;
+    overflow-x: hidden !important;
+    //   background-color: #FFFF;
+    height: calc(100vh - 75px) !important;
 }
 
 .chip__status--active {
-  background-color: #D1EAD2 !important;
-  color: #68BC6C !important;
-  padding: 3px 14px !important;
+    background-color: #D1EAD2 !important;
+    color: #68BC6C !important;
+    padding: 3px 14px !important;
 }
+
 .chip__status--inactive {
-  background-color: #F5CFCC !important;
-  color: #E06055 !important;
+    background-color: #F5CFCC !important;
+    color: #E06055 !important;
 }
-.chip__level--n1{
-  background-color: #a1d2e8 !important;
-  color: #046f9e  !important;
+
+.chip__level--n1 {
+    background-color: #a1d2e8 !important;
+    color: #046f9e !important;
 }
-.chip__level--n2{
-  background-color: #f9aa6d !important;
-  color: #b95100 !important;
+
+.chip__level--n2 {
+    background-color: #f9aa6d !important;
+    color: #b95100 !important;
 }
-.chip__level--n3{
-  background-color: #71de8e !important;
-  color: #00611a !important;
+
+.chip__level--n3 {
+    background-color: #71de8e !important;
+    color: #00611a !important;
 }
-.chip__level--none{
-  background-color: #c7c4c4 !important;
-  color: #707070!important;
+
+.chip__level--none {
+    background-color: #c7c4c4 !important;
+    color: #707070!important;
 }
 
 .custom-tooltip__history {
-  // background-color: #a4acb954 !important;
-  // color: #8391a7 !important;
-  padding: 0 10px !important;
-  font-size: 11px !important;
-
+    // background-color: #a4acb954 !important;
+    // color: #8391a7 !important;
+    padding: 0 10px !important;
+    font-size: 11px !important;
 }
