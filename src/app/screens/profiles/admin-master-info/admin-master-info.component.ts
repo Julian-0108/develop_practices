@@ -86,7 +86,7 @@ export class AdminMasterInfoComponent implements OnInit {
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
     {
-      name: 'Area de educación',
+      name: 'Area de Formación',
       url: 'education-area',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
