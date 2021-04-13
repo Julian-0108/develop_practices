@@ -124,7 +124,9 @@ export class AdminMasterInfoComponent implements OnInit {
           (el) => el !== 'type' && el !== 'description' && el !== 'submenu'
         );
       case 'studies':
-        return this.displayedColumns.filter((el) => el !== 'type' && el !== 'submenu' && el !== 'reference');
+        return this.displayedColumns.filter(
+          (el) => el !== 'type' && el !== 'submenu' && el !== 'reference'
+        );
       case 'security-responsabilities':
         return this.displayedColumns.filter(
           (el) => el !== 'description' && el !== 'submenu' && el !== 'reference'
@@ -137,25 +139,8 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter((el) => el !== 'submenu' && el !== 'reference');
 
       default:
-        return this.displayedColumns.filter((el) => el !== 'reference');
+        return this.displayedColumns.filter((el) => el !== 'reference' && el !== 'submenu');
     }
-    // if (this.masterSeleted === 'types') {
-    //   return this.displayedColumns.filter(
-    //     (el) => el !== 'type' && el !== 'description' && el !== 'submenu'
-    //   );
-    // } else if (this.masterSeleted === 'security-responsabilities') {
-    //   return this.displayedColumns.filter(
-    //     (el) => el !== 'description' && el !== 'submenu' && el !== 'reference'
-    //   );
-    // } else if (this.masterSeleted == 'education-area') {
-    //   return this.displayedColumns.filter(
-    //     (el) => el !== 'type' && el !== 'submenu' && el !== 'reference'
-    //   );
-    // } else if (this.masterSeleted !== 'base-teams-categories') {
-    //   return this.displayedColumns.filter((el) => el !== 'submenu' && el !== 'reference');
-    // } else {
-    //   return this.displayedColumns.filter((el) => el !== 'reference');
-    // }
   }
 
   openDialog(element?: Master) {

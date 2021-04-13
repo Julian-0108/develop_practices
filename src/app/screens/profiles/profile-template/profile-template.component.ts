@@ -149,7 +149,9 @@ export class ProfileTemplateComponent implements OnInit {
     this.getData();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+  }
 
   addRowIntoEducationTable(d?: AcademicEducationTable, noUpdate?: boolean) {
     const row = this.formBuilder.group({
@@ -411,6 +413,7 @@ export class ProfileTemplateComponent implements OnInit {
       this.data = res;
       if (res.academicEducation[0].education !== undefined) {
         this.showEducationFilter = true;
+        this.showNotFoundMessage = false;
       }
       this.readOnlyEducationDatasource = new MatTableDataSource(res.academicEducation);
       this.profileTemplateService.getAllEstudies().then((resp: AcademicEducation[]) => {
