@@ -77,7 +77,7 @@ export class MasterInfoComponent implements OnInit {
         value: '',
         disabled: this.data?.url === 'types' || this.data?.url === 'security-responsabilities',
       }),
-      type: new FormControl({value: null, disabled: this.data?.url === 'education-area' || this.data?.url === 'education-area'}),
+      type: new FormControl({value: null, disabled: this.data?.url === 'education-area' || this.data?.url === 'studies'}),
       masterReference: new FormControl(null),
       idParent: new FormControl({value: null, disabled: this.data?.url !== 'base-teams-categories' || true}),
       createdAt: new FormControl({ value: '', disabled: true }),
@@ -227,6 +227,7 @@ export class MasterInfoComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((resp: any) => {
+        if(resp==='close') return
         /*
          * Acciones que se activan al dar click en el botón "guardar" del formulario.
          */
