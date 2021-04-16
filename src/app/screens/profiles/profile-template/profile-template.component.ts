@@ -131,6 +131,14 @@ export class ProfileTemplateComponent implements OnInit {
   selected: any;
   educationDataSource = new BehaviorSubject<AbstractControl[]>([]);
   public educationColumns: string[] = ['education', 'area', 'actions'];
+  public coursesAndCertificationsColumns: string[] = ['domain', 'type', 'name', 'required', 'optional'];
+  ejemploDataSource = [{
+    domain: 'Base de Datos',
+type: 'Certificado',
+name: 'SQL Básico',
+required: true,
+optional: false,
+  }]
   public rows: FormArray = this.formBuilder.array([]);
   public form: FormGroup = this.formBuilder.group({ academicEducation: this.rows });
   readOnlyEducationDatasource!: MatTableDataSource<AcademicEducationTable>;
