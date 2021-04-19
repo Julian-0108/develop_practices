@@ -132,13 +132,40 @@ export class ProfileTemplateComponent implements OnInit {
   educationDataSource = new BehaviorSubject<AbstractControl[]>([]);
   public educationColumns: string[] = ['education', 'area', 'actions'];
   public coursesAndCertificationsColumns: string[] = ['domain', 'type', 'name', 'required', 'optional'];
+  public CoursesCertificationsColumns: string[] = ['knowledge', 'area', 'description', 'yearsExperience', 'poyectsExperience'];
+  public CoursesCertificationsColumnsEdit: string[] = ['knowledge', 'area', 'description', 'yearsExperience', 'poyectsExperience', 'actions'];
+  disableInputs = false;
   ejemploDataSource = [{
     domain: 'Base de Datos',
-type: 'Certificado',
-name: 'SQL Básico',
-required: true,
-optional: false,
-  }]
+    type: 'Certificado',
+    name: 'SQL Básico',
+    required: true,
+    optional: false,
+  }];
+  CoursesCertificationsData = [
+    {
+      knowledge: 'Fundamentos Básicos',
+      area: 'Desarrollo',
+      description: 'Programar en java',
+      yearsExperience: 3,
+      proyectsExperience: 2,
+    },
+    {
+      knowledge: 'Fundamentos Básicos',
+      area: 'Bases de datos',
+      description: 'Manejar sql',
+      yearsExperience: 1,
+      proyectsExperience: 0,
+    },
+    {
+      knowledge: 'Fundamentos Básicos',
+      area: 'Administración',
+      description: 'Llevar contabilidad',
+      yearsExperience: 4,
+      proyectsExperience: 8,
+    },
+  ];
+
   public rows: FormArray = this.formBuilder.array([]);
   public form: FormGroup = this.formBuilder.group({ academicEducation: this.rows });
   readOnlyEducationDatasource!: MatTableDataSource<AcademicEducationTable>;
