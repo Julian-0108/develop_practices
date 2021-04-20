@@ -99,6 +99,16 @@ export class ProfileTemplateComponent implements OnInit {
     'Diciembre',
   ];
 
+  functionColumns: string[] = ['domain', 'function', 'description'];
+  actionfunction:  string[] = ['domain', 'function', 'description', 'actions'];  
+
+  functiondataSource = [
+    {domain: 'Base de Datos',         function: 'Fundamentos/conceptos básicos',                       description: 'Crear, modificar, eliminar usuarios'},
+    {domain:'Servidores Aplicación',  function: 'Conocimiento/gestión de un producto o herramienta',   description: 'lorem ipsum dolor sit amet consectetur adipiscing elit'},
+    {domain: 'Otro dominio',          function: 'Gestión de accesos',                                  description: 'lorem ipsum dolor sit amet consectetur adipiscing elit'},
+  ];
+  
+
   formObjective = new FormGroup({
     objective: new FormControl(null, [Validators.required]),
   });
