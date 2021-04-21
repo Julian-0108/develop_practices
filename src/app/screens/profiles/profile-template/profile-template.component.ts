@@ -110,6 +110,16 @@ export class ProfileTemplateComponent implements OnInit {
     'Diciembre',
   ];
 
+  functionColumns: string[] = ['domain', 'function', 'description'];
+  actionfunction:  string[] = ['domain', 'function', 'description', 'actions'];
+
+  functiondataSource = [
+    {domain: 'Base de Datos',         function: 'Fundamentos/conceptos básicos',                       description: 'Crear, modificar, eliminar usuarios'},
+    {domain:'Servidores Aplicación',  function: 'Conocimiento/gestión de un producto o herramienta',   description: 'lorem ipsum dolor sit amet consectetur adipiscing elit'},
+    {domain: 'Otro dominio',          function: 'Gestión de accesos',                                  description: 'lorem ipsum dolor sit amet consectetur adipiscing elit'},
+  ];
+
+
   formObjective = new FormGroup({
     objective: new FormControl(null, [Validators.required]),
   });
@@ -142,22 +152,38 @@ export class ProfileTemplateComponent implements OnInit {
   educationDataSource = new BehaviorSubject<AbstractControl[]>([]);
   coursesCertificationDataSource = new BehaviorSubject<AbstractControl[]>([]);
   public educationColumns: string[] = ['education', 'area', 'actions'];
-  public coursesAndCertificationsColumns: string[] = [
-    'domain',
-    'type',
-    'name',
-    'required',
-    'optional'
-    // 'actions',
-  ];
-
-  ejemploDataSource = [
+  public coursesAndCertificationsColumns: string[] = ['domain', 'type', 'name', 'required', 'optional'];
+  public CoursesCertificationsColumns: string[] = ['knowledge', 'area', 'description', 'yearsExperience', 'poyectsExperience'];
+  public CoursesCertificationsColumnsEdit: string[] = ['knowledge', 'area', 'description', 'yearsExperience', 'poyectsExperience', 'actions'];
+  disableInputs = false;
+  ejemploDataSource = [{
+    domain: 'Base de Datos',
+    type: 'Certificado',
+    name: 'SQL Básico',
+    required: true,
+    optional: false,
+  }];
+  CoursesCertificationsData = [
     {
-      domain: 'Base de Datos',
-      type: 'Certificado',
-      name: 'SQL Básico',
-      required: true,
-      optional: false,
+      knowledge: 'Fundamentos Básicos',
+      area: 'Desarrollo',
+      description: 'Programar en java',
+      yearsExperience: 3,
+      proyectsExperience: 2,
+    },
+    {
+      knowledge: 'Fundamentos Básicos',
+      area: 'Bases de datos',
+      description: 'Manejar sql',
+      yearsExperience: 1,
+      proyectsExperience: 0,
+    },
+    {
+      knowledge: 'Fundamentos Básicos',
+      area: 'Administración',
+      description: 'Llevar contabilidad',
+      yearsExperience: 4,
+      proyectsExperience: 8,
     },
   ];
 

@@ -31,6 +31,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatStepperModule } from '@angular/material/stepper';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -42,6 +43,7 @@ import { CustomPaginator } from './custom-paginator';
 const materialComponents = [
   MatPaginatorModule,
   MatSortModule,
+  MatCheckboxModule,
   MatSlideToggleModule,
   MatTooltipModule,
   MatIconModule,

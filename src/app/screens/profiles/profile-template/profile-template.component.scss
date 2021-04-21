@@ -400,6 +400,10 @@ p.talents {
     margin: 0 !important;
 }
 
+td {
+    text-align: center;
+}
+
 ::ng-deep.mat-option.mat-selected:not(.mat-option-disabled) {
     color: #000000de !important;
 }
