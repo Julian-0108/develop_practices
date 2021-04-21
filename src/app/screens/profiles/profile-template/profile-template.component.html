@@ -96,7 +96,7 @@
     </mat-drawer>
 
     <div fxLayout="row">
-    <mat-card class="profile__card" fxFlex="70">
+      <mat-card class="profile__card" fxFlex="70">
         <mat-card-header>
           <mat-card-title class="profile-card__title">Objetivo del Cargo</mat-card-title>
         </mat-card-header>
@@ -145,8 +145,7 @@
             <div class="item" fxFlex="50">
               <mat-form-field floatLabel="always" appearance="none">
                 <input placeholder="0 años" (blur)="fieldExperienceValidation('professionalExperience')"
-                  (keypress)="onlyNumbers.classicOnlyNumbers($event)" formControlName="professionalExperience"
-                  matInput>
+                  (keypress)="onlyNumbers.classicOnlyNumbers($event)" formControlName="professionalExperience" matInput>
                 <app-validator [form]="formExperience" name="professionalExperience"></app-validator>
               </mat-form-field>
             </div>
@@ -258,7 +257,7 @@
                     </div>
                   </th>
                   <td mat-cell *matCellDef="let element; let i = index">
-                    <button mat-icon-button (click)="removeRow(i)">
+                    <button mat-icon-button (click)="removeRow(i, 'education')">
                       <mat-icon class="table__buttons table__buttons--delete">delete</mat-icon>
                     </button>
                   </td>
@@ -268,6 +267,7 @@
           </form>
         </mat-card-content>
       </mat-card>
+
       <mat-card class="profile__card" fxFlex="60">
         <mat-card-header>
           <mat-card-title class="profile-card__title">Cursos y Certificaciones
@@ -275,104 +275,178 @@
             </mat-icon>
           </mat-card-title>
         </mat-card-header>
-        <mat-card-content fxLayout="row wrap" *ngIf="!isEditable">
-          <div class="table__container">
-            <table mat-table [dataSource]="ejemploDataSource" class="mat-elevation-z0">
-              <caption style="display: none;">Visualización de los cursos y certificaciones del perfil</caption>
-              <tr mat-header-row *matHeaderRowDef="coursesAndCertificationsColumns; sticky: true"></tr>
-              <tr mat-row *matRowDef="let row; columns: coursesAndCertificationsColumns;"></tr>
 
-              <ng-container matColumnDef="domain">
-                <th scope="col" mat-header-cell *matHeaderCellDef> Dominio
-                  <div class="filter-inputs">
-                    <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select class="filter">
-                        <mat-option [value]="''">
-                          Ver Todos
-                        </mat-option>
-                        <mat-option>
-                          Dominio 1
-                        </mat-option>
-                        <mat-option>
-                          Dominio 2
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </th>
-                <td mat-cell *matCellDef="let element"> {{element.domain}}</td>
-              </ng-container>
+        <mat-card-content fxLayout="row wrap">
+          <form [formGroup]="coursesCertificationsForm">
+            <div class="table__container">
+              <table #coursesCertifications mat-table
+                [dataSource]="!isEditable ? readOnlyCoursesCertificationsDatasource : coursesCertificationDataSource"
+                class="mat-elevation-z0" formArrayName="coursesAndCertificates">
+                <caption style="display: none;">Visualización de los cursos y certificaciones del perfil</caption>
+                <tr mat-header-row *matHeaderRowDef="coursesAndCertificationsColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: coursesAndCertificationsColumns;"></tr>
 
-              <ng-container matColumnDef="type">
-                <th scope="col" mat-header-cell *matHeaderCellDef> Tipo
-                  <div class="filter-inputs ">
-                    <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select class="filter">
-                        <mat-option [value]="''">
-                          Ver Todos
-                        </mat-option>
-                        <mat-option>
-                          Tipo 1
-                        </mat-option>
-                        <mat-option>
-                          Tipo 2
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </th>
-                <td mat-cell *matCellDef="let element">{{element.type}}</td>
-              </ng-container>
+                <ng-container matColumnDef="domain">
+                  <th scope="col" mat-header-cell *matHeaderCellDef> Dominio
+                    <div class="filter-inputs" *ngIf="!isEditable">
+                      <mat-form-field floatLabel="always" appearance="none">
+                        <mat-select class="filter filter__courses-certifications"
+                          (selectionChange)="applyFilter($event)">
+                          <mat-option [value]="''">
+                            Ver Todos
+                          </mat-option>
+                          <mat-option *ngFor="let domain of domainList" [value]="domain._id">
+                            {{domain.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </th>
+                  <ng-container *ngIf="!isEditable">
+                    <td mat-cell *matCellDef="let element">{{element.domain.name}}</td>
+                  </ng-container>
+                  <ng-container *ngIf="isEditable">
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                      <mat-form-field floatLabel="always" appearance="none">
+                        <mat-select placeholder="Click para activar la lista" formControlName="domain">
+                          <mat-option *ngFor="let domain of domainList" [value]="domain._id">
+                            {{domain.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </td>
+                  </ng-container>
+                </ng-container>
 
-              <ng-container matColumnDef="name">
-                <th scope="col" mat-header-cell *matHeaderCellDef> Nombre
-                  <div class="filter-inputs ">
-                    <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select class="filter">
-                        <mat-option [value]="''">
-                          Ver Todos
-                        </mat-option>
-                        <mat-option>
-                          Nombre 1
-                        </mat-option>
-                        <mat-option>
-                          Nombre 2
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </th>
-                <td mat-cell *matCellDef="let element">{{element.name}}</td>
-              </ng-container>
+                <ng-container matColumnDef="type">
+                  <th scope="col" mat-header-cell *matHeaderCellDef> Tipo
+                    <div class="filter-inputs" *ngIf="!isEditable">
+                      <mat-form-field floatLabel="always" appearance="none">
+                        <mat-select class="filter filter__courses-certifications">
+                          <mat-option [value]="''">
+                            Ver Todos
+                          </mat-option>
+                          <mat-option *ngFor="let type of typeList" [value]="type._id">
+                            {{type.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </th>
+                  <ng-container *ngIf="!isEditable">
+                    <td mat-cell *matCellDef="let element">{{element.type.name}}</td>
+                  </ng-container>
+                  <ng-container *ngIf="isEditable">
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                      <mat-form-field floatLabel="always" appearance="none">
+                        <mat-select placeholder="Click para activar la lista" formControlName="type">
+                          <mat-option *ngFor="let type of typeList" [value]="type._id">
+                            {{type.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </td>
+                  </ng-container>
+                </ng-container>
 
-              <ng-container matColumnDef="required">
-                <th scope="col" mat-header-cell *matHeaderCellDef> Requerido
-                  <div class="filter-inputs filter-inputs--area">
+                <ng-container matColumnDef="name">
+                  <th scope="col" mat-header-cell *matHeaderCellDef> Nombre
+                    <div class="filter-inputs" *ngIf="!isEditable">
+                      <mat-form-field floatLabel="always" appearance="none">
+                        <mat-select class="filter filter__courses-certifications">
+                          <mat-option [value]="''">
+                            Ver Todos
+                          </mat-option>
+                          <mat-option *ngFor="let name of nameList" [value]="name._id">
+                            {{name.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </th>
+                  <ng-container *ngIf="!isEditable">
+                    <td mat-cell *matCellDef="let element">{{element.name.name}}</td>
+                  </ng-container>
+                  <ng-container *ngIf="isEditable">
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                      <mat-form-field floatLabel="always" appearance="none">
+                        <mat-select placeholder="Click para activar la lista" formControlName="name">
+                          <mat-option *ngFor="let name of nameList" [value]="name._id">
+                            {{name.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </td>
+                  </ng-container>
+                </ng-container>
 
-                  </div>
-                </th>
-                <td mat-cell *matCellDef="let element">{{element.required}}</td>
-              </ng-container>
+                <ng-container matColumnDef="required">
+                  <th scope="col" mat-header-cell *matHeaderCellDef> Requerido
+                    <div class="filter-inputs filter-inputs--area" *ngIf="!isEditable">
 
-              <ng-container matColumnDef="optional">
-                <th scope="col" mat-header-cell *matHeaderCellDef> Deseable
-                  <div class="filter-inputs filter-inputs--area">
+                    </div>
+                  </th>
+                  <ng-container *ngIf="!isEditable">
+                    <td mat-cell *matCellDef="let element">
+                      <mat-checkbox [checked]="element.required" disabled></mat-checkbox>
+                    </td>
+                  </ng-container>
+                  <ng-container *ngIf="isEditable">
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                      <mat-checkbox [checked]="row.value.required" formControlName="required"></mat-checkbox>
+                    </td>
+                  </ng-container>
+                </ng-container>
 
-                  </div>
-                </th>
-                <td mat-cell *matCellDef="let element">{{element.optional}}</td>
-              </ng-container>
-            </table>
+                <ng-container matColumnDef="optional">
+                  <th scope="col" mat-header-cell *matHeaderCellDef> Deseable
+                    <div class="filter-inputs filter-inputs--area" *ngIf="!isEditable">
 
-          </div>
+                    </div>
+                  </th>
+                  <ng-container *ngIf="!isEditable">
+                    <td mat-cell *matCellDef="let element">
+                      <mat-checkbox #a (change)="b.value ? b.value = false : b.value = true"
+                        [checked]="element.optional" disabled></mat-checkbox>
+                    </td>
+                  </ng-container>
+                  <ng-container *ngIf="isEditable">
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                      <mat-checkbox #b (change)="a.value ? a.value = false : a.value = true"
+                        [checked]="row.value.optional" formControlName="optional"></mat-checkbox>
+                    </td>
+                  </ng-container>
+
+                </ng-container>
+
+                <ng-container matColumnDef="actions" *ngIf="isEditable">
+                  <th scope="col" mat-header-cell *matHeaderCellDef>
+                    <div class="button__container" fxLayoutAlign="center">
+                      <button mat-flat-button class="table-header__button"
+                        (click)="addRowIntoCoursesAndCertificationsTable()">
+                        <mat-icon style="font-size: 22px;">add</mat-icon> Añadir
+                      </button>
+                    </div>
+                  </th>
+                  <td mat-cell *matCellDef="let element; let i = index">
+                    <button mat-icon-button (click)="removeRow(i, 'coursesCertifications')">
+                      <mat-icon class="table__buttons table__buttons--delete">delete</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+              </table>
+
+            </div>
+          </form>
           <!-- <div class="profile-card__content" *ngFor="let item of data.requiredCertificates">
             <p>
               {{item.description}}
             </p>
           </div> -->
         </mat-card-content>
-        <mat-card-content *ngIf="isEditable">
-          <ng-container *ngIf="contentPagesRequiredCertificates.length > 1">
+        <!-- <mat-card-content *ngIf="isEditable"> -->
+
+        <!-- <ng-container *ngIf="contentPagesRequiredCertificates.length > 1">
             <button mat-icon-button (click)="nextTab(matTabRequiredCertificates._tabs.length, 'requiredCertificates')"
               class="button-next" [disabled]="nextPageButtonDisabledRequiredCertificates">
               <mat-icon>navigate_next</mat-icon>
@@ -392,8 +466,8 @@
                 </mat-list-option>
               </mat-tab>
             </mat-tab-group>
-          </mat-selection-list>
-        </mat-card-content>
+          </mat-selection-list> -->
+        <!-- </mat-card-content> -->
       </mat-card>
     </div>
     <div fxLayout="row">
@@ -545,7 +619,7 @@
       </mat-card>
     </div>
     <div fxLayout="row">
-      <mat-card class="profile__card" fxFlex="50">
+      <mat-card class="profile__card" fxFlex="40">
         <mat-card-header>
           <mat-card-title class="profile-card__title">Valoración de Competencias Corporativas</mat-card-title>
         </mat-card-header>
@@ -574,8 +648,8 @@
                   <ng-container matColumnDef="measureApproval">
                     <th scope="col" mat-header-cell *matHeaderCellDef> Medida de Aprobación </th>
                     <td mat-cell *matCellDef="let element">
-                      <mat-slider color="warn" [value]="percent[element._id]" [disabled]="!isEditable" min="0"
-                        max="100" (input)="onChangeSliderValue($event, element._id, element)"></mat-slider>
+                      <mat-slider color="warn" [value]="percent[element._id]" [disabled]="!isEditable" min="0" max="100"
+                        (input)="onChangeSliderValue($event, element._id, element)"></mat-slider>
                       <label>{{percent[element._id]}}%</label>
                     </td>
                     <td mat-footer-cell *matFooterCellDef>{{getTotalPercent('assertiveCommunication')}}%</td>
@@ -608,8 +682,8 @@
                   <ng-container matColumnDef="measureApproval">
                     <th scope="col" mat-header-cell *matHeaderCellDef> Medida de Aprobación </th>
                     <td mat-cell *matCellDef="let element">
-                      <mat-slider color="warn" [disabled]="!isEditable" [value]="percent[element._id]" min="0"
-                        max="100" (input)="onChangeSliderValue($event, element._id, element)"></mat-slider>
+                      <mat-slider color="warn" [disabled]="!isEditable" [value]="percent[element._id]" min="0" max="100"
+                        (input)="onChangeSliderValue($event, element._id, element)"></mat-slider>
                       <label>{{percent[element._id]}}%</label>
                     </td>
                     <td mat-footer-cell *matFooterCellDef>{{getTotalPercent('achievementOrientation')}}%</td>
@@ -643,8 +717,8 @@
                   <ng-container matColumnDef="measureApproval">
                     <th scope="col" mat-header-cell *matHeaderCellDef> Medida de Aprobación </th>
                     <td mat-cell *matCellDef="let element">
-                      <mat-slider color="warn" [disabled]="!isEditable" [value]="percent[element._id]" min="0"
-                        max="100" (input)="onChangeSliderValue($event, element._id, element)"></mat-slider>
+                      <mat-slider color="warn" [disabled]="!isEditable" [value]="percent[element._id]" min="0" max="100"
+                        (input)="onChangeSliderValue($event, element._id, element)"></mat-slider>
                       <label>{{percent[element._id]}}%</label>
                     </td>
                     <td mat-footer-cell *matFooterCellDef>{{getTotalPercent('serviceOrientation')}}%</td>
@@ -678,8 +752,8 @@
                   <ng-container matColumnDef="measureApproval">
                     <th scope="col" mat-header-cell *matHeaderCellDef> Medida de Aprobación </th>
                     <td mat-cell *matCellDef="let element">
-                      <mat-slider color="warn" [disabled]="!isEditable" [value]="percent[element._id]" min="0"
-                        max="100" (input)="onChangeSliderValue($event, element._id, element)"></mat-slider>
+                      <mat-slider color="warn" [disabled]="!isEditable" [value]="percent[element._id]" min="0" max="100"
+                        (input)="onChangeSliderValue($event, element._id, element)"></mat-slider>
                       <label>{{percent[element._id]}}%</label>
                     </td>
                     <td mat-footer-cell *matFooterCellDef>{{getTotalPercent('teamwork')}}%</td>
@@ -697,7 +771,7 @@
         </mat-card-content>
       </mat-card>
 
-      <mat-card class="profile__card right-side" fxFlex="50">
+      <mat-card class="profile__card right-side" fxFlex="60">
         <mat-card-header>
           <mat-card-title class="profile-card__title">Talentos
             <mat-icon *ngIf="talentsError && isEditable" class="card-error__icon" matSuffix>error</mat-icon>

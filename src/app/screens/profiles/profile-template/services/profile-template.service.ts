@@ -33,7 +33,7 @@ export class ProfileTemplateService {
   }
   async getAllCertificates() {
     return await this.httpClient
-      .get(`${environment.API_MASTER_INFO}/courses-certifications?status=true`)
+      .get(`${environment.API_MASTER_INFO}/courses-certifications?status=true&`)
       .pipe(pluck('payload'))
       .toPromise();
   }
@@ -94,6 +94,24 @@ export class ProfileTemplateService {
       .pipe(pluck('payload'))
       .toPromise();
 
+    data.coursesAndCertificates = [
+      {
+        domain: {
+          _id: 'abc1',
+          name: 'Base de Datos',
+        },
+        type: {
+          _id: 'abc2',
+          name: 'Certificado',
+        },
+        name: {
+          _id: '606dbae8a80ab7718abf169b',
+          name:'prueba2'
+        },
+        required: true,
+        optional: false
+      },
+    ];
     data.academicEducation = data.academicEducation.map((item: any) => {
       return { education: item._id, name: item.name, area: item.area };
     });
@@ -119,3 +137,5 @@ export class ProfileTemplateService {
       .toPromise();
   }
 }
+
+
