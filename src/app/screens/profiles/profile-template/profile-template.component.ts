@@ -26,6 +26,13 @@ export interface AcademicEducationTable {
   education: string;
   area: Array<{ _id: string; name: string }>;
 }
+interface CoursesCertificationsTable {
+  domain: {_id: string, name: string};
+  type: {_id: string, name: string};
+  name: {_id: string, name: string};
+  required: boolean;
+  optional: boolean;
+}
 export interface AcademicEducation {
   _id: string;
   name: string;
@@ -42,6 +49,7 @@ export interface AcademicEducation {
 })
 export class ProfileTemplateComponent implements OnInit {
   @ViewChild('educationTable') _educationTable!: MatTable<any>;
+  @ViewChild('coursesCertifications') _coursesCertifications!: MatTable<any>;
   @ViewChild('requiredCertificates') requiredCertificates!: MatSelectionList;
   @ViewChild('specificKnowledge') specificKnowledge!: MatSelectionList;
   @ViewChild('rolResponsabilities') rolResponsabilities!: MatSelectionList;
@@ -57,6 +65,9 @@ export class ProfileTemplateComponent implements OnInit {
 
   contentPagesEducation = [];
   educationList: AcademicEducation[] = [];
+  domainList: any[] = [];
+  typeList: any[] = [];
+  nameList: any[] = [];
   areasList: AcademicEducation[] = [];
   contentPagesSpecificKnowledge = [];
   contentPagesRequiredCertificates = [];
@@ -100,14 +111,14 @@ export class ProfileTemplateComponent implements OnInit {
   ];
 
   functionColumns: string[] = ['domain', 'function', 'description'];
-  actionfunction:  string[] = ['domain', 'function', 'description', 'actions'];  
+  actionfunction:  string[] = ['domain', 'function', 'description', 'actions'];
 
   functiondataSource = [
     {domain: 'Base de Datos',         function: 'Fundamentos/conceptos básicos',                       description: 'Crear, modificar, eliminar usuarios'},
     {domain:'Servidores Aplicación',  function: 'Conocimiento/gestión de un producto o herramienta',   description: 'lorem ipsum dolor sit amet consectetur adipiscing elit'},
     {domain: 'Otro dominio',          function: 'Gestión de accesos',                                  description: 'lorem ipsum dolor sit amet consectetur adipiscing elit'},
   ];
-  
+
 
   formObjective = new FormGroup({
     objective: new FormControl(null, [Validators.required]),
@@ -137,9 +148,9 @@ export class ProfileTemplateComponent implements OnInit {
   onHistory = false;
   history: any = [];
 
-  exampleForm!: FormGroup;
   selected: any;
   educationDataSource = new BehaviorSubject<AbstractControl[]>([]);
+  coursesCertificationDataSource = new BehaviorSubject<AbstractControl[]>([]);
   public educationColumns: string[] = ['education', 'area', 'actions'];
   public coursesAndCertificationsColumns: string[] = ['domain', 'type', 'name', 'required', 'optional'];
   public CoursesCertificationsColumns: string[] = ['knowledge', 'area', 'description', 'yearsExperience', 'poyectsExperience'];
@@ -178,7 +189,13 @@ export class ProfileTemplateComponent implements OnInit {
 
   public rows: FormArray = this.formBuilder.array([]);
   public form: FormGroup = this.formBuilder.group({ academicEducation: this.rows });
+  public coursesCertificationsFormRows: FormArray = this.formBuilder.array([]);
+  public coursesCertificationsForm: FormGroup = this.formBuilder.group({
+    coursesAndCertificates: this.coursesCertificationsFormRows,
+  });
+
   readOnlyEducationDatasource!: MatTableDataSource<AcademicEducationTable>;
+  readOnlyCoursesCertificationsDatasource!: MatTableDataSource<CoursesCertificationsTable>;
   public responsabilitySeleted = '';
   showEducationFilter = false;
   showNotFoundMessage = true;
@@ -194,8 +211,10 @@ export class ProfileTemplateComponent implements OnInit {
     this.getData();
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
 
+  r(e: any) {
+    console.log(e)
   }
 
   addRowIntoEducationTable(d?: AcademicEducationTable, noUpdate?: boolean) {
@@ -208,7 +227,24 @@ export class ProfileTemplateComponent implements OnInit {
       this.refreshEducationTable();
     }
   }
+  addRowIntoCoursesAndCertificationsTable(d?: CoursesCertificationsTable, noUpdate?: boolean) {
+    console.log(d);
+    const row = this.formBuilder.group({
+      domain: [d && d.domain._id ? d.domain._id : null, []],
+      type: [d && d.type._id ? d.type._id : null, []],
+      name: [d && d.name._id ? d.name._id : null, []],
+      required: d && d.required ? d.required : true,
+      optional: d && d.optional ? d.optional : false,
+    });
+    this.coursesCertificationsFormRows.push(row);
+    if (!noUpdate) {
+      this.refreshCoursesCertificationsTable();
+    }
+  }
 
+  refreshCoursesCertificationsTable() {
+    this.coursesCertificationDataSource.next(this.coursesCertificationsFormRows.controls);
+  }
   refreshEducationTable() {
     this.educationDataSource.next(this.rows.controls);
   }
@@ -225,10 +261,22 @@ export class ProfileTemplateComponent implements OnInit {
     }
   }
 
-  removeRow(index: number) {
-    const control = this.form.controls.academicEducation as FormArray;
-    control.removeAt(index);
-    this._educationTable.renderRows();
+  removeRow(index: number, table: string) {
+    switch (table) {
+      case 'education':
+        // const control = this.form.controls.academicEducation as FormArray;
+        (this.form.controls.academicEducation as FormArray).removeAt(index);
+        this._educationTable.renderRows();
+        break;
+
+      case 'coursesCertifications':
+        // const control = this.form.controls.academicEducation as FormArray;
+        (this.coursesCertificationsForm.controls.coursesAndCertificates as FormArray).removeAt(
+          index
+        );
+        this._coursesCertifications.renderRows();
+        break;
+    }
   }
 
   getTotalPercent(table: any) {
@@ -461,9 +509,36 @@ export class ProfileTemplateComponent implements OnInit {
         this.showNotFoundMessage = false;
       }
       this.readOnlyEducationDatasource = new MatTableDataSource(res.academicEducation);
+      this.readOnlyCoursesCertificationsDatasource = new MatTableDataSource(
+        res.coursesAndCertificates
+      );
       this.profileTemplateService.getAllEstudies().then((resp: AcademicEducation[]) => {
         this.educationList = resp;
       });
+      this.domainList = [{
+        name: 'Base de Datos',
+        _id: 'abc1'
+      },
+      {
+        name: 'Base de Datos2',
+        _id: 'abc11'
+      }];
+      this.typeList = [{
+        name: 'Certificado',
+        _id: 'abc2'
+      },
+      {
+        name: 'Certificado2',
+        _id: 'abc22'
+      }];
+      // this.nameList = [{
+      //   name: 'SQL Básico',
+      //   _id: 'abc3'
+      // },
+      // {
+      //   name: 'SQL Básico2',
+      //   _id: 'abc33'
+      // }];
       this.buildTalentsReadOnly(this.data);
       this.dataAssertiveComunication = new MatTableDataSource(res.assertiveComunication);
       res.assertiveComunication.forEach((el: any) => {
@@ -519,20 +594,27 @@ export class ProfileTemplateComponent implements OnInit {
     this.formExperience.get('professionalExperience')?.patchValue(this.data.professionalExperience);
     this.formExperience.get('chargeExperience')?.patchValue(this.data.chargeExperience);
     /* Education */
-    const control = this.form.controls.academicEducation as FormArray;
-    control.clear();
+    (this.form.controls.academicEducation as FormArray).clear();
     this.data.academicEducation.forEach((el: AcademicEducationTable) =>
       this.addRowIntoEducationTable(el, false)
     );
     this.refreshEducationTable();
+
+    /* Courses and Certifications */
+    (this.coursesCertificationsForm.controls
+      .coursesAndCertificates as FormArray).clear();
+    this.data.coursesAndCertificates.forEach((el: CoursesCertificationsTable) =>
+      this.addRowIntoCoursesAndCertificationsTable(el, false)
+    );
+    this.refreshCoursesCertificationsTable();
     /* Areas */
     await this.profileTemplateService.getAllAreas().then((res: AcademicEducation[]) => {
-      console.log(res);
       this.areasList = res;
     });
-    /* Required Certificates */
+    /* Courses and Certifications */
     this.profileTemplateService.getAllCertificates().then((res: any) => {
-      this.buildPagesList(res, 'requiredCertificates');
+      this.nameList = res;
+      // this.buildPagesList(res, 'requiredCertificates');
     });
     /* Specific Knowledge */
     this.profileTemplateService.getAllKnowledge().then((res: any) => {
@@ -555,7 +637,7 @@ export class ProfileTemplateComponent implements OnInit {
         }
       });
     });
-
+    this.coursesAndCertificationsColumns.push('actions');
     this.isEditable = true;
     this.educationError = false;
   }
@@ -645,6 +727,8 @@ export class ProfileTemplateComponent implements OnInit {
   }
 
   onSave() {
+    console.log(this.coursesCertificationsForm.value.coursesAndCertificates)
+    return;
     if (
       this.onSaveObjective() &&
       this.onSaveEperience() &&
@@ -719,6 +803,7 @@ export class ProfileTemplateComponent implements OnInit {
             });
             this.existentDate = '';
             this.getData();
+            this.coursesAndCertificationsColumns.splice(this.coursesAndCertificationsColumns.indexOf('actions'), 1);
             this.isEditable = false;
           })
           .catch((error) => {
@@ -751,6 +836,7 @@ export class ProfileTemplateComponent implements OnInit {
       });
       this.existentDate = '';
       this.getData();
+      this.coursesAndCertificationsColumns.splice(this.coursesAndCertificationsColumns.indexOf('actions'), 1);
       this.isEditable = false;
     });
   }
@@ -940,6 +1026,7 @@ export class ProfileTemplateComponent implements OnInit {
 
   onCancel() {
     this.sendInformation = {};
+    this.coursesAndCertificationsColumns.splice(this.coursesAndCertificationsColumns.indexOf('actions'), 1);
     this.isEditable = false;
   }
 

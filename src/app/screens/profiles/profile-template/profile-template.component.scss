@@ -408,10 +408,19 @@ td {
     color: #000000de !important;
 }
 
-.mat-column-actions,
 .mat-column-education,
 .mat-column-area {
     text-align: center !important;
+    padding: 0 !important;
+}
+
+.mat-column-education {
+  width: 11em;
+}
+
+.mat-column-actions {
+  text-align: center !important;
+  padding: 0 !important;
 }
 
 .table__container {
@@ -472,4 +481,17 @@ td {
 
 .not-show-list-item {
     display: none;
+}
+
+.mat-column-required,
+.mat-column-optional {
+  min-width: 6.5em;
+  text-align: center !important;
+}
+.mat-column-domain, .mat-column-optional {
+  padding: 0 !important;
+}
+
+.mat-column-domain, .mat-column-type, .mat-column-name {
+  width: 12em;
 }

@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRippleModule } from '@angular/material/core';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -37,6 +38,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CustomPaginator } from './custom-paginator';
+
 
 const materialComponents = [
   MatPaginatorModule,
@@ -75,6 +77,7 @@ const materialComponents = [
   MatTabsModule,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatCheckboxModule
 ];
 
 @NgModule({
