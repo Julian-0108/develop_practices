@@ -27,9 +27,9 @@ export interface AcademicEducationTable {
   area: Array<{ _id: string; name: string }>;
 }
 interface CoursesCertificationsTable {
-  domain: {_id: string, name: string};
-  type: {_id: string, name: string};
-  name: {_id: string, name: string};
+  domain: { _id: string; name: string };
+  type: { _id: string; name: string };
+  name: { _id: string; name: string };
   required: boolean;
   optional: boolean;
 }
@@ -111,14 +111,25 @@ export class ProfileTemplateComponent implements OnInit {
   ];
 
   functionColumns: string[] = ['domain', 'function', 'description'];
-  actionfunction:  string[] = ['domain', 'function', 'description', 'actions'];
+  actionfunction: string[] = ['domain', 'function', 'description', 'actions'];
 
   functiondataSource = [
-    {domain: 'Base de Datos',         function: 'Fundamentos/conceptos básicos',                       description: 'Crear, modificar, eliminar usuarios'},
-    {domain:'Servidores Aplicación',  function: 'Conocimiento/gestión de un producto o herramienta',   description: 'lorem ipsum dolor sit amet consectetur adipiscing elit'},
-    {domain: 'Otro dominio',          function: 'Gestión de accesos',                                  description: 'lorem ipsum dolor sit amet consectetur adipiscing elit'},
+    {
+      domain: 'Base de Datos',
+      function: 'Fundamentos/conceptos básicos',
+      description: 'Crear, modificar, eliminar usuarios',
+    },
+    {
+      domain: 'Servidores Aplicación',
+      function: 'Conocimiento/gestión de un producto o herramienta',
+      description: 'lorem ipsum dolor sit amet consectetur adipiscing elit',
+    },
+    {
+      domain: 'Otro dominio',
+      function: 'Gestión de accesos',
+      description: 'lorem ipsum dolor sit amet consectetur adipiscing elit',
+    },
   ];
-
 
   formObjective = new FormGroup({
     objective: new FormControl(null, [Validators.required]),
@@ -152,17 +163,38 @@ export class ProfileTemplateComponent implements OnInit {
   educationDataSource = new BehaviorSubject<AbstractControl[]>([]);
   coursesCertificationDataSource = new BehaviorSubject<AbstractControl[]>([]);
   public educationColumns: string[] = ['education', 'area', 'actions'];
-  public coursesAndCertificationsColumns: string[] = ['domain', 'type', 'name', 'required', 'optional'];
-  public CoursesCertificationsColumns: string[] = ['knowledge', 'area', 'description', 'yearsExperience', 'poyectsExperience'];
-  public CoursesCertificationsColumnsEdit: string[] = ['knowledge', 'area', 'description', 'yearsExperience', 'poyectsExperience', 'actions'];
+  public coursesAndCertificationsColumns: string[] = [
+    'domain',
+    'type',
+    'name',
+    'required',
+    'optional',
+  ];
+  public CoursesCertificationsColumns: string[] = [
+    'knowledge',
+    'area',
+    'description',
+    'yearsExperience',
+    'poyectsExperience',
+  ];
+  public CoursesCertificationsColumnsEdit: string[] = [
+    'knowledge',
+    'area',
+    'description',
+    'yearsExperience',
+    'poyectsExperience',
+    'actions',
+  ];
   disableInputs = false;
-  ejemploDataSource = [{
-    domain: 'Base de Datos',
-    type: 'Certificado',
-    name: 'SQL Básico',
-    required: true,
-    optional: false,
-  }];
+  ejemploDataSource = [
+    {
+      domain: 'Base de Datos',
+      type: 'Certificado',
+      name: 'SQL Básico',
+      required: true,
+      optional: false,
+    },
+  ];
   CoursesCertificationsData = [
     {
       knowledge: 'Fundamentos Básicos',
@@ -214,7 +246,7 @@ export class ProfileTemplateComponent implements OnInit {
   ngOnInit(): void {}
 
   r(e: any) {
-    console.log(e)
+    console.log(e);
   }
 
   addRowIntoEducationTable(d?: AcademicEducationTable, noUpdate?: boolean) {
@@ -515,22 +547,26 @@ export class ProfileTemplateComponent implements OnInit {
       this.profileTemplateService.getAllEstudies().then((resp: AcademicEducation[]) => {
         this.educationList = resp;
       });
-      this.domainList = [{
-        name: 'Base de Datos',
-        _id: 'abc1'
-      },
-      {
-        name: 'Base de Datos2',
-        _id: 'abc11'
-      }];
-      this.typeList = [{
-        name: 'Certificado',
-        _id: 'abc2'
-      },
-      {
-        name: 'Certificado2',
-        _id: 'abc22'
-      }];
+      this.domainList = [
+        {
+          name: 'Base de Datos',
+          _id: 'abc1',
+        },
+        {
+          name: 'Base de Datos2',
+          _id: 'abc11',
+        },
+      ];
+      // this.typeList = [
+      //   {
+      //     name: 'Certificado',
+      //     _id: 'abc2',
+      //   },
+      //   {
+      //     name: 'Certificado2',
+      //     _id: 'abc22',
+      //   },
+      // ];
       // this.nameList = [{
       //   name: 'SQL Básico',
       //   _id: 'abc3'
@@ -601,8 +637,7 @@ export class ProfileTemplateComponent implements OnInit {
     this.refreshEducationTable();
 
     /* Courses and Certifications */
-    (this.coursesCertificationsForm.controls
-      .coursesAndCertificates as FormArray).clear();
+    (this.coursesCertificationsForm.controls.coursesAndCertificates as FormArray).clear();
     this.data.coursesAndCertificates.forEach((el: CoursesCertificationsTable) =>
       this.addRowIntoCoursesAndCertificationsTable(el, false)
     );
@@ -612,9 +647,12 @@ export class ProfileTemplateComponent implements OnInit {
       this.areasList = res;
     });
     /* Courses and Certifications */
+
+    this.profileTemplateService.getAllTypes('Cursos y certificaciones').then((res: any) => {
+      this.typeList = res;
+    });
     this.profileTemplateService.getAllCertificates().then((res: any) => {
       this.nameList = res;
-      // this.buildPagesList(res, 'requiredCertificates');
     });
     /* Specific Knowledge */
     this.profileTemplateService.getAllKnowledge().then((res: any) => {
@@ -640,6 +678,10 @@ export class ProfileTemplateComponent implements OnInit {
     this.coursesAndCertificationsColumns.push('actions');
     this.isEditable = true;
     this.educationError = false;
+  }
+
+  ejem(ev: any){
+    console.log(ev)
   }
 
   buildTalentsReadOnly(data: any) {
@@ -727,7 +769,7 @@ export class ProfileTemplateComponent implements OnInit {
   }
 
   onSave() {
-    console.log(this.coursesCertificationsForm.value.coursesAndCertificates)
+    console.log(this.coursesCertificationsForm.value.coursesAndCertificates);
     return;
     if (
       this.onSaveObjective() &&
@@ -803,7 +845,10 @@ export class ProfileTemplateComponent implements OnInit {
             });
             this.existentDate = '';
             this.getData();
-            this.coursesAndCertificationsColumns.splice(this.coursesAndCertificationsColumns.indexOf('actions'), 1);
+            this.coursesAndCertificationsColumns.splice(
+              this.coursesAndCertificationsColumns.indexOf('actions'),
+              1
+            );
             this.isEditable = false;
           })
           .catch((error) => {
@@ -836,7 +881,10 @@ export class ProfileTemplateComponent implements OnInit {
       });
       this.existentDate = '';
       this.getData();
-      this.coursesAndCertificationsColumns.splice(this.coursesAndCertificationsColumns.indexOf('actions'), 1);
+      this.coursesAndCertificationsColumns.splice(
+        this.coursesAndCertificationsColumns.indexOf('actions'),
+        1
+      );
       this.isEditable = false;
     });
   }
@@ -1026,7 +1074,10 @@ export class ProfileTemplateComponent implements OnInit {
 
   onCancel() {
     this.sendInformation = {};
-    this.coursesAndCertificationsColumns.splice(this.coursesAndCertificationsColumns.indexOf('actions'), 1);
+    this.coursesAndCertificationsColumns.splice(
+      this.coursesAndCertificationsColumns.indexOf('actions'),
+      1
+    );
     this.isEditable = false;
   }
 

@@ -31,11 +31,22 @@ export class ProfileTemplateService {
       .pipe<AcademicEducation[]>(pluck('payload'))
       .toPromise();
   }
-  async getAllCertificates() {
+  async getAllTypes(masterReference: string) {
     return await this.httpClient
-      .get(`${environment.API_MASTER_INFO}/courses-certifications?status=true&`)
+      .get(`${environment.API_MASTER_INFO}/types?masterReference=${masterReference}`)
       .pipe(pluck('payload'))
       .toPromise();
+  }
+  async getAllCertificates(type?: string) {
+    return type
+      ? await this.httpClient
+          .get(`${environment.API_MASTER_INFO}/courses-certifications?status=true&type=${type}`)
+          .pipe(pluck('payload'))
+          .toPromise()
+      : await this.httpClient
+          .get(`${environment.API_MASTER_INFO}/courses-certifications?status=true`)
+          .pipe(pluck('payload'))
+          .toPromise();
   }
   async getAllKnowledge() {
     return await this.httpClient
@@ -101,15 +112,15 @@ export class ProfileTemplateService {
           name: 'Base de Datos',
         },
         type: {
-          _id: 'abc2',
-          name: 'Certificado',
+          _id: '605ba3d590d9e4a513155552',
+          name: 'Curso',
         },
         name: {
           _id: '606dbae8a80ab7718abf169b',
-          name:'prueba2'
+          name: 'prueba2',
         },
         required: true,
-        optional: false
+        optional: false,
       },
     ];
     data.academicEducation = data.academicEducation.map((item: any) => {
@@ -137,5 +148,3 @@ export class ProfileTemplateService {
       .toPromise();
   }
 }
-
-

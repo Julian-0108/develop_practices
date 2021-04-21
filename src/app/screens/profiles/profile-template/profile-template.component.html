@@ -340,7 +340,7 @@
                   <ng-container *ngIf="isEditable">
                     <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
                       <mat-form-field floatLabel="always" appearance="none">
-                        <mat-select placeholder="Click para activar la lista" formControlName="type">
+                        <mat-select placeholder="Click para activar la lista" formControlName="type" >
                           <mat-option *ngFor="let type of typeList" [value]="type._id">
                             {{type.name}}
                           </mat-option>
@@ -354,7 +354,7 @@
                   <th scope="col" mat-header-cell *matHeaderCellDef> Nombre
                     <div class="filter-inputs" *ngIf="!isEditable">
                       <mat-form-field floatLabel="always" appearance="none">
-                        <mat-select class="filter filter__courses-certifications">
+                        <mat-select class="filter filter__courses-certifications" >
                           <mat-option [value]="''">
                             Ver Todos
                           </mat-option>
@@ -482,115 +482,129 @@
             </p>
           </div> -->
 
-          <table mat-table [dataSource]="CoursesCertificationsData" class="mat-elevation-z0">
-            <!-- Knowledge Column -->
-            <ng-container matColumnDef="knowledge">
-              <th mat-header-cell *matHeaderCellDef> Conocimiento </th>
-              <td mat-cell *matCellDef="let element"> {{element.knowledge}} </td>
-            </ng-container>
-            <!-- Area Column -->
-            <ng-container matColumnDef="area">
-              <th mat-header-cell *matHeaderCellDef> Area de conocimiento </th>
-              <td mat-cell *matCellDef="let element"> {{element.area}} </td>
-            </ng-container>
-            <!-- Description Column -->
-            <ng-container matColumnDef="description">
-              <th mat-header-cell *matHeaderCellDef> Description </th>
-              <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-            </ng-container>
-            <!-- YearsExperience Column -->
-            <ng-container matColumnDef="yearsExperience">
-              <th mat-header-cell *matHeaderCellDef> Experiencia en años </th>
-              <td mat-cell *matCellDef="let element"> {{element.yearsExperience}} </td>
-            </ng-container>
-            <!-- PoyectsExperience Column -->
-            <ng-container matColumnDef="poyectsExperience">
-              <th mat-header-cell *matHeaderCellDef> Experiencia en proyectos </th>
-              <td mat-cell *matCellDef="let element"> {{element.proyectsExperience}} </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="CoursesCertificationsColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: CoursesCertificationsColumns;"></tr>
-          </table>
-
-        </mat-card-content>
-        <mat-card-content *ngIf="isEditable">
-          <!-- <ng-container *ngIf="contentPagesSpecificKnowledge.length > 1">
-            <button mat-icon-button (click)="nextTab(matTabSpecificKnowledge._tabs.length, 'specificKnowledge')"
-              class="button-next" [disabled]="nextPageButtonDisabledSpecificKnowledge">
-              <mat-icon>navigate_next</mat-icon>
-            </button>
-            <button mat-icon-button (click)="beforeTab('specificKnowledge')" class="button-before"
-              [disabled]="beforePageButtonDisabledSpecificKnowledge">
-              <mat-icon>navigate_before</mat-icon>
-            </button>
-          </ng-container>
-          <mat-selection-list #specificKnowledge fxLayout="row">
-            <mat-tab-group #matTabSpecificKnowledge mat-align-tabs="start" animationDuration="0ms"
-              [(selectedIndex)]="tabIndexSpecificKnowledge">
-              <mat-tab label="First" *ngFor="let contentPage of contentPagesSpecificKnowledge">
-                <div fxLayout="row">
-                  <div fxLayout="column" *ngFor="let data of contentPage">
-                    <mat-list-option [selected]="onInitList(item, 'specificKnowledge')" *ngFor="let item of data"
-                      [value]="item">
-                      {{item.description}}
-                    </mat-list-option>
-                  </div>
-                </div>
-              </mat-tab>
-            </mat-tab-group>
-          </mat-selection-list> -->
-
-          <table mat-table [dataSource]="CoursesCertificationsData" class="mat-elevation-z0">
-            <!-- Knowledge Column -->
-            <ng-container matColumnDef="knowledge">
-              <th mat-header-cell *matHeaderCellDef> Conocimiento </th>
-              <td mat-cell *matCellDef="let element"> {{element.knowledge}} </td>
-            </ng-container>
-            <!-- Area Column -->
-            <ng-container matColumnDef="area">
-              <th mat-header-cell *matHeaderCellDef> Area de conocimiento </th>
-              <td mat-cell *matCellDef="let element"> {{element.area}} </td>
-            </ng-container>
-            <!-- Description Column -->
-            <ng-container matColumnDef="description">
-              <th mat-header-cell *matHeaderCellDef> Description </th>
-              <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-            </ng-container>
-            <!-- YearsExperience Column -->
-            <ng-container matColumnDef="yearsExperience">
-              <th mat-header-cell *matHeaderCellDef> Experiencia en años </th>
-              <td mat-cell *matCellDef="let element">
-                <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput type="number" [formControl]="" (keypress)="onlyNumbers.classicOnlyNumbers($event)"
-                    min="0" max="60" [disabled]="!disableInputs">
-                </mat-form-field>
-              </td>
-            </ng-container>
-            <!-- PoyectsExperience Column -->
-            <ng-container matColumnDef="poyectsExperience">
-              <th mat-header-cell *matHeaderCellDef> Experiencia en proyectos </th>
-              <td mat-cell *matCellDef="let element">
-                <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput type="number" [formControl]="" (keypress)="onlyNumbers.classicOnlyNumbers($event)"
-                    min="0" max="60" [disabled]="!disableInputs">
-                </mat-form-field>
-              </td>
-            </ng-container>
-            <!-- checkbox -->
-            <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let element">
-                <mat-checkbox [(ngModel)]="disableInputs">
-                </mat-checkbox>
-              </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="CoursesCertificationsColumnsEdit"></tr>
-            <tr mat-row *matRowDef="let row; columns: CoursesCertificationsColumnsEdit;"></tr>
-          </table>
-
         </mat-card-content>
       </mat-card>
     </div>
+    <div fxLayout="row">
+      <mat-card class="profile__card" fxFlex="100">
+          <mat-card-header>
+              <mat-card-title class="profile-card__title">Conocimientos Específicos del Cargo
+                  <mat-icon *ngIf="specificKnowledgeError && isEditable" class="card-error__icon" matSuffix>error
+                  </mat-icon>
+              </mat-card-title>
+          </mat-card-header>
+          <mat-card-content fxLayout="row wrap" *ngIf="!isEditable">
+
+              <!-- <div class="profile-card__content" *ngFor="let item of data.specificKnowledge">
+              <p>{{item.description}}</p>
+           </div> -->
+              <table mat-table [dataSource]="CoursesCertificationsData" class="mat-elevation-z0">
+                  <!-- Knowledge Column -->
+                  <ng-container matColumnDef="knowledge">
+                      <th mat-header-cell *matHeaderCellDef> Conocimiento </th>
+                      <td mat-cell *matCellDef="let element"> {{element.knowledge}} </td>
+                  </ng-container>
+                  <!-- Area Column -->
+                  <ng-container matColumnDef="area">
+                      <th mat-header-cell *matHeaderCellDef> Area de conocimiento </th>
+                      <td mat-cell *matCellDef="let element"> {{element.area}} </td>
+                  </ng-container>
+                  <!-- Description Column -->
+                  <ng-container matColumnDef="description">
+                      <th mat-header-cell *matHeaderCellDef> Description </th>
+                      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+                  </ng-container>
+                  <!-- YearsExperience Column -->
+                  <ng-container matColumnDef="yearsExperience">
+                      <th mat-header-cell *matHeaderCellDef> Experiencia en años </th>
+                      <td mat-cell *matCellDef="let element"> {{element.yearsExperience}} </td>
+                  </ng-container>
+                  <!-- PoyectsExperience Column -->
+                  <ng-container matColumnDef="poyectsExperience">
+                      <th mat-header-cell *matHeaderCellDef> Experiencia en proyectos </th>
+                      <td mat-cell *matCellDef="let element"> {{element.proyectsExperience}} </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="CoursesCertificationsColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: CoursesCertificationsColumns;"></tr>
+              </table>
+
+          </mat-card-content>
+          <mat-card-content *ngIf="isEditable">
+
+              <!-- <ng-container *ngIf="contentPagesSpecificKnowledge.length > 1">
+         <button mat-icon-button (click)="nextTab(matTabSpecificKnowledge._tabs.length, 'specificKnowledge')"
+           class="button-next" [disabled]="nextPageButtonDisabledSpecificKnowledge">
+           <mat-icon>navigate_next</mat-icon>
+         </button>
+         <button mat-icon-button (click)="beforeTab('specificKnowledge')" class="button-before"
+           [disabled]="beforePageButtonDisabledSpecificKnowledge">
+           <mat-icon>navigate_before</mat-icon>
+         </button>
+       </ng-container>
+       <mat-selection-list #specificKnowledge fxLayout="row">
+         <mat-tab-group #matTabSpecificKnowledge mat-align-tabs="start" animationDuration="0ms"
+           [(selectedIndex)]="tabIndexSpecificKnowledge">
+           <mat-tab label="First" *ngFor="let contentPage of contentPagesSpecificKnowledge">
+             <div fxLayout="row">
+               <div fxLayout="column" *ngFor="let data of contentPage">
+                 <mat-list-option [selected]="onInitList(item, 'specificKnowledge')" *ngFor="let item of data"
+                   [value]="item">
+                   {{item.description}}
+                 </mat-list-option>
+               </div>
+             </div>
+           </mat-tab>
+         </mat-tab-group>
+       </mat-selection-list> -->
+              <table mat-table [dataSource]="CoursesCertificationsData" class="mat-elevation-z0">
+                  <!-- Knowledge Column -->
+                  <ng-container matColumnDef="knowledge">
+                      <th mat-header-cell *matHeaderCellDef> Conocimiento </th>
+                      <td mat-cell *matCellDef="let element"> {{element.knowledge}} </td>
+                  </ng-container>
+                  <!-- Area Column -->
+                  <ng-container matColumnDef="area">
+                      <th mat-header-cell *matHeaderCellDef> Area de conocimiento </th>
+                      <td mat-cell *matCellDef="let element"> {{element.area}} </td>
+                  </ng-container>
+                  <!-- Description Column -->
+                  <ng-container matColumnDef="description">
+                      <th mat-header-cell *matHeaderCellDef> Description </th>
+                      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+                  </ng-container>
+                  <!-- YearsExperience Column -->
+                  <ng-container matColumnDef="yearsExperience">
+                      <th mat-header-cell *matHeaderCellDef> Experiencia en años </th>
+                      <td mat-cell *matCellDef="let element">
+                          <mat-form-field floatLabel="always" appearance="none">
+                              <input matInput type="number" [formControl]="" (keypress)="onlyNumbers.classicOnlyNumbers($event)" min="0" max="60" [disabled]="!disableInputs">
+                          </mat-form-field>
+                      </td>
+                  </ng-container>
+                  <!-- PoyectsExperience Column -->
+                  <ng-container matColumnDef="poyectsExperience">
+                      <th mat-header-cell *matHeaderCellDef> Experiencia en proyectos </th>
+                      <td mat-cell *matCellDef="let element">
+                          <mat-form-field floatLabel="always" appearance="none">
+                              <input matInput type="number" [formControl]="" (keypress)="onlyNumbers.classicOnlyNumbers($event)" min="0" max="60" [disabled]="!disableInputs">
+                          </mat-form-field>
+                      </td>
+                  </ng-container>
+                  <!-- checkbox -->
+                  <ng-container matColumnDef="actions">
+                      <th mat-header-cell *matHeaderCellDef></th>
+                      <td mat-cell *matCellDef="let element">
+                          <mat-checkbox [(ngModel)]="disableInputs">
+                          </mat-checkbox>
+                      </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="CoursesCertificationsColumnsEdit"></tr>
+                  <tr mat-row *matRowDef="let row; columns: CoursesCertificationsColumnsEdit;"></tr>
+              </table>
+
+          </mat-card-content>
+      </mat-card>
+  </div>
     <div fxLayout="row">
       <mat-card class="profile__card" fxFlex="40">
         <mat-card-header>
@@ -784,7 +798,6 @@
         </mat-card-content>
       </mat-card>
     </div>
-
 
     <div fxLayout="row">
       <mat-card class="profile__card" fxFlex="50">
