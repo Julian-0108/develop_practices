@@ -372,7 +372,7 @@
                     <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
                       <mat-form-field floatLabel="always" appearance="none">
                         <mat-select placeholder="Click para activar la lista" formControlName="name">
-                          <mat-option *ngFor="let name of nameList" [value]="name._id">
+                          <mat-option *ngFor="let name of ejem(row.value.type)" [value]="name._id">
                             {{name.name}}
                           </mat-option>
                         </mat-select>
@@ -407,14 +407,12 @@
                   </th>
                   <ng-container *ngIf="!isEditable">
                     <td mat-cell *matCellDef="let element">
-                      <mat-checkbox #a (change)="b.value ? b.value = false : b.value = true"
-                        [checked]="element.optional" disabled></mat-checkbox>
+                      <mat-checkbox [checked]="element.optional" disabled></mat-checkbox>
                     </td>
                   </ng-container>
                   <ng-container *ngIf="isEditable">
                     <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
-                      <mat-checkbox #b (change)="a.value ? a.value = false : a.value = true"
-                        [checked]="row.value.optional" formControlName="optional"></mat-checkbox>
+                      <mat-checkbox [checked]="row.value.optional" formControlName="optional"></mat-checkbox>
                     </td>
                   </ng-container>
 
@@ -785,7 +783,7 @@
                 </button>
               </th>
               <td mat-cell *matCellDef="let element, let i= index">
-                <button mat-icon-button (click)="removeRow(i)">
+                <button mat-icon-button (click)="removeRow(i, 'education')">
                   <mat-icon class="table__buttons table__buttons--delete">delete</mat-icon>
                 </button>
               </td>
