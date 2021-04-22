@@ -75,9 +75,9 @@ export class MasterInfoComponent implements OnInit {
       name: new FormControl('', [Validators.required, this.customValidator.noWhitespaceValidator]),
       description: new FormControl({
         value: '',
-        disabled: this.data?.url === 'types' || this.data?.url === 'security-responsabilities',
+        disabled: this.data?.url === 'types' || this.data?.url === 'security-responsabilities' || this.data?.url === 'courses-certifications',
       }),
-      type: new FormControl({value: null, disabled: this.data?.url === 'education-area' || this.data?.url === 'studies'}),
+      type: new FormControl({value: null, disabled: this.data?.url === 'education-area' || this.data?.url === 'studies' || this.data?.url === 'domain'}),
       masterReference: new FormControl(null),
       idParent: new FormControl({value: null, disabled: this.data?.url !== 'base-teams-categories' || true}),
       createdAt: new FormControl({ value: '', disabled: true }),
