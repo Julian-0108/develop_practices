@@ -259,8 +259,9 @@ export class ProfileTemplateComponent implements OnInit {
       this.refreshEducationTable();
     }
   }
-  addRowIntoCoursesAndCertificationsTable(d?: CoursesCertificationsTable, noUpdate?: boolean) {
+  async addRowIntoCoursesAndCertificationsTable(d?: CoursesCertificationsTable, noUpdate?: boolean) {
     console.log(d);
+
     const row = this.formBuilder.group({
       domain: [d && d.domain._id ? d.domain._id : null, []],
       type: [d && d.type._id ? d.type._id : null, []],
@@ -268,6 +269,7 @@ export class ProfileTemplateComponent implements OnInit {
       required: d && d.required ? d.required : true,
       optional: d && d.optional ? d.optional : false,
     });
+    // console.log(await this.x());
     this.coursesCertificationsFormRows.push(row);
     if (!noUpdate) {
       this.refreshCoursesCertificationsTable();
@@ -557,6 +559,9 @@ export class ProfileTemplateComponent implements OnInit {
           _id: 'abc11',
         },
       ];
+      this.profileTemplateService.getAllCertificates().then((res: any) => {
+        this.nameList = res;
+      });
       // this.typeList = [
       //   {
       //     name: 'Certificado',
@@ -647,12 +652,8 @@ export class ProfileTemplateComponent implements OnInit {
       this.areasList = res;
     });
     /* Courses and Certifications */
-
-    this.profileTemplateService.getAllTypes('Cursos y certificaciones').then((res: any) => {
+    this.profileTemplateService.getAllTypes('Cursos y certificaciones', false).then((res: any) => {
       this.typeList = res;
-    });
-    this.profileTemplateService.getAllCertificates().then((res: any) => {
-      this.nameList = res;
     });
     /* Specific Knowledge */
     this.profileTemplateService.getAllKnowledge().then((res: any) => {
@@ -680,8 +681,27 @@ export class ProfileTemplateComponent implements OnInit {
     this.educationError = false;
   }
 
-  ejem(ev: any){
-    console.log(ev)
+  // returnType(typeId: string | undefined) {
+    // this.profileTemplateService.getAllTypes(false, typeId).then((type: any) => type);
+    // // this.profileTemplateService.getAllCertificates(d?.type.name).then((res: any) => {
+    // //   console.log(res);
+    // // });
+  // }
+
+  async x(idType: string) {
+    // "605ba3d590d9e4a513155552"
+    const x = await this.profileTemplateService.getAllTypes(false, idType);
+    return x.name
+    // return this.nameList.filter((i: any) => i.type === x.name)
+  }
+
+  ejem(ev: any) {
+    
+    // return [];
+    // const idType = ev;
+
+return []
+    // return this.nameList.map((i: any) => i)
   }
 
   buildTalentsReadOnly(data: any) {

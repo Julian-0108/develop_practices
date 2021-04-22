@@ -31,11 +31,19 @@ export class ProfileTemplateService {
       .pipe<AcademicEducation[]>(pluck('payload'))
       .toPromise();
   }
-  async getAllTypes(masterReference: string) {
-    return await this.httpClient
-      .get(`${environment.API_MASTER_INFO}/types?masterReference=${masterReference}`)
+  async getAllTypes(masterReference?: string | boolean, idType?: string | boolean) {
+    if (masterReference) {
+      return await this.httpClient
+        .get(`${environment.API_MASTER_INFO}/types?masterReference=${masterReference}`)
+        .pipe(pluck('payload'))
+        .toPromise();
+    }
+    if (idType) {
+      return await this.httpClient
+      .get(`${environment.API_MASTER_INFO}/types/${idType}`)
       .pipe(pluck('payload'))
       .toPromise();
+    }
   }
   async getAllCertificates(type?: string) {
     return type
@@ -116,8 +124,24 @@ export class ProfileTemplateService {
           name: 'Curso',
         },
         name: {
-          _id: '606dbae8a80ab7718abf169b',
+          _id: '608054faeca5d5bb09c77a77',
           name: 'prueba2',
+        },
+        required: true,
+        optional: false,
+      },
+      {
+        domain: {
+          _id: 'abc11',
+          name: 'Base de Datos',
+        },
+        type: {
+          _id: '605ba3cc90d9e46b08155550',
+          name: 'Certificación',
+        },
+        name: {
+          _id: '606dbae8a80ab7718abf169b',
+          name: 'prueba1',
         },
         required: true,
         optional: false,
