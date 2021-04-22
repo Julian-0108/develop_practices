@@ -40,15 +40,29 @@ export class ProfileTemplateService {
     }
     if (idType) {
       return await this.httpClient
-      .get(`${environment.API_MASTER_INFO}/types/${idType}`)
-      .pipe(pluck('payload'))
-      .toPromise();
+        .get(`${environment.API_MASTER_INFO}/types/${idType}`)
+        .pipe(pluck('payload'))
+        .toPromise();
     }
   }
-  async getAllCertificates(type?: string) {
+  async getAllCertificates(idDomain?: string, type?: string) {
     return type
       ? await this.httpClient
           .get(`${environment.API_MASTER_INFO}/courses-certifications?status=true&type=${type}`)
+          .pipe(pluck('payload'))
+          .toPromise()
+      : idDomain
+      ? await this.httpClient
+          .get(
+            `${environment.API_MASTER_INFO}/courses-certifications?status=true&idDomain=${idDomain}`
+          )
+          .pipe(pluck('payload'))
+          .toPromise()
+      : idDomain && type
+      ? await this.httpClient
+          .get(
+            `${environment.API_MASTER_INFO}/courses-certifications?status=true&idDomain=${idDomain}&type=${type}`
+          )
           .pipe(pluck('payload'))
           .toPromise()
       : await this.httpClient
@@ -115,38 +129,67 @@ export class ProfileTemplateService {
 
     data.coursesAndCertificates = [
       {
-        domain: {
-          _id: 'abc1',
-          name: 'Base de Datos',
-        },
-        type: {
-          _id: '605ba3d590d9e4a513155552',
-          name: 'Curso',
-        },
-        name: {
-          _id: '608054faeca5d5bb09c77a77',
-          name: 'prueba2',
-        },
-        required: true,
+        id: '608088bf6e69932378db6448',
+        name: 'Devops',
+        type: 'Curso',
         optional: false,
+        required: true,
+        idDomain: '60806cff098c2328dc2174b1',
+        nameDomain: 'Base de Datos',
       },
       {
-        domain: {
-          _id: 'abc11',
-          name: 'Base de Datos',
-        },
-        type: {
-          _id: '605ba3cc90d9e46b08155550',
-          name: 'Certificación',
-        },
-        name: {
-          _id: '606dbae8a80ab7718abf169b',
-          name: 'prueba1',
-        },
-        required: true,
+        id: '6080898f6e69932378db6449',
+        name: 'Devops',
+        type: 'Certificación',
         optional: false,
+        required: true,
+        idDomain: '60806d35098c2328dc2174b2',
+        nameDomain: 'Integración',
+      },
+      {
+        id: '6080905371b2f62f8cbff4fb',
+        name: 'Oracle',
+        type: 'Certificación',
+        optional: false,
+        required: true,
+        idDomain: '60806d35098c2328dc2174b2',
+        nameDomain: 'Integración',
       },
     ];
+    // data.coursesAndCertificates = [
+    //   {
+    //     domain: {
+    //       _id: 'abc1',
+    //       name: 'Base de Datos',
+    //     },
+    //     type: {
+    //       _id: '605ba3d590d9e4a513155552',
+    //       name: 'Curso',
+    //     },
+    //     name: {
+    //       _id: '608054faeca5d5bb09c77a77',
+    //       name: 'prueba2',
+    //     },
+    //     required: true,
+    //     optional: false,
+    //   },
+    //   {
+    //     domain: {
+    //       _id: 'abc11',
+    //       name: 'Base de Datos',
+    //     },
+    //     type: {
+    //       _id: '605ba3cc90d9e46b08155550',
+    //       name: 'Certificación',
+    //     },
+    //     name: {
+    //       _id: '606dbae8a80ab7718abf169b',
+    //       name: 'prueba1',
+    //     },
+    //     required: true,
+    //     optional: false,
+    //   },
+    // ];
     data.academicEducation = data.academicEducation.map((item: any) => {
       return { education: item._id, name: item.name, area: item.area };
     });

@@ -27,11 +27,13 @@ export interface AcademicEducationTable {
   area: Array<{ _id: string; name: string }>;
 }
 interface CoursesCertificationsTable {
-  domain: { _id: string; name: string };
-  type: { _id: string; name: string };
-  name: { _id: string; name: string };
-  required: boolean;
+  id: string;
+  name: string;
+  type: string;
+  idDomain: string;
+  nameDomain: string;
   optional: boolean;
+  required: boolean;
 }
 export interface AcademicEducation {
   _id: string;
@@ -67,7 +69,7 @@ export class ProfileTemplateComponent implements OnInit {
   educationList: AcademicEducation[] = [];
   domainList: any[] = [];
   typeList: any[] = [];
-  nameList: any[] = [];
+  nameList: any = {};
   areasList: AcademicEducation[] = [];
   contentPagesSpecificKnowledge = [];
   contentPagesRequiredCertificates = [];
@@ -245,10 +247,6 @@ export class ProfileTemplateComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  r(e: any) {
-    console.log(e);
-  }
-
   addRowIntoEducationTable(d?: AcademicEducationTable, noUpdate?: boolean) {
     const row = this.formBuilder.group({
       education: [d && d.education ? d.education : null, []],
@@ -259,22 +257,41 @@ export class ProfileTemplateComponent implements OnInit {
       this.refreshEducationTable();
     }
   }
-  async addRowIntoCoursesAndCertificationsTable(d?: CoursesCertificationsTable, noUpdate?: boolean) {
+  addRowIntoCoursesAndCertificationsTable(d?: CoursesCertificationsTable, noUpdate?: boolean) {
     console.log(d);
 
     const row = this.formBuilder.group({
-      domain: [d && d.domain._id ? d.domain._id : null, []],
-      type: [d && d.type._id ? d.type._id : null, []],
-      name: [d && d.name._id ? d.name._id : null, []],
+      domain: [d && d.idDomain ? d.idDomain : null, []],
+      type: [d && d.type ? d.type : null, []],
+      name: [d && d.name ? d.name : null, []],
       required: d && d.required ? d.required : true,
       optional: d && d.optional ? d.optional : false,
     });
-    // console.log(await this.x());
     this.coursesCertificationsFormRows.push(row);
     if (!noUpdate) {
       this.refreshCoursesCertificationsTable();
     }
   }
+  filerCoursesAndCertificationsList(row: any, i: number) {
+    console.log(row)
+    this.profileTemplateService.getAllCertificates(row.domain, row.type).then((res: any) => {
+      this.nameList[i] = res;
+      // this.percent[id] = ev.value;
+      // element.measureApproval = this.percent[element._id];
+    })
+  }
+  // async onFilterByType(idType: string) {
+  //   const type: any = await this.profileTemplateService.getAllTypes(false, idType);
+  //   const names = await this.profileTemplateService.getAllCertificates(type.name);
+  //   return names
+  //   // return this.nameListCourses;
+  // }
+  // onFilterByType = (idType: string) => {
+  //   this.profileTemplateService.getAllTypes(false, idType).then((type: any) => {
+  //     this.nameListCourses = this.nameList.filter((name: any) => name.type === type.name)
+  //   });
+  //   return this.nameListCourses;
+  // }
 
   refreshCoursesCertificationsTable() {
     this.coursesCertificationDataSource.next(this.coursesCertificationsFormRows.controls);
@@ -551,17 +568,19 @@ export class ProfileTemplateComponent implements OnInit {
       });
       this.domainList = [
         {
-          name: 'Base de Datos',
-          _id: 'abc1',
+          nameDomain: 'Base de Datos',
+          idDomain: '60806cff098c2328dc2174b1',
         },
         {
-          name: 'Base de Datos2',
-          _id: 'abc11',
+          nameDomain: 'Integración',
+          idDomain: '60806d35098c2328dc2174b2',
         },
       ];
-      this.profileTemplateService.getAllCertificates().then((res: any) => {
-        this.nameList = res;
-      });
+      // this.profileTemplateService.getAllCertificates().then((allNames: any) => {
+      //   this.nameList = allNames;
+      // });
+
+      // this.onFilterByType('605ba3d590d9e4a513155552');
       // this.typeList = [
       //   {
       //     name: 'Certificado',
@@ -655,6 +674,13 @@ export class ProfileTemplateComponent implements OnInit {
     this.profileTemplateService.getAllTypes('Cursos y certificaciones', false).then((res: any) => {
       this.typeList = res;
     });
+    const form = this.coursesCertificationsForm.value.coursesAndCertificates;
+    form.forEach((row: any, index: number) => {
+      console.log(row)
+      console.log(index)
+      console.log(row[index])
+      this.filerCoursesAndCertificationsList(row, index);
+    })
     /* Specific Knowledge */
     this.profileTemplateService.getAllKnowledge().then((res: any) => {
       this.buildPagesAndColumnsList(res, 'specificKnowledge');
@@ -687,22 +713,6 @@ export class ProfileTemplateComponent implements OnInit {
     // //   console.log(res);
     // // });
   // }
-
-  async x(idType: string) {
-    // "605ba3d590d9e4a513155552"
-    const x = await this.profileTemplateService.getAllTypes(false, idType);
-    return x.name
-    // return this.nameList.filter((i: any) => i.type === x.name)
-  }
-
-  ejem(ev: any) {
-    
-    // return [];
-    // const idType = ev;
-
-return []
-    // return this.nameList.map((i: any) => i)
-  }
 
   buildTalentsReadOnly(data: any) {
     let newarray: any = [];
