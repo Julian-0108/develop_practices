@@ -25,7 +25,7 @@ export class AdminMasterInfoComponent implements OnInit {
     'name',
     'reference',
     'description',
-    'domain',
+    'idDomain',
     'type',
     'createdAt',
     'updatedAt',
@@ -131,30 +131,30 @@ export class AdminMasterInfoComponent implements OnInit {
         );
       case 'studies':
         return this.displayedColumns.filter(
-          (el) => el !== 'type' && el !== 'submenu' && el !== 'reference' && el !== 'domain'
+          (el) => el !== 'type' && el !== 'submenu' && el !== 'reference' && el !== 'idDomain'
         );
       case 'security-responsabilities':
         return this.displayedColumns.filter(
-          (el) => el !== 'description' && el !== 'submenu' && el !== 'reference' && el !== 'domain'
+          (el) => el !== 'description' && el !== 'submenu' && el !== 'reference' && el !== 'idDomain'
         );
       case 'education-area':
         return this.displayedColumns.filter(
-          (el) => el !== 'type' && el !== 'submenu' && el !== 'reference' && el !== 'domain'
+          (el) => el !== 'type' && el !== 'submenu' && el !== 'reference' && el !== 'idDomain'
         );
       case 'base-teams-categories':
         return this.displayedColumns.filter(
-          (el) => el !== 'submenu' && el !== 'reference' && el !== 'domain'
+          (el) => el !== 'submenu' && el !== 'reference' && el !== 'idDomain'
         );
       case 'domain':
         return this.displayedColumns.filter(
-          (el) => el !== 'submenu' && el !== 'reference' && el !== 'type' && el !== 'domain'
+          (el) => el !== 'submenu' && el !== 'reference' && el !== 'type' && el !== 'idDomain'
         );
       case 'courses-certifications':
         return this.displayedColumns.filter(
-          (el) => el !== 'submenu' && el !== 'reference' && el !== 'description' 
+          (el) => el !== 'submenu' && el !== 'reference' && el !== 'description'
         );
       default:
-        return this.displayedColumns.filter((el) => el !== 'reference' && el !== 'submenu' && el !== 'domain');
+        return this.displayedColumns.filter((el) => el !== 'reference' && el !== 'submenu' && el !== 'idDomain');
     }
   }
 

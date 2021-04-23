@@ -49,7 +49,7 @@ export class MasterInfoComponent implements OnInit {
     this.fillTypesList();
     this.fillSkillsList();
     this.fillDomainsList();
-    console.log(this.data)
+    console.log(this.data);
   }
 
   fillTypesList() {
@@ -83,24 +83,43 @@ export class MasterInfoComponent implements OnInit {
       name: new FormControl('', [Validators.required, this.customValidator.noWhitespaceValidator]),
       description: new FormControl({
         value: '',
-        disabled: this.data?.url === 'types' || this.data?.url === 'security-responsabilities' || this.data?.url === 'courses-certifications',
+        disabled:
+          this.data?.url === 'types' ||
+          this.data?.url === 'security-responsabilities' ||
+          this.data?.url === 'courses-certifications',
       }),
-      type: new FormControl({value: null, disabled: this.data?.url === 'education-area' || this.data?.url === 'studies' || this.data?.url === 'domain'}),
+      type: new FormControl({
+        value: null,
+        disabled:
+          this.data?.url === 'education-area' ||
+          this.data?.url === 'studies' ||
+          this.data?.url === 'domain',
+      }),
       idDomain: new FormControl(null),
       masterReference: new FormControl(null),
-      idParent: new FormControl({value: null, disabled: this.data?.url !== 'base-teams-categories' || true}),
+      idParent: new FormControl({
+        value: null,
+        disabled: this.data?.url !== 'base-teams-categories' || true,
+      }),
       createdAt: new FormControl({ value: '', disabled: true }),
       updatedAt: new FormControl({ value: '', disabled: true }),
       url: new FormControl({ value: null, disabled: this.data?.url === 'base-teams-categories' }),
       status: new FormControl(''),
-      submenu: new FormControl({value: null, disabled: this.data?.url !== 'base-teams-categories'}),
+      submenu: new FormControl({
+        value: null,
+        disabled: this.data?.url !== 'base-teams-categories',
+      }),
       imagePath: new FormControl({ value: '', disabled: true }),
     });
   }
 
   initForm(): void {
     console.log(this.data);
-    if (this.data.element && this.data.element.type !== 'Habilidad' && this.data?.url === 'base-teams-categories') {
+    if (
+      this.data.element &&
+      this.data.element.type !== 'Habilidad' &&
+      this.data?.url === 'base-teams-categories'
+    ) {
       this.form.get('submenu')?.disable();
       this.form.get('idParent')?.enable();
     }
@@ -129,6 +148,7 @@ export class MasterInfoComponent implements OnInit {
     }
 
     if (this.data?.element) {
+      this.data.element.idDomain = this.data.element.domain[0]._id;
       this.form.patchValue(this.data.element);
       this.form
         .get('createdAt')
@@ -198,7 +218,7 @@ export class MasterInfoComponent implements OnInit {
   }
 
   updateRegisterToMaster() {
-  this.updateRegister(false);
+    this.updateRegister(false);
   }
   updateRegisterWithImageToMaster() {
     this.updateRegister(true);
@@ -239,14 +259,14 @@ export class MasterInfoComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((resp: any) => {
-        if(resp==='close') return
+        if (resp === 'close') return;
         /*
          * Acciones que se activan al dar click en el botón "guardar" del formulario.
          */
         resp = {
           ...resp,
           idMaster: id,
-          ...withImage ? this.form.getRawValue() : this.form.value,
+          ...(withImage ? this.form.getRawValue() : this.form.value),
         };
         delete resp[`_id`];
         delete resp[`updatedAt`];
@@ -255,7 +275,7 @@ export class MasterInfoComponent implements OnInit {
          * Se Guarda la información en historial y se actualiza la información del
          * perfil.
          */
-        if (withImage){
+        if (withImage) {
           this.masterInfoService
             .updateToMasterWithImages(this.data.url, this.data.element._id, this.createFormData())
             ?.then(() => {
@@ -279,26 +299,26 @@ export class MasterInfoComponent implements OnInit {
             });
         } else {
           this.masterInfoService
-          .updateRegisterToMaster(this.data.url, this.data.element._id, this.form.value)
-          ?.then(() => {
-            this.historyMastersService.hitoryActionsAdminMaster('post', id, resp);
-          })
-          .then((response: any) => {
-            console.log(response);
-            this.notificationService.openSimpleSnackBar({
-              title: 'Operación Finalizada',
-              message: 'La información se ha actualizado con éxito y su historial fue creado.',
-              type: 'success',
+            .updateRegisterToMaster(this.data.url, this.data.element._id, this.form.value)
+            ?.then(() => {
+              this.historyMastersService.hitoryActionsAdminMaster('post', id, resp);
+            })
+            .then((response: any) => {
+              console.log(response);
+              this.notificationService.openSimpleSnackBar({
+                title: 'Operación Finalizada',
+                message: 'La información se ha actualizado con éxito y su historial fue creado.',
+                type: 'success',
+              });
+              this.onClose();
+            })
+            .catch((error) => {
+              this.notificationService.openSimpleSnackBar({
+                title: 'Ocurrió un Error',
+                message: error.message,
+                type: 'error',
+              });
             });
-            this.onClose();
-          })
-          .catch((error) => {
-            this.notificationService.openSimpleSnackBar({
-              title: 'Ocurrió un Error',
-              message: error.message,
-              type: 'error',
-            });
-          });
         }
       });
   }
@@ -317,15 +337,15 @@ export class MasterInfoComponent implements OnInit {
         });
     } else {
       this.masterInfoService
-      .updateRegisterToMaster(this.data.url, this.data.element._id, this.form.value)
-      .then((response: any) => this.showNotification(response))
-      .catch((err) => {
-        this.notificationService.openSimpleSnackBar({
-          title: 'Error Inesperado',
-          message: err.message,
-          type: 'error',
+        .updateRegisterToMaster(this.data.url, this.data.element._id, this.form.value)
+        .then((response: any) => this.showNotification(response))
+        .catch((err) => {
+          this.notificationService.openSimpleSnackBar({
+            title: 'Error Inesperado',
+            message: err.message,
+            type: 'error',
+          });
         });
-      });
     }
   }
   onFileChange(event: any) {
