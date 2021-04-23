@@ -690,7 +690,7 @@ export class ProfileTemplateComponent implements OnInit {
 
   async x(idType: string) {
     // "605ba3d590d9e4a513155552"
-    const x = await this.profileTemplateService.getAllTypes(false, idType);
+    const x: any = await this.profileTemplateService.getAllTypes(false, idType);
     return x.name
     // return this.nameList.filter((i: any) => i.type === x.name)
   }

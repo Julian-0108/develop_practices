@@ -26,6 +26,7 @@ export class MasterInfoComponent implements OnInit {
   private archivo!: string;
   private readonly DATE_FORM_CONTROL = 'yyyy-MM-dd';
   types: any[] = [];
+  domains: any[] = [];
   skills: any[] = [];
   masters: Masters[] = [];
 
@@ -47,6 +48,7 @@ export class MasterInfoComponent implements OnInit {
     this.initForm();
     this.fillTypesList();
     this.fillSkillsList();
+    this.fillDomainsList();
     console.log(this.data)
   }
 
@@ -69,6 +71,12 @@ export class MasterInfoComponent implements OnInit {
     });
   }
 
+  fillDomainsList() {
+    this.masterInfoService.getDomains().then((response: any) => {
+      this.domains = response;
+    });
+  }
+
   createForm(): FormGroup {
     return this.formBuilder.group({
       _id: new FormControl(),
@@ -78,6 +86,7 @@ export class MasterInfoComponent implements OnInit {
         disabled: this.data?.url === 'types' || this.data?.url === 'security-responsabilities' || this.data?.url === 'courses-certifications',
       }),
       type: new FormControl({value: null, disabled: this.data?.url === 'education-area' || this.data?.url === 'studies' || this.data?.url === 'domain'}),
+      idDomain: new FormControl({value: null}),
       masterReference: new FormControl(null),
       idParent: new FormControl({value: null, disabled: this.data?.url !== 'base-teams-categories' || true}),
       createdAt: new FormControl({ value: '', disabled: true }),

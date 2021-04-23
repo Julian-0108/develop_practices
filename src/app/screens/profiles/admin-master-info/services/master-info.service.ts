@@ -39,6 +39,15 @@ export class MasterInfoService {
       .toPromise();
   }
 
+  getDomains(): Promise<any> {
+    return this.http
+      .get(
+        `${environment.API_MASTER_INFO}/domain?status=true`
+      )
+      .pipe(pluck('payload'))
+      .toPromise();
+  }
+
   getSkills() {
     return this.http
       .get(
