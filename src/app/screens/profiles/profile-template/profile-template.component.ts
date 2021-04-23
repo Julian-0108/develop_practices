@@ -170,14 +170,14 @@ export class ProfileTemplateComponent implements OnInit {
     'required',
     'optional',
   ];
-  public CoursesCertificationsColumns: string[] = [
+  public specificknowledgeColumns: string[] = [
     'knowledge',
     'area',
     'description',
     'yearsExperience',
     'poyectsExperience',
   ];
-  public CoursesCertificationsColumnsEdit: string[] = [
+  public specificknowledgeColumnsEdit: string[] = [
     'knowledge',
     'area',
     'description',
@@ -195,7 +195,7 @@ export class ProfileTemplateComponent implements OnInit {
       optional: false,
     },
   ];
-  CoursesCertificationsData = [
+  specificknowledge = [
     {
       knowledge: 'Fundamentos Básicos',
       area: 'Desarrollo',
