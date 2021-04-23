@@ -13,4 +13,6 @@ export interface Master {
   createdAt?: string;
   updatedAt?: string;
   idParent?: string;
+  idDomain?: string;
+  domain?: any;
 }

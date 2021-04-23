@@ -48,11 +48,9 @@ export class MasterInfoService {
       .toPromise();
   }
 
-  getDomains(): Promise<any> {
-    return this.http
-      .get(
-        `${environment.API_MASTER_INFO}/domain?status=true`
-      )
+  async getDomains() {
+    return await this.http
+      .get(`${environment.API_MASTER_INFO}/domain?status=true`)
       .pipe(pluck('payload'))
       .toPromise();
   }
