@@ -39,14 +39,6 @@ export class MasterInfoService {
       .toPromise();
   }
 
-  getDomains(): Promise<any> {
-    return this.http
-      .get(
-        `${environment.API_MASTER_INFO}/domain?status=true`
-      )
-      .pipe(pluck('payload'))
-      .toPromise();
-  }
 
   getSkills() {
     return this.http
@@ -56,6 +48,16 @@ export class MasterInfoService {
       .pipe(pluck('payload'))
       .toPromise();
   }
+
+  getDomains(): Promise<any> {
+    return this.http
+      .get(
+        `${environment.API_MASTER_INFO}/domain?status=true`
+      )
+      .pipe(pluck('payload'))
+      .toPromise();
+  }
+
   addRegisterToMaster(url: string, register: any) {
     return this.http.post(`${environment.API_MASTER_INFO}/${url}`, register).toPromise();
   }

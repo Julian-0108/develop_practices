@@ -96,7 +96,6 @@ export class AdminMasterInfoComponent implements OnInit {
       url: 'domain',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
-
   ];
 
   public masterSeleted: string = '';
@@ -142,15 +141,17 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) => el !== 'type' && el !== 'submenu' && el !== 'reference' && el !== 'domain'
         );
+      case 'base-teams-categories':
+        return this.displayedColumns.filter(
+          (el) => el !== 'submenu' && el !== 'reference' && el !== 'domain'
+        );
       case 'domain':
         return this.displayedColumns.filter(
-          (el) => el !== 'type' && el !== 'reference' && el !== 'submenu' && el !== 'domain'
-        );
-      case 'base-teams-categories':
-        return this.displayedColumns.filter((el) => el !== 'submenu' && el !== 'reference' && el !== 'domain'
+          (el) => el !== 'submenu' && el !== 'reference' && el !== 'type' && el !== 'domain'
         );
       case 'courses-certifications':
-        return this.displayedColumns.filter((el) => el !== 'submenu' && el !== 'reference' && el !== 'description' 
+        return this.displayedColumns.filter(
+          (el) => el !== 'submenu' && el !== 'reference' && el !== 'description' 
         );
       default:
         return this.displayedColumns.filter((el) => el !== 'reference' && el !== 'submenu' && el !== 'domain');
