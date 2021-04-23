@@ -25,6 +25,7 @@ export class AdminMasterInfoComponent implements OnInit {
     'name',
     'reference',
     'description',
+    'domain',
     'type',
     'createdAt',
     'updatedAt',
@@ -90,6 +91,11 @@ export class AdminMasterInfoComponent implements OnInit {
       url: 'education-area',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
+    {
+      name: 'Dominio',
+      url: 'domain',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
   ];
 
   public masterSeleted: string = '';
@@ -125,21 +131,30 @@ export class AdminMasterInfoComponent implements OnInit {
         );
       case 'studies':
         return this.displayedColumns.filter(
-          (el) => el !== 'type' && el !== 'submenu' && el !== 'reference'
+          (el) => el !== 'type' && el !== 'submenu' && el !== 'reference' && el !== 'domain'
         );
       case 'security-responsabilities':
         return this.displayedColumns.filter(
-          (el) => el !== 'description' && el !== 'submenu' && el !== 'reference'
+          (el) => el !== 'description' && el !== 'submenu' && el !== 'reference' && el !== 'domain'
         );
       case 'education-area':
         return this.displayedColumns.filter(
-          (el) => el !== 'type' && el !== 'submenu' && el !== 'reference'
+          (el) => el !== 'type' && el !== 'submenu' && el !== 'reference' && el !== 'domain'
         );
       case 'base-teams-categories':
-        return this.displayedColumns.filter((el) => el !== 'submenu' && el !== 'reference');
-
+        return this.displayedColumns.filter(
+          (el) => el !== 'submenu' && el !== 'reference' && el !== 'domain'
+        );
+      case 'domain':
+        return this.displayedColumns.filter(
+          (el) => el !== 'submenu' && el !== 'reference' && el !== 'type' && el !== 'domain'
+        );
+      case 'courses-certifications':
+        return this.displayedColumns.filter(
+          (el) => el !== 'submenu' && el !== 'reference' && el !== 'description' 
+        );
       default:
-        return this.displayedColumns.filter((el) => el !== 'reference' && el !== 'submenu');
+        return this.displayedColumns.filter((el) => el !== 'reference' && el !== 'submenu' && el !== 'domain');
     }
   }
 

@@ -19,11 +19,25 @@
                     <app-validator [form]="form" name="name"></app-validator>
                 </mat-form-field>
             </div>
-            <div *ngIf="data?.url !== 'security-responsabilities'" class="item" fxFlex="50">
+            <div *ngIf="data?.url !== 'security-responsabilities' && data?.url !== 'courses-certifications'" class="item" fxFlex="50">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Descripción</mat-label>
                     <input matInput formControlName="description" placeholder="Descripción">
                     <app-validator [form]="form" name="description"></app-validator>
+                </mat-form-field>
+            </div>
+            <div *ngIf="data?.url === 'courses-certifications'" class="item" fxFlex="50">
+                <mat-form-field floatLabel="always" appearance="none">
+                    <mat-label class="label">Dominio</mat-label>
+                    <mat-select #idDomain formControlName="idDomain">
+                        <mat-option *ngFor="let domain of domains" [value]="domain._id">
+                            {{domain.name}}
+                        </mat-option>
+                        <mat-option *ngIf="domains?.length === 0" disabled>
+                            <i>No hay dominios disponibles</i>
+                        </mat-option>
+                    </mat-select>
+                    <app-validator [form]="form" name="idDomain" [otherIcon]="true"></app-validator>
                 </mat-form-field>
             </div>
             <div *ngIf="data?.url === 'types'" class="item" fxFlex="25">
