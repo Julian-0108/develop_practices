@@ -28,6 +28,7 @@ export class MasterInfoComponent implements OnInit {
   types: any[] = [];
   skills: any[] = [];
   masters: Masters[] = [];
+  domains: any[] = [];
 
   constructor(
     private datePipe: DatePipe,
@@ -47,6 +48,7 @@ export class MasterInfoComponent implements OnInit {
     this.initForm();
     this.fillTypesList();
     this.fillSkillsList();
+    this.fillDomainsList();
     console.log(this.data)
   }
 
@@ -69,15 +71,22 @@ export class MasterInfoComponent implements OnInit {
     });
   }
 
+  fillDomainsList() {
+    this.masterInfoService.getDomains().then((response: any) => {
+      this.domains = response;
+    });
+  }
+
   createForm(): FormGroup {
     return this.formBuilder.group({
       _id: new FormControl(),
       name: new FormControl('', [Validators.required, this.customValidator.noWhitespaceValidator]),
       description: new FormControl({
         value: '',
-        disabled: this.data?.url === 'types' || this.data?.url === 'security-responsabilities',
+        disabled: this.data?.url === 'types' || this.data?.url === 'security-responsabilities' || this.data?.url === 'courses-certifications',
       }),
-      type: new FormControl({value: null, disabled: this.data?.url === 'education-area' || this.data?.url === 'studies'}),
+      type: new FormControl({value: null, disabled: this.data?.url === 'education-area' || this.data?.url === 'studies' || this.data?.url === 'domain'}),
+      idDomain: new FormControl(null),
       masterReference: new FormControl(null),
       idParent: new FormControl({value: null, disabled: this.data?.url !== 'base-teams-categories' || true}),
       createdAt: new FormControl({ value: '', disabled: true }),
@@ -107,6 +116,9 @@ export class MasterInfoComponent implements OnInit {
       if (this.data.url === 'security-responsabilities') {
         this.form.controls.description?.clearValidators();
         this.form.controls.description?.updateValueAndValidity();
+      }
+      if (this.data.url === 'courses-certifications') {
+        this.form.controls.idDomain?.setValidators([Validators.required]);
       }
     } else {
       this.masters = this.data.masters.filter((master) => master.name !== 'Tipos');
