@@ -21,13 +21,14 @@ import { ActivatedRoute } from '@angular/router';
 import { OnlyNumbers } from '@shared/functions/onlyNumbers';
 import { BehaviorSubject } from 'rxjs';
 import { ResponsabilitiesDescComponent } from './responsabilitiesDesc/responsabilities-desc.component';
+import { resolveAny } from 'dns';
 
 export interface AcademicEducationTable {
   education: string;
   area: Array<{ _id: string; name: string }>;
 }
 interface CoursesCertificationsTable {
-  id: string;
+  _id: string;
   name: string;
   type: string;
   idDomain: string;
@@ -52,7 +53,7 @@ export interface AcademicEducation {
 export class ProfileTemplateComponent implements OnInit {
   @ViewChild('educationTable') _educationTable!: MatTable<any>;
   @ViewChild('coursesCertifications') _coursesCertifications!: MatTable<any>;
-  @ViewChild('requiredCertificates') requiredCertificates!: MatSelectionList;
+  // @ViewChild('requiredCertificates') requiredCertificates!: MatSelectionList;
   @ViewChild('specificKnowledge') specificKnowledge!: MatSelectionList;
   @ViewChild('rolResponsabilities') rolResponsabilities!: MatSelectionList;
   @ViewChild('talents') talents!: MatSelectionList;
@@ -70,29 +71,30 @@ export class ProfileTemplateComponent implements OnInit {
   domainList: any[] = [];
   typeList: any[] = [];
   nameList: any = {};
+  allNamesList: any = [];
   areasList: AcademicEducation[] = [];
   contentPagesSpecificKnowledge = [];
-  contentPagesRequiredCertificates = [];
+  // contentPagesRequiredCertificates = [];
   contentPagesRolResponsabilities = [];
   contentPagesTalents = [];
   contentPagesTalentsReadOnly = [];
   contentPagesSecurityResponsabilities = [];
   isEditable = false;
-  nextPageButtonDisabledRequiredCertificates = false;
+  // nextPageButtonDisabledRequiredCertificates = false;
   nextPageButtonDisabledSpecificKnowledge = false;
   nextPageButtonDisabledRolResponsabilities = false;
   nextPageButtonDisabledTalents = false;
   nextPageButtonDisabledTalentsReadOnly = false;
   nextPageButtonDisabledSecurityResp: any;
   beforePageButtonDisabledSecurityResp: any;
-  beforePageButtonDisabledRequiredCertificates = true;
+  // beforePageButtonDisabledRequiredCertificates = true;
   beforePageButtonDisabledSpecificKnowledge = true;
   beforePageButtonDisabledRolResponsabilities = true;
   beforePageButtonDisabledTalents = true;
   beforePageButtonDisabledTalentsReadOnly = true;
   selectedOptions: any = [];
   public tabIndexSpecificKnowledge = 0;
-  public tabIndexRequiredCertificates = 0;
+  // public tabIndexRequiredCertificates = 0;
   public tabIndexRolResponsabilities = 0;
   public tabIndexTalents = 0;
   public tabIndexTalentsReadOnly = 0;
@@ -154,6 +156,7 @@ export class ProfileTemplateComponent implements OnInit {
   securityRespError = false;
   idProfile = this.activatedRoute.snapshot.params.idProfile;
   onlyNumbers = new OnlyNumbers();
+
   /* History */
   historyId!: string;
   existentDate!: string;
@@ -225,14 +228,16 @@ export class ProfileTemplateComponent implements OnInit {
   public form: FormGroup = this.formBuilder.group({ academicEducation: this.rows });
   public coursesCertificationsFormRows: FormArray = this.formBuilder.array([]);
   public coursesCertificationsForm: FormGroup = this.formBuilder.group({
-    coursesAndCertificates: this.coursesCertificationsFormRows,
+    coursesAndCertifications: this.coursesCertificationsFormRows,
   });
 
   readOnlyEducationDatasource!: MatTableDataSource<AcademicEducationTable>;
   readOnlyCoursesCertificationsDatasource!: MatTableDataSource<CoursesCertificationsTable>;
   public responsabilitySeleted = '';
   showEducationFilter = false;
+  showCoursesCertificationsFilter = false;
   showNotFoundMessage = true;
+  showNotFoundMessageCoursesCertications = true;
   corporativeRespList: string[] = [];
 
   constructor(
@@ -246,6 +251,14 @@ export class ProfileTemplateComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  checkBoxChanged(el: any, sourceCheck: string) {
+    if (sourceCheck === 'optional' && el.optional) {
+      el.required = false;
+    } else if (sourceCheck === 'required' && el.required) {
+      el.optional = false;
+    }
+  }
 
   addRowIntoEducationTable(d?: AcademicEducationTable, noUpdate?: boolean) {
     const row = this.formBuilder.group({
@@ -261,11 +274,12 @@ export class ProfileTemplateComponent implements OnInit {
     console.log(d);
 
     const row = this.formBuilder.group({
-      domain: [d && d.idDomain ? d.idDomain : null, []],
-      type: [d && d.type ? d.type : null, []],
-      name: [d && d.name ? d.name : null, []],
-      required: d && d.required ? d.required : true,
+      domain: d && d.idDomain ? d.idDomain : null,
+      type: d && d.type ? d.type : null,
+      name: d && d._id ? d._id : null,
+      required: d && d.required ? d.required : false,
       optional: d && d.optional ? d.optional : false,
+      id: d && d._id ? d._id : null,
     });
     this.coursesCertificationsFormRows.push(row);
     if (!noUpdate) {
@@ -273,25 +287,11 @@ export class ProfileTemplateComponent implements OnInit {
     }
   }
   filerCoursesAndCertificationsList(row: any, i: number) {
-    console.log(row)
+    console.log(row);
     this.profileTemplateService.getAllCertificates(row.domain, row.type).then((res: any) => {
       this.nameList[i] = res;
-      // this.percent[id] = ev.value;
-      // element.measureApproval = this.percent[element._id];
-    })
+    });
   }
-  // async onFilterByType(idType: string) {
-  //   const type: any = await this.profileTemplateService.getAllTypes(false, idType);
-  //   const names = await this.profileTemplateService.getAllCertificates(type.name);
-  //   return names
-  //   // return this.nameListCourses;
-  // }
-  // onFilterByType = (idType: string) => {
-  //   this.profileTemplateService.getAllTypes(false, idType).then((type: any) => {
-  //     this.nameListCourses = this.nameList.filter((name: any) => name.type === type.name)
-  //   });
-  //   return this.nameListCourses;
-  // }
 
   refreshCoursesCertificationsTable() {
     this.coursesCertificationDataSource.next(this.coursesCertificationsFormRows.controls);
@@ -299,6 +299,7 @@ export class ProfileTemplateComponent implements OnInit {
   refreshEducationTable() {
     this.educationDataSource.next(this.rows.controls);
   }
+
   /**
    * @author Hanna
    * @description Esta función inicializa las listas, marcando visualmente las opciones
@@ -322,7 +323,7 @@ export class ProfileTemplateComponent implements OnInit {
 
       case 'coursesCertifications':
         // const control = this.form.controls.academicEducation as FormArray;
-        (this.coursesCertificationsForm.controls.coursesAndCertificates as FormArray).removeAt(
+        (this.coursesCertificationsForm.controls.coursesAndCertifications as FormArray).removeAt(
           index
         );
         this._coursesCertifications.renderRows();
@@ -442,15 +443,15 @@ export class ProfileTemplateComponent implements OnInit {
    */
   nextTab(length: any, section: string) {
     switch (section) {
-      case 'requiredCertificates':
-        this.tabIndexRequiredCertificates = this.tabIndexRequiredCertificates + 1;
-        if (this.tabIndexRequiredCertificates > 0) {
-          this.beforePageButtonDisabledRequiredCertificates = false;
-        }
-        if (this.tabIndexRequiredCertificates === length - 1) {
-          this.nextPageButtonDisabledRequiredCertificates = true;
-        }
-        break;
+      // case 'requiredCertificates':
+      //   this.tabIndexRequiredCertificates = this.tabIndexRequiredCertificates + 1;
+      //   if (this.tabIndexRequiredCertificates > 0) {
+      //     this.beforePageButtonDisabledRequiredCertificates = false;
+      //   }
+      //   if (this.tabIndexRequiredCertificates === length - 1) {
+      //     this.nextPageButtonDisabledRequiredCertificates = true;
+      //   }
+      //   break;
       case 'specificKnowledge':
         this.tabIndexSpecificKnowledge = this.tabIndexSpecificKnowledge + 1;
         if (this.tabIndexSpecificKnowledge > 0) {
@@ -547,6 +548,7 @@ export class ProfileTemplateComponent implements OnInit {
   displayedColumns(table: string) {
     return [table, 'measureApproval'];
   }
+
   /**
    * @author Hanna
    * @description Esta función consulta el json de la información de la aplicación y
@@ -559,9 +561,13 @@ export class ProfileTemplateComponent implements OnInit {
         this.showEducationFilter = true;
         this.showNotFoundMessage = false;
       }
+      if (res.coursesAndCertifications.length !== 0) {
+        this.showCoursesCertificationsFilter = true;
+        this.showNotFoundMessageCoursesCertications = false;
+      }
       this.readOnlyEducationDatasource = new MatTableDataSource(res.academicEducation);
       this.readOnlyCoursesCertificationsDatasource = new MatTableDataSource(
-        res.coursesAndCertificates
+        res.coursesAndCertifications
       );
       this.profileTemplateService.getAllEstudies().then((resp: AcademicEducation[]) => {
         this.educationList = resp;
@@ -576,9 +582,13 @@ export class ProfileTemplateComponent implements OnInit {
           idDomain: '60806d35098c2328dc2174b2',
         },
       ];
-      // this.profileTemplateService.getAllCertificates().then((allNames: any) => {
-      //   this.nameList = allNames;
-      // });
+      this.profileTemplateService.getAllCertificates().then((allNames: any) => {
+        this.allNamesList = allNames;
+      });
+
+      this.profileTemplateService.getAllTypes('Cursos y certificaciones', false).then((types: any) => {
+        this.typeList = types;
+      });
 
       // this.onFilterByType('605ba3d590d9e4a513155552');
       // this.typeList = [
@@ -661,8 +671,8 @@ export class ProfileTemplateComponent implements OnInit {
     this.refreshEducationTable();
 
     /* Courses and Certifications */
-    (this.coursesCertificationsForm.controls.coursesAndCertificates as FormArray).clear();
-    this.data.coursesAndCertificates.forEach((el: CoursesCertificationsTable) =>
+    (this.coursesCertificationsForm.controls.coursesAndCertifications as FormArray).clear();
+    this.data.coursesAndCertifications.forEach((el: CoursesCertificationsTable) =>
       this.addRowIntoCoursesAndCertificationsTable(el, false)
     );
     this.refreshCoursesCertificationsTable();
@@ -671,16 +681,10 @@ export class ProfileTemplateComponent implements OnInit {
       this.areasList = res;
     });
     /* Courses and Certifications */
-    this.profileTemplateService.getAllTypes('Cursos y certificaciones', false).then((res: any) => {
-      this.typeList = res;
-    });
-    const form = this.coursesCertificationsForm.value.coursesAndCertificates;
+    const form = this.coursesCertificationsForm.value.coursesAndCertifications;
     form.forEach((row: any, index: number) => {
-      console.log(row)
-      console.log(index)
-      console.log(row[index])
       this.filerCoursesAndCertificationsList(row, index);
-    })
+    });
     /* Specific Knowledge */
     this.profileTemplateService.getAllKnowledge().then((res: any) => {
       this.buildPagesAndColumnsList(res, 'specificKnowledge');
@@ -706,13 +710,6 @@ export class ProfileTemplateComponent implements OnInit {
     this.isEditable = true;
     this.educationError = false;
   }
-
-  // returnType(typeId: string | undefined) {
-    // this.profileTemplateService.getAllTypes(false, typeId).then((type: any) => type);
-    // // this.profileTemplateService.getAllCertificates(d?.type.name).then((res: any) => {
-    // //   console.log(res);
-    // // });
-  // }
 
   buildTalentsReadOnly(data: any) {
     let newarray: any = [];
@@ -786,9 +783,9 @@ export class ProfileTemplateComponent implements OnInit {
       finalArrayPages = [...finalArrayPages, newarrayPages];
     }
     switch (section) {
-      case 'requiredCertificates':
-        this.contentPagesRequiredCertificates = finalArrayPages;
-        break;
+      // case 'requiredCertificates':
+      //   this.contentPagesRequiredCertificates = finalArrayPages;
+      //   break;
       case 'rolResponsabilities':
         this.contentPagesRolResponsabilities = finalArrayPages;
         break;
@@ -799,8 +796,9 @@ export class ProfileTemplateComponent implements OnInit {
   }
 
   onSave() {
-    console.log(this.coursesCertificationsForm.value.coursesAndCertificates);
-    return;
+    // console.log(this.coursesCertificationsForm.value.coursesAndCertifications);
+    // this.onSaveRequiredCertificates();
+    // return;
     if (
       this.onSaveObjective() &&
       this.onSaveEperience() &&
@@ -980,22 +978,52 @@ export class ProfileTemplateComponent implements OnInit {
     return true;
   }
   onSaveRequiredCertificates() {
-    if (this.requiredCertificates.selectedOptions.selected.length === 0) {
+    let newCoursesCertificationsArray: any = [];
+    let emptyFields: object[] = [];
+    for (const i of this.coursesCertificationsForm.value.coursesAndCertifications) {
+      if (
+        i.domain === null ||
+        i.type === null ||
+        i.name === null ||
+        i.optional === null ||
+        i.required === null
+      ) {
+        emptyFields.push(i);
+      }
+    }
+    if (this.coursesCertificationsForm.value.coursesAndCertifications.length === 0) {
       this.notificationService.openSimpleSnackBar({
         title: 'Acción Incorrecta',
-        message: 'Debe seleccionar al menos un item de la lista de "Certificaciones Requeridas". ',
+        message: 'La selección de "Cursos y Certificaciones" no puede estar vacía.',
+        type: 'error',
+      });
+      this.requiredCertificatesError = true;
+      return;
+    }
+    if (emptyFields.length !== 0) {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Acción Incorrecta',
+        message: 'Ninguno de los campos de "Cursos y Certificaciones" puede estar vacío.',
         type: 'error',
       });
       this.requiredCertificatesError = true;
       return;
     }
     this.requiredCertificatesError = false;
+
+    for (const i of this.coursesCertificationsForm.value.coursesAndCertifications) {
+      newCoursesCertificationsArray.push({
+        optional: i.optional,
+        required: i.required,
+        course: i.name,
+      });
+    }
     this.sendInformation = {
       ...this.sendInformation,
-      requiredCertificates: this.requiredCertificates.selectedOptions.selected.map(
-        (value) => value.value
-      ),
+      coursesAndCertifications: newCoursesCertificationsArray,
+      requiredCertificates: ['6054b769f794dfd91b0371d2'],
     };
+    console.log(this.sendInformation);
     return true;
   }
   onSaveSpecificKnowledge() {
@@ -1139,12 +1167,17 @@ export class ProfileTemplateComponent implements OnInit {
     const area = element.map((el: any) => el.name);
     return area.join(', ');
   }
-  applyFilter(event: any) {
-    this.readOnlyEducationDatasource.filter = event.value;
-    if (this.readOnlyEducationDatasource.filteredData.length === 0) {
-      this.showNotFoundMessage = true;
-    } else {
-      this.showNotFoundMessage = false;
+  applyFilter(event: any, source: string) {
+    if (source === 'coursesAndCertifications') {
+      this.readOnlyCoursesCertificationsDatasource.filter = event.value;
+      this.readOnlyCoursesCertificationsDatasource.filteredData.length === 0
+        ? (this.showNotFoundMessageCoursesCertications = true)
+        : (this.showNotFoundMessageCoursesCertications = false);
+    } else if (source === 'education') {
+      this.readOnlyEducationDatasource.filter = event.value;
+      this.readOnlyEducationDatasource.filteredData.length === 0
+        ? (this.showNotFoundMessage = true)
+        : (this.showNotFoundMessage = false);
     }
   }
 
