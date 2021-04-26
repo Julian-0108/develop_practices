@@ -26,10 +26,10 @@
                     <app-validator [form]="form" name="description"></app-validator>
                 </mat-form-field>
             </div>
-            <div *ngIf="data?.url === 'courses-certifications'" class="item" fxFlex="50">
+            <div *ngIf="data?.url === 'courses-certifications' || data?.url == 'functions'" class="item" fxFlex>
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Dominio</mat-label>
-                    <mat-select #idDomain formControlName="idDomain">
+                    <mat-select #idDomain formControlName="idDomain" placeholder="Seleccione un dominio">
                         <mat-option *ngFor="let domain of domains" [value]="domain._id">
                             {{domain.name}}
                         </mat-option>
@@ -51,7 +51,7 @@
                     <app-validator [form]="form" name="masterReference" [otherIcon]="true"></app-validator>
                 </mat-form-field>
             </div>
-            <div *ngIf="data?.url !== 'types'" class="item" fxFlex="25">
+            <div *ngIf="data?.url !== 'types' && data?.url !== 'functions'" class="item" fxFlex="25">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Tipo</mat-label>
                     <mat-select #ej formControlName="type" (selectionChange)="typeValidation($event)">

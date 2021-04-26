@@ -21,7 +21,6 @@ import { ActivatedRoute } from '@angular/router';
 import { OnlyNumbers } from '@shared/functions/onlyNumbers';
 import { BehaviorSubject } from 'rxjs';
 import { ResponsabilitiesDescComponent } from './responsabilitiesDesc/responsabilities-desc.component';
-import { resolveAny } from 'dns';
 
 export interface AcademicEducationTable {
   education: string;
@@ -146,6 +145,10 @@ export class ProfileTemplateComponent implements OnInit {
     startDate: new FormControl(),
     endDate: new FormControl(),
   });
+  formSpecificknowledge = new FormGroup({
+    yearsExperience: new FormControl(),
+    proyectsExperience: new FormControl(),
+  });
   sendInformation = {};
   /* Errors */
   educationError = false;
@@ -175,14 +178,14 @@ export class ProfileTemplateComponent implements OnInit {
     'required',
     'optional',
   ];
-  public CoursesCertificationsColumns: string[] = [
+  public specificknowledgeColumns: string[] = [
     'knowledge',
     'area',
     'description',
     'yearsExperience',
     'poyectsExperience',
   ];
-  public CoursesCertificationsColumnsEdit: string[] = [
+  public specificknowledgeColumnsEdit: string[] = [
     'knowledge',
     'area',
     'description',
@@ -200,7 +203,7 @@ export class ProfileTemplateComponent implements OnInit {
       optional: false,
     },
   ];
-  CoursesCertificationsData = [
+  specificknowledge = [
     {
       knowledge: 'Fundamentos Básicos',
       area: 'Desarrollo',
@@ -502,11 +505,11 @@ export class ProfileTemplateComponent implements OnInit {
   beforeTab(section: string) {
     switch (section) {
       case 'requiredCertificates':
-        this.tabIndexRequiredCertificates = this.tabIndexRequiredCertificates - 1;
-        this.nextPageButtonDisabledRequiredCertificates = false;
-        if (this.tabIndexRequiredCertificates === 0) {
-          this.beforePageButtonDisabledRequiredCertificates = true;
-        }
+        // this.tabIndexRequiredCertificates = this.tabIndexRequiredCertificates - 1;
+        // this.nextPageButtonDisabledRequiredCertificates = false;
+        // if (this.tabIndexRequiredCertificates === 0) {
+        //   this.beforePageButtonDisabledRequiredCertificates = true;
+        // }
         break;
       case 'specificKnowledge':
         this.tabIndexSpecificKnowledge = this.tabIndexSpecificKnowledge - 1;
