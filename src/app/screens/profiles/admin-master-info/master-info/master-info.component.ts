@@ -93,6 +93,7 @@ export class MasterInfoComponent implements OnInit {
         disabled:
           this.data?.url === 'education-area' ||
           this.data?.url === 'studies' ||
+          this.data?.url === 'functions' ||
           this.data?.url === 'domain',
       }),
       idDomain: new FormControl(null),
@@ -136,7 +137,7 @@ export class MasterInfoComponent implements OnInit {
         this.form.controls.description?.clearValidators();
         this.form.controls.description?.updateValueAndValidity();
       }
-      if (this.data.url === 'courses-certifications') {
+      if (this.data.url === 'courses-certifications' || this.data.url === 'functions') {
         this.form.controls.idDomain?.setValidators([Validators.required]);
       }
     } else {
@@ -148,7 +149,12 @@ export class MasterInfoComponent implements OnInit {
     }
 
     if (this.data?.element) {
+    console.log(this.data);
+
+      if (this.data.element.domain) {
       this.data.element.idDomain = this.data.element.domain[0]._id;
+      }
+
       this.form.patchValue(this.data.element);
       this.form
         .get('createdAt')
@@ -370,6 +376,8 @@ export class MasterInfoComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.form.value);
+    
     if (
       this.form.get('submenu')?.value === null &&
       this.data.url === 'base-teams-categories' &&
@@ -394,6 +402,7 @@ export class MasterInfoComponent implements OnInit {
     }
 
     if (this.data?.element) {
+      console.log(this.form.value);
       this.manage_images.includes(this.data.url)
         ? this.updateRegisterWithImageToMaster()
         : this.updateRegisterToMaster();
