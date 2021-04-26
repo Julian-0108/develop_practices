@@ -21,7 +21,6 @@ import { ActivatedRoute } from '@angular/router';
 import { OnlyNumbers } from '@shared/functions/onlyNumbers';
 import { BehaviorSubject } from 'rxjs';
 import { ResponsabilitiesDescComponent } from './responsabilitiesDesc/responsabilities-desc.component';
-// import { resolveAny } from 'dns';
 
 export interface AcademicEducationTable {
   education: string;
