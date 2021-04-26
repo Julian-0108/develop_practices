@@ -142,6 +142,10 @@ export class ProfileTemplateComponent implements OnInit {
     startDate: new FormControl(),
     endDate: new FormControl(),
   });
+  formSpecificknowledge = new FormGroup({
+    yearsExperience: new FormControl(),
+    proyectsExperience: new FormControl(),
+  });
   sendInformation = {};
   /* Errors */
   educationError = false;

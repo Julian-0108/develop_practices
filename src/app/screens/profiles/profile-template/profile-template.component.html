@@ -540,52 +540,54 @@
              </div>
            </mat-tab>
          </mat-tab-group>
-       </mat-selection-list> -->
-                    <table mat-table [dataSource]="specificknowledge" class="mat-elevation-z0">
-                        <!-- Knowledge Column -->
-                        <ng-container matColumnDef="knowledge">
-                            <th mat-header-cell *matHeaderCellDef> Conocimiento </th>
-                            <td mat-cell *matCellDef="let element"> {{element.knowledge}} </td>
-                        </ng-container>
-                        <!-- Area Column -->
-                        <ng-container matColumnDef="area">
-                            <th mat-header-cell *matHeaderCellDef> Area de conocimiento </th>
-                            <td mat-cell *matCellDef="let element"> {{element.area}} </td>
-                        </ng-container>
-                        <!-- Description Column -->
-                        <ng-container matColumnDef="description">
-                            <th mat-header-cell *matHeaderCellDef> Description </th>
-                            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-                        </ng-container>
-                        <!-- YearsExperience Column -->
-                        <ng-container matColumnDef="yearsExperience">
-                            <th mat-header-cell *matHeaderCellDef> Experiencia en años </th>
-                            <td mat-cell *matCellDef="let element">
-                                <mat-form-field floatLabel="always" appearance="none">
-                                    <input matInput type="number" [formControl]="" (keypress)="onlyNumbers.classicOnlyNumbers($event)" min="0" max="60" [disabled]="!disableInputs">
-                                </mat-form-field>
-                            </td>
-                        </ng-container>
-                        <!-- PoyectsExperience Column -->
-                        <ng-container matColumnDef="poyectsExperience">
-                            <th mat-header-cell *matHeaderCellDef> Experiencia en proyectos </th>
-                            <td mat-cell *matCellDef="let element">
-                                <mat-form-field floatLabel="always" appearance="none">
-                                    <input matInput type="number" [formControl]="" (keypress)="onlyNumbers.classicOnlyNumbers($event)" min="0" max="60" [disabled]="!disableInputs">
-                                </mat-form-field>
-                            </td>
-                        </ng-container>
-                        <!-- checkbox -->
-                        <ng-container matColumnDef="actions">
-                            <th mat-header-cell *matHeaderCellDef></th>
-                            <td mat-cell *matCellDef="let element">
-                                <mat-checkbox [(ngModel)]="disableInputs">
-                                </mat-checkbox>
-                            </td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="specificknowledgeColumnsEdit"></tr>
-                        <tr mat-row *matRowDef="let row; columns: specificknowledgeColumnsEdit;"></tr>
-                    </table>
+        </mat-selection-list> -->
+                    <form [formGroup]="formSpecificknowledge" novalidate autocomplete="off">
+                        <table mat-table [dataSource]="specificknowledge" class="mat-elevation-z0">
+                            <!-- Knowledge Column -->
+                            <ng-container matColumnDef="knowledge">
+                                <th mat-header-cell *matHeaderCellDef> Conocimiento </th>
+                                <td mat-cell *matCellDef="let element"> {{element.knowledge}} </td>
+                            </ng-container>
+                            <!-- Area Column -->
+                            <ng-container matColumnDef="area">
+                                <th mat-header-cell *matHeaderCellDef> Area de conocimiento </th>
+                                <td mat-cell *matCellDef="let element"> {{element.area}} </td>
+                            </ng-container>
+                            <!-- Description Column -->
+                            <ng-container matColumnDef="description">
+                                <th mat-header-cell *matHeaderCellDef> Description </th>
+                                <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+                            </ng-container>
+                            <!-- YearsExperience Column -->
+                            <ng-container matColumnDef="yearsExperience">
+                                <th mat-header-cell *matHeaderCellDef> Experiencia en años </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <mat-form-field floatLabel="always" appearance="none">
+                                        <input matInput type="number" [formControl]="" (keypress)="onlyNumbers.classicOnlyNumbers($event)" min="0" max="60" [disabled]="!disableInputs">
+                                    </mat-form-field>
+                                </td>
+                            </ng-container>
+                            <!-- PoyectsExperience Column -->
+                            <ng-container matColumnDef="poyectsExperience">
+                                <th mat-header-cell *matHeaderCellDef> Experiencia en proyectos </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <mat-form-field floatLabel="always" appearance="none">
+                                        <input matInput type="number" [formControl]="" (keypress)="onlyNumbers.classicOnlyNumbers($event)" min="0" max="60" [disabled]="!disableInputs">
+                                    </mat-form-field>
+                                </td>
+                            </ng-container>
+                            <!-- checkbox -->
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef></th>
+                                <td mat-cell *matCellDef="let element">
+                                    <mat-checkbox [(ngModel)]="disableInputs">
+                                    </mat-checkbox>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="specificknowledgeColumnsEdit"></tr>
+                            <tr mat-row *matRowDef="let row; columns: specificknowledgeColumnsEdit;"></tr>
+                        </table>
+                    </form>
 
                 </mat-card-content>
             </mat-card>
