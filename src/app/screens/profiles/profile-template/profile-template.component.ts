@@ -21,7 +21,6 @@ import { ActivatedRoute } from '@angular/router';
 import { OnlyNumbers } from '@shared/functions/onlyNumbers';
 import { BehaviorSubject } from 'rxjs';
 import { ResponsabilitiesDescComponent } from './responsabilitiesDesc/responsabilities-desc.component';
-import { resolveAny } from 'dns';
 
 export interface AcademicEducationTable {
   education: string;
@@ -501,13 +500,13 @@ export class ProfileTemplateComponent implements OnInit {
   }
   beforeTab(section: string) {
     switch (section) {
-      case 'requiredCertificates':
-        this.tabIndexRequiredCertificates = this.tabIndexRequiredCertificates - 1;
-        this.nextPageButtonDisabledRequiredCertificates = false;
-        if (this.tabIndexRequiredCertificates === 0) {
-          this.beforePageButtonDisabledRequiredCertificates = true;
-        }
-        break;
+      // case 'requiredCertificates':
+      //   this.tabIndexRequiredCertificates = this.tabIndexRequiredCertificates - 1;
+      //   this.nextPageButtonDisabledRequiredCertificates = false;
+      //   if (this.tabIndexRequiredCertificates === 0) {
+      //     this.beforePageButtonDisabledRequiredCertificates = true;
+      //   }
+      //   break;
       case 'specificKnowledge':
         this.tabIndexSpecificKnowledge = this.tabIndexSpecificKnowledge - 1;
         this.nextPageButtonDisabledSpecificKnowledge = false;
