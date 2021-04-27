@@ -86,8 +86,8 @@ export class ProfileTemplateComponent implements OnInit {
   nextPageButtonDisabledRolResponsabilities = false;
   nextPageButtonDisabledTalents = false;
   nextPageButtonDisabledTalentsReadOnly = false;
-  nextPageButtonDisabledSecurityResp: any;
-  beforePageButtonDisabledSecurityResp: any;
+  nextPageButtonDisabledSecurityResp = false;
+  beforePageButtonDisabledSecurityResp = true;
   // beforePageButtonDisabledRequiredCertificates = true;
   beforePageButtonDisabledSpecificKnowledge = true;
   beforePageButtonDisabledRolResponsabilities = true;
@@ -257,8 +257,6 @@ export class ProfileTemplateComponent implements OnInit {
     }
   }
   addRowIntoCoursesAndCertificationsTable(d?: CoursesCertificationsTable, noUpdate?: boolean) {
-    console.log(d);
-
     const row = this.formBuilder.group({
       domain: d && d.idDomain ? d.idDomain : null,
       type: d && d.type ? d.type : null,
@@ -273,8 +271,6 @@ export class ProfileTemplateComponent implements OnInit {
     }
   }
   addRowIntoRolResponsabilitiesTable(d?: any, noUpdate?: boolean) {
-    console.log(d);
-
     const row = this.formBuilder.group({
       domain: d && d.idDomain ? d.idDomain : null,
       function: d && d._id ? d._id : null,
@@ -286,7 +282,6 @@ export class ProfileTemplateComponent implements OnInit {
     }
   }
   filerSelectList(row: any, index: number, source: string) {
-    console.log(row);
     switch (source) {
       case 'coursesAndCertifications':
         this.profileTemplateService.getAllCertificates(row.domain, row.type).then((res: any) => {
@@ -768,14 +763,14 @@ export class ProfileTemplateComponent implements OnInit {
 
     finalArrayColumns.forEach((el: any) => {
       newarrayPages = [...newarrayPages, el];
-      if (newarrayPages.length === 3) {
+      if (newarrayPages.length === 1) {
         finalArrayPages = [...finalArrayPages, newarrayPages];
         newarrayPages = [];
       }
     });
-    if (newarrayPages[0].length !== 0) {
-      finalArrayPages = [...finalArrayPages, newarrayPages];
-    }
+    // if (newarrayPages[0].length !== 0) {
+    //   finalArrayPages = [...finalArrayPages, newarrayPages];
+    // }
 
     switch (section) {
       case 'specificKnowledge':
@@ -783,30 +778,46 @@ export class ProfileTemplateComponent implements OnInit {
         break;
       case 'securityResponsabilities':
         this.contentPagesSecurityResponsabilities = finalArrayPages;
-
         break;
     }
   }
   buildPagesList(res: any, section: string) {
+    let newarraycolumns: any = [];
     let newarrayPages: any = [];
     let finalArrayPages: any = [];
+    let finalArrayColumns: any = [];
     res.forEach((element: any) => {
-      newarrayPages = [...newarrayPages, element];
-      if (newarrayPages.length === 6) {
+      newarraycolumns = [...newarraycolumns, element];
+      if (newarraycolumns.length === 4) {
+        finalArrayColumns = [...finalArrayColumns, newarraycolumns];
+        newarraycolumns = [];
+      }
+    });
+    finalArrayColumns = [...finalArrayColumns, newarraycolumns];
+
+    finalArrayColumns.forEach((el: any) => {
+      newarrayPages = [...newarrayPages, el];
+      if (newarrayPages.length === 4) {
         finalArrayPages = [...finalArrayPages, newarrayPages];
         newarrayPages = [];
       }
     });
-    if (newarrayPages.length !== 0) {
-      finalArrayPages = [...finalArrayPages, newarrayPages];
-    }
+    // if (newarrayPages[0].length !== 0) {
+    //   finalArrayPages = [...finalArrayPages, newarrayPages];
+    // }
+    // let newarrayPages: any = [];
+    // let finalArrayPages: any = [];
+    // res.forEach((element: any) => {
+    //   newarrayPages = [...newarrayPages, element];
+    //   if (newarrayPages.length === 6) {
+    //     finalArrayPages = [...finalArrayPages, newarrayPages];
+    //     newarrayPages = [];
+    //   }
+    // });
+    // if (newarrayPages.length !== 0) {
+    //   finalArrayPages = [...finalArrayPages, newarrayPages];
+    // }
     switch (section) {
-      // case 'requiredCertificates':
-      //   this.contentPagesRequiredCertificates = finalArrayPages;
-      //   break;
-      case 'rolResponsabilities':
-        this.contentPagesRolResponsabilities = finalArrayPages;
-        break;
       case 'talents':
         this.contentPagesTalents = finalArrayPages;
         break;
@@ -814,8 +825,6 @@ export class ProfileTemplateComponent implements OnInit {
   }
 
   onSave() {
-    // this.onSaveRolResponsabilities();
-    // return;
     if (
       this.onSaveObjective() &&
       this.onSaveEperience() &&
@@ -827,8 +836,6 @@ export class ProfileTemplateComponent implements OnInit {
       this.onSaveSecurityResp() &&
       this.onSaveCorporativeCompetences()
     ) {
-      // console.log(this.sendInformation);
-      // return;
       const saveHistorial: SnackOptionsInterface = {
         title: 'Guardar en Historial',
         message: '¿Desea que el registro de los cambios se guarde en el historial?',
@@ -1036,7 +1043,6 @@ export class ProfileTemplateComponent implements OnInit {
       ...this.sendInformation,
       coursesAndCertifications: newCoursesCertificationsArray,
     };
-    console.log(this.sendInformation);
     return true;
   }
   onSaveSpecificKnowledge() {
@@ -1091,7 +1097,6 @@ export class ProfileTemplateComponent implements OnInit {
         return { _id: el.function };
       }),
     };
-    console.log(this.sendInformation);
     return true;
   }
   onSaveTalents() {

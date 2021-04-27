@@ -637,7 +637,7 @@
           </mat-selection-list>
         </mat-card-content>
         <mat-card-content *ngIf="isEditable">
-          <ng-container *ngIf="contentPagesSecurityResponsabilities.length > 1">
+          <ng-container *ngIf="contentPagesSecurityResponsabilities.length > 1 && responsabilitySeleted !== ''">
             <button mat-icon-button
               (click)="nextTab(matTabSecurityResponsabilities._tabs.length, 'securityResponsabilities')"
               class="button-next" [disabled]="nextPageButtonDisabledSecurityResp">
@@ -994,14 +994,18 @@
               <mat-icon>navigate_before</mat-icon>
             </button>
           </ng-container>
-          <mat-selection-list #talents fxLayout="column">
+          <mat-selection-list #talents fxLayout="row">
             <mat-tab-group #matTabTalents mat-align-tabs="start" [(selectedIndex)]="tabIndexTalents"
               animationDuration="0ms">
               <mat-tab label="First" *ngFor="let contentPage of contentPagesTalents">
-                <mat-list-option [selected]="onInitList(item, 'talents')" *ngFor="let item of contentPage"
-                  [value]="item">
-                  {{item.name}}
-                </mat-list-option>
+                <div fxLayout="row">
+                  <div fxLayout="column" *ngFor="let cont of contentPage">
+                    <mat-list-option *ngFor="let item of cont" [selected]="onInitList(item, 'talents')"
+                      [value]="item">
+                      {{item.name}}
+                    </mat-list-option>
+                  </div>
+                </div>
               </mat-tab>
             </mat-tab-group>
           </mat-selection-list>
