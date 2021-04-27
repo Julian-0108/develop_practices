@@ -11,7 +11,6 @@ export class HistoryMastersService {
   constructor(private httpClient: HttpClient) { }
 
   async hitoryActionsAdminMaster(action: string, idProfile: string, data?: any) {
-    console.log(data);
     if (action === 'get') {
       return this.httpClient
         .get(`${environment.API_MASTER_INFO}/historical-master?idMaster=${idProfile}`)
