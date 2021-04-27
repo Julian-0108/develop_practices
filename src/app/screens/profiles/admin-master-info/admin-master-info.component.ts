@@ -149,6 +149,10 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) => el !== 'submenu' && el !== 'reference' && el !== 'type' && el !== 'idDomain'
         );
+      case 'functions':
+        return this.displayedColumns.filter(
+          (el) => el !== 'submenu' && el !== 'reference' && el !== 'type'
+        );
       case 'courses-certifications':
         return this.displayedColumns.filter(
           (el) => el !== 'submenu' && el !== 'reference' && el !== 'description'

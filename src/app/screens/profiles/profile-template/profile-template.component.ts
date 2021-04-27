@@ -126,6 +126,10 @@ export class ProfileTemplateComponent implements OnInit {
     startDate: new FormControl(),
     endDate: new FormControl(),
   });
+  formSpecificknowledge = new FormGroup({
+    yearsExperience: new FormControl(),
+    proyectsExperience: new FormControl(),
+  });
   sendInformation = {};
   /* Errors */
   educationError = false;
@@ -158,14 +162,14 @@ export class ProfileTemplateComponent implements OnInit {
     'required',
     'optional',
   ];
-  public CoursesCertificationsColumns: string[] = [
+  public specificknowledgeColumns: string[] = [
     'knowledge',
     'area',
     'description',
     'yearsExperience',
     'poyectsExperience',
   ];
-  public CoursesCertificationsColumnsEdit: string[] = [
+  public specificknowledgeColumnsEdit: string[] = [
     'knowledge',
     'area',
     'description',
@@ -528,13 +532,6 @@ export class ProfileTemplateComponent implements OnInit {
   }
   beforeTab(section: string) {
     switch (section) {
-      // case 'requiredCertificates':
-      //   this.tabIndexRequiredCertificates = this.tabIndexRequiredCertificates - 1;
-      //   this.nextPageButtonDisabledRequiredCertificates = false;
-      //   if (this.tabIndexRequiredCertificates === 0) {
-      //     this.beforePageButtonDisabledRequiredCertificates = true;
-      //   }
-      //   break;
       case 'specificKnowledge':
         this.tabIndexSpecificKnowledge = this.tabIndexSpecificKnowledge - 1;
         this.nextPageButtonDisabledSpecificKnowledge = false;
