@@ -127,7 +127,7 @@ export class AdminMasterInfoComponent implements OnInit {
     switch (this.masterSeleted) {
       case 'types':
         return this.displayedColumns.filter(
-          (el) => el !== 'type' && el !== 'description' && el !== 'submenu'
+          (el) => el !== 'type' && el !== 'description' && el !== 'submenu' && el !== 'idDomain'
         );
       case 'studies':
         return this.displayedColumns.filter(
@@ -194,7 +194,7 @@ export class AdminMasterInfoComponent implements OnInit {
   applyDirectFilter(e: any) {
     this.dataSource.filter = e.value;
   }
-  setId(el: any) {
+  setId(el: any, master: any) {
     this.idHistory = el;
   }
 
@@ -202,11 +202,4 @@ export class AdminMasterInfoComponent implements OnInit {
     this.open = true;
   }
 
-  getSelectedValue() {
-    const resultmaster = this.masters.find((resp) => {
-      return resp.url == this.masterSeleted;
-    });
-    this.result = resultmaster?.name;
-    console.log(this.masterSeleted);
-  }
 }
