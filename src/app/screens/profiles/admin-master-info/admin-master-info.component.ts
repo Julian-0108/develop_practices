@@ -194,7 +194,7 @@ export class AdminMasterInfoComponent implements OnInit {
   applyDirectFilter(e: any) {
     this.dataSource.filter = e.value;
   }
-  setId(el: any, master: any) {
+  setId(el: any) {
     this.idHistory = el;
   }
 

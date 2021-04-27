@@ -172,7 +172,7 @@ export class HistoryMasterComponent implements OnInit {
     this.historySelected = id;
     this.visivility = true;
     this.dataSource = this.historyFilter.filter((el: any) => el._id === id);
-    console.log(this.historyFilter);
+    // Thanks for all <3
     if (this.historyFilter[0].idDomain != null) {
       this.displayedColumns = [...this.displayedColumns, 'domain'];
     }
