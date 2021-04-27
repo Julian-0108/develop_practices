@@ -54,7 +54,7 @@ export class ProfileTemplateComponent implements OnInit {
   @ViewChild('coursesCertifications') _coursesCertifications!: MatTable<any>;
   // @ViewChild('requiredCertificates') requiredCertificates!: MatSelectionList;
   @ViewChild('specificKnowledge') specificKnowledge!: MatSelectionList;
-  @ViewChild('rolResponsabilities') rolResponsabilities!: MatSelectionList;
+  @ViewChild('rolResponsabilities') _rolResponsabilities!: MatTable<any>;
   @ViewChild('talents') talents!: MatSelectionList;
   @ViewChild('securityResponsabilities') securityResponsabilities!: MatSelectionList;
   dataAssertiveComunication!: MatTableDataSource<Tables>;
@@ -70,7 +70,9 @@ export class ProfileTemplateComponent implements OnInit {
   domainList: any[] = [];
   typeList: any[] = [];
   nameList: any = {};
+  rolResponsabilitiesList: any = {};
   allNamesList: any = [];
+  allRolResponsabilities: any = [];
   areasList: AcademicEducation[] = [];
   contentPagesSpecificKnowledge = [];
   // contentPagesRequiredCertificates = [];
@@ -113,27 +115,6 @@ export class ProfileTemplateComponent implements OnInit {
     'Diciembre',
   ];
 
-  functionColumns: string[] = ['domain', 'function', 'description'];
-  actionfunction: string[] = ['domain', 'function', 'description', 'actions'];
-
-  functiondataSource = [
-    {
-      domain: 'Base de Datos',
-      function: 'Fundamentos/conceptos básicos',
-      description: 'Crear, modificar, eliminar usuarios',
-    },
-    {
-      domain: 'Servidores Aplicación',
-      function: 'Conocimiento/gestión de un producto o herramienta',
-      description: 'lorem ipsum dolor sit amet consectetur adipiscing elit',
-    },
-    {
-      domain: 'Otro dominio',
-      function: 'Gestión de accesos',
-      description: 'lorem ipsum dolor sit amet consectetur adipiscing elit',
-    },
-  ];
-
   formObjective = new FormGroup({
     objective: new FormControl(null, [Validators.required]),
   });
@@ -170,6 +151,9 @@ export class ProfileTemplateComponent implements OnInit {
   selected: any;
   educationDataSource = new BehaviorSubject<AbstractControl[]>([]);
   coursesCertificationDataSource = new BehaviorSubject<AbstractControl[]>([]);
+  rolResponsabilitiesdataSource = new BehaviorSubject<AbstractControl[]>([]);
+  // functionColumns: string[] = ['domain', 'function', 'description'];
+  public rolResponsabilitiesColumns: string[] = ['domain', 'function', 'description'];
   public educationColumns: string[] = ['education', 'area', 'actions'];
   public coursesAndCertificationsColumns: string[] = [
     'domain',
@@ -194,16 +178,7 @@ export class ProfileTemplateComponent implements OnInit {
     'actions',
   ];
   disableInputs = false;
-  ejemploDataSource = [
-    {
-      domain: 'Base de Datos',
-      type: 'Certificado',
-      name: 'SQL Básico',
-      required: true,
-      optional: false,
-    },
-  ];
-  specificknowledge = [
+  CoursesCertificationsData = [
     {
       knowledge: 'Fundamentos Básicos',
       area: 'Desarrollo',
@@ -227,20 +202,28 @@ export class ProfileTemplateComponent implements OnInit {
     },
   ];
 
+  /* Forms */
   public rows: FormArray = this.formBuilder.array([]);
   public form: FormGroup = this.formBuilder.group({ academicEducation: this.rows });
   public coursesCertificationsFormRows: FormArray = this.formBuilder.array([]);
   public coursesCertificationsForm: FormGroup = this.formBuilder.group({
     coursesAndCertifications: this.coursesCertificationsFormRows,
   });
+  public rolResponsabilitiesFormRows: FormArray = this.formBuilder.array([]);
+  public rolResponsabilitiesForm: FormGroup = this.formBuilder.group({
+    rolResponsabilities: this.rolResponsabilitiesFormRows,
+  });
 
   readOnlyEducationDatasource!: MatTableDataSource<AcademicEducationTable>;
   readOnlyCoursesCertificationsDatasource!: MatTableDataSource<CoursesCertificationsTable>;
+  readOnlyRolResponsabilitiesDatasource!: MatTableDataSource<any>;
   public responsabilitySeleted = '';
   showEducationFilter = false;
   showCoursesCertificationsFilter = false;
+  showRolResponsabilitiesFilter = false;
   showNotFoundMessage = true;
   showNotFoundMessageCoursesCertications = true;
+  showNotFoundMessageRolResponsabilities = true;
   corporativeRespList: string[] = [];
 
   constructor(
@@ -289,13 +272,43 @@ export class ProfileTemplateComponent implements OnInit {
       this.refreshCoursesCertificationsTable();
     }
   }
-  filerCoursesAndCertificationsList(row: any, i: number) {
-    console.log(row);
-    this.profileTemplateService.getAllCertificates(row.domain, row.type).then((res: any) => {
-      this.nameList[i] = res;
+  addRowIntoRolResponsabilitiesTable(d?: any, noUpdate?: boolean) {
+    console.log(d);
+
+    const row = this.formBuilder.group({
+      domain: d && d.idDomain ? d.idDomain : null,
+      function: d && d._id ? d._id : null,
+      description: d && d.description ? d.description : null,
     });
+    this.rolResponsabilitiesFormRows.push(row);
+    if (!noUpdate) {
+      this.refreshRolResponsabilitiesTable();
+    }
+  }
+  filerSelectList(row: any, index: number, source: string) {
+    console.log(row);
+    switch (source) {
+      case 'coursesAndCertifications':
+        this.profileTemplateService.getAllCertificates(row.domain, row.type).then((res: any) => {
+          this.nameList[index] = res;
+        });
+        break;
+      case 'rolResponsabilities':
+        this.profileTemplateService.getAllFunctions(row.domain).then((res: any) => {
+          this.rolResponsabilitiesList[index] = res;
+        });
+        break;
+    }
   }
 
+  changeDescriptionBySelection(row: any) {
+    const itemSelected = this.allRolResponsabilities.filter((res: any) => res._id === row.function);
+    row.description = itemSelected[0].description;
+  }
+
+  refreshRolResponsabilitiesTable() {
+    this.rolResponsabilitiesdataSource.next(this.rolResponsabilitiesFormRows.controls);
+  }
   refreshCoursesCertificationsTable() {
     this.coursesCertificationDataSource.next(this.coursesCertificationsFormRows.controls);
   }
@@ -319,17 +332,32 @@ export class ProfileTemplateComponent implements OnInit {
   removeRow(index: number, table: string) {
     switch (table) {
       case 'education':
-        // const control = this.form.controls.academicEducation as FormArray;
         (this.form.controls.academicEducation as FormArray).removeAt(index);
         this._educationTable.renderRows();
         break;
-
       case 'coursesCertifications':
-        // const control = this.form.controls.academicEducation as FormArray;
+        this.nameList = {};
         (this.coursesCertificationsForm.controls.coursesAndCertifications as FormArray).removeAt(
           index
         );
+        for (
+          let i = 0;
+          i < this.coursesCertificationsForm.value.coursesAndCertifications.length;
+          i++
+        ) {
+          const row = this.coursesCertificationsForm.value.coursesAndCertifications[i];
+          this.filerSelectList(row, i, 'coursesAndCertifications');
+        }
         this._coursesCertifications.renderRows();
+        break;
+      case 'rolResponsabilities':
+        this.rolResponsabilitiesList = {};
+        (this.rolResponsabilitiesForm.controls.rolResponsabilities as FormArray).removeAt(index);
+        for (let i = 0; i < this.rolResponsabilitiesForm.value.rolResponsabilities.length; i++) {
+          const row = this.rolResponsabilitiesForm.value.rolResponsabilities[i];
+          this.filerSelectList(row, i, 'rolResponsabilities');
+        }
+        this._rolResponsabilities.renderRows();
         break;
     }
   }
@@ -504,13 +532,6 @@ export class ProfileTemplateComponent implements OnInit {
   }
   beforeTab(section: string) {
     switch (section) {
-      case 'requiredCertificates':
-        // this.tabIndexRequiredCertificates = this.tabIndexRequiredCertificates - 1;
-        // this.nextPageButtonDisabledRequiredCertificates = false;
-        // if (this.tabIndexRequiredCertificates === 0) {
-        //   this.beforePageButtonDisabledRequiredCertificates = true;
-        // }
-        break;
       case 'specificKnowledge':
         this.tabIndexSpecificKnowledge = this.tabIndexSpecificKnowledge - 1;
         this.nextPageButtonDisabledSpecificKnowledge = false;
@@ -568,50 +589,37 @@ export class ProfileTemplateComponent implements OnInit {
         this.showCoursesCertificationsFilter = true;
         this.showNotFoundMessageCoursesCertications = false;
       }
+      if (res.rolResponsabilities.length !== 0) {
+        this.showRolResponsabilitiesFilter = true;
+        this.showNotFoundMessageRolResponsabilities = false;
+      }
       this.readOnlyEducationDatasource = new MatTableDataSource(res.academicEducation);
+      this.readOnlyRolResponsabilitiesDatasource = new MatTableDataSource(res.rolResponsabilities);
       this.readOnlyCoursesCertificationsDatasource = new MatTableDataSource(
         res.coursesAndCertifications
       );
       this.profileTemplateService.getAllEstudies().then((resp: AcademicEducation[]) => {
         this.educationList = resp;
       });
-      this.domainList = [
-        {
-          nameDomain: 'Base de Datos',
-          idDomain: '60806cff098c2328dc2174b1',
-        },
-        {
-          nameDomain: 'Integración',
-          idDomain: '60806d35098c2328dc2174b2',
-        },
-      ];
+      this.profileTemplateService.getAllDomains().then((resp: any[]) => {
+        this.domainList = resp;
+      });
+
       this.profileTemplateService.getAllCertificates().then((allNames: any) => {
         this.allNamesList = allNames;
       });
 
-      this.profileTemplateService.getAllTypes('Cursos y certificaciones', false).then((types: any) => {
-        this.typeList = types;
+      /* Rol Responsabilities */
+      this.profileTemplateService.getAllFunctions().then((rolResponsabilities: any) => {
+        this.allRolResponsabilities = rolResponsabilities;
       });
 
-      // this.onFilterByType('605ba3d590d9e4a513155552');
-      // this.typeList = [
-      //   {
-      //     name: 'Certificado',
-      //     _id: 'abc2',
-      //   },
-      //   {
-      //     name: 'Certificado2',
-      //     _id: 'abc22',
-      //   },
-      // ];
-      // this.nameList = [{
-      //   name: 'SQL Básico',
-      //   _id: 'abc3'
-      // },
-      // {
-      //   name: 'SQL Básico2',
-      //   _id: 'abc33'
-      // }];
+      this.profileTemplateService
+        .getAllTypes('Cursos y certificaciones', false)
+        .then((types: any) => {
+          this.typeList = types;
+        });
+
       this.buildTalentsReadOnly(this.data);
       this.dataAssertiveComunication = new MatTableDataSource(res.assertiveComunication);
       res.assertiveComunication.forEach((el: any) => {
@@ -679,23 +687,29 @@ export class ProfileTemplateComponent implements OnInit {
       this.addRowIntoCoursesAndCertificationsTable(el, false)
     );
     this.refreshCoursesCertificationsTable();
+    const coursesCertiform = this.coursesCertificationsForm.value.coursesAndCertifications;
+    coursesCertiform.forEach((row: any, index: number) => {
+      this.filerSelectList(row, index, 'coursesAndCertifications');
+    });
+    /* Rol Responsabilities */
+    (this.rolResponsabilitiesForm.controls.rolResponsabilities as FormArray).clear();
+    this.data.rolResponsabilities.forEach((el: any) =>
+      this.addRowIntoRolResponsabilitiesTable(el, false)
+    );
+    this.refreshRolResponsabilitiesTable();
+    const rolRespForm = this.rolResponsabilitiesForm.value.rolResponsabilities;
+    rolRespForm.forEach((row: any, index: number) => {
+      this.filerSelectList(row, index, 'rolResponsabilities');
+    });
     /* Areas */
     await this.profileTemplateService.getAllAreas().then((res: AcademicEducation[]) => {
       this.areasList = res;
-    });
-    /* Courses and Certifications */
-    const form = this.coursesCertificationsForm.value.coursesAndCertifications;
-    form.forEach((row: any, index: number) => {
-      this.filerCoursesAndCertificationsList(row, index);
     });
     /* Specific Knowledge */
     this.profileTemplateService.getAllKnowledge().then((res: any) => {
       this.buildPagesAndColumnsList(res, 'specificKnowledge');
     });
-    /* Rol Responsabilities */
-    this.profileTemplateService.getAllFunctions().then((res: any) => {
-      this.buildPagesList(res, 'rolResponsabilities');
-    });
+
     /* Talents */
     this.profileTemplateService.getAllTalents().then((res: any) => {
       this.buildPagesList(res, 'talents');
@@ -710,6 +724,7 @@ export class ProfileTemplateComponent implements OnInit {
       });
     });
     this.coursesAndCertificationsColumns.push('actions');
+    this.rolResponsabilitiesColumns.push('actions');
     this.isEditable = true;
     this.educationError = false;
   }
@@ -799,8 +814,7 @@ export class ProfileTemplateComponent implements OnInit {
   }
 
   onSave() {
-    // console.log(this.coursesCertificationsForm.value.coursesAndCertifications);
-    // this.onSaveRequiredCertificates();
+    // this.onSaveRolResponsabilities();
     // return;
     if (
       this.onSaveObjective() &&
@@ -813,6 +827,8 @@ export class ProfileTemplateComponent implements OnInit {
       this.onSaveSecurityResp() &&
       this.onSaveCorporativeCompetences()
     ) {
+      // console.log(this.sendInformation);
+      // return;
       const saveHistorial: SnackOptionsInterface = {
         title: 'Guardar en Historial',
         message: '¿Desea que el registro de los cambios se guarde en el historial?',
@@ -876,10 +892,8 @@ export class ProfileTemplateComponent implements OnInit {
             });
             this.existentDate = '';
             this.getData();
-            this.coursesAndCertificationsColumns.splice(
-              this.coursesAndCertificationsColumns.indexOf('actions'),
-              1
-            );
+            this.removeActionsColumn(this.coursesAndCertificationsColumns);
+            this.removeActionsColumn(this.rolResponsabilitiesColumns);
             this.isEditable = false;
           })
           .catch((error) => {
@@ -912,10 +926,8 @@ export class ProfileTemplateComponent implements OnInit {
       });
       this.existentDate = '';
       this.getData();
-      this.coursesAndCertificationsColumns.splice(
-        this.coursesAndCertificationsColumns.indexOf('actions'),
-        1
-      );
+      this.removeActionsColumn(this.coursesAndCertificationsColumns);
+      this.removeActionsColumn(this.rolResponsabilitiesColumns);
       this.isEditable = false;
     });
   }
@@ -988,8 +1000,7 @@ export class ProfileTemplateComponent implements OnInit {
         i.domain === null ||
         i.type === null ||
         i.name === null ||
-        i.optional === null ||
-        i.required === null
+        (i.optional === false && i.required === false)
       ) {
         emptyFields.push(i);
       }
@@ -1024,7 +1035,6 @@ export class ProfileTemplateComponent implements OnInit {
     this.sendInformation = {
       ...this.sendInformation,
       coursesAndCertifications: newCoursesCertificationsArray,
-      requiredCertificates: ['6054b769f794dfd91b0371d2'],
     };
     console.log(this.sendInformation);
     return true;
@@ -1049,22 +1059,39 @@ export class ProfileTemplateComponent implements OnInit {
     return true;
   }
   onSaveRolResponsabilities() {
-    if (this.rolResponsabilities.selectedOptions.selected.length === 0) {
+    let emptyFields: object[] = [];
+    for (const i of this.rolResponsabilitiesForm.value.rolResponsabilities) {
+      if (i.domain === null || i.function === null) {
+        emptyFields.push(i);
+      }
+    }
+    if (this.rolResponsabilitiesForm.value.rolResponsabilities.length === 0) {
       this.notificationService.openSimpleSnackBar({
         title: 'Acción Incorrecta',
-        message: 'Debe seleccionar al menos un item de la lista de "Funciones del Rol".',
+        message: 'La selección de "Funciones del Cargo" no puede estar vacía.',
         type: 'error',
       });
-      this.rolResponsabilitiesError = true;
+      this.requiredCertificatesError = true;
       return;
     }
-    this.rolResponsabilitiesError = false;
+    if (emptyFields.length !== 0) {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Acción Incorrecta',
+        message: 'Ninguno de los campos de "Funciones del Cargo" puede estar vacío.',
+        type: 'error',
+      });
+      this.requiredCertificatesError = true;
+      return;
+    }
+    this.requiredCertificatesError = false;
+
     this.sendInformation = {
       ...this.sendInformation,
-      rolResponsabilities: this.rolResponsabilities.selectedOptions.selected.map(
-        (value) => value.value
-      ),
+      jobFunctions: this.rolResponsabilitiesForm.value.rolResponsabilities.map((el: any) => {
+        return { _id: el.function };
+      }),
     };
+    console.log(this.sendInformation);
     return true;
   }
   onSaveTalents() {
@@ -1135,11 +1162,13 @@ export class ProfileTemplateComponent implements OnInit {
 
   onCancel() {
     this.sendInformation = {};
-    this.coursesAndCertificationsColumns.splice(
-      this.coursesAndCertificationsColumns.indexOf('actions'),
-      1
-    );
+    this.removeActionsColumn(this.coursesAndCertificationsColumns);
+    this.removeActionsColumn(this.rolResponsabilitiesColumns);
     this.isEditable = false;
+  }
+
+  removeActionsColumn(source: string[]) {
+    source.splice(source.indexOf('actions'), 1);
   }
 
   fieldExperienceValidation(field: string) {
@@ -1181,6 +1210,11 @@ export class ProfileTemplateComponent implements OnInit {
       this.readOnlyEducationDatasource.filteredData.length === 0
         ? (this.showNotFoundMessage = true)
         : (this.showNotFoundMessage = false);
+    } else if (source === 'rolResponsabilities') {
+      this.readOnlyRolResponsabilitiesDatasource.filter = event.value;
+      this.readOnlyRolResponsabilitiesDatasource.filteredData.length === 0
+        ? (this.showNotFoundMessageRolResponsabilities = true)
+        : (this.showNotFoundMessageRolResponsabilities = false);
     }
   }
 

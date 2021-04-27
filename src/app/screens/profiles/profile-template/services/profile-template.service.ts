@@ -126,11 +126,28 @@ export class ProfileTemplateService {
       .pipe(pluck('payload'))
       .toPromise();
   }
-  async getAllFunctions() {
-    return await this.httpClient
-      .get(`${environment.API_MASTER_INFO}/functions?status=true`)
+  async getAllDomains() {
+    let domainList: any = await this.httpClient
+      .get(`${environment.API_MASTER_INFO}/domain?status=true`)
       .pipe(pluck('payload'))
       .toPromise();
+    domainList.forEach((item: any) => {
+      item.idDomain = item._id;
+      item.nameDomain = item.name;
+    });
+    console.log(domainList);
+    return domainList;
+  }
+  async getAllFunctions(idDomain?: string) {
+    return idDomain
+      ? await this.httpClient
+          .get(`${environment.API_MASTER_INFO}/functions?status=true&idDomain=${idDomain}`)
+          .pipe(pluck('payload'))
+          .toPromise()
+      : await this.httpClient
+          .get(`${environment.API_MASTER_INFO}/functions?status=true`)
+          .pipe(pluck('payload'))
+          .toPromise();
   }
   async getAllTalents() {
     return await this.httpClient
@@ -180,6 +197,8 @@ export class ProfileTemplateService {
     data.academicEducation = data.academicEducation.map((item: any) => {
       return { education: item._id, name: item.name, area: item.area };
     });
+    data.rolResponsabilities = data.jobFunctions;
+    delete data.jobFunctions;
     /* SecurityResponsabilities */
     data.responsabilitiesGroupbyType = {};
     data.securityResponsabilities.forEach((resp: any) => {
@@ -201,3 +220,20 @@ export class ProfileTemplateService {
       .toPromise();
   }
 }
+// rolResponsabilitiesdataSource = [
+//   {
+//     domain: 'Base de Datos',
+//     function: 'Fundamentos/conceptos básicos',
+//     description: 'Crear, modificar, eliminar usuarios',
+//   },
+//   {
+//     domain: 'Servidores Aplicación',
+//     function: 'Conocimiento/gestión de un producto o herramienta',
+//     description: 'lorem ipsum dolor sit amet consectetur adipiscing elit',
+//   },
+//   {
+//     domain: 'Otro dominio',
+//     function: 'Gestión de accesos',
+//     description: 'lorem ipsum dolor sit amet consectetur adipiscing elit',
+//   },
+// ];
