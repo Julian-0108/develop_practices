@@ -26,7 +26,7 @@ export class HistoryMasterComponent implements OnInit {
   historySelected = '';
   visivility = false;
   existentDate! : string;
-  displayedColumns: string[] = ['name'];
+  displayedColumns: string[] = ['name', 'description', 'type'];
   formFilterHistory = new FormGroup({
     startDate: new FormControl(),
     endDate: new FormControl(),
@@ -173,23 +173,23 @@ export class HistoryMasterComponent implements OnInit {
     this.visivility = true;
     this.dataSource = this.historyFilter.filter((el: any) => el._id === id);
     // Thanks for all <3
-    if (this.historyFilter[0].idDomain != null) {
-      this.displayedColumns = [...this.displayedColumns, 'domain'];
-    }
-    if (this.historyFilter[0].description) {
-      this.displayedColumns = [...this.displayedColumns, 'description'];
-    }
-    if (this.historyFilter[0].type != null) {
-      this.displayedColumns = [...this.displayedColumns, 'type'];
-    }
+    // if (this.historyFilter[0].idDomain != null) {
+    //   this.displayedColumns = [...this.displayedColumns, 'domain'];
+    // }
+    // if (this.historyFilter[0].description) {
+    //   this.displayedColumns = [...this.displayedColumns, 'description'];
+    // }
+    // if (this.historyFilter[0].type != null) {
+    //   this.displayedColumns = [...this.displayedColumns, 'type'];
+    // }
     // if (this.historyFilter[0].idMaster != null) {
     //   this.displayedColumns = [...this.displayedColumns, 'master'];
     // }
-    console.log(this.dataSource);
+    // console.log(this.dataSource);
   }
   outPreview() {
     this.historySelected = '';
     this.visivility = false;
-    this.displayedColumns = ['name'];
+    // this.displayedColumns = ['name'];
   }
 }
