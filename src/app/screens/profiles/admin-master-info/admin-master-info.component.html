@@ -17,8 +17,8 @@
                     <mat-form-field floatLabel="always" appearance="none">
                         <mat-label>Seleccionar maestro</mat-label>
                         <mat-select #ej placeholder="Click para activar la lista" [(ngModel)]="masterSeleted" (selectionChange)="getDataMaster()">
-                            <mat-select-trigger>{{result}}</mat-select-trigger>
-                            <mat-option *ngFor="let master of masters | orderAlphabetically:'name'" [value]="master.url" (click)="getSelectedValue()">
+                            <mat-select-trigger>{{subtitle.name}}</mat-select-trigger>
+                            <mat-option *ngFor="let master of masters | orderAlphabetically:'name'" [value]="master.url">
                                 {{master.name}}
 
                                 <mat-icon matTooltipClass="custom-tooltip" [matTooltip]="master.sumary" class="content__icon">help
