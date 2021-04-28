@@ -47,78 +47,54 @@ export class ProfileTemplateService {
   }
   changeKeyName(response: any) {
     for (let i of response) {
-      console.log(i);
       i._id = i.id;
     }
   }
-  async getAllCertificates(idDomain?: string, type?: string, name?: string) {
-    // if (type) {
-    //   const response: any = await this.httpClient
-    //     .get(`${environment.API_MASTER_INFO}/courses-certifications?status=true&type=${type}`)
-    //     .pipe(pluck('payload'))
-    //     .toPromise();
-    //   return response;
-    // } else if (idDomain) {
-    //   const response: any = await this.httpClient
-    //     .get(
-    //       `${environment.API_MASTER_INFO}/courses-certifications?status=true&idDomain=${idDomain}`
-    //     )
-    //     .pipe(pluck('payload'))
-    //     .toPromise();
-    //   return response;
-    // } else if (idDomain && type) {
-    //   const response: any = await this.httpClient
-    //     .get(
-    //       `${environment.API_MASTER_INFO}/courses-certifications?status=true&idDomain=${idDomain}&type=${type}`
-    //     )
-    //     .pipe(pluck('payload'))
-    //     .toPromise();
-    //   return response;
-    // } else if (idDomain && type && name) {
-    //   const response: any = await this.httpClient
-    //     .get(
-    //       `${environment.API_MASTER_INFO}/courses-certifications?status=true&idDomain=${idDomain}&type=${type}&name:${name}`
-    //     )
-    //     .pipe(pluck('payload'))
-    //     .toPromise();
-    //   return response;
-    // } else {
-    //   const response: any = await this.httpClient
-    //     .get(`${environment.API_MASTER_INFO}/courses-certifications?status=true`)
-    //     .pipe(pluck('payload'))
-    //     .toPromise();
-    //   return response;
-    // }
-    return type
-      ? await this.httpClient
-          .get(`${environment.API_MASTER_INFO}/courses-certifications?status=true&type=${type}`)
-          .pipe(pluck('payload'))
-          .toPromise()
-      : idDomain
-      ? await this.httpClient
-          .get(
-            `${environment.API_MASTER_INFO}/courses-certifications?status=true&idDomain=${idDomain}`
-          )
-          .pipe(pluck('payload'))
-          .toPromise()
-      : idDomain && type
-      ? await this.httpClient
-          .get(
-            `${environment.API_MASTER_INFO}/courses-certifications?status=true&idDomain=${idDomain}&type=${type}`
-          )
-          .pipe(pluck('payload'))
-          .toPromise()
-      : idDomain && type && name
-      ? await this.httpClient
-          .get(
-            `${environment.API_MASTER_INFO}/courses-certifications?status=true&idDomain=${idDomain}&type=${type}&name:${name}`
-          )
-          .pipe(pluck('payload'))
-          .toPromise()
-      : await this.httpClient
-          .get(`${environment.API_MASTER_INFO}/courses-certifications?status=true`)
-          .pipe(pluck('payload'))
-          .toPromise();
+  async getAllCertificates(
+    idDomain?: string,
+    type?: string,
+    name?: string
+  ) {
+    if (idDomain && type) {
+      const response: any = await this.httpClient
+        .get(
+          `${environment.API_MASTER_INFO}/courses-certifications?status=true&idDomain=${idDomain}&type=${type}`
+        )
+        .pipe(pluck('payload'))
+        .toPromise();
+      return response;
+    }
+    if (type) {
+      const response: any = await this.httpClient
+        .get(`${environment.API_MASTER_INFO}/courses-certifications?status=true&type=${type}`)
+        .pipe(pluck('payload'))
+        .toPromise();
+      return response;
+    }
+    if (idDomain) {
+      const response: any = await this.httpClient
+        .get(
+          `${environment.API_MASTER_INFO}/courses-certifications?status=true&idDomain=${idDomain}`
+        )
+        .pipe(pluck('payload'))
+        .toPromise();
+      return response;
+    }
+    if (idDomain && type && name) {
+      const response: any = await this.httpClient
+        .get(
+          `${environment.API_MASTER_INFO}/courses-certifications?status=true&idDomain=${idDomain}&type=${type}&name:${name}`
+        )
+        .pipe(pluck('payload'))
+        .toPromise();
+      return response;
+    } else {
+      const response: any = await this.httpClient
+        .get(`${environment.API_MASTER_INFO}/courses-certifications?status=true`)
+        .pipe(pluck('payload'))
+        .toPromise();
+      return response;
+    }
   }
   async getAllKnowledge() {
     return await this.httpClient
@@ -135,7 +111,6 @@ export class ProfileTemplateService {
       item.idDomain = item._id;
       item.nameDomain = item.name;
     });
-    console.log(domainList);
     return domainList;
   }
   async getAllFunctions(idDomain?: string) {
@@ -210,7 +185,6 @@ export class ProfileTemplateService {
         );
       }
     });
-    console.log(data);
     return data;
   }
   async updateProfile(id: any, body: any) {

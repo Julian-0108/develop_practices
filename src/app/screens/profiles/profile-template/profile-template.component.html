@@ -204,12 +204,8 @@
               </ng-container>
             </table>
           </div>
-
           <div class="not-found-data__container" *ngIf="showNotFoundMessage">
-            <img class="not-found-data__image" src="../../../../assets/images/notFoundData.svg" alt="Not found data">
-            <div class="not-found-data__message">
-              No se ha encontrado información.
-            </div>
+            <app-not-found-message></app-not-found-message>
           </div>
 
         </mat-card-content>
@@ -445,12 +441,8 @@
 
             </div>
           </form>
-
           <div class="not-found-data__container" *ngIf="showNotFoundMessageCoursesCertications && !isEditable">
-            <img class="not-found-data__image" src="../../../../assets/images/notFoundData.svg" alt="Not found data">
-            <div class="not-found-data__message">
-              No se ha encontrado información.
-            </div>
+            <app-not-found-message></app-not-found-message>
           </div>
         </mat-card-content>
         <mat-card-content *ngIf="isEditable">
@@ -635,6 +627,9 @@
               </div>
             </mat-list-option>
           </mat-selection-list>
+          <div class="not-found-data__container" *ngIf="showNotFoundMessageSecurityResponsabilities">
+            <app-not-found-message></app-not-found-message>
+          </div>
         </mat-card-content>
         <mat-card-content *ngIf="isEditable">
           <ng-container *ngIf="contentPagesSecurityResponsabilities.length > 1 && responsabilitySeleted !== ''">
@@ -659,12 +654,11 @@
               </mat-select>
             </mat-form-field>
           </div>
+
           <div class="not-found-data__container" *ngIf="responsabilitySeleted === ''">
-            <img class="not-found-data__image" src="../../../../assets/images/notFoundData.svg" alt="Not found data">
-            <div class="not-found-data__message">
-              No ha seleccionado ningún item de la lista.
-            </div>
+            <app-not-found-message [message]="'No ha seleccionado ningún item de la lista.'"></app-not-found-message>
           </div>
+
           <mat-selection-list #securityResponsabilities fxLayout="row">
             <mat-tab-group #matTabSecurityResponsabilities mat-align-tabs="start" animationDuration="0ms"
               [(selectedIndex)]="tabIndexSecurityResp">
@@ -683,6 +677,7 @@
           </mat-selection-list>
         </mat-card-content>
       </mat-card>
+
       <mat-card class="profile__card" fxFlex="60">
         <mat-card-header>
           <mat-card-title class="profile-card__title">Funciones del Cargo
@@ -737,7 +732,8 @@
                 <th scope="col" mat-header-cell *matHeaderCellDef> Función Específica
                   <div class="filter-inputs" *ngIf="showRolResponsabilitiesFilter && !isEditable">
                     <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select class="filter filter__courses-certifications">
+                      <mat-select class="filter filter__courses-certifications"
+                        (selectionChange)="applyFilter($event, 'rolResponsabilities')">
                         <mat-option [value]="''">
                           Ver Todos
                         </mat-option>
@@ -794,6 +790,9 @@
 
             </table>
           </form>
+          <div class="not-found-data__container" *ngIf="showNotFoundMessageRolResponsabilities && !isEditable">
+            <app-not-found-message></app-not-found-message>
+          </div>
         </mat-card-content>
       </mat-card>
     </div>
@@ -982,6 +981,9 @@
               </div>
             </mat-tab>
           </mat-tab-group>
+          <div class="not-found-data__container" *ngIf="showNotFoundMessageTalents">
+            <app-not-found-message></app-not-found-message>
+          </div>
         </mat-card-content>
         <mat-card-content *ngIf="isEditable">
           <ng-container *ngIf="contentPagesTalents.length > 1">
@@ -1000,8 +1002,7 @@
               <mat-tab label="First" *ngFor="let contentPage of contentPagesTalents">
                 <div fxLayout="row">
                   <div fxLayout="column" *ngFor="let cont of contentPage">
-                    <mat-list-option *ngFor="let item of cont" [selected]="onInitList(item, 'talents')"
-                      [value]="item">
+                    <mat-list-option *ngFor="let item of cont" [selected]="onInitList(item, 'talents')" [value]="item">
                       {{item.name}}
                     </mat-list-option>
                   </div>
