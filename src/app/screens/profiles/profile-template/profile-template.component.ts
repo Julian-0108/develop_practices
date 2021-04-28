@@ -224,6 +224,9 @@ export class ProfileTemplateComponent implements OnInit {
   showNotFoundMessage = true;
   showNotFoundMessageCoursesCertications = true;
   showNotFoundMessageRolResponsabilities = true;
+  showNotFoundMessageSecurityResponsabilities = true;
+  showNotFoundMessageTalents = true;
+
   corporativeRespList: string[] = [];
 
   constructor(
@@ -285,6 +288,8 @@ export class ProfileTemplateComponent implements OnInit {
     switch (source) {
       case 'coursesAndCertifications':
         this.profileTemplateService.getAllCertificates(row.domain, row.type).then((res: any) => {
+          console.log(res);
+          console.log(row.domain);
           this.nameList[index] = res;
         });
         break;
@@ -576,7 +581,11 @@ export class ProfileTemplateComponent implements OnInit {
   async getData() {
     await this.profileTemplateService.getData(this.idProfile).then((res: any) => {
       this.data = res;
-      if (res.academicEducation[0].education !== undefined) {
+      // if (res.academicEducation[0].education !== undefined) {
+      //   this.showEducationFilter = true;
+      //   this.showNotFoundMessage = false;
+      // }
+      if (res.academicEducation.length !== 0) {
         this.showEducationFilter = true;
         this.showNotFoundMessage = false;
       }
@@ -587,6 +596,12 @@ export class ProfileTemplateComponent implements OnInit {
       if (res.rolResponsabilities.length !== 0) {
         this.showRolResponsabilitiesFilter = true;
         this.showNotFoundMessageRolResponsabilities = false;
+      }
+      if (res.securityResponsabilities.length !== 0) {
+        this.showNotFoundMessageSecurityResponsabilities = false;
+      }
+      if (res.talents.length !== 0) {
+        this.showNotFoundMessageTalents = false;
       }
       this.readOnlyEducationDatasource = new MatTableDataSource(res.academicEducation);
       this.readOnlyRolResponsabilitiesDatasource = new MatTableDataSource(res.rolResponsabilities);
@@ -601,7 +616,11 @@ export class ProfileTemplateComponent implements OnInit {
       });
 
       this.profileTemplateService.getAllCertificates().then((allNames: any) => {
-        this.allNamesList = allNames;
+        const allNamesWithOutDuplicates = allNames.filter(
+          (obj: any, index: number, arraySource: any[]) =>
+            arraySource.findIndex((element: any) => element.name === obj.name) === index
+        );
+        this.allNamesList = allNamesWithOutDuplicates;
       });
 
       /* Rol Responsabilities */
@@ -642,6 +661,9 @@ export class ProfileTemplateComponent implements OnInit {
       });
       this.historyFilter = this.history;
     });
+  }
+  uniq(data: any, key: any) {
+    return [...new Map(data.map((el: any) => [key(el), el])).values()];
   }
   /**
    * @author Hanna

@@ -1,7 +1,10 @@
 body {
-    // padding: 0 20px ;
-    height: calc(100vh - 75px);
-    background-color: #FFFF !important;
+  // padding: 0 20px ;
+  height: calc(100vh - 75px);
+  background-color: #fff !important;
+}
+mat-drawer-container {
+background-color: #fff !important;
 }
 
 .button-back {
@@ -12,7 +15,7 @@ body {
     display: flex;
     padding-top: 2em;
     background-image: url(../../../../assets/images/backgroundRombos.svg);
-    background-size: cover;
+    background-size: contain;
 }
 
 .text {
