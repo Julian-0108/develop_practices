@@ -194,20 +194,3 @@ export class ProfileTemplateService {
       .toPromise();
   }
 }
-// rolResponsabilitiesdataSource = [
-//   {
-//     domain: 'Base de Datos',
-//     function: 'Fundamentos/conceptos básicos',
-//     description: 'Crear, modificar, eliminar usuarios',
-//   },
-//   {
-//     domain: 'Servidores Aplicación',
-//     function: 'Conocimiento/gestión de un producto o herramienta',
-//     description: 'lorem ipsum dolor sit amet consectetur adipiscing elit',
-//   },
-//   {
-//     domain: 'Otro dominio',
-//     function: 'Gestión de accesos',
-//     description: 'lorem ipsum dolor sit amet consectetur adipiscing elit',
-//   },
-// ];
