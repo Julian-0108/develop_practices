@@ -6,6 +6,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './valoraciontotal.component.html',
   styleUrls: ['./valoraciontotal.component.scss']
 })
+
 export class ValoraciontotalComponent implements OnInit {
 
   constructor(
