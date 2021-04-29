@@ -39,6 +39,7 @@ export class MasterInfoService {
       .toPromise();
   }
 
+
   getSkills() {
     return this.http
       .get(

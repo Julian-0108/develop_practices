@@ -26,9 +26,9 @@ export class MasterInfoComponent implements OnInit {
   private archivo!: string;
   private readonly DATE_FORM_CONTROL = 'yyyy-MM-dd';
   types: any[] = [];
+  domains: any[] = [];
   skills: any[] = [];
   masters: Masters[] = [];
-  domains: any[] = [];
 
   constructor(
     private datePipe: DatePipe,

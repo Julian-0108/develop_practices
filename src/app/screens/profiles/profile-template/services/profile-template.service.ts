@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { pluck } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { Master } from '@shared/interfaces/master.interface';
+//import { Master } from '@shared/interfaces/master.interface';
 
 export interface AcademicEducation {
   _id: string;
