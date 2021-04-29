@@ -6,6 +6,8 @@ import { ProfileTemplateComponent } from './profile-template.component';
 import { SharedModule } from '@shared/shared.module';
 import { TitleCasePipe } from '@angular/common';
 import { ResponsabilitiesDescComponent } from './responsabilitiesDesc/responsabilities-desc.component';
+//import { ValoraciontotalComponent } from './valoraciontotal/valoraciontotal.component';
+
 // import { ProfileFormHistoryComponent } from './profile-form-history/profile-form-history.component';
 
 
@@ -14,7 +16,8 @@ import { ResponsabilitiesDescComponent } from './responsabilitiesDesc/responsabi
   imports: [
     CommonModule,
     ProfileTemplateRoutingModule,
-    SharedModule
+    SharedModule,
+   // ValoraciontotalComponent
   ],
   providers: [TitleCasePipe],
 })

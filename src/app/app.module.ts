@@ -15,17 +15,23 @@ import { SharedModule } from "./shared/shared.module";
 import { registerLocaleData } from '@angular/common';
 import { CoreModule } from './core/core.module';
 
+
+
+
 registerLocaleData(localeEsCo, 'es-CO');
 
 @NgModule({
   declarations: [
-    AppComponent],
+    AppComponent,    
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
     SharedModule,
+    
+    
   ],
   providers: [
     {

@@ -1,3 +1,4 @@
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { Tables } from '@app/shared/interfaces/profile-competences.interface';
@@ -21,6 +22,9 @@ import { ActivatedRoute } from '@angular/router';
 import { OnlyNumbers } from '@shared/functions/onlyNumbers';
 import { BehaviorSubject } from 'rxjs';
 import { ResponsabilitiesDescComponent } from './responsabilitiesDesc/responsabilities-desc.component';
+import { ValoraciontotalComponent } from './valoraciontotal/valoraciontotal.component';
+//import { ValorTotalComponent } from './valortotal/valortotal.component';
+
 
 export interface AcademicEducationTable {
   education: string;
@@ -1182,6 +1186,12 @@ export class ProfileTemplateComponent implements OnInit {
         ? (this.showNotFoundMessage = true)
         : (this.showNotFoundMessage = false);
     }
+  }
+
+  selectedValor() {
+    this._dialog.open(ValoraciontotalComponent)
+      .afterClosed()
+      .subscribe((resp: any) => {});
   }
 
   selectedResponsability(event: any) {
