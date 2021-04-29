@@ -5,6 +5,11 @@
       matTooltip="Volver a la página anterior">
     </button>
     <div class="actions">
+      <div class="action" *ngIf="!isEditable !onHistory"  >
+        <button mat-mini-fab  (click)="selectedValor()" matTooltip="Valoración total del perfil">
+        <img class="icon"  src="../assets/images/progresion-grafica.svg" > 
+        </button>
+      </div>
       <div class="action" *ngIf="!isEditable">
         <button (click)="drawer.toggle()" mat-mini-fab matTooltip="Ver historial del perfil">
           <mat-icon>history</mat-icon>
