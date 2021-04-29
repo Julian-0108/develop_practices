@@ -73,6 +73,7 @@ export class HistoryMasterComponent implements OnInit {
     this.existentDate = '';
     if (changes.idHistory.currentValue !== undefined) {
       this.idHistoryassigned = changes.idHistory.currentValue._id;
+      console.log(this.idHistoryassigned);
       this.historyMastersService.hitoryActionsAdminMaster('get', this.idHistoryassigned)
         .then((res: any) => {
           this.historyFilter = res.map((item: any) => {
@@ -80,7 +81,6 @@ export class HistoryMasterComponent implements OnInit {
             item[`showDate`] = this.showDate(item.updatedAt);
             return item;
           });
-          console.log(this.historyFilter);
         });
     }
     }
@@ -172,9 +172,24 @@ export class HistoryMasterComponent implements OnInit {
     this.historySelected = id;
     this.visivility = true;
     this.dataSource = this.historyFilter.filter((el: any) => el._id === id);
+    // Thanks for all <3
+    // if (this.historyFilter[0].idDomain != null) {
+    //   this.displayedColumns = [...this.displayedColumns, 'domain'];
+    // }
+    // if (this.historyFilter[0].description) {
+    //   this.displayedColumns = [...this.displayedColumns, 'description'];
+    // }
+    // if (this.historyFilter[0].type != null) {
+    //   this.displayedColumns = [...this.displayedColumns, 'type'];
+    // }
+    // if (this.historyFilter[0].idMaster != null) {
+    //   this.displayedColumns = [...this.displayedColumns, 'master'];
+    // }
+    // console.log(this.dataSource);
   }
   outPreview() {
     this.historySelected = '';
     this.visivility = false;
+    // this.displayedColumns = ['name'];
   }
 }

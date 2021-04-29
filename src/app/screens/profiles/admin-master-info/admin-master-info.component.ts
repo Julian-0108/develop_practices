@@ -8,6 +8,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Masters } from './interfaces/master-info-dialog';
+import { BehaviorSubject } from 'rxjs';
+import { AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-master-info',
@@ -101,7 +103,7 @@ export class AdminMasterInfoComponent implements OnInit {
   public masterSeleted: string = '';
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true, read: MatSort }) sort!: MatSort;
-  dataSource!: MatTableDataSource<Master>;
+  dataSource: any = new BehaviorSubject<Master[]>([]);
   result!: any;
 
   constructor(
@@ -116,7 +118,7 @@ export class AdminMasterInfoComponent implements OnInit {
 
   getDataMaster() {
     this.masterInfoService.getData(this.masterSeleted).then((res) => {
-      this.dataSource = new MatTableDataSource(res);
+      this.dataSource.next(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.subtitle = this.masters.find((el: any) => el.url === this.masterSeleted);
@@ -127,7 +129,7 @@ export class AdminMasterInfoComponent implements OnInit {
     switch (this.masterSeleted) {
       case 'types':
         return this.displayedColumns.filter(
-          (el) => el !== 'type' && el !== 'description' && el !== 'submenu' && el !== 'domain'
+          (el) => el !== 'type' && el !== 'description' && el !== 'submenu' && el !== 'idDomain'
         );
       case 'studies':
         return this.displayedColumns.filter(
@@ -202,11 +204,4 @@ export class AdminMasterInfoComponent implements OnInit {
     this.open = true;
   }
 
-  getSelectedValue() {
-    const resultmaster = this.masters.find((resp) => {
-      return resp.url == this.masterSeleted;
-    });
-    this.result = resultmaster?.name;
-    console.log(this.masterSeleted);
-  }
 }

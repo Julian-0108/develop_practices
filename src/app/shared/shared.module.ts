@@ -19,6 +19,7 @@ import { LoaderInterceptor } from './components/loader/loader.interceptor';
 import { CardsPipe } from './pipes/cards.pipe';
 import { OrderAlphabeticallyPipe } from './pipes/order-alphabetically.pipe';
 import { ProfileFormHistoryComponent } from '@app/screens/profiles/profile-template/profile-form-history/profile-form-history.component';
+import { NotFoundMessageComponent } from './components/notFoundMessage/not-found-message.component';
 
 
 
@@ -34,7 +35,9 @@ import { ProfileFormHistoryComponent } from '@app/screens/profiles/profile-templ
     CardsPipe,
     OrderAlphabeticallyPipe,
 
-    ProfileFormHistoryComponent
+    ProfileFormHistoryComponent,
+
+    NotFoundMessageComponent
   ],
   imports: [
     CommonModule,
@@ -55,7 +58,7 @@ import { ProfileFormHistoryComponent } from '@app/screens/profiles/profile-templ
     NotImageDirective,
     CardsPipe,
     OrderAlphabeticallyPipe,
-
+    NotFoundMessageComponent,
     ProfileFormHistoryComponent,
   ],
   providers: [

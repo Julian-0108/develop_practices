@@ -376,8 +376,7 @@ export class MasterInfoComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form.value);
-    
+
     if (
       this.form.get('submenu')?.value === null &&
       this.data.url === 'base-teams-categories' &&
