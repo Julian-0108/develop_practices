@@ -130,8 +130,8 @@ export class DialogComponent implements OnInit {
       title: 'Guardar en Historial',
       message: '¿Desea que el registro de los cambios se guarde en el historial?',
       type: 'warning',
-      action: 'Con Historial',
-      contraryAction: 'Sin Historial',
+      action: 'Con historial',
+      contraryAction: 'Sin historial',
     };
     this.notificationService
       .openComplexSnackBar(saveHistorial)

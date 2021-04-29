@@ -18,15 +18,15 @@ export class HistoryMasterComponent implements OnInit {
   endDateFilter = (d: Date | null): boolean => {
     const day = (d || new Date()).getDay();
     // Prevent Saturday and Sunday from being selected.
-    console.log(dayjs.default(day).isBefore(day, 'date'))
+    console.log(dayjs.default(day).isBefore(day, 'date'));
     return day !== 0 && day !== 6;
-  }
+  };
   historyFilter: any = [];
   dataSource = [];
   historySelected = '';
   visivility = false;
-  existentDate! : string;
-  displayedColumns: string[] = ['name', 'description', 'type'];
+  existentDate!: string;
+  displayedColumns: string[] = ['name', 'description', 'type', 'domain', 'master'];
   formFilterHistory = new FormGroup({
     startDate: new FormControl(),
     endDate: new FormControl(),
@@ -48,8 +48,10 @@ export class HistoryMasterComponent implements OnInit {
 
   constructor(private historyMastersService: HistoryMastersService) {}
   @Input() idHistory: any;
+  @Input() masterSeleted: any;
   idHistoryassigned!: any;
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
   // ngOnChanges(changes: SimpleChanges): void {
   //   this.existentDate = '';
   //   if (changes.idHistory.currentValue !== undefined) {
@@ -71,19 +73,54 @@ export class HistoryMasterComponent implements OnInit {
   // }
   ngOnChanges(changes: SimpleChanges): void {
     this.existentDate = '';
-    if (changes.idHistory.currentValue !== undefined) {
-      this.idHistoryassigned = changes.idHistory.currentValue._id;
-      console.log(this.idHistoryassigned);
-      this.historyMastersService.hitoryActionsAdminMaster('get', this.idHistoryassigned)
-        .then((res: any) => {
-          this.historyFilter = res.map((item: any) => {
-            item.updatedAt = dayjs.default(item.updatedAt).format('YYYY-MM-DD');
-            item[`showDate`] = this.showDate(item.updatedAt);
-            return item;
+    if (changes.idHistory) {
+      if (changes.idHistory.currentValue !== undefined) {
+        this.idHistoryassigned = changes.idHistory.currentValue._id;
+        console.log(this.idHistoryassigned);
+        this.historyMastersService
+          .hitoryActionsAdminMaster('get', this.idHistoryassigned)
+          .then((res: any) => {
+            this.historyFilter = res.map((item: any) => {
+              item.updatedAt = dayjs.default(item.updatedAt).format('YYYY-MM-DD');
+              item[`showDate`] = this.showDate(item.updatedAt);
+              return item;
+            });
           });
-        });
+      }
     }
+  }
+  getDisplayedColumns(): string[] {
+    switch (this.masterSeleted) {
+      case 'types':
+        return this.displayedColumns.filter(
+          (el) => el !== 'description' && el !== 'type' && el !== 'domain'
+        );
+      case 'studies':
+        return this.displayedColumns.filter(
+          (el) => el !== 'type' && el !== 'domain' && el !== 'master'
+        );
+      case 'security-responsabilities':
+        return this.displayedColumns.filter(
+          (el) => el !== 'description' && el !== 'domain' && el !== 'master'
+        );
+      case 'education-area':
+        return this.displayedColumns.filter(
+          (el) => el !== 'type' && el !== 'domain' && el !== 'master'
+        );
+      case 'base-teams-categories':
+        return this.displayedColumns.filter((el) => el !== 'domain' && el !== 'master');
+      case 'domain':
+        return this.displayedColumns.filter(
+          (el) => el !== 'type' && el !== 'domain' && el !== 'master'
+        );
+      case 'functions':
+        return this.displayedColumns.filter((el) => el !== 'type' && el !== 'master');
+      case 'courses-certifications':
+        return this.displayedColumns.filter((el) => el !== 'description' && el !== 'master');
+      default:
+        return this.displayedColumns.filter((el) => el !== 'domain' && el !== 'master');
     }
+  }
 
   /**
    * @author Hanna
@@ -94,19 +131,20 @@ export class HistoryMasterComponent implements OnInit {
     this.existentDate = '';
     const startDate = dayjs.default(event.value).format('YYYY-MM-DD');
     let endDate: any;
-        if (this.formFilterHistory.value.endDate === null) {
-          endDate = dayjs.default(new Date().setDate(new Date().getDate() + 1)).format('YYYY-MM-DD');
-          this.formFilterHistory.get('endDate')?.patchValue(endDate);
-        } else {
-          endDate = dayjs.default(this.formFilterHistory.value.endDate).format('YYYY-MM-DD');
-        }
+    if (this.formFilterHistory.value.endDate === null) {
+      endDate = dayjs.default(new Date().setDate(new Date().getDate() + 1)).format('YYYY-MM-DD');
+      this.formFilterHistory.get('endDate')?.patchValue(endDate);
+    } else {
+      endDate = dayjs.default(this.formFilterHistory.value.endDate).format('YYYY-MM-DD');
+    }
     this.historyMastersService
       .hitoryActionsAdminMaster('get', this.idHistoryassigned)
       .then((res: any) => {
         console.log(res);
-        this.historyFilter = this.setShowDate(this.historyFilter, res).filter((item: any) =>
-        dayjs.default(item.updatedAt).isSameOrAfter(startDate) &&
-        dayjs.default(item.updatedAt).isSameOrBefore(endDate)
+        this.historyFilter = this.setShowDate(this.historyFilter, res).filter(
+          (item: any) =>
+            dayjs.default(item.updatedAt).isSameOrAfter(startDate) &&
+            dayjs.default(item.updatedAt).isSameOrBefore(endDate)
         );
         console.log(this.historyFilter);
       });
@@ -124,9 +162,10 @@ export class HistoryMasterComponent implements OnInit {
     this.historyMastersService
       .hitoryActionsAdminMaster('get', this.idHistoryassigned)
       .then((res: any) => {
-        this.historyFilter = this.setShowDate(this.historyFilter, res).filter((item: any) =>
-        dayjs.default(item.updatedAt).isSameOrAfter(startDate) &&
-        dayjs.default(item.updatedAt).isSameOrBefore(endDate)
+        this.historyFilter = this.setShowDate(this.historyFilter, res).filter(
+          (item: any) =>
+            dayjs.default(item.updatedAt).isSameOrAfter(startDate) &&
+            dayjs.default(item.updatedAt).isSameOrBefore(endDate)
         );
       });
   }
@@ -172,6 +211,7 @@ export class HistoryMasterComponent implements OnInit {
     this.historySelected = id;
     this.visivility = true;
     this.dataSource = this.historyFilter.filter((el: any) => el._id === id);
+    console.log(this.dataSource)
     // Thanks for all <3
     // if (this.historyFilter[0].idDomain != null) {
     //   this.displayedColumns = [...this.displayedColumns, 'domain'];

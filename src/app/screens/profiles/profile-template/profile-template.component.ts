@@ -581,10 +581,6 @@ export class ProfileTemplateComponent implements OnInit {
   async getData() {
     await this.profileTemplateService.getData(this.idProfile).then((res: any) => {
       this.data = res;
-      // if (res.academicEducation[0].education !== undefined) {
-      //   this.showEducationFilter = true;
-      //   this.showNotFoundMessage = false;
-      // }
       if (res.academicEducation.length !== 0) {
         this.showEducationFilter = true;
         this.showNotFoundMessage = false;
@@ -790,10 +786,6 @@ export class ProfileTemplateComponent implements OnInit {
         newarrayPages = [];
       }
     });
-    // if (newarrayPages[0].length !== 0) {
-    //   finalArrayPages = [...finalArrayPages, newarrayPages];
-    // }
-
     switch (section) {
       case 'specificKnowledge':
         this.contentPagesSpecificKnowledge = finalArrayPages;
@@ -824,21 +816,6 @@ export class ProfileTemplateComponent implements OnInit {
         newarrayPages = [];
       }
     });
-    // if (newarrayPages[0].length !== 0) {
-    //   finalArrayPages = [...finalArrayPages, newarrayPages];
-    // }
-    // let newarrayPages: any = [];
-    // let finalArrayPages: any = [];
-    // res.forEach((element: any) => {
-    //   newarrayPages = [...newarrayPages, element];
-    //   if (newarrayPages.length === 6) {
-    //     finalArrayPages = [...finalArrayPages, newarrayPages];
-    //     newarrayPages = [];
-    //   }
-    // });
-    // if (newarrayPages.length !== 0) {
-    //   finalArrayPages = [...finalArrayPages, newarrayPages];
-    // }
     switch (section) {
       case 'talents':
         this.contentPagesTalents = finalArrayPages;
@@ -862,8 +839,8 @@ export class ProfileTemplateComponent implements OnInit {
         title: 'Guardar en Historial',
         message: '¿Desea que el registro de los cambios se guarde en el historial?',
         type: 'warning',
-        action: 'Con Historial',
-        contraryAction: 'Sin Historial',
+        action: 'Con historial',
+        contraryAction: 'Sin historial',
       };
       this.notificationService
         .openComplexSnackBar(saveHistorial)
