@@ -211,21 +211,11 @@ export class HistoryMasterComponent implements OnInit {
     this.historySelected = id;
     this.visivility = true;
     this.dataSource = this.historyFilter.filter((el: any) => el._id === id);
+    // for (let i of this.dataSource) {
+
+    // }
+    console.log(this.historyFilter)
     console.log(this.dataSource)
-    // Thanks for all <3
-    // if (this.historyFilter[0].idDomain != null) {
-    //   this.displayedColumns = [...this.displayedColumns, 'domain'];
-    // }
-    // if (this.historyFilter[0].description) {
-    //   this.displayedColumns = [...this.displayedColumns, 'description'];
-    // }
-    // if (this.historyFilter[0].type != null) {
-    //   this.displayedColumns = [...this.displayedColumns, 'type'];
-    // }
-    // if (this.historyFilter[0].idMaster != null) {
-    //   this.displayedColumns = [...this.displayedColumns, 'master'];
-    // }
-    // console.log(this.dataSource);
   }
   outPreview() {
     this.historySelected = '';

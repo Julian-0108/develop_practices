@@ -118,6 +118,7 @@ export class AdminMasterInfoComponent implements OnInit {
 
   getDataMaster() {
     this.masterInfoService.getData(this.masterSeleted).then((res) => {
+      console.log(res)
       this.dataSource.next(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -197,6 +198,7 @@ export class AdminMasterInfoComponent implements OnInit {
     this.dataSource.filter = e.value;
   }
   setId(el: any) {
+    console.log(el)
     this.idHistory = el;
   }
 

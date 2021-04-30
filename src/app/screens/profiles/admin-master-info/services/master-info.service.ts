@@ -102,4 +102,13 @@ export class MasterInfoService {
       xhr.send(register);
     });
   }
+
+  async getDomain(id: string) {
+    return await this.http
+      .get(`${environment.API_MASTER_INFO}/domain/${id}`)
+      .pipe(pluck('payload'))
+      .toPromise();
+
+  }
 }
+

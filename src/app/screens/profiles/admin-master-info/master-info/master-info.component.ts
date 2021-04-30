@@ -251,7 +251,7 @@ export class MasterInfoComponent implements OnInit {
         }
       });
   }
-  onUpdatewithHistory(id: any, data: any, withImage: boolean) {
+   onUpdatewithHistory(id: any, data: any, withImage: boolean) {
     /*
      * Se abre el formulario donde se ingresa la descripción de los cambios,
      * que se guardarán en el historial.
@@ -264,15 +264,20 @@ export class MasterInfoComponent implements OnInit {
         autoFocus: false,
       })
       .afterClosed()
-      .subscribe((resp: any) => {
+      .subscribe(async (resp: any) => {
         if (resp === 'close') return;
         /*
          * Acciones que se activan al dar click en el botón "guardar" del formulario.
          */
+        const domainName: any = await this.masterInfoService.getDomain(this.form.value.idDomain);
+        console.log(domainName)
+        // resp = domainName.name
+        console.log(this.form.value)
         resp = {
           ...resp,
           idMaster: id,
           ...(withImage ? this.form.getRawValue() : this.form.value),
+          idDomain: domainName.name,
         };
         delete resp[`_id`];
         delete resp[`updatedAt`];
@@ -304,6 +309,7 @@ export class MasterInfoComponent implements OnInit {
               });
             });
         } else {
+          console.log(resp)
           this.masterInfoService
             .updateRegisterToMaster(this.data.url, this.data.element._id, this.form.value)
             ?.then(() => {
