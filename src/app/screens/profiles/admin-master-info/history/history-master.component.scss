@@ -122,13 +122,14 @@ table.mat-table {
     text-align: center !important;
 }
 
-.mat-column-name {
+.mat-column-name, .mat-column-type, .mat-column-domain, .mat-column-master {
     width: 10em;
     color: #707070;
+    text-align: center !important;
 }
 
 .mat-column-description {
-    width: 15em;
+    width: 20em;
 }
 
 .mat-column-status {
