@@ -34,13 +34,13 @@ export class ProfileTemplateService {
   async getAllTypes(masterReference?: string | boolean, idType?: string | boolean) {
     if (masterReference) {
       return await this.httpClient
-        .get(`${environment.API_MASTER_INFO}/types?masterReference=${masterReference}`)
+        .get(`${environment.API_MASTER_INFO}/types?status=true&masterReference=${masterReference}`)
         .pipe(pluck('payload'))
         .toPromise();
     }
     if (idType) {
       return await this.httpClient
-        .get(`${environment.API_MASTER_INFO}/types/${idType}`)
+        .get(`${environment.API_MASTER_INFO}/types?status=true/${idType}`)
         .pipe(pluck('payload'))
         .toPromise();
     }
