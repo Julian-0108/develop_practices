@@ -9,7 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Masters } from './interfaces/master-info-dialog';
 import { BehaviorSubject } from 'rxjs';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-master-info',
@@ -103,7 +103,7 @@ export class AdminMasterInfoComponent implements OnInit {
   public masterSeleted: string = '';
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true, read: MatSort }) sort!: MatSort;
-  dataSource: any = new BehaviorSubject<Master[]>([]);
+  dataSource: MatTableDataSource<Master> = new MatTableDataSource();
   result!: any;
 
   constructor(
@@ -117,9 +117,9 @@ export class AdminMasterInfoComponent implements OnInit {
   ngOnInit(): void {}
 
   getDataMaster() {
-    this.masterInfoService.getData(this.masterSeleted).then((res) => {
-      console.log(res)
-      this.dataSource.next(res);
+    this.masterInfoService.getData(this.masterSeleted).then((res: Master[]) => {
+      console.log(res);
+      this.dataSource.data = res
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.subtitle = this.masters.find((el: any) => el.url === this.masterSeleted);
@@ -138,7 +138,8 @@ export class AdminMasterInfoComponent implements OnInit {
         );
       case 'security-responsabilities':
         return this.displayedColumns.filter(
-          (el) => el !== 'description' && el !== 'submenu' && el !== 'reference' && el !== 'idDomain'
+          (el) =>
+            el !== 'description' && el !== 'submenu' && el !== 'reference' && el !== 'idDomain'
         );
       case 'education-area':
         return this.displayedColumns.filter(
@@ -161,7 +162,9 @@ export class AdminMasterInfoComponent implements OnInit {
           (el) => el !== 'submenu' && el !== 'reference' && el !== 'description'
         );
       default:
-        return this.displayedColumns.filter((el) => el !== 'reference' && el !== 'submenu' && el !== 'idDomain');
+        return this.displayedColumns.filter(
+          (el) => el !== 'reference' && el !== 'submenu' && el !== 'idDomain'
+        );
     }
   }
 
@@ -185,27 +188,20 @@ export class AdminMasterInfoComponent implements OnInit {
     });
   }
 
-  applyFilter(event: Event) {
-    const filterValue: String = (event.target as HTMLInputElement).value;
+  applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    console.log(this.dataSource);
   }
 
-  applyDirectFilter(e: any) {
-    this.dataSource.filter = e.value;
+  applyDirectFilter(filterValue: any) {
+    this.dataSource.filter = filterValue;
   }
   setId(el: any) {
-    console.log(el)
+    console.log(el);
     this.idHistory = el;
   }
 
   isOpen() {
     this.open = true;
   }
-
 }
-
-
