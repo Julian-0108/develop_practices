@@ -48,7 +48,7 @@
             <th mat-header-cell *matHeaderCellDef> Dominio
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event)" type="text">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -63,7 +63,7 @@
             <th mat-header-cell *matHeaderCellDef> Maestro
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event)" type="text">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -76,7 +76,7 @@
             <th mat-header-cell *matHeaderCellDef> Nombre
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text" autocomplete="off">
                   <mat-icon
                     [ngClass]="{'icon-search-security' : masterSeleted == 'security-responsabilities', 'icon-search' : masterSeleted != 'security-responsabilities'}"
                     matSuffix>search</mat-icon>
@@ -91,7 +91,7 @@
             <th mat-header-cell *matHeaderCellDef> Descripción
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text" autocomplete="off">
                   <mat-icon class="icon-description" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -104,7 +104,7 @@
             <th mat-header-cell *matHeaderCellDef> Tipo
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event)" type="text" autocomplete="off">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text" autocomplete="off">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -118,7 +118,7 @@
             <th mat-header-cell *matHeaderCellDef matSort> Fecha de creación
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event)" type="date">
+                  <input matInput class="filter" (change)="applyFilter($event.target.value)" type="date">
                 </mat-form-field>
               </div>
             </th>
@@ -130,7 +130,7 @@
             <th mat-header-cell *matHeaderCellDef matSort>Fecha de actualización
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event)" type="date">
+                  <input matInput class="filter" (change)="applyFilter($event.target.value)" type="date">
                 </mat-form-field>
               </div>
             </th>
@@ -142,7 +142,7 @@
             <th mat-header-cell *matHeaderCellDef> Estado
               <div class="filter-inputs filter-inputs__status">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <mat-select class="filter" (selectionChange)="applyDirectFilter($event)">
+                  <mat-select class="filter" (selectionChange)="applyDirectFilter($event.value)">
                     <mat-option value="true">Activo</mat-option>
                     <mat-option value="false">Inactivo</mat-option>
                   </mat-select>
@@ -162,7 +162,7 @@
             <th mat-header-cell *matHeaderCellDef> Subgrupo
               <div class="filter-inputs filter-inputs__status">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <mat-select class="filter" (selectionChange)="applyDirectFilter($event)">
+                  <mat-select class="filter" (selectionChange)="applyDirectFilter($event.value)">
                     <mat-option value="true">Sí</mat-option>
                     <mat-option value="false">No</mat-option>
                   </mat-select>
