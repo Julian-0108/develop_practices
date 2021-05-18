@@ -25,6 +25,11 @@ export class ProfileTemplateService {
       .pipe<AcademicEducation[]>(pluck('payload'))
       .toPromise();
   }
+
+  async getAllSpecificKnowledge(): Promise<any[]> {
+    return []
+  }
+
   async getAllAreas(): Promise<AcademicEducation[]> {
     return await this.httpClient
       .get(`${environment.API_MASTER_INFO}/education-area?status=true`)
@@ -172,6 +177,15 @@ export class ProfileTemplateService {
     data.academicEducation = data.academicEducation.map((item: any) => {
       return { education: item._id, name: item.name, area: item.area };
     });
+    data.specificKnowledge = [
+      {
+        domain: 'Dominio',
+        knowledgeArea: 'Administración',
+        specificKnowledge: 'registros en oracle',
+        yearsExperience: 1,
+        pojectsExperience: 1,
+      }
+    ]
     data.rolResponsabilities = data.jobFunctions;
     delete data.jobFunctions;
     /* SecurityResponsabilities */
@@ -185,6 +199,7 @@ export class ProfileTemplateService {
         );
       }
     });
+    console.log(data)
     return data;
   }
   async updateProfile(id: any, body: any) {
