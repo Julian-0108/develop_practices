@@ -58,6 +58,32 @@
             </td>
           </ng-container>
 
+          <!-- Knowledge Area Column -->
+          <ng-container matColumnDef="knowledgeArea">
+            <th mat-header-cell *matHeaderCellDef> Área de conocimiento
+              <div class="filter-inputs">
+                <mat-form-field floatLabel="always" appearance="none">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text">
+                  <mat-icon class="icon-search" matSuffix>search</mat-icon>
+                </mat-form-field>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.knowledgeArea}} </td>
+          </ng-container>
+
+          <!-- Specific Knowledge Column -->
+          <ng-container matColumnDef="specificKnowledge">
+            <th mat-header-cell *matHeaderCellDef> Conocimiento Específico
+              <div class="filter-inputs">
+                <mat-form-field floatLabel="always" appearance="none">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text">
+                  <mat-icon class="icon-search" matSuffix>search</mat-icon>
+                </mat-form-field>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.specificKnowledge}} </td>
+          </ng-container>
+
           <!-- Reference Column -->
           <ng-container matColumnDef="reference">
             <th mat-header-cell *matHeaderCellDef> Maestro

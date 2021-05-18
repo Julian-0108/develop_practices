@@ -24,10 +24,12 @@ export class AdminMasterInfoComponent implements OnInit {
   subtitle: any = '';
 
   public displayedColumns: string[] = [
+    'idDomain',
+    'knowledgeArea',
+    'specificKnowledge',
     'name',
     'reference',
     'description',
-    'idDomain',
     'type',
     'createdAt',
     'updatedAt',
@@ -98,6 +100,11 @@ export class AdminMasterInfoComponent implements OnInit {
       url: 'domain',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
+    {
+      name: 'Temario',
+      url: 'syllabi',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
   ];
 
   public masterSeleted: string = '';
@@ -119,7 +126,7 @@ export class AdminMasterInfoComponent implements OnInit {
   getDataMaster() {
     this.masterInfoService.getData(this.masterSeleted).then((res: Master[]) => {
       console.log(res);
-      this.dataSource.data = res
+      this.dataSource.data = res;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.subtitle = this.masters.find((el: any) => el.url === this.masterSeleted);
@@ -130,40 +137,98 @@ export class AdminMasterInfoComponent implements OnInit {
     switch (this.masterSeleted) {
       case 'types':
         return this.displayedColumns.filter(
-          (el) => el !== 'type' && el !== 'description' && el !== 'submenu' && el !== 'idDomain'
+          (el) =>
+            el !== 'type' &&
+            el !== 'description' &&
+            el !== 'submenu' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge'
         );
       case 'studies':
         return this.displayedColumns.filter(
-          (el) => el !== 'type' && el !== 'submenu' && el !== 'reference' && el !== 'idDomain'
+          (el) =>
+            el !== 'type' &&
+            el !== 'submenu' &&
+            el !== 'reference' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge'
         );
       case 'security-responsabilities':
         return this.displayedColumns.filter(
           (el) =>
-            el !== 'description' && el !== 'submenu' && el !== 'reference' && el !== 'idDomain'
+            el !== 'description' &&
+            el !== 'submenu' &&
+            el !== 'reference' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge'
         );
       case 'education-area':
         return this.displayedColumns.filter(
-          (el) => el !== 'type' && el !== 'submenu' && el !== 'reference' && el !== 'idDomain'
+          (el) =>
+            el !== 'type' &&
+            el !== 'submenu' &&
+            el !== 'reference' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge'
         );
       case 'base-teams-categories':
         return this.displayedColumns.filter(
-          (el) => el !== 'submenu' && el !== 'reference' && el !== 'idDomain'
+          (el) =>
+            el !== 'submenu' &&
+            el !== 'reference' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge'
         );
       case 'domain':
         return this.displayedColumns.filter(
-          (el) => el !== 'submenu' && el !== 'reference' && el !== 'type' && el !== 'idDomain'
+          (el) =>
+            el !== 'submenu' &&
+            el !== 'reference' &&
+            el !== 'type' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge'
         );
       case 'functions':
         return this.displayedColumns.filter(
-          (el) => el !== 'submenu' && el !== 'reference' && el !== 'type'
+          (el) =>
+            el !== 'submenu' &&
+            el !== 'reference' &&
+            el !== 'type' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge'
         );
       case 'courses-certifications':
         return this.displayedColumns.filter(
-          (el) => el !== 'submenu' && el !== 'reference' && el !== 'description'
+          (el) =>
+            el !== 'submenu' &&
+            el !== 'reference' &&
+            el !== 'description' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge'
+        );
+      case 'syllabi':
+        return this.displayedColumns.filter(
+          (el) =>
+            el !== 'submenu' &&
+            el !== 'name' &&
+            el !== 'reference' &&
+            el !== 'type' &&
+            el !== 'description'
         );
       default:
         return this.displayedColumns.filter(
-          (el) => el !== 'reference' && el !== 'submenu' && el !== 'idDomain'
+          (el) =>
+            el !== 'reference' &&
+            el !== 'submenu' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge'
         );
     }
   }

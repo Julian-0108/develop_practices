@@ -80,7 +80,7 @@ export class MasterInfoComponent implements OnInit {
   createForm(): FormGroup {
     return this.formBuilder.group({
       _id: new FormControl(),
-      name: new FormControl('', [Validators.required, this.customValidator.noWhitespaceValidator]),
+      name: new FormControl(''),
       description: new FormControl({
         value: '',
         disabled:
@@ -97,6 +97,8 @@ export class MasterInfoComponent implements OnInit {
           this.data?.url === 'domain',
       }),
       idDomain: new FormControl(null),
+      knowledgeArea: new FormControl(null),
+      specificKnowledge: new FormControl(null),
       masterReference: new FormControl(null),
       idParent: new FormControl({
         value: null,
@@ -124,20 +126,34 @@ export class MasterInfoComponent implements OnInit {
       this.form.get('submenu')?.disable();
       this.form.get('idParent')?.enable();
     }
+
+    if (this.data.url !== 'syllabi') {
+      this.form.controls.name?.setValidators([Validators.required]);
+      this.form.controls.name?.updateValueAndValidity();
+    } else {
+      this.form.controls.name?.clearValidators();
+    }
+
     if (this.data.url !== 'types') {
-      this.form.controls.type?.setValidators([Validators.required]);
-      this.form.controls.type?.updateValueAndValidity();
-      this.form.controls.description?.setValidators([
-        Validators.required,
-        this.customValidator.noWhitespaceValidator,
-      ]);
-      this.form.controls.description?.updateValueAndValidity();
-      this.form.controls.masterReference?.clearValidators();
-      if (this.data.url === 'security-responsabilities') {
-        this.form.controls.description?.clearValidators();
+      if (this.data.url !== 'syllabi') {
+        this.form.controls.type?.setValidators([Validators.required]);
+        this.form.controls.type?.updateValueAndValidity();
+        this.form.controls.description?.setValidators([
+          Validators.required,
+          this.customValidator.noWhitespaceValidator,
+        ]);
         this.form.controls.description?.updateValueAndValidity();
+        this.form.controls.masterReference?.clearValidators();
+        if (this.data.url === 'security-responsabilities') {
+          this.form.controls.description?.clearValidators();
+          this.form.controls.description?.updateValueAndValidity();
+        }
       }
-      if (this.data.url === 'courses-certifications' || this.data.url === 'functions') {
+      if (
+        this.data.url === 'courses-certifications' ||
+        this.data.url === 'functions' ||
+        this.data.url === 'syllabi'
+      ) {
         this.form.controls.idDomain?.setValidators([Validators.required]);
       }
     } else {
@@ -149,10 +165,10 @@ export class MasterInfoComponent implements OnInit {
     }
 
     if (this.data?.element) {
-    console.log(this.data);
+      console.log(this.data);
 
       if (this.data.element.domain) {
-      this.data.element.idDomain = this.data.element.domain[0]._id;
+        this.data.element.idDomain = this.data.element.domain[0]._id;
       }
 
       this.form.patchValue(this.data.element);
@@ -251,7 +267,7 @@ export class MasterInfoComponent implements OnInit {
         }
       });
   }
-   onUpdatewithHistory(id: any, data: any, withImage: boolean) {
+  onUpdatewithHistory(id: any, data: any, withImage: boolean) {
     /*
      * Se abre el formulario donde se ingresa la descripción de los cambios,
      * que se guardarán en el historial.
@@ -270,9 +286,9 @@ export class MasterInfoComponent implements OnInit {
          * Acciones que se activan al dar click en el botón "guardar" del formulario.
          */
         const domainName: any = await this.masterInfoService.getDomain(this.form.value.idDomain);
-        console.log(domainName)
+        console.log(domainName);
         // resp = domainName.name
-        console.log(this.form.value)
+        console.log(this.form.value);
         resp = {
           ...resp,
           idMaster: id,
@@ -309,7 +325,7 @@ export class MasterInfoComponent implements OnInit {
               });
             });
         } else {
-          console.log(resp)
+          console.log(resp);
           this.masterInfoService
             .updateRegisterToMaster(this.data.url, this.data.element._id, this.form.value)
             ?.then(() => {
@@ -382,7 +398,6 @@ export class MasterInfoComponent implements OnInit {
   }
 
   onSubmit() {
-
     if (
       this.form.get('submenu')?.value === null &&
       this.data.url === 'base-teams-categories' &&
@@ -509,5 +524,38 @@ export class MasterInfoComponent implements OnInit {
     }
     this.form.get('submenu')?.disable();
     this.form.get('idParent')?.disable();
+  }
+
+  showOrHide(field: string) {
+    const URL = this.data?.url;
+    switch (field) {
+      case 'name':
+        if (URL !== 'syllabi') return true;
+        break;
+      case 'description':
+        if (
+          URL !== 'security-responsabilities' &&
+          URL !== 'courses-certifications' &&
+          URL !== 'syllabi'
+        )
+          return true;
+        break;
+      case 'idDomain':
+        if (URL === 'courses-certifications' || URL === 'functions' || URL === 'syllabi')
+          return true;
+        break;
+      case 'masterReference':
+        if (URL === 'types') return true;
+        break;
+      case 'type':
+        if (URL !== 'types' && URL !== 'functions' && URL !== 'syllabi') return true;
+        break;
+      case 'knowledgeArea':
+        if (URL === 'syllabi') return true;
+        break;
+      case 'specificKnowledge':
+        if (URL === 'syllabi') return true;
+        break;
+    }
   }
 }
