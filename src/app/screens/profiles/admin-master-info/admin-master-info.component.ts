@@ -40,8 +40,18 @@ export class AdminMasterInfoComponent implements OnInit {
 
   public readonly masters: Masters[] = [
     {
-      name: 'Habilidades de equipo',
-      url: 'base-teams-categories',
+      name: 'Area de Formación',
+      url: 'education-area',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    {
+      name: 'Competencias corporativas y talentos',
+      url: 'skills',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    {
+      name: 'Conocimientos específicos del cargo',
+      url: 'specific-knowledge',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
     {
@@ -51,23 +61,8 @@ export class AdminMasterInfoComponent implements OnInit {
       icon: 'help',
     },
     {
-      name: 'Competencias corporativas y talentos',
-      url: 'skills',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
-    },
-    {
-      name: 'Funciones del Cargo',
-      url: 'functions',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
-    },
-    {
-      name: 'Módulos',
-      url: 'modules',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
-    },
-    {
-      name: 'Conocimientos específicos del cargo',
-      url: 'specific-knowledge',
+      name: 'Dominio',
+      url: 'domain',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
     {
@@ -76,13 +71,23 @@ export class AdminMasterInfoComponent implements OnInit {
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
     {
+      name: 'Funciones del Cargo',
+      url: 'functions',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    {
+      name: 'Habilidades de equipo',
+      url: 'base-teams-categories',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    {
       name: 'Herramientas de trabajo',
       url: 'work-tools',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
     {
-      name: 'Tipos',
-      url: 'types',
+      name: 'Módulos',
+      url: 'modules',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
     {
@@ -91,20 +96,15 @@ export class AdminMasterInfoComponent implements OnInit {
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
     {
-      name: 'Area de Formación',
-      url: 'education-area',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
-    },
-    {
-      name: 'Dominio',
-      url: 'domain',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
-    },
-    {
       name: 'Temario',
       url: 'syllabi',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
+    {
+      name: 'Tipos',
+      url: 'types',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    }
   ];
 
   public masterSeleted: string = '';
