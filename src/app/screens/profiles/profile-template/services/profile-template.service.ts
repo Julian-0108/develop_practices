@@ -26,10 +26,6 @@ export class ProfileTemplateService {
       .toPromise();
   }
 
-  async getAllSpecificKnowledge(): Promise<any[]> {
-    return []
-  }
-
   async getAllAreas(): Promise<AcademicEducation[]> {
     return await this.httpClient
       .get(`${environment.API_MASTER_INFO}/education-area?status=true`)
@@ -55,11 +51,7 @@ export class ProfileTemplateService {
       i._id = i.id;
     }
   }
-  async getAllCertificates(
-    idDomain?: string,
-    type?: string,
-    name?: string
-  ) {
+  async getAllCertificates(idDomain?: string, type?: string, name?: string) {
     if (idDomain && type) {
       const response: any = await this.httpClient
         .get(
@@ -179,13 +171,13 @@ export class ProfileTemplateService {
     });
     data.specificKnowledge = [
       {
-        domain: 'Dominio',
-        knowledgeArea: 'Administración',
-        specificKnowledge: 'registros en oracle',
+        domain: '60806cff098c2328dc2174b1',
+        knowledgeArea: 'Seguridad',
+        specificKnowledge: 'Gestion de accesos',
         yearsExperience: 1,
         pojectsExperience: 1,
-      }
-    ]
+      },
+    ];
     data.rolResponsabilities = data.jobFunctions;
     delete data.jobFunctions;
     /* SecurityResponsabilities */
@@ -199,7 +191,7 @@ export class ProfileTemplateService {
         );
       }
     });
-    console.log(data)
+    console.log(data);
     return data;
   }
   async updateProfile(id: any, body: any) {
@@ -207,5 +199,39 @@ export class ProfileTemplateService {
       .put(`${environment.API_BASE_PROFILES}/bases-profiles/${id}`, body)
       .pipe(pluck('payload'))
       .toPromise();
+  }
+  async getAllKnowledgeArea(idDomain: string) {
+    return await this.httpClient
+      .get(`${environment.API_MASTER_INFO}/syllabi?status=true&idDomain=${idDomain}`)
+      .pipe(pluck('payload'))
+      .toPromise();
+  }
+  async getAllSpecificKnowledge(idDomain: string, knowledgeArea: string) {
+    return await this.httpClient
+      .get(
+        `${environment.API_MASTER_INFO}/syllabi?status=true&idDomain=${idDomain}&knowledgeArea=${knowledgeArea}`
+      )
+      .pipe(pluck('payload'))
+      .toPromise();
+  }
+  async getSyllabi(idDomain?: string, knowledgeArea?: string, specificKnowledge?: string) {
+    if (idDomain && knowledgeArea && specificKnowledge) {
+      return await this.httpClient
+        .get(
+          `${environment.API_MASTER_INFO}/syllabi?status=true&idDomain=${idDomain}&knowledgeArea=${knowledgeArea}&specificKnowledge=${specificKnowledge}`
+        )
+        .pipe(pluck('payload'))
+        .toPromise();
+    }
+    let allLists: any = { knowledgeArea: [], specificKnowledge: [] };
+    let response: any = await this.httpClient
+      .get(`${environment.API_MASTER_INFO}/syllabi?status=true`)
+      .pipe(pluck('payload'))
+      .toPromise();
+    response.forEach((element: any) => {
+      allLists.knowledgeArea.push(element.knowledgeArea);
+      allLists.specificKnowledge.push(element.specificKnowledge);
+    });
+    return allLists;
   }
 }

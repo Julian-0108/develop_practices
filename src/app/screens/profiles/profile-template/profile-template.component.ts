@@ -1,4 +1,3 @@
-
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { Tables } from '@app/shared/interfaces/profile-competences.interface';
@@ -24,7 +23,6 @@ import { BehaviorSubject } from 'rxjs';
 import { ResponsabilitiesDescComponent } from './responsabilitiesDesc/responsabilities-desc.component';
 import { ValoraciontotalComponent } from './valoraciontotal/valoraciontotal.component';
 //import { ValorTotalComponent } from './valortotal/valortotal.component';
-
 
 export interface AcademicEducationTable {
   education: string;
@@ -75,7 +73,9 @@ export class ProfileTemplateComponent implements OnInit {
   typeList: any[] = [];
   nameList: any = {};
   rolResponsabilitiesList: any = {};
+  knowledgeAreaList: any = {};
   specificKnowledgeList: any = {};
+  allSpecificKnowledgeList: any = {};
   allNamesList: any = [];
   allRolResponsabilities: any = [];
   areasList: AcademicEducation[] = [];
@@ -256,7 +256,9 @@ export class ProfileTemplateComponent implements OnInit {
     this.getData();
   }
 
-  ngOnInit(): void {console.log(moment.version)}
+  ngOnInit(): void {
+    console.log(moment.version);
+  }
 
   checkBoxChanged(el: any, sourceCheck: string) {
     if (sourceCheck === 'optional' && el.optional) {
@@ -291,15 +293,15 @@ export class ProfileTemplateComponent implements OnInit {
     }
   }
 
-  addRowIntoSpecificKnowledgeTable(d?: any, noUpdate?: boolean){
-      const row = this.formBuilder.group({
+  addRowIntoSpecificKnowledgeTable(d?: any, noUpdate?: boolean) {
+    const row = this.formBuilder.group({
       domain: d && d.domain ? d.domain : null,
       knowledgeArea: d && d.knowledgeArea ? d.knowledgeArea : null,
       specificKnowledge: d && d.specificKnowledge ? d.specificKnowledge : null,
-      yearsExperience: d && d.yearsExperience ? d.yearsExperience : false,
-      pojectsExperience: d && d.pojectsExperience ? d.pojectsExperience : false,
+      yearsExperience: d && d.yearsExperience ? d.yearsExperience : 0,
+      pojectsExperience: d && d.pojectsExperience ? d.pojectsExperience : 0,
     });
-    console.log(row)
+    console.log(row);
     this.specificKnowledgeFormRows.push(row);
     if (!noUpdate) {
       this.refreshSpecificKnowledgeTable();
@@ -332,9 +334,15 @@ export class ProfileTemplateComponent implements OnInit {
         });
         break;
       case 'specificKnowledge':
-        this.profileTemplateService.getAllSpecificKnowledge().then((res: any) => {
-          this.specificKnowledgeList[index] = res;
+        this.profileTemplateService.getAllKnowledgeArea(row.domain).then((res: any) => {
+          this.knowledgeAreaList[index] = res;
+          console.log(this.knowledgeAreaList);
         });
+        this.profileTemplateService
+          .getAllSpecificKnowledge(row.domain, row.knowledgeArea)
+          .then((res: any) => {
+            this.specificKnowledgeList[index] = res;
+          });
         break;
     }
   }
@@ -392,14 +400,8 @@ export class ProfileTemplateComponent implements OnInit {
         this._coursesCertifications.renderRows();
         break;
       case 'specificKnowledge':
-        (this.specificKnowledgeForm.controls.specificKnowledge as FormArray).removeAt(
-          index
-        );
-        for (
-          let i = 0;
-          i < this.specificKnowledgeForm.value.specificKnowledge.length;
-          i++
-        ) {
+        (this.specificKnowledgeForm.controls.specificKnowledge as FormArray).removeAt(index);
+        for (let i = 0; i < this.specificKnowledgeForm.value.specificKnowledge.length; i++) {
           const row = this.specificKnowledgeForm.value.specificKnowledge[i];
           this.filerSelectList(row, i, 'specificKnowledge');
         }
@@ -529,15 +531,6 @@ export class ProfileTemplateComponent implements OnInit {
    */
   nextTab(length: any, section: string) {
     switch (section) {
-      // case 'requiredCertificates':
-      //   this.tabIndexRequiredCertificates = this.tabIndexRequiredCertificates + 1;
-      //   if (this.tabIndexRequiredCertificates > 0) {
-      //     this.beforePageButtonDisabledRequiredCertificates = false;
-      //   }
-      //   if (this.tabIndexRequiredCertificates === length - 1) {
-      //     this.nextPageButtonDisabledRequiredCertificates = true;
-      //   }
-      //   break;
       case 'specificKnowledge':
         this.tabIndexSpecificKnowledge = this.tabIndexSpecificKnowledge + 1;
         if (this.tabIndexSpecificKnowledge > 0) {
@@ -663,14 +656,15 @@ export class ProfileTemplateComponent implements OnInit {
       this.readOnlyCoursesCertificationsDatasource = new MatTableDataSource(
         res.coursesAndCertifications
       );
-      this.readOnlySpecificKnowledgeDatasource = new MatTableDataSource(
-        res.specificKnowledge
-      );
+      this.readOnlySpecificKnowledgeDatasource = new MatTableDataSource(res.specificKnowledge);
       this.profileTemplateService.getAllEstudies().then((resp: AcademicEducation[]) => {
         this.educationList = resp;
       });
       this.profileTemplateService.getAllDomains().then((resp: any[]) => {
         this.domainList = resp;
+      });
+      this.profileTemplateService.getSyllabi().then((resp: any) => {
+        this.allSpecificKnowledgeList = resp;
       });
 
       this.profileTemplateService.getAllCertificates().then((allNames: any) => {
@@ -1121,22 +1115,50 @@ export class ProfileTemplateComponent implements OnInit {
     return true;
   }
   onSaveSpecificKnowledge() {
-    // if (this.specificKnowledge.selectedOptions.selected.length === 0) {
-    //   this.notificationService.openSimpleSnackBar({
-    //     title: 'Acción Incorrecta',
-    //     message: 'Debe seleccionar al menos un item de la lista de "Conocimientos Específicos".',
-    //     type: 'error',
-    //   });
-    //   this.specificKnowledgeError = true;
-    //   return;
-    // }
-    // this.specificKnowledgeError = false;
-    // this.sendInformation = {
-    //   ...this.sendInformation,
-    //   specificKnowledge: this.specificKnowledge.selectedOptions.selected.map(
-    //     (value) => value.value
-    //   ),
-    // };
+    let emptyFields: object[] = [];
+    let newResponse: any[] = [];
+    for (const i of this.specificKnowledgeForm.value.specificKnowledge) {
+      if (i.domain === null || i.knowledgeArea === null || i.specificKnowledge === null) {
+        emptyFields.push(i);
+      }
+    }
+
+    if (this.specificKnowledgeForm.value.specificKnowledge.length === 0) {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Acción Incorrecta',
+        message: 'La selección de "Conocimientos Específicos" no puede estar vacía.',
+        type: 'error',
+      });
+      this.specificKnowledgeError = true;
+      return;
+    }
+    if (emptyFields.length !== 0) {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Acción Incorrecta',
+        message: 'Ninguno de los campos de "Conocimientos Específicos" puede estar vacío.',
+        type: 'error',
+      });
+      this.specificKnowledgeError = true;
+      return;
+    }
+    this.specificKnowledgeError = false;
+    /* Arma la estructura que recibe el back */
+    for (const i of this.specificKnowledgeForm.value.specificKnowledge) {
+      this.profileTemplateService
+        .getSyllabi(i.domain, i.knowledgeArea, i.specificKnowledge)
+        .then((resp: any) => {
+          newResponse.push({
+            idSyllabi: resp[0]._id,
+            years: i.yearsExperience,
+            projects: i.pojectsExperience,
+          });
+        });
+    }
+    console.log(newResponse);
+    this.sendInformation = {
+      ...this.sendInformation,
+      specificKnowledge: newResponse
+    };
     return true;
   }
   onSaveRolResponsabilities() {
@@ -1305,7 +1327,8 @@ export class ProfileTemplateComponent implements OnInit {
   }
 
   selectedValor() {
-    this._dialog.open(ValoraciontotalComponent)
+    this._dialog
+      .open(ValoraciontotalComponent)
       .afterClosed()
       .subscribe((resp: any) => {});
   }
