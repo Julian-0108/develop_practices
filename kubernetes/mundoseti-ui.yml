@@ -2,22 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: mundoseti
-  name: mundoseti-ui
+  name: ${sourceRepository}
   labels:
-    app: mundoseti-ui
+    app: ${sourceRepository}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mundoseti-ui
+      app: ${sourceRepository}
   template:
     metadata:
       labels:
-        app: mundoseti-ui
+        app: ${sourceRepository}
     spec:
       containers:
       - image: srvsetia604:5000/${sourceRepository}:${UpdatedVersion}
-        name: mundoseti-ui
+        name: ${sourceRepository}
         ports:
         - containerPort: 80
         resources:
@@ -36,9 +36,9 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: mundoseti
-  name: mundoseti-ui-service
+  name: ${sourceRepository}-service
   labels:
-    app: mundoseti-ui-service
+    app: ${sourceRepository}-service
 spec:
   type: NodePort
   ports:
@@ -47,6 +47,6 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
-    app: mundoseti-ui
+    app: ${sourceRepository}
 status:
   loadBalancer: {}
