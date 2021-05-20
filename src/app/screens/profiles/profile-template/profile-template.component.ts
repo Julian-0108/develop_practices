@@ -295,11 +295,11 @@ export class ProfileTemplateComponent implements OnInit {
 
   addRowIntoSpecificKnowledgeTable(d?: any, noUpdate?: boolean) {
     const row = this.formBuilder.group({
-      domain: d && d.domain ? d.domain : null,
+      domain: d && d.idDomain ? d.idDomain : null,
       knowledgeArea: d && d.knowledgeArea ? d.knowledgeArea : null,
       specificKnowledge: d && d.specificKnowledge ? d.specificKnowledge : null,
-      yearsExperience: d && d.yearsExperience ? d.yearsExperience : 0,
-      pojectsExperience: d && d.pojectsExperience ? d.pojectsExperience : 0,
+      yearsExperience: d && d.years ? d.years : 0,
+      pojectsExperience: d && d.projects ? d.projects : 0,
     });
     console.log(row);
     this.specificKnowledgeFormRows.push(row);

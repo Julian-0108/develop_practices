@@ -526,7 +526,7 @@
                     </div>
                   </th>
                   <ng-container *ngIf="!isEditable">
-                    <td mat-cell *matCellDef="let element">{{element.domain}}</td>
+                    <td mat-cell *matCellDef="let element">{{element.nameDomain}}</td>
                   </ng-container>
                   <ng-container *ngIf="isEditable">
                     <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
@@ -615,7 +615,7 @@
                     </div>
                   </th>
                   <ng-container *ngIf="!isEditable">
-                    <td mat-cell *matCellDef="let element">{{element.yearsExperience}}</td>
+                    <td mat-cell *matCellDef="let element">{{element.years}}</td>
                   </ng-container>
                   <ng-container *ngIf="isEditable">
                     <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
@@ -635,7 +635,7 @@
                     </div>
                   </th>
                   <ng-container *ngIf="!isEditable">
-                    <td mat-cell *matCellDef="let element">{{element.pojectsExperience}}</td>
+                    <td mat-cell *matCellDef="let element">{{element.projects}}</td>
                   </ng-container>
                   <ng-container *ngIf="isEditable">
                     <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">

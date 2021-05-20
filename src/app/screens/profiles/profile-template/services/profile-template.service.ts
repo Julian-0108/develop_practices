@@ -2,34 +2,25 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { pluck } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-//import { Master } from '@shared/interfaces/master.interface';
+import { Master } from '@shared/interfaces/master.interface';
 
-export interface AcademicEducation {
-  _id: string;
-  name: string;
-  description: string;
-  status: boolean;
-  type?: string;
-  updatedAt: string;
-  createdAt: string;
-}
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileTemplateService {
   constructor(private httpClient: HttpClient) {}
 
-  async getAllEstudies(): Promise<AcademicEducation[]> {
+  async getAllEstudies(): Promise<Master[]> {
     return await this.httpClient
       .get(`${environment.API_MASTER_INFO}/studies?status=true`)
-      .pipe<AcademicEducation[]>(pluck('payload'))
+      .pipe<Master[]>(pluck('payload'))
       .toPromise();
   }
 
-  async getAllAreas(): Promise<AcademicEducation[]> {
+  async getAllAreas(): Promise<Master[]> {
     return await this.httpClient
       .get(`${environment.API_MASTER_INFO}/education-area?status=true`)
-      .pipe<AcademicEducation[]>(pluck('payload'))
+      .pipe<Master[]>(pluck('payload'))
       .toPromise();
   }
   async getAllTypes(masterReference?: string | boolean, idType?: string | boolean) {
@@ -169,15 +160,6 @@ export class ProfileTemplateService {
     data.academicEducation = data.academicEducation.map((item: any) => {
       return { education: item._id, name: item.name, area: item.area };
     });
-    data.specificKnowledge = [
-      {
-        domain: '60806cff098c2328dc2174b1',
-        knowledgeArea: 'Seguridad',
-        specificKnowledge: 'Gestion de accesos',
-        yearsExperience: 1,
-        pojectsExperience: 1,
-      },
-    ];
     data.rolResponsabilities = data.jobFunctions;
     delete data.jobFunctions;
     /* SecurityResponsabilities */
@@ -214,6 +196,7 @@ export class ProfileTemplateService {
       .pipe(pluck('payload'))
       .toPromise();
   }
+
   async getSyllabi(idDomain?: string, knowledgeArea?: string, specificKnowledge?: string) {
     if (idDomain && knowledgeArea && specificKnowledge) {
       return await this.httpClient
@@ -223,6 +206,9 @@ export class ProfileTemplateService {
         .pipe(pluck('payload'))
         .toPromise();
     }
+    /** Con la información que trae del servicio de Sylaby, arma las listas de los filtros
+     * de knowledgeArea y specificKnowledge.
+     */
     let allLists: any = { knowledgeArea: [], specificKnowledge: [] };
     let response: any = await this.httpClient
       .get(`${environment.API_MASTER_INFO}/syllabi?status=true`)
