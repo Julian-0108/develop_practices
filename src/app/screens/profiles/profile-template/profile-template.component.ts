@@ -56,7 +56,6 @@ export class ProfileTemplateComponent implements OnInit {
   @ViewChild('educationTable') _educationTable!: MatTable<any>;
   @ViewChild('coursesCertifications') _coursesCertifications!: MatTable<any>;
   @ViewChild('specificKnowledge') _specificKnowledge!: MatTable<any>;
-  // @ViewChild('specificKnowledge') specificKnowledge!: MatSelectionList;
   @ViewChild('rolResponsabilities') _rolResponsabilities!: MatTable<any>;
   @ViewChild('talents') talents!: MatSelectionList;
   @ViewChild('securityResponsabilities') securityResponsabilities!: MatSelectionList;
@@ -171,21 +170,6 @@ export class ProfileTemplateComponent implements OnInit {
     'specificKnowledge',
     'yearsExperience',
     'pojectsExperience',
-  ];
-  // public specificknowledgeColumns: string[] = [
-  //   'knowledge',
-  //   'area',
-  //   'description',
-  //   'yearsExperience',
-  //   'pojectsExperience',
-  // ];
-  public specificknowledgeColumnsEdit: string[] = [
-    'knowledge',
-    'area',
-    'description',
-    'yearsExperience',
-    'pojectsExperience',
-    'actions',
   ];
   disableInputs = false;
   CoursesCertificationsData = [
@@ -715,9 +699,7 @@ export class ProfileTemplateComponent implements OnInit {
       this.historyFilter = this.history;
     });
   }
-  uniq(data: any, key: any) {
-    return [...new Map(data.map((el: any) => [key(el), el])).values()];
-  }
+
   /**
    * @author Hanna
    * @description Esta función muestra las fechas en la sección de historial,
@@ -829,9 +811,7 @@ export class ProfileTemplateComponent implements OnInit {
   /**
    * @author Hanna
    * @description Función que construye las columnas de las opciones que se mostrarán en
-   * cada página o tab de las secciones que contengan listas.Esta función arma un máximo
-   * de 3 columnas. La función "buildPagesList", por ser secciones de menor tamaño,
-   * arma solo una columna con listas de máximo 6 items.
+   * cada página o tab de las secciones que contengan listas.
    */
 
   buildPagesAndColumnsList(res: any, section: string) {
@@ -1358,5 +1338,9 @@ export class ProfileTemplateComponent implements OnInit {
       this.educationError = true;
       return;
     }
+  }
+
+  uniq(data: any, key: any) {
+    return [...new Map(data.map((el: any) => [key(el), el])).values()];
   }
 }
