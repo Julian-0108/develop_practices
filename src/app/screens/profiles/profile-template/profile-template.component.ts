@@ -23,6 +23,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ResponsabilitiesDescComponent } from './responsabilitiesDesc/responsabilities-desc.component';
 import { ValoraciontotalComponent } from './valoraciontotal/valoraciontotal.component';
 //import { ValorTotalComponent } from './valortotal/valortotal.component';
+import { Master } from '@shared/interfaces/master.interface';
 
 export interface AcademicEducationTable {
   education: string;
@@ -68,7 +69,7 @@ export class ProfileTemplateComponent implements OnInit {
   securityResponsabilitiesData!: any;
 
   contentPagesEducation = [];
-  educationList: AcademicEducation[] = [];
+  educationList: Master[] = [];
   domainList: any[] = [];
   typeList: any[] = [];
   nameList: any = {};
@@ -78,7 +79,7 @@ export class ProfileTemplateComponent implements OnInit {
   allSpecificKnowledgeList: any = {};
   allNamesList: any = [];
   allRolResponsabilities: any = [];
-  areasList: AcademicEducation[] = [];
+  areasList: Master[] = [];
   contentPagesSpecificKnowledge = [];
   contentPagesRolResponsabilities = [];
   contentPagesTalents = [];
@@ -657,7 +658,7 @@ export class ProfileTemplateComponent implements OnInit {
         res.coursesAndCertifications
       );
       this.readOnlySpecificKnowledgeDatasource = new MatTableDataSource(res.specificKnowledge);
-      this.profileTemplateService.getAllEstudies().then((resp: AcademicEducation[]) => {
+      this.profileTemplateService.getAllEstudies().then((resp: Master[]) => {
         this.educationList = resp;
       });
       this.profileTemplateService.getAllDomains().then((resp: any[]) => {
@@ -782,7 +783,7 @@ export class ProfileTemplateComponent implements OnInit {
       this.filerSelectList(row, index, 'rolResponsabilities');
     });
     /* Areas */
-    await this.profileTemplateService.getAllAreas().then((res: AcademicEducation[]) => {
+    await this.profileTemplateService.getAllAreas().then((res: Master[]) => {
       this.areasList = res;
     });
     /* Specific Knowledge */
@@ -1157,7 +1158,7 @@ export class ProfileTemplateComponent implements OnInit {
     console.log(newResponse);
     this.sendInformation = {
       ...this.sendInformation,
-      specificKnowledge: newResponse
+      specificKnowledge: newResponse,
     };
     return true;
   }
