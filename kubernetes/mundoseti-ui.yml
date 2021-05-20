@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: mundoseti
+  name: mundoseti-ui
+  labels:
+    app: mundoseti-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mundoseti-ui
+  template:
+    metadata:
+      labels:
+        app: mundoseti-ui
+    spec:
+      containers:
+      - image: srvsetia604:5000/${sourceRepository}:${UpdatedVersion}
+        name: mundoseti-ui
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "350Mi"
+            cpu: "100m"
+          limits:
+            memory: "550Mi"
+            cpu: "400m"
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: regcred
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: mundoseti
+  name: mundoseti-ui-service
+  labels:
+    app: mundoseti-ui-service
+spec:
+  type: NodePort
+  ports:
+  - nodePort: 30024
+    port: 30024
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: mundoseti-ui
+status:
+  loadBalancer: {}
