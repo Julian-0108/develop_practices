@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: mundoseti
+  name: ${sourceRepository}
+  labels:
+    app: ${sourceRepository}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${sourceRepository}
+  template:
+    metadata:
+      labels:
+        app: ${sourceRepository}
+    spec:
+      containers:
+      - image: srvsetia604:5000/${sourceRepository}:${UpdatedVersion}
+        name: ${sourceRepository}
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "350Mi"
+            cpu: "100m"
+          limits:
+            memory: "550Mi"
+            cpu: "400m"
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: regcred
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: mundoseti
+  name: ${sourceRepository}-service
+  labels:
+    app: ${sourceRepository}-service
+spec:
+  type: NodePort
+  ports:
+  - nodePort: 30024
+    port: 30024
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: ${sourceRepository}
+status:
+  loadBalancer: {}
