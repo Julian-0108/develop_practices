@@ -9,7 +9,7 @@
                 [fxFlex]="data?.url === 'security-responsabilities' ? '75' : '25'">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Nombre</mat-label>
-                    <input matInput type="text" formControlName="name" placeholder="Nombre">
+                    <input matInput type="text" formControlName="name" placeholder="Digite el nombre">
                     <app-validator [form]="form" name="name"></app-validator>
                 </mat-form-field>
             </div>
@@ -20,14 +20,7 @@
                     <app-validator [form]="form" name="name"></app-validator>
                 </mat-form-field>
             </div> -->
-            <div *ngIf="showOrHide('description')" class="item" fxFlex="30">
-                <mat-form-field floatLabel="always" appearance="none">
-                    <mat-label class="label">Descripción</mat-label>
-                    <input matInput formControlName="description" placeholder="Descripción">
-                    <app-validator [form]="form" name="description"></app-validator>
-                </mat-form-field>
-            </div>
-            <div *ngIf="showOrHide('idDomain')" class="item" fxFlex>
+            <div *ngIf="showOrHide('idDomain')" class="item" fxFlex="25">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Dominio</mat-label>
                     <mat-select #idDomain formControlName="idDomain" placeholder="Seleccione un dominio">
@@ -45,7 +38,7 @@
             <div *ngIf="showOrHide('knowledgeArea')" class="item" fxFlex="30">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Área de Conocimiento</mat-label>
-                    <mat-select #ej formControlName="knowledgeArea">
+                    <mat-select #ej formControlName="knowledgeArea" placeholder="Seleccione un área">
                         <mat-option *ngFor="let area of types" [value]="area.name">
                             {{area.name}}
                         </mat-option>
@@ -59,34 +52,26 @@
             <div *ngIf="showOrHide('specificKnowledge')" class="item" fxFlex="40">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Conocimiento Específico</mat-label>
-                    <input matInput formControlName="specificKnowledge" placeholder="Conocimiento Específico">
+                    <mat-select #ej formControlName="specificKnowledge" placeholder="Seleccione un conocimiento">
+                        <mat-option *ngFor="let area of types" [value]="area.name">
+                            {{area.name}}
+                        </mat-option>
+                        <mat-option *ngIf="types?.length === 0" disabled>
+                            <i>No hay tipos disponibles</i>
+                        </mat-option>
+                    </mat-select>
+                    <!-- <input matInput formControlName="specificKnowledge" placeholder="Seleccione un conocimiento"> -->
                     <app-validator [form]="form" name="specificKnowledge"></app-validator>
                 </mat-form-field>
             </div>
-                        <!--
-            <div *ngIf="showOrHide('platform')" class="item" fxFlex="30">
+
+            <div *ngIf="showOrHide('description')" class="item" fxFlex="30">
                 <mat-form-field floatLabel="always" appearance="none">
-                    <mat-label class="label">Plataforma</mat-label>
-                    <input matInput formControlName="platform" placeholder="Plataforma">
-                    <app-validator [form]="form" name="tecnology"></app-validator>
+                    <mat-label class="label">Descripción</mat-label>
+                    <input matInput formControlName="description" placeholder="Descripción">
+                    <app-validator [form]="form" name="description"></app-validator>
                 </mat-form-field>
             </div>
-           <div *ngIf="showOrHide('tecnology')" class="item" fxFlex="30">
-                <mat-form-field floatLabel="always" appearance="none">
-                    <mat-label class="label">Tecnologia</mat-label>
-                    <input matInput formControlName="tecnology" placeholder="Tecnologia">
-                    <app-validator [form]="form" name="tecnology"></app-validator>
-                </mat-form-field>
-            </div>
-            
-        
-            <div *ngIf="showOrHide('formation')" class="item" fxFlex="30">
-                <mat-form-field floatLabel="always" appearance="none">
-                    <mat-label class="label">Formación</mat-label>
-                    <input matInput formControlName="formation" placeholder="Formación">
-                    <app-validator [form]="form" name="formation"></app-validator>
-                </mat-form-field>
-            </div>-->
 
             <div *ngIf="showOrHide('masterReference')" class="item" fxFlex="25">
                 <mat-form-field floatLabel="always" appearance="none">
@@ -100,10 +85,11 @@
                 </mat-form-field>
             </div>
 
-            <div *ngIf="showOrHide('type')" class="item" fxFlex="25">
+            <div *ngIf="showOrHide('type') && data.url !== 'courses-certifications'" class="item" fxFlex="25">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Tipo</mat-label>
-                    <mat-select #ej formControlName="type" (selectionChange)="typeValidation($event)">
+                    <mat-select #ej formControlName="type" (selectionChange)="typeValidation($event)"
+                        placeholder="Seleccione un tipo">
                         <mat-option *ngFor="let type of types" [value]="type.name">
                             {{type.name}}
                         </mat-option>
@@ -112,6 +98,46 @@
                         </mat-option>
                     </mat-select>
                     <app-validator [form]="form" name="type" [otherIcon]="true"></app-validator>
+                </mat-form-field>
+            </div>
+        </div>
+        <div fxLayout="row">
+            <div *ngIf="showOrHide('type') && data.url === 'courses-certifications'" class="item" fxFlex="25">
+                <mat-form-field floatLabel="always" appearance="none">
+                    <mat-label class="label">Tipo</mat-label>
+                    <mat-select #ej formControlName="type" (selectionChange)="typeValidation($event)"
+                        placeholder="Seleccione un tipo">
+                        <mat-option *ngFor="let type of types" [value]="type.name">
+                            {{type.name}}
+                        </mat-option>
+                        <mat-option *ngIf="types?.length === 0" disabled>
+                            <i>No hay tipos disponibles</i>
+                        </mat-option>
+                    </mat-select>
+                    <app-validator [form]="form" name="type" [otherIcon]="true"></app-validator>
+                </mat-form-field>
+            </div>
+            <div *ngIf="showOrHide('platform')" class="item" fxFlex="30">
+                <mat-form-field floatLabel="always" appearance="none">
+                    <mat-label class="label">Plataforma</mat-label>
+                    <input matInput formControlName="platform" placeholder="Digite una plataforma">
+                    <!-- <app-validator [form]="form" name="platform"></app-validator> -->
+                </mat-form-field>
+            </div>
+            <div *ngIf="showOrHide('technology')" class="item" fxFlex="30">
+                <mat-form-field floatLabel="always" appearance="none">
+                    <mat-label class="label">Tecnologia</mat-label>
+                    <input matInput formControlName="technology" placeholder="Digite una tecnologia">
+                    <!-- <app-validator [form]="form" name="technology"></app-validator> -->
+                </mat-form-field>
+            </div>
+
+
+            <div *ngIf="showOrHide('formation')" class="item" fxFlex="30">
+                <mat-form-field floatLabel="always" appearance="none">
+                    <mat-label class="label">Formación</mat-label>
+                    <input matInput formControlName="formation" placeholder="Digite una formación">
+                    <!-- <app-validator [form]="form" name="formation"></app-validator> -->
                 </mat-form-field>
             </div>
         </div>

@@ -8,7 +8,7 @@
       </div>
     </div>
     <mat-drawer #drawer class="example-sidenav" mode="over" position="end">
-      <app-history-master [masterSeleted]="masterSeleted" [idHistory]="idHistory" ></app-history-master>
+      <app-history-master [masterSeleted]="masterSeleted" [idHistory]="idHistory"></app-history-master>
     </mat-drawer>
 
     <div class="main">
@@ -41,10 +41,10 @@
 
       <div class="table__container">
 
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
           <!-- Domain Column -->
-          <ng-container matColumnDef="idDomain">
+          <ng-container matColumnDef="idDomain" sticky>
             <th mat-header-cell *matHeaderCellDef> Dominio
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
@@ -59,7 +59,7 @@
           </ng-container>
 
           <!-- Knowledge Area Column -->
-          <ng-container matColumnDef="knowledgeArea">
+          <ng-container matColumnDef="knowledgeArea" sticky>
             <th mat-header-cell *matHeaderCellDef> Área de conocimiento
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
@@ -70,7 +70,7 @@
             </th>
             <td mat-cell *matCellDef="let element"> {{element.knowledgeArea}} </td>
           </ng-container>
-          
+
           <!-- Platform Column -->
           <ng-container matColumnDef="platform">
             <th mat-header-cell *matHeaderCellDef> Plataforma
@@ -84,9 +84,9 @@
             <td mat-cell *matCellDef="let element"> {{element.platform}} </td>
           </ng-container>
 
-          <!--Tecno Column -->
-          <ng-container matColumnDef="tecnology">
-            <th mat-header-cell *matHeaderCellDef> Tecnología 
+          <!--Technology Column -->
+          <ng-container matColumnDef="technology">
+            <th mat-header-cell *matHeaderCellDef> Tecnología
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
                   <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text">
@@ -96,9 +96,9 @@
             </th>
             <td mat-cell *matCellDef="let element"> {{element.tecnology}} </td>
           </ng-container>
-          
+
           <!-- formation Column -->
-           <ng-container matColumnDef="formation">
+          <ng-container matColumnDef="formation">
             <th mat-header-cell *matHeaderCellDef> Formación
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
@@ -110,9 +110,8 @@
             <td mat-cell *matCellDef="let element"> {{element.formation}} </td>
           </ng-container>
 
-
           <!-- Specific Knowledge Column -->
-          <ng-container matColumnDef="specificKnowledge">
+          <ng-container matColumnDef="specificKnowledge" sticky>
             <th mat-header-cell *matHeaderCellDef> Conocimiento Específico
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
@@ -142,7 +141,8 @@
             <th mat-header-cell *matHeaderCellDef> Nombre
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text" autocomplete="off">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text"
+                    autocomplete="off">
                   <mat-icon
                     [ngClass]="{'icon-search-security' : masterSeleted == 'security-responsabilities', 'icon-search' : masterSeleted != 'security-responsabilities'}"
                     matSuffix>search</mat-icon>
@@ -157,7 +157,8 @@
             <th mat-header-cell *matHeaderCellDef> Descripción
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text" autocomplete="off">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text"
+                    autocomplete="off">
                   <mat-icon class="icon-description" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -171,7 +172,8 @@
             <th mat-header-cell *matHeaderCellDef> Tipo
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text" autocomplete="off">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text"
+                    autocomplete="off">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -219,7 +221,8 @@
             <td mat-cell *matCellDef="let element">
               <div>
                 <label class="chip__status"
-                  [ngClass]="{'chip__status--active':element.status,'chip__status--inactive':!element.status}">{{element.status ? 'Activo' : 'Inactivo'}}</label>
+                  [ngClass]="{'chip__status--active':element.status,'chip__status--inactive':!element.status}">{{element.status
+                  ? 'Activo' : 'Inactivo'}}</label>
               </div>
             </td>
           </ng-container>
@@ -239,7 +242,8 @@
             <td mat-cell *matCellDef="let element" class="submenu">
               <div>
                 <label class="chip__status"
-                  [ngClass]="{'chip__status--active':element.submenu,'chip__status--inactive':!element.submenu}">{{element.submenu ? 'Sí' : 'No'}}</label>
+                  [ngClass]="{'chip__status--active':element.submenu,'chip__status--inactive':!element.submenu}">{{element.submenu
+                  ? 'Sí' : 'No'}}</label>
               </div>
             </td>
           </ng-container>
@@ -256,14 +260,6 @@
               <button mat-icon-button (click)="setId(element);drawer.toggle()">
                 <mat-icon class="table__buttons history">history</mat-icon>
               </button>
-            </td>
-          </ng-container>
-
-          <!-- Star Column -->
-          <ng-container matColumnDef="star" stickyEnd>
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element">
-              <mat-icon> more_vert</mat-icon>
             </td>
           </ng-container>
 

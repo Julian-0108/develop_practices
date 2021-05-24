@@ -30,7 +30,6 @@ export class AdminMasterInfoComponent implements OnInit {
     'type',
     'name',
     'platform',
-    'star',
     'technology',
     'formation',
     'reference',

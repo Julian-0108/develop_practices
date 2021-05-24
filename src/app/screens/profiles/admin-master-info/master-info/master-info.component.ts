@@ -532,6 +532,15 @@ export class MasterInfoComponent implements OnInit {
       case 'name':
         if (URL !== 'syllabi') return true;
         break;
+      case 'platform':
+        if (URL === 'courses-certifications') return true;
+        break;
+      case 'technology':
+        if (URL === 'courses-certifications') return true;
+        break;
+      case 'formation':
+        if (URL === 'courses-certifications') return true;
+        break;
       case 'description':
         if (
           URL !== 'security-responsabilities' &&
@@ -551,10 +560,10 @@ export class MasterInfoComponent implements OnInit {
         if (URL !== 'types' && URL !== 'functions' && URL !== 'syllabi') return true;
         break;
       case 'knowledgeArea':
-        if (URL === 'syllabi') return true;
+        if (URL === 'syllabi' || URL === 'courses-certifications') return true;
         break;
       case 'specificKnowledge':
-        if (URL === 'syllabi') return true;
+        if (URL === 'syllabi' || URL === 'courses-certifications') return true;
         break;
     }
   }
