@@ -71,12 +71,14 @@ export class ProfileTemplateComponent implements OnInit {
   educationList: Master[] = [];
   domainList: any[] = [];
   typeList: any[] = [];
-  nameList: any = {};
+  coursesAndCertificationsKnowledgeAreaList: any = {};
+  allCoursesAndCertificationsKnowledgeAreaList: any[] = [];
+  // nameList: any = {};
   rolResponsabilitiesList: any = {};
   knowledgeAreaList: any = {};
   specificKnowledgeList: any = {};
   allSpecificKnowledgeList: any = {};
-  allNamesList: any = [];
+  // allNamesList: any = [];
   allRolResponsabilities: any = [];
   areasList: Master[] = [];
   contentPagesSpecificKnowledge = [];
@@ -159,8 +161,8 @@ export class ProfileTemplateComponent implements OnInit {
   public educationColumns: string[] = ['education', 'area', 'actions'];
   public coursesAndCertificationsColumns: string[] = [
     'domain',
-    'type',
     'name',
+    'type',
     'required',
     'optional',
   ];
@@ -307,10 +309,14 @@ export class ProfileTemplateComponent implements OnInit {
   filerSelectList(row: any, index: number, source: string) {
     switch (source) {
       case 'coursesAndCertifications':
-        this.profileTemplateService.getAllCertificates(row.domain, row.type).then((res: any) => {
-          console.log(res);
-          console.log(row.domain);
-          this.nameList[index] = res;
+        this.profileTemplateService.getAllKnowledgeArea(row.domain).then((res: any) => {
+          const allAreaKnowledgeWithOutDuplicates = res.filter(
+            (obj: any, index: number, arraySource: any[]) =>
+              arraySource.findIndex(
+                (element: any) => element.knowledgeArea === obj.knowledgeArea
+              ) === index
+          );
+          this.coursesAndCertificationsKnowledgeAreaList[index] = allAreaKnowledgeWithOutDuplicates;
         });
         break;
       case 'rolResponsabilities':
@@ -320,7 +326,13 @@ export class ProfileTemplateComponent implements OnInit {
         break;
       case 'specificKnowledge':
         this.profileTemplateService.getAllKnowledgeArea(row.domain).then((res: any) => {
-          this.knowledgeAreaList[index] = res;
+          const allSpecificKnowledgeWithOutDuplicates = res.filter(
+            (obj: any, index: number, arraySource: any[]) =>
+              arraySource.findIndex(
+                (element: any) => element.knowledgeArea === obj.knowledgeArea
+              ) === index
+          );
+          this.knowledgeAreaList[index] = allSpecificKnowledgeWithOutDuplicates;
           console.log(this.knowledgeAreaList);
         });
         this.profileTemplateService
@@ -370,18 +382,18 @@ export class ProfileTemplateComponent implements OnInit {
         this._educationTable.renderRows();
         break;
       case 'coursesCertifications':
-        this.nameList = {};
+        // this.nameList = {};
         (this.coursesCertificationsForm.controls.coursesAndCertifications as FormArray).removeAt(
           index
         );
-        for (
-          let i = 0;
-          i < this.coursesCertificationsForm.value.coursesAndCertifications.length;
-          i++
-        ) {
-          const row = this.coursesCertificationsForm.value.coursesAndCertifications[i];
-          this.filerSelectList(row, i, 'coursesAndCertifications');
-        }
+        // for (
+        //   let i = 0;
+        //   i < this.coursesCertificationsForm.value.coursesAndCertifications.length;
+        //   i++
+        // ) {
+        //   const row = this.coursesCertificationsForm.value.coursesAndCertifications[i];
+        //   this.filerSelectList(row, i, 'coursesAndCertifications');
+        // }
         this._coursesCertifications.renderRows();
         break;
       case 'specificKnowledge':
@@ -652,13 +664,13 @@ export class ProfileTemplateComponent implements OnInit {
         this.allSpecificKnowledgeList = resp;
       });
 
-      this.profileTemplateService.getAllCertificates().then((allNames: any) => {
-        const allNamesWithOutDuplicates = allNames.filter(
-          (obj: any, index: number, arraySource: any[]) =>
-            arraySource.findIndex((element: any) => element.name === obj.name) === index
-        );
-        this.allNamesList = allNamesWithOutDuplicates;
-      });
+      // this.profileTemplateService.getAllCertificates().then((allNames: any) => {
+      // const allNamesWithOutDuplicates = allNames.filter(
+      //   (obj: any, index: number, arraySource: any[]) =>
+      //     arraySource.findIndex((element: any) => element.name === obj.name) === index
+      // );
+      //   this.allNamesList = allNamesWithOutDuplicates;
+      // });
 
       /* Rol Responsabilities */
       this.profileTemplateService.getAllFunctions().then((rolResponsabilities: any) => {
@@ -670,6 +682,10 @@ export class ProfileTemplateComponent implements OnInit {
         .then((types: any) => {
           this.typeList = types;
         });
+
+      this.profileTemplateService.getAllTypes('Temario', false).then((types: any) => {
+        this.allCoursesAndCertificationsKnowledgeAreaList = types;
+      });
 
       this.buildTalentsReadOnly(this.data);
       this.dataAssertiveComunication = new MatTableDataSource(res.assertiveComunication);
@@ -1086,7 +1102,9 @@ export class ProfileTemplateComponent implements OnInit {
       newCoursesCertificationsArray.push({
         optional: i.optional,
         required: i.required,
-        course: i.name,
+        idDomain: i.idDomain,
+        type: i.type,
+        knowledgeArea: i.name,
       });
     }
     this.sendInformation = {
