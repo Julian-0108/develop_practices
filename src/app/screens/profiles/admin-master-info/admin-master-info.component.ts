@@ -49,11 +49,11 @@ export class AdminMasterInfoComponent implements OnInit {
       url: 'skills',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
-    {
-      name: 'Conocimientos específicos del cargo',
-      url: 'specific-knowledge',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
-    },
+    // {
+    //   name: 'Conocimientos específicos del cargo',
+    //   url: 'specific-knowledge',
+    //   sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    // },
     {
       name: 'Cursos y certificaciones',
       url: 'courses-certifications',

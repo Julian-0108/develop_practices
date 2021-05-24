@@ -321,6 +321,40 @@
                   </ng-container>
                 </ng-container>
 
+                <ng-container matColumnDef="name">
+                  <th scope="col" mat-header-cell *matHeaderCellDef> Área de Conocimiento
+                    <div class="filter-inputs" *ngIf="showCoursesCertificationsFilter && !isEditable">
+                      <mat-form-field floatLabel="always" appearance="none">
+                        <mat-select class="filter filter__courses-certifications"
+                          (selectionChange)="applyFilter($event, 'coursesAndCertifications')">
+                          <mat-option [value]="''">
+                            Ver Todos
+                          </mat-option>
+                          <mat-option *ngFor="let area of allCoursesAndCertificationsKnowledgeAreaList"
+                            [value]="area.name">
+                            {{area.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </th>
+                  <ng-container *ngIf="!isEditable">
+                    <td mat-cell *matCellDef="let element">{{element.name}}</td>
+                  </ng-container>
+                  <ng-container *ngIf="isEditable">
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                      <mat-form-field floatLabel="always" appearance="none">
+                        <mat-select placeholder="Click para activar la lista" formControlName="name">
+                          <mat-option *ngFor="let area of coursesAndCertificationsKnowledgeAreaList[index]"
+                            [value]="area.knowledgeArea">
+                            {{area.knowledgeArea}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </td>
+                  </ng-container>
+                </ng-container>
+
                 <ng-container matColumnDef="type">
                   <th scope="col" mat-header-cell *matHeaderCellDef> Tipo
                     <div class="filter-inputs" *ngIf="showCoursesCertificationsFilter && !isEditable">
@@ -347,38 +381,6 @@
                           (selectionChange)="filerSelectList(row.value, index, 'coursesAndCertifications')">
                           <mat-option *ngFor="let type of typeList" [value]="type.name">
                             {{type.name}}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                    </td>
-                  </ng-container>
-                </ng-container>
-
-                <ng-container matColumnDef="name">
-                  <th scope="col" mat-header-cell *matHeaderCellDef> Nombre
-                    <div class="filter-inputs" *ngIf="showCoursesCertificationsFilter && !isEditable">
-                      <mat-form-field floatLabel="always" appearance="none">
-                        <mat-select class="filter filter__courses-certifications"
-                          (selectionChange)="applyFilter($event, 'coursesAndCertifications')">
-                          <mat-option [value]="''">
-                            Ver Todos
-                          </mat-option>
-                          <mat-option *ngFor="let name of allNamesList" [value]="name.name">
-                            {{name.name}}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                    </div>
-                  </th>
-                  <ng-container *ngIf="!isEditable">
-                    <td mat-cell *matCellDef="let element">{{element.name}}</td>
-                  </ng-container>
-                  <ng-container *ngIf="isEditable">
-                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
-                      <mat-form-field floatLabel="always" appearance="none">
-                        <mat-select placeholder="Click para activar la lista" formControlName="name">
-                          <mat-option *ngFor="let name of nameList[index]" [value]="name._id">
-                            {{name.name}}
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
