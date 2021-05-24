@@ -55,6 +55,30 @@
                     <app-validator [form]="form" name="specificKnowledge"></app-validator>
                 </mat-form-field>
             </div>
+                        <!--
+            <div *ngIf="showOrHide('platform')" class="item" fxFlex="30">
+                <mat-form-field floatLabel="always" appearance="none">
+                    <mat-label class="label">Plataforma</mat-label>
+                    <input matInput formControlName="platform" placeholder="Plataforma">
+                    <app-validator [form]="form" name="tecnology"></app-validator>
+                </mat-form-field>
+            </div>
+           <div *ngIf="showOrHide('tecnology')" class="item" fxFlex="30">
+                <mat-form-field floatLabel="always" appearance="none">
+                    <mat-label class="label">Tecnologia</mat-label>
+                    <input matInput formControlName="tecnology" placeholder="Tecnologia">
+                    <app-validator [form]="form" name="tecnology"></app-validator>
+                </mat-form-field>
+            </div>
+            
+        
+            <div *ngIf="showOrHide('formation')" class="item" fxFlex="30">
+                <mat-form-field floatLabel="always" appearance="none">
+                    <mat-label class="label">Formación</mat-label>
+                    <input matInput formControlName="formation" placeholder="Formación">
+                    <app-validator [form]="form" name="formation"></app-validator>
+                </mat-form-field>
+            </div>-->
 
             <div *ngIf="showOrHide('masterReference')" class="item" fxFlex="25">
                 <mat-form-field floatLabel="always" appearance="none">
@@ -67,6 +91,7 @@
                     <app-validator [form]="form" name="masterReference" [otherIcon]="true"></app-validator>
                 </mat-form-field>
             </div>
+
             <div *ngIf="showOrHide('type')" class="item" fxFlex="25">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Tipo</mat-label>

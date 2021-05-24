@@ -27,15 +27,20 @@ export class AdminMasterInfoComponent implements OnInit {
     'idDomain',
     'knowledgeArea',
     'specificKnowledge',
+    'type',
     'name',
+    'platform',
+    'star',
+    'technology',
+    'formation',
     'reference',
     'description',
-    'type',
     'createdAt',
     'updatedAt',
     'status',
     'submenu',
     'actions',
+    
   ];
 
   public readonly masters: Masters[] = [
@@ -143,7 +148,10 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'submenu' &&
             el !== 'idDomain' &&
             el !== 'knowledgeArea' &&
-            el !== 'specificKnowledge'
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
         );
       case 'studies':
         return this.displayedColumns.filter(
@@ -153,7 +161,10 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'reference' &&
             el !== 'idDomain' &&
             el !== 'knowledgeArea' &&
-            el !== 'specificKnowledge'
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
         );
       case 'security-responsabilities':
         return this.displayedColumns.filter(
@@ -163,7 +174,10 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'reference' &&
             el !== 'idDomain' &&
             el !== 'knowledgeArea' &&
-            el !== 'specificKnowledge'
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
         );
       case 'education-area':
         return this.displayedColumns.filter(
@@ -173,7 +187,10 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'reference' &&
             el !== 'idDomain' &&
             el !== 'knowledgeArea' &&
-            el !== 'specificKnowledge'
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
         );
       case 'base-teams-categories':
         return this.displayedColumns.filter(
@@ -182,7 +199,10 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'reference' &&
             el !== 'idDomain' &&
             el !== 'knowledgeArea' &&
-            el !== 'specificKnowledge'
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
         );
       case 'domain':
         return this.displayedColumns.filter(
@@ -192,7 +212,10 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'type' &&
             el !== 'idDomain' &&
             el !== 'knowledgeArea' &&
-            el !== 'specificKnowledge'
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
         );
       case 'functions':
         return this.displayedColumns.filter(
@@ -201,16 +224,17 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'reference' &&
             el !== 'type' &&
             el !== 'knowledgeArea' &&
-            el !== 'specificKnowledge'
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
         );
       case 'courses-certifications':
         return this.displayedColumns.filter(
           (el) =>
             el !== 'submenu' &&
             el !== 'reference' &&
-            el !== 'description' &&
-            el !== 'knowledgeArea' &&
-            el !== 'specificKnowledge'
+            el !== 'description'          
         );
       case 'syllabi':
         return this.displayedColumns.filter(
@@ -219,7 +243,10 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'name' &&
             el !== 'reference' &&
             el !== 'type' &&
-            el !== 'description'
+            el !== 'description' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
         );
       default:
         return this.displayedColumns.filter(
@@ -228,7 +255,10 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'submenu' &&
             el !== 'idDomain' &&
             el !== 'knowledgeArea' &&
-            el !== 'specificKnowledge'
+            el !== 'specificKnowledge'&&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
         );
     }
   }
