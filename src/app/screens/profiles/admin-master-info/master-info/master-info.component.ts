@@ -29,6 +29,9 @@ export class MasterInfoComponent implements OnInit {
   domains: any[] = [];
   skills: any[] = [];
   masters: Masters[] = [];
+  knowledgeAreaList: any = [];
+  specificKnowledgeList: any = [];
+  idSyllabi!: string;
 
   constructor(
     private datePipe: DatePipe,
@@ -50,6 +53,48 @@ export class MasterInfoComponent implements OnInit {
     this.fillSkillsList();
     this.fillDomainsList();
     console.log(this.data);
+  }
+
+  filerSelectList(source: string) {
+    switch (source) {
+      case 'dominioField':
+        this.masterInfoService.getSyllabiLists(this.form.value.idDomain).then((res: any) => {
+          const allAreaKnowledgeWithOutDuplicates = res.filter(
+            (obj: any, index: number, arraySource: any[]) =>
+              arraySource.findIndex(
+                (element: any) => element.knowledgeArea === obj.knowledgeArea
+              ) === index
+          );
+          this.knowledgeAreaList = allAreaKnowledgeWithOutDuplicates;
+        });
+        this.notNullData('knowledgeArea');
+        break;
+      case 'knowledgeAreaField':
+        this.masterInfoService
+          .getSyllabiLists(this.form.value.idDomain, this.form.value.knowledgeArea)
+          .then((res: any) => {
+            const allSpecificKnowledgeWithOutDuplicates = res.filter(
+              (obj: any, index: number, arraySource: any[]) =>
+                arraySource.findIndex(
+                  (element: any) => element.specificKnowledge === obj.specificKnowledge
+                ) === index
+            );
+            this.specificKnowledgeList = allSpecificKnowledgeWithOutDuplicates;
+          });
+          this.notNullData('specificKnowledge');
+        break;
+      case 'specificKnowledgeField':
+        this.masterInfoService
+          .getSyllabiLists(
+            this.form.value.idDomain,
+            this.form.value.knowledgeArea,
+            this.form.value.specificKnowledge
+          )
+          .then((res: any) => {
+            this.idSyllabi = res[0]._id;
+          });
+        break;
+    }
   }
 
   fillTypesList() {
@@ -80,6 +125,9 @@ export class MasterInfoComponent implements OnInit {
   createForm(): FormGroup {
     return this.formBuilder.group({
       _id: new FormControl(),
+      platform: new FormControl(null),
+      technology: new FormControl(null),
+      formation: new FormControl(null),
       name: new FormControl(''),
       description: new FormControl({
         value: '',
@@ -116,8 +164,7 @@ export class MasterInfoComponent implements OnInit {
     });
   }
 
-  initForm(): void {
-    console.log(this.data);
+  formValidations() {
     if (
       this.data.element &&
       this.data.element.type !== 'Habilidad' &&
@@ -126,14 +173,12 @@ export class MasterInfoComponent implements OnInit {
       this.form.get('submenu')?.disable();
       this.form.get('idParent')?.enable();
     }
-
     if (this.data.url !== 'syllabi') {
       this.form.controls.name?.setValidators([Validators.required]);
       this.form.controls.name?.updateValueAndValidity();
     } else {
       this.form.controls.name?.clearValidators();
     }
-
     if (this.data.url !== 'types') {
       if (this.data.url !== 'syllabi') {
         this.form.controls.type?.setValidators([Validators.required]);
@@ -150,11 +195,36 @@ export class MasterInfoComponent implements OnInit {
         }
       }
       if (
-        this.data.url === 'courses-certifications' ||
         this.data.url === 'functions' ||
         this.data.url === 'syllabi'
       ) {
         this.form.controls.idDomain?.setValidators([Validators.required]);
+        this.form.controls.idDomain?.updateValueAndValidity();
+      } else {
+        this.form.controls.idDomain?.clearValidators();
+      }
+      if (
+        this.data.url === 'courses-certifications'
+      ) {
+        this.form.controls.idDomain?.setValidators([Validators.required]);
+        this.form.controls.idDomain?.updateValueAndValidity();
+        this.form.controls.knowledgeArea?.setValidators([Validators.required]);
+        this.form.controls.knowledgeArea?.updateValueAndValidity();
+        this.form.controls.specificKnowledge?.setValidators([Validators.required]);
+        this.form.controls.specificKnowledge?.updateValueAndValidity();
+        this.form.controls.platform?.setValidators([Validators.required]);
+        this.form.controls.platform?.updateValueAndValidity();
+        this.form.controls.technology?.setValidators([Validators.required]);
+        this.form.controls.technology?.updateValueAndValidity();
+        this.form.controls.formation?.setValidators([Validators.required]);
+        this.form.controls.formation?.updateValueAndValidity();
+      } else {
+        this.form.controls.idDomain?.clearValidators();
+        this.form.controls.knowledgeArea?.clearValidators();
+        this.form.controls.specificKnowledge?.clearValidators();
+        this.form.controls.platform?.clearValidators();
+        this.form.controls.technology?.clearValidators();
+        this.form.controls.formation?.clearValidators();
       }
     } else {
       this.masters = this.data.masters.filter((master) => master.name !== 'Tipos');
@@ -163,13 +233,39 @@ export class MasterInfoComponent implements OnInit {
       this.form.controls.type?.clearValidators();
       this.form.controls.description?.clearValidators();
     }
+  }
+
+  notNullData(field: any){
+    if (
+      this.form.value[`field`] === null ||
+      this.form.value[`field`] === undefined ||
+      this.form.value[`field`] === ''
+    ) {
+      this.form.get(field)?.setErrors({ error: 'Campo obligatorio' });
+    }
+  }
+
+  initForm(): void {
+    console.log(this.data);
+
+    this.formValidations();
 
     if (this.data?.element) {
       console.log(this.data);
 
-      if (this.data.element.domain) {
-        this.data.element.idDomain = this.data.element.domain[0]._id;
+      if (this.data.element.syllabi) {
+        this.form.get('idDomain')?.patchValue(this.data.element.syllabi[0].idDomain);
+        this.filerSelectList('dominioField');
+        this.form.get('knowledgeArea')?.patchValue(this.data.element.syllabi[0].knowledgeArea);
+        this.filerSelectList('knowledgeAreaField');
+        this.form
+          .get('specificKnowledge')
+          ?.patchValue(this.data.element.syllabi[0].specificKnowledge);
+        // this.data.element.idDomain = this.data.element.syllabi[0].idDomain;
+        // this.data.element.knowledgeArea = this.data.element.syllabi[0].knowledgeArea;
+        // this.data.element.specificKnowledge = this.data.element.syllabi[0].specificKnowledge;
       }
+      console.log(this.data);
 
       this.form.patchValue(this.data.element);
       this.form
@@ -226,6 +322,9 @@ export class MasterInfoComponent implements OnInit {
   }
 
   addRegisterToMaster() {
+    if (this.data.url === 'courses-certifications') {
+      this.form.value.idSyllabi = this.idSyllabi;
+    }
     console.log(this.data.url, this.form.value);
     this.masterInfoService
       .addRegisterToMaster(this.data.url, this.form.value)
@@ -439,8 +538,6 @@ export class MasterInfoComponent implements OnInit {
       this.form.get('submenu')?.disable();
       this.form.get('submenu')?.patchValue(false);
       this.form.get('idParent')?.enable();
-      console.log('FORM', this.form.value);
-      console.log('FORM2', this.form.getRawValue());
       this.form.controls.idParent?.setValidators([Validators.required]);
       this.form.controls.idParent?.updateValueAndValidity();
       return;

@@ -37,6 +37,7 @@ interface CoursesCertificationsTable {
   nameDomain: string;
   optional: boolean;
   required: boolean;
+  knowledgeArea: string;
 }
 export interface AcademicEducation {
   _id: string;
@@ -269,10 +270,10 @@ export class ProfileTemplateComponent implements OnInit {
     const row = this.formBuilder.group({
       domain: d && d.idDomain ? d.idDomain : null,
       type: d && d.type ? d.type : null,
-      name: d && d._id ? d._id : null,
+      name: d && d.knowledgeArea ? d.knowledgeArea : null,
       required: d && d.required ? d.required : false,
-      optional: d && d.optional ? d.optional : false,
-      id: d && d._id ? d._id : null,
+      optional: d && d.optional ? d.optional : false
+      // id: d && d._id ? d._id : null,
     });
     this.coursesCertificationsFormRows.push(row);
     if (!noUpdate) {
@@ -382,18 +383,18 @@ export class ProfileTemplateComponent implements OnInit {
         this._educationTable.renderRows();
         break;
       case 'coursesCertifications':
-        // this.nameList = {};
+        this.coursesAndCertificationsKnowledgeAreaList = {};
         (this.coursesCertificationsForm.controls.coursesAndCertifications as FormArray).removeAt(
           index
         );
-        // for (
-        //   let i = 0;
-        //   i < this.coursesCertificationsForm.value.coursesAndCertifications.length;
-        //   i++
-        // ) {
-        //   const row = this.coursesCertificationsForm.value.coursesAndCertifications[i];
-        //   this.filerSelectList(row, i, 'coursesAndCertifications');
-        // }
+        for (
+          let i = 0;
+          i < this.coursesCertificationsForm.value.coursesAndCertifications.length;
+          i++
+        ) {
+          const row = this.coursesCertificationsForm.value.coursesAndCertifications[i];
+          this.filerSelectList(row, i, 'coursesAndCertifications');
+        }
         this._coursesCertifications.renderRows();
         break;
       case 'specificKnowledge':
@@ -1097,12 +1098,12 @@ export class ProfileTemplateComponent implements OnInit {
       return;
     }
     this.requiredCertificatesError = false;
-
+    /* Construye la data como la necesita el back */
     for (const i of this.coursesCertificationsForm.value.coursesAndCertifications) {
       newCoursesCertificationsArray.push({
         optional: i.optional,
         required: i.required,
-        idDomain: i.idDomain,
+        idDomain: i.domain,
         type: i.type,
         knowledgeArea: i.name,
       });
