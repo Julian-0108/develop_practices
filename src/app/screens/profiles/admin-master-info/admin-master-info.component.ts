@@ -24,24 +24,40 @@ export class AdminMasterInfoComponent implements OnInit {
   subtitle: any = '';
 
   public displayedColumns: string[] = [
+    'idDomain',
+    'knowledgeArea',
+    'specificKnowledge',
+    'type',
     'name',
+    'platform',
+    'technology',
+    'formation',
     'reference',
     'description',
-    'idDomain',
-    'type',
     'createdAt',
     'updatedAt',
     'status',
     'submenu',
     'actions',
+    
   ];
 
   public readonly masters: Masters[] = [
     {
-      name: 'Habilidades de equipo',
-      url: 'base-teams-categories',
+      name: 'Area de Formación',
+      url: 'education-area',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
+    {
+      name: 'Competencias corporativas y talentos',
+      url: 'skills',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    // {
+    //   name: 'Conocimientos específicos del cargo',
+    //   url: 'specific-knowledge',
+    //   sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    // },
     {
       name: 'Cursos y certificaciones',
       url: 'courses-certifications',
@@ -49,23 +65,8 @@ export class AdminMasterInfoComponent implements OnInit {
       icon: 'help',
     },
     {
-      name: 'Competencias corporativas y talentos',
-      url: 'skills',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
-    },
-    {
-      name: 'Funciones del Cargo',
-      url: 'functions',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
-    },
-    {
-      name: 'Módulos',
-      url: 'modules',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
-    },
-    {
-      name: 'Conocimientos específicos del cargo',
-      url: 'specific-knowledge',
+      name: 'Dominio',
+      url: 'domain',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
     {
@@ -74,13 +75,23 @@ export class AdminMasterInfoComponent implements OnInit {
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
     {
+      name: 'Funciones del Cargo',
+      url: 'functions',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    {
+      name: 'Habilidades de equipo',
+      url: 'base-teams-categories',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+    },
+    {
       name: 'Herramientas de trabajo',
       url: 'work-tools',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
     {
-      name: 'Tipos',
-      url: 'types',
+      name: 'Módulos',
+      url: 'modules',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
     {
@@ -89,15 +100,15 @@ export class AdminMasterInfoComponent implements OnInit {
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
     {
-      name: 'Area de Formación',
-      url: 'education-area',
+      name: 'Temario',
+      url: 'syllabi',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
     },
     {
-      name: 'Dominio',
-      url: 'domain',
+      name: 'Tipos',
+      url: 'types',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
-    },
+    }
   ];
 
   public masterSeleted: string = '';
@@ -118,8 +129,7 @@ export class AdminMasterInfoComponent implements OnInit {
 
   getDataMaster() {
     this.masterInfoService.getData(this.masterSeleted).then((res: Master[]) => {
-      console.log(res);
-      this.dataSource.data = res
+      this.dataSource.data = res;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.subtitle = this.masters.find((el: any) => el.url === this.masterSeleted);
@@ -130,40 +140,123 @@ export class AdminMasterInfoComponent implements OnInit {
     switch (this.masterSeleted) {
       case 'types':
         return this.displayedColumns.filter(
-          (el) => el !== 'type' && el !== 'description' && el !== 'submenu' && el !== 'idDomain'
+          (el) =>
+            el !== 'type' &&
+            el !== 'description' &&
+            el !== 'submenu' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
         );
       case 'studies':
         return this.displayedColumns.filter(
-          (el) => el !== 'type' && el !== 'submenu' && el !== 'reference' && el !== 'idDomain'
+          (el) =>
+            el !== 'type' &&
+            el !== 'submenu' &&
+            el !== 'reference' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
         );
       case 'security-responsabilities':
         return this.displayedColumns.filter(
           (el) =>
-            el !== 'description' && el !== 'submenu' && el !== 'reference' && el !== 'idDomain'
+            el !== 'description' &&
+            el !== 'submenu' &&
+            el !== 'reference' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
         );
       case 'education-area':
         return this.displayedColumns.filter(
-          (el) => el !== 'type' && el !== 'submenu' && el !== 'reference' && el !== 'idDomain'
+          (el) =>
+            el !== 'type' &&
+            el !== 'submenu' &&
+            el !== 'reference' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
         );
       case 'base-teams-categories':
         return this.displayedColumns.filter(
-          (el) => el !== 'submenu' && el !== 'reference' && el !== 'idDomain'
+          (el) =>
+            el !== 'submenu' &&
+            el !== 'reference' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
         );
       case 'domain':
         return this.displayedColumns.filter(
-          (el) => el !== 'submenu' && el !== 'reference' && el !== 'type' && el !== 'idDomain'
+          (el) =>
+            el !== 'submenu' &&
+            el !== 'reference' &&
+            el !== 'type' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
         );
       case 'functions':
         return this.displayedColumns.filter(
-          (el) => el !== 'submenu' && el !== 'reference' && el !== 'type'
+          (el) =>
+            el !== 'submenu' &&
+            el !== 'reference' &&
+            el !== 'type' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
         );
       case 'courses-certifications':
         return this.displayedColumns.filter(
-          (el) => el !== 'submenu' && el !== 'reference' && el !== 'description'
+          (el) =>
+            el !== 'submenu' &&
+            el !== 'reference' &&
+            el !== 'description'          
+        );
+      case 'syllabi':
+        return this.displayedColumns.filter(
+          (el) =>
+            el !== 'submenu' &&
+            el !== 'name' &&
+            el !== 'reference' &&
+            el !== 'type' &&
+            el !== 'description' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
         );
       default:
         return this.displayedColumns.filter(
-          (el) => el !== 'reference' && el !== 'submenu' && el !== 'idDomain'
+          (el) =>
+            el !== 'reference' &&
+            el !== 'submenu' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge'&&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
         );
     }
   }
@@ -190,14 +283,12 @@ export class AdminMasterInfoComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log(this.dataSource);
   }
 
   applyDirectFilter(filterValue: any) {
     this.dataSource.filter = filterValue;
   }
   setId(el: any) {
-    console.log(el);
     this.idHistory = el;
   }
 

@@ -5,9 +5,9 @@
       matTooltip="Volver a la página anterior">
     </button>
     <div class="actions">
-      <div class="action" *ngIf="!isEditable !onHistory"  >
-        <button mat-mini-fab  (click)="selectedValor()" matTooltip="Valoración total del perfil">
-        <img class="icon"  src="../assets/images/progresion-grafica.svg" >
+      <div class="action" *ngIf="!isEditable !onHistory">
+        <button mat-mini-fab (click)="selectedValor()" matTooltip="Valoración total del perfil">
+          <img class="icon" src="../assets/images/progresion-grafica.svg">
         </button>
       </div>
       <div class="action" *ngIf="!isEditable">
@@ -305,7 +305,7 @@
                     </div>
                   </th>
                   <ng-container *ngIf="!isEditable">
-                    <td mat-cell *matCellDef="let element">{{element.nameDomain}}</td>
+                    <td mat-cell *matCellDef="let element">{{element.name}}</td>
                   </ng-container>
                   <ng-container *ngIf="isEditable">
                     <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
@@ -314,6 +314,40 @@
                           (selectionChange)="filerSelectList(row.value, index, 'coursesAndCertifications')">
                           <mat-option *ngFor="let domain of domainList" [value]="domain.idDomain">
                             {{domain.nameDomain}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </td>
+                  </ng-container>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                  <th scope="col" mat-header-cell *matHeaderCellDef> Área de Conocimiento
+                    <div class="filter-inputs" *ngIf="showCoursesCertificationsFilter && !isEditable">
+                      <mat-form-field floatLabel="always" appearance="none">
+                        <mat-select class="filter filter__courses-certifications"
+                          (selectionChange)="applyFilter($event, 'coursesAndCertifications')">
+                          <mat-option [value]="''">
+                            Ver Todos
+                          </mat-option>
+                          <mat-option *ngFor="let area of allCoursesAndCertificationsKnowledgeAreaList"
+                            [value]="area.name">
+                            {{area.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </th>
+                  <ng-container *ngIf="!isEditable">
+                    <td mat-cell *matCellDef="let element">{{element.knowledgeArea}}</td>
+                  </ng-container>
+                  <ng-container *ngIf="isEditable">
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                      <mat-form-field floatLabel="always" appearance="none">
+                        <mat-select placeholder="Click para activar la lista" formControlName="name">
+                          <mat-option *ngFor="let area of coursesAndCertificationsKnowledgeAreaList[index]"
+                            [value]="area.knowledgeArea">
+                            {{area.knowledgeArea}}
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
@@ -347,38 +381,6 @@
                           (selectionChange)="filerSelectList(row.value, index, 'coursesAndCertifications')">
                           <mat-option *ngFor="let type of typeList" [value]="type.name">
                             {{type.name}}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                    </td>
-                  </ng-container>
-                </ng-container>
-
-                <ng-container matColumnDef="name">
-                  <th scope="col" mat-header-cell *matHeaderCellDef> Nombre
-                    <div class="filter-inputs" *ngIf="showCoursesCertificationsFilter && !isEditable">
-                      <mat-form-field floatLabel="always" appearance="none">
-                        <mat-select class="filter filter__courses-certifications"
-                          (selectionChange)="applyFilter($event, 'coursesAndCertifications')">
-                          <mat-option [value]="''">
-                            Ver Todos
-                          </mat-option>
-                          <mat-option *ngFor="let name of allNamesList" [value]="name.name">
-                            {{name.name}}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                    </div>
-                  </th>
-                  <ng-container *ngIf="!isEditable">
-                    <td mat-cell *matCellDef="let element">{{element.name}}</td>
-                  </ng-container>
-                  <ng-container *ngIf="isEditable">
-                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
-                      <mat-form-field floatLabel="always" appearance="none">
-                        <mat-select placeholder="Click para activar la lista" formControlName="name">
-                          <mat-option *ngFor="let name of nameList[index]" [value]="name._id">
-                            {{name.name}}
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
@@ -450,44 +452,6 @@
             <app-not-found-message></app-not-found-message>
           </div>
         </mat-card-content>
-        <mat-card-content *ngIf="isEditable">
-
-          <!-- <ng-container *ngIf="contentPagesRequiredCertificates.length > 1">
-            <button mat-icon-button (click)="nextTab(matTabRequiredCertificates._tabs.length, 'requiredCertificates')"
-              class="button-next" [disabled]="nextPageButtonDisabledRequiredCertificates">
-              <mat-icon>navigate_next</mat-icon>
-            </button>
-                        <button mat-icon-button (click)="beforeTab('requiredCertificates')" class="button-before" [disabled]="beforePageButtonDisabledRequiredCertificates">
-              <mat-icon>navigate_before</mat-icon>
-            </button>
-                    </ng-container>
-                    <mat-selection-list #requiredCertificates fxLayout="column">
-                        <mat-tab-group #matTabRequiredCertificates mat-align-tabs="start" animationDuration="0ms" [(selectedIndex)]="tabIndexRequiredCertificates">
-                            <mat-tab label="First" *ngFor="let contentPage of contentPagesRequiredCertificates">
-                                <mat-list-option [selected]="onInitList(item, 'requiredCertificates')" *ngFor="let item of contentPage" [value]="item">
-                                    {{item.description}}
-                                </mat-list-option>
-                            </mat-tab>
-                        </mat-tab-group>
-                    </mat-selection-list>
-                </mat-card-content>
-            </mat-card>
-        </div>
-        <div fxLayout="row">
-            <mat-card class="profile__card" fxFlex="100">
-                <mat-card-header>
-                    <mat-card-title class="profile-card__title">Conocimientos Específicos del Cargo
-                        <mat-icon *ngIf="specificKnowledgeError && isEditable" class="card-error__icon" matSuffix>error</mat-icon>
-                    </mat-card-title>
-                </mat-card-header>
-                <mat-card-content fxLayout="row wrap" *ngIf="!isEditable">
-                    <!-- <div class="profile-card__content" *ngFor="let item of data.specificKnowledge">
-            <p>
-              {{item.description}}
-            </p>
-          </div> -->
-
-        </mat-card-content>
       </mat-card>
     </div>
 
@@ -499,116 +463,179 @@
             </mat-icon>
           </mat-card-title>
         </mat-card-header>
-        <mat-card-content fxLayout="row wrap" *ngIf="!isEditable">
-          <div class="profile-card__content" *ngFor="let item of data.specificKnowledge">
-            <p>{{item.description}}</p>
+        <mat-card-content fxLayout="row wrap">
+          <form [formGroup]="specificKnowledgeForm" style="width: 100%;">
+            <div class="table__container">
+              <table #specificKnowledge mat-table
+                [dataSource]="!isEditable ? readOnlySpecificKnowledgeDatasource : specificKnowledgeDataSource"
+                class="mat-elevation-z0" formArrayName="specificKnowledge">
+                <caption style="display: none;">Visualización de los conocimientos específicos del perfil
+                </caption>
+                <tr mat-header-row *matHeaderRowDef="specificKnowledgeColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: specificKnowledgeColumns;"></tr>
+
+                <ng-container matColumnDef="domain">
+                  <th scope="col" mat-header-cell *matHeaderCellDef> Dominio
+                    <div class="filter-inputs" *ngIf="showSpecificKnowledgeFilter && !isEditable">
+                      <mat-form-field floatLabel="always" appearance="none">
+                        <mat-select class="filter" (selectionChange)="applyFilter($event, 'specificKnowledge')">
+                          <mat-option [value]="''">
+                            Ver Todos
+                          </mat-option>
+                          <mat-option *ngFor="let domain of domainList" [value]="domain.idDomain">
+                            {{domain.nameDomain}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </th>
+                  <ng-container *ngIf="!isEditable">
+                    <td mat-cell *matCellDef="let element">{{element.nameDomain}}</td>
+                  </ng-container>
+                  <ng-container *ngIf="isEditable">
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                      <mat-form-field floatLabel="always" appearance="none">
+                        <mat-select placeholder="Click para activar la lista" formControlName="domain"
+                          (selectionChange)="filerSelectList(row.value, index, 'specificKnowledge')">
+                          <mat-option *ngFor="let domain of domainList" [value]="domain.idDomain">
+                            {{domain.nameDomain}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </td>
+                  </ng-container>
+                </ng-container>
+
+                <ng-container matColumnDef="knowledgeArea">
+                  <th scope="col" mat-header-cell *matHeaderCellDef> Área de Conocimiento
+                    <div class="filter-inputs" *ngIf="showSpecificKnowledgeFilter && !isEditable">
+                      <mat-form-field floatLabel="always" appearance="none">
+                        <mat-select class="filter" (selectionChange)="applyFilter($event, 'specificKnowledge')">
+                          <mat-option [value]="''">
+                            Ver Todos
+                          </mat-option>
+                          <mat-option *ngFor="let type of allSpecificKnowledgeList.knowledgeArea" [value]="type">
+                            {{type}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </th>
+                  <ng-container *ngIf="!isEditable">
+                    <td mat-cell *matCellDef="let element">{{element.knowledgeArea}}</td>
+                  </ng-container>
+                  <ng-container *ngIf="isEditable">
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                      <!-- <input matInput type="text" formControlName="knowledgeArea"> -->
+                      <mat-form-field floatLabel="always" appearance="none">
+                        <mat-select placeholder="Click para activar la lista" formControlName="knowledgeArea"
+                          (selectionChange)="filerSelectList(row.value, index, 'specificKnowledge')">
+                          <mat-option *ngFor="let item of knowledgeAreaList[index]" [value]="item.knowledgeArea">
+                            {{item.knowledgeArea}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </td>
+                  </ng-container>
+                </ng-container>
+
+                <ng-container matColumnDef="specificKnowledge">
+                  <th scope="col" mat-header-cell *matHeaderCellDef> Conocimiento Específico
+                    <div class="filter-inputs" *ngIf="showSpecificKnowledgeFilter && !isEditable">
+                      <mat-form-field floatLabel="always" appearance="none">
+                        <mat-select class="filter" (selectionChange)="applyFilter($event, 'specificKnowledge')">
+                          <mat-option [value]="''">
+                            Ver Todos
+                          </mat-option>
+                          <mat-option *ngFor="let item of allSpecificKnowledgeList.specificKnowledge" [value]="item">
+                            {{item}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </th>
+                  <ng-container *ngIf="!isEditable">
+                    <td mat-cell *matCellDef="let element">{{element.specificKnowledge}}</td>
+                  </ng-container>
+                  <ng-container *ngIf="isEditable">
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                      <!-- <input matInput type="text" formControlName="specificKnowledge"> -->
+                      <mat-form-field floatLabel="always" appearance="none">
+                        <mat-select placeholder="Click para activar la lista" formControlName="specificKnowledge">
+                          <mat-option *ngFor="let item of specificKnowledgeList[index]"
+                            [value]="item.specificKnowledge">
+                            {{item.specificKnowledge}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </td>
+                  </ng-container>
+                </ng-container>
+
+                <ng-container matColumnDef="yearsExperience">
+                  <th scope="col" mat-header-cell *matHeaderCellDef> Experiencia en años
+                    <div class="filter-inputs filter-inputs--area" *ngIf="showSpecificKnowledgeFilter && !isEditable">
+
+                    </div>
+                  </th>
+                  <ng-container *ngIf="!isEditable">
+                    <td mat-cell *matCellDef="let element">{{element.years}}</td>
+                  </ng-container>
+                  <ng-container *ngIf="isEditable">
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                      <mat-form-field class="input-number__container" floatLabel="always" appearance="none">
+                        <input #yearsExperienceField class="input-number" min="0" max="99" matInput type="number"
+                          formControlName="yearsExperience"
+                          (keypress)="onlyNumbers.classicOnlyNumbers($event); onlyNumbers.lenghtValidator(yearsExperienceField.value, 2, $event)">
+                      </mat-form-field>
+                    </td>
+                  </ng-container>
+                </ng-container>
+
+                <ng-container matColumnDef="pojectsExperience">
+                  <th scope="col" mat-header-cell *matHeaderCellDef> Experiencia en Proyectos
+                    <div class="filter-inputs filter-inputs--area" *ngIf="showSpecificKnowledgeFilter && !isEditable">
+
+                    </div>
+                  </th>
+                  <ng-container *ngIf="!isEditable">
+                    <td mat-cell *matCellDef="let element">{{element.projects}}</td>
+                  </ng-container>
+                  <ng-container *ngIf="isEditable">
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                      <mat-form-field class="input-number__container" floatLabel="always" appearance="none">
+                        <input #pojectsExperienceField class="input-number" min="0" max="99" matInput type="number"
+                          formControlName="pojectsExperience"
+                          (keypress)="onlyNumbers.classicOnlyNumbers($event); onlyNumbers.lenghtValidator(pojectsExperienceField.value, 2, $event)">
+                      </mat-form-field>
+                    </td>
+                  </ng-container>
+
+                </ng-container>
+
+                <ng-container matColumnDef="actions" *ngIf="isEditable">
+                  <th scope="col" mat-header-cell *matHeaderCellDef>
+                    <div class="button__container" fxLayoutAlign="center">
+                      <button mat-flat-button class="table-header__button" (click)="addRowIntoSpecificKnowledgeTable()">
+                        <mat-icon style="font-size: 22px;">add</mat-icon> Añadir
+                      </button>
+                    </div>
+                  </th>
+                  <td mat-cell *matCellDef="let element; let i = index">
+                    <button mat-icon-button (click)="removeRow(i, 'specificKnowledge')">
+                      <mat-icon class="table__buttons table__buttons--delete">delete</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+              </table>
+
+            </div>
+          </form>
+          <div class="not-found-data__container" *ngIf="showNotFoundMessageSpecificKnowledge && !isEditable">
+            <app-not-found-message></app-not-found-message>
           </div>
-          <!-- <table mat-table [dataSource]="CoursesCertificationsData" class="mat-elevation-z0">
-
-            <ng-container matColumnDef="knowledge">
-              <th mat-header-cell *matHeaderCellDef> Conocimiento </th>
-              <td mat-cell *matCellDef="let element"> {{element.knowledge}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="area">
-              <th mat-header-cell *matHeaderCellDef> Area de conocimiento </th>
-              <td mat-cell *matCellDef="let element"> {{element.area}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="description">
-              <th mat-header-cell *matHeaderCellDef> Description </th>
-              <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="yearsExperience">
-              <th mat-header-cell *matHeaderCellDef> Experiencia en años </th>
-              <td mat-cell *matCellDef="let element"> {{element.yearsExperience}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="poyectsExperience">
-              <th mat-header-cell *matHeaderCellDef> Experiencia en proyectos </th>
-              <td mat-cell *matCellDef="let element"> {{element.proyectsExperience}} </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="CoursesCertificationsColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: CoursesCertificationsColumns;"></tr>
-          </table> -->
-
         </mat-card-content>
         <mat-card-content *ngIf="isEditable">
-
-          <ng-container *ngIf="contentPagesSpecificKnowledge.length > 1">
-            <button mat-icon-button (click)="nextTab(matTabSpecificKnowledge._tabs.length, 'specificKnowledge')"
-              class="button-next" [disabled]="nextPageButtonDisabledSpecificKnowledge">
-              <mat-icon>navigate_next</mat-icon>
-            </button>
-            <button mat-icon-button (click)="beforeTab('specificKnowledge')" class="button-before"
-              [disabled]="beforePageButtonDisabledSpecificKnowledge">
-              <mat-icon>navigate_before</mat-icon>
-            </button>
-          </ng-container>
-          <mat-selection-list #specificKnowledge fxLayout="row">
-            <mat-tab-group #matTabSpecificKnowledge mat-align-tabs="start" animationDuration="0ms"
-              [(selectedIndex)]="tabIndexSpecificKnowledge">
-              <mat-tab label="First" *ngFor="let contentPage of contentPagesSpecificKnowledge">
-                <div fxLayout="row">
-                  <div fxLayout="column" *ngFor="let data of contentPage">
-                    <mat-list-option [selected]="onInitList(item, 'specificKnowledge')" *ngFor="let item of data"
-                      [value]="item">
-                      {{item.description}}
-                    </mat-list-option>
-                  </div>
-                </div>
-              </mat-tab>
-            </mat-tab-group>
-          </mat-selection-list>
-          <!--
-          <table mat-table [dataSource]="CoursesCertificationsData" class="mat-elevation-z0">
-
-            <ng-container matColumnDef="knowledge">
-              <th mat-header-cell *matHeaderCellDef> Conocimiento </th>
-              <td mat-cell *matCellDef="let element"> {{element.knowledge}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="area">
-              <th mat-header-cell *matHeaderCellDef> Area de conocimiento </th>
-              <td mat-cell *matCellDef="let element"> {{element.area}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="description">
-              <th mat-header-cell *matHeaderCellDef> Description </th>
-              <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="yearsExperience">
-              <th mat-header-cell *matHeaderCellDef> Experiencia en años </th>
-              <td mat-cell *matCellDef="let element">
-                <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput type="number" [formControl]="" (keypress)="onlyNumbers.classicOnlyNumbers($event)"
-                    min="0" max="60" [disabled]="!disableInputs">
-                </mat-form-field>
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="poyectsExperience">
-              <th mat-header-cell *matHeaderCellDef> Experiencia en proyectos </th>
-              <td mat-cell *matCellDef="let element">
-                <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput type="number" [formControl]="" (keypress)="onlyNumbers.classicOnlyNumbers($event)"
-                    min="0" max="60" [disabled]="!disableInputs">
-                </mat-form-field>
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let element">
-                <mat-checkbox [(ngModel)]="disableInputs">
-                </mat-checkbox>
-              </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="CoursesCertificationsColumnsEdit"></tr>
-            <tr mat-row *matRowDef="let row; columns: CoursesCertificationsColumnsEdit;"></tr>
-          </table> -->
         </mat-card-content>
       </mat-card>
     </div>

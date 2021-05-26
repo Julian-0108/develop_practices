@@ -1,4 +1,3 @@
-
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { Tables } from '@app/shared/interfaces/profile-competences.interface';
@@ -24,7 +23,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ResponsabilitiesDescComponent } from './responsabilitiesDesc/responsabilities-desc.component';
 import { ValoraciontotalComponent } from './valoraciontotal/valoraciontotal.component';
 //import { ValorTotalComponent } from './valortotal/valortotal.component';
-
+import { Master } from '@shared/interfaces/master.interface';
 
 export interface AcademicEducationTable {
   education: string;
@@ -38,6 +37,7 @@ interface CoursesCertificationsTable {
   nameDomain: string;
   optional: boolean;
   required: boolean;
+  knowledgeArea: string;
 }
 export interface AcademicEducation {
   _id: string;
@@ -56,8 +56,7 @@ export interface AcademicEducation {
 export class ProfileTemplateComponent implements OnInit {
   @ViewChild('educationTable') _educationTable!: MatTable<any>;
   @ViewChild('coursesCertifications') _coursesCertifications!: MatTable<any>;
-  // @ViewChild('requiredCertificates') requiredCertificates!: MatSelectionList;
-  @ViewChild('specificKnowledge') specificKnowledge!: MatSelectionList;
+  @ViewChild('specificKnowledge') _specificKnowledge!: MatTable<any>;
   @ViewChild('rolResponsabilities') _rolResponsabilities!: MatTable<any>;
   @ViewChild('talents') talents!: MatSelectionList;
   @ViewChild('securityResponsabilities') securityResponsabilities!: MatSelectionList;
@@ -70,36 +69,37 @@ export class ProfileTemplateComponent implements OnInit {
   securityResponsabilitiesData!: any;
 
   contentPagesEducation = [];
-  educationList: AcademicEducation[] = [];
+  educationList: Master[] = [];
   domainList: any[] = [];
   typeList: any[] = [];
-  nameList: any = {};
+  coursesAndCertificationsKnowledgeAreaList: any = {};
+  allCoursesAndCertificationsKnowledgeAreaList: any[] = [];
+  // nameList: any = {};
   rolResponsabilitiesList: any = {};
-  allNamesList: any = [];
+  knowledgeAreaList: any = {};
+  specificKnowledgeList: any = {};
+  allSpecificKnowledgeList: any = {};
+  // allNamesList: any = [];
   allRolResponsabilities: any = [];
-  areasList: AcademicEducation[] = [];
+  areasList: Master[] = [];
   contentPagesSpecificKnowledge = [];
-  // contentPagesRequiredCertificates = [];
   contentPagesRolResponsabilities = [];
   contentPagesTalents = [];
   contentPagesTalentsReadOnly = [];
   contentPagesSecurityResponsabilities = [];
   isEditable = false;
-  // nextPageButtonDisabledRequiredCertificates = false;
   nextPageButtonDisabledSpecificKnowledge = false;
   nextPageButtonDisabledRolResponsabilities = false;
   nextPageButtonDisabledTalents = false;
   nextPageButtonDisabledTalentsReadOnly = false;
   nextPageButtonDisabledSecurityResp = false;
   beforePageButtonDisabledSecurityResp = true;
-  // beforePageButtonDisabledRequiredCertificates = true;
   beforePageButtonDisabledSpecificKnowledge = true;
   beforePageButtonDisabledRolResponsabilities = true;
   beforePageButtonDisabledTalents = true;
   beforePageButtonDisabledTalentsReadOnly = true;
   selectedOptions: any = [];
   public tabIndexSpecificKnowledge = 0;
-  // public tabIndexRequiredCertificates = 0;
   public tabIndexRolResponsabilities = 0;
   public tabIndexTalents = 0;
   public tabIndexTalentsReadOnly = 0;
@@ -135,6 +135,7 @@ export class ProfileTemplateComponent implements OnInit {
     proyectsExperience: new FormControl(),
   });
   sendInformation = {};
+
   /* Errors */
   educationError = false;
   requiredCertificatesError = false;
@@ -155,31 +156,23 @@ export class ProfileTemplateComponent implements OnInit {
   selected: any;
   educationDataSource = new BehaviorSubject<AbstractControl[]>([]);
   coursesCertificationDataSource = new BehaviorSubject<AbstractControl[]>([]);
+  specificKnowledgeDataSource = new BehaviorSubject<AbstractControl[]>([]);
   rolResponsabilitiesdataSource = new BehaviorSubject<AbstractControl[]>([]);
-  // functionColumns: string[] = ['domain', 'function', 'description'];
   public rolResponsabilitiesColumns: string[] = ['domain', 'function', 'description'];
   public educationColumns: string[] = ['education', 'area', 'actions'];
   public coursesAndCertificationsColumns: string[] = [
     'domain',
-    'type',
     'name',
+    'type',
     'required',
     'optional',
   ];
-  public specificknowledgeColumns: string[] = [
-    'knowledge',
-    'area',
-    'description',
+  public specificKnowledgeColumns: string[] = [
+    'domain',
+    'knowledgeArea',
+    'specificKnowledge',
     'yearsExperience',
-    'poyectsExperience',
-  ];
-  public specificknowledgeColumnsEdit: string[] = [
-    'knowledge',
-    'area',
-    'description',
-    'yearsExperience',
-    'poyectsExperience',
-    'actions',
+    'pojectsExperience',
   ];
   disableInputs = false;
   CoursesCertificationsData = [
@@ -213,6 +206,10 @@ export class ProfileTemplateComponent implements OnInit {
   public coursesCertificationsForm: FormGroup = this.formBuilder.group({
     coursesAndCertifications: this.coursesCertificationsFormRows,
   });
+  public specificKnowledgeFormRows: FormArray = this.formBuilder.array([]);
+  public specificKnowledgeForm: FormGroup = this.formBuilder.group({
+    specificKnowledge: this.specificKnowledgeFormRows,
+  });
   public rolResponsabilitiesFormRows: FormArray = this.formBuilder.array([]);
   public rolResponsabilitiesForm: FormGroup = this.formBuilder.group({
     rolResponsabilities: this.rolResponsabilitiesFormRows,
@@ -220,13 +217,17 @@ export class ProfileTemplateComponent implements OnInit {
 
   readOnlyEducationDatasource!: MatTableDataSource<AcademicEducationTable>;
   readOnlyCoursesCertificationsDatasource!: MatTableDataSource<CoursesCertificationsTable>;
+  readOnlySpecificKnowledgeDatasource!: MatTableDataSource<any>;
   readOnlyRolResponsabilitiesDatasource!: MatTableDataSource<any>;
   public responsabilitySeleted = '';
+  /* Filters and not found messages*/
   showEducationFilter = false;
   showCoursesCertificationsFilter = false;
+  showSpecificKnowledgeFilter = false;
   showRolResponsabilitiesFilter = false;
   showNotFoundMessage = true;
   showNotFoundMessageCoursesCertications = true;
+  showNotFoundMessageSpecificKnowledge = true;
   showNotFoundMessageRolResponsabilities = true;
   showNotFoundMessageSecurityResponsabilities = true;
   showNotFoundMessageTalents = true;
@@ -243,7 +244,9 @@ export class ProfileTemplateComponent implements OnInit {
     this.getData();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(moment.version);
+  }
 
   checkBoxChanged(el: any, sourceCheck: string) {
     if (sourceCheck === 'optional' && el.optional) {
@@ -267,16 +270,32 @@ export class ProfileTemplateComponent implements OnInit {
     const row = this.formBuilder.group({
       domain: d && d.idDomain ? d.idDomain : null,
       type: d && d.type ? d.type : null,
-      name: d && d._id ? d._id : null,
+      name: d && d.knowledgeArea ? d.knowledgeArea : null,
       required: d && d.required ? d.required : false,
-      optional: d && d.optional ? d.optional : false,
-      id: d && d._id ? d._id : null,
+      optional: d && d.optional ? d.optional : false
+      // id: d && d._id ? d._id : null,
     });
     this.coursesCertificationsFormRows.push(row);
     if (!noUpdate) {
       this.refreshCoursesCertificationsTable();
     }
   }
+
+  addRowIntoSpecificKnowledgeTable(d?: any, noUpdate?: boolean) {
+    const row = this.formBuilder.group({
+      domain: d && d.idDomain ? d.idDomain : null,
+      knowledgeArea: d && d.knowledgeArea ? d.knowledgeArea : null,
+      specificKnowledge: d && d.specificKnowledge ? d.specificKnowledge : null,
+      yearsExperience: d && d.years ? d.years : 0,
+      pojectsExperience: d && d.projects ? d.projects : 0,
+    });
+    console.log(row);
+    this.specificKnowledgeFormRows.push(row);
+    if (!noUpdate) {
+      this.refreshSpecificKnowledgeTable();
+    }
+  }
+
   addRowIntoRolResponsabilitiesTable(d?: any, noUpdate?: boolean) {
     const row = this.formBuilder.group({
       domain: d && d.idDomain ? d.idDomain : null,
@@ -291,16 +310,37 @@ export class ProfileTemplateComponent implements OnInit {
   filerSelectList(row: any, index: number, source: string) {
     switch (source) {
       case 'coursesAndCertifications':
-        this.profileTemplateService.getAllCertificates(row.domain, row.type).then((res: any) => {
-          console.log(res);
-          console.log(row.domain);
-          this.nameList[index] = res;
+        this.profileTemplateService.getAllKnowledgeArea(row.domain).then((res: any) => {
+          const allAreaKnowledgeWithOutDuplicates = res.filter(
+            (obj: any, index: number, arraySource: any[]) =>
+              arraySource.findIndex(
+                (element: any) => element.knowledgeArea === obj.knowledgeArea
+              ) === index
+          );
+          this.coursesAndCertificationsKnowledgeAreaList[index] = allAreaKnowledgeWithOutDuplicates;
         });
         break;
       case 'rolResponsabilities':
         this.profileTemplateService.getAllFunctions(row.domain).then((res: any) => {
           this.rolResponsabilitiesList[index] = res;
         });
+        break;
+      case 'specificKnowledge':
+        this.profileTemplateService.getAllKnowledgeArea(row.domain).then((res: any) => {
+          const allSpecificKnowledgeWithOutDuplicates = res.filter(
+            (obj: any, index: number, arraySource: any[]) =>
+              arraySource.findIndex(
+                (element: any) => element.knowledgeArea === obj.knowledgeArea
+              ) === index
+          );
+          this.knowledgeAreaList[index] = allSpecificKnowledgeWithOutDuplicates;
+          console.log(this.knowledgeAreaList);
+        });
+        this.profileTemplateService
+          .getAllSpecificKnowledge(row.domain, row.knowledgeArea)
+          .then((res: any) => {
+            this.specificKnowledgeList[index] = res;
+          });
         break;
     }
   }
@@ -315,6 +355,9 @@ export class ProfileTemplateComponent implements OnInit {
   }
   refreshCoursesCertificationsTable() {
     this.coursesCertificationDataSource.next(this.coursesCertificationsFormRows.controls);
+  }
+  refreshSpecificKnowledgeTable() {
+    this.specificKnowledgeDataSource.next(this.specificKnowledgeFormRows.controls);
   }
   refreshEducationTable() {
     this.educationDataSource.next(this.rows.controls);
@@ -340,7 +383,7 @@ export class ProfileTemplateComponent implements OnInit {
         this._educationTable.renderRows();
         break;
       case 'coursesCertifications':
-        this.nameList = {};
+        this.coursesAndCertificationsKnowledgeAreaList = {};
         (this.coursesCertificationsForm.controls.coursesAndCertifications as FormArray).removeAt(
           index
         );
@@ -353,6 +396,14 @@ export class ProfileTemplateComponent implements OnInit {
           this.filerSelectList(row, i, 'coursesAndCertifications');
         }
         this._coursesCertifications.renderRows();
+        break;
+      case 'specificKnowledge':
+        (this.specificKnowledgeForm.controls.specificKnowledge as FormArray).removeAt(index);
+        for (let i = 0; i < this.specificKnowledgeForm.value.specificKnowledge.length; i++) {
+          const row = this.specificKnowledgeForm.value.specificKnowledge[i];
+          this.filerSelectList(row, i, 'specificKnowledge');
+        }
+        this._specificKnowledge.renderRows();
         break;
       case 'rolResponsabilities':
         this.rolResponsabilitiesList = {};
@@ -478,15 +529,6 @@ export class ProfileTemplateComponent implements OnInit {
    */
   nextTab(length: any, section: string) {
     switch (section) {
-      // case 'requiredCertificates':
-      //   this.tabIndexRequiredCertificates = this.tabIndexRequiredCertificates + 1;
-      //   if (this.tabIndexRequiredCertificates > 0) {
-      //     this.beforePageButtonDisabledRequiredCertificates = false;
-      //   }
-      //   if (this.tabIndexRequiredCertificates === length - 1) {
-      //     this.nextPageButtonDisabledRequiredCertificates = true;
-      //   }
-      //   break;
       case 'specificKnowledge':
         this.tabIndexSpecificKnowledge = this.tabIndexSpecificKnowledge + 1;
         if (this.tabIndexSpecificKnowledge > 0) {
@@ -593,6 +635,10 @@ export class ProfileTemplateComponent implements OnInit {
         this.showCoursesCertificationsFilter = true;
         this.showNotFoundMessageCoursesCertications = false;
       }
+      if (res.specificKnowledge.length !== 0) {
+        this.showSpecificKnowledgeFilter = true;
+        this.showNotFoundMessageSpecificKnowledge = false;
+      }
       if (res.rolResponsabilities.length !== 0) {
         this.showRolResponsabilitiesFilter = true;
         this.showNotFoundMessageRolResponsabilities = false;
@@ -608,20 +654,24 @@ export class ProfileTemplateComponent implements OnInit {
       this.readOnlyCoursesCertificationsDatasource = new MatTableDataSource(
         res.coursesAndCertifications
       );
-      this.profileTemplateService.getAllEstudies().then((resp: AcademicEducation[]) => {
+      this.readOnlySpecificKnowledgeDatasource = new MatTableDataSource(res.specificKnowledge);
+      this.profileTemplateService.getAllEstudies().then((resp: Master[]) => {
         this.educationList = resp;
       });
       this.profileTemplateService.getAllDomains().then((resp: any[]) => {
         this.domainList = resp;
       });
-
-      this.profileTemplateService.getAllCertificates().then((allNames: any) => {
-        const allNamesWithOutDuplicates = allNames.filter(
-          (obj: any, index: number, arraySource: any[]) =>
-            arraySource.findIndex((element: any) => element.name === obj.name) === index
-        );
-        this.allNamesList = allNamesWithOutDuplicates;
+      this.profileTemplateService.getSyllabi().then((resp: any) => {
+        this.allSpecificKnowledgeList = resp;
       });
+
+      // this.profileTemplateService.getAllCertificates().then((allNames: any) => {
+      // const allNamesWithOutDuplicates = allNames.filter(
+      //   (obj: any, index: number, arraySource: any[]) =>
+      //     arraySource.findIndex((element: any) => element.name === obj.name) === index
+      // );
+      //   this.allNamesList = allNamesWithOutDuplicates;
+      // });
 
       /* Rol Responsabilities */
       this.profileTemplateService.getAllFunctions().then((rolResponsabilities: any) => {
@@ -633,6 +683,10 @@ export class ProfileTemplateComponent implements OnInit {
         .then((types: any) => {
           this.typeList = types;
         });
+
+      this.profileTemplateService.getAllTypes('Temario', false).then((types: any) => {
+        this.allCoursesAndCertificationsKnowledgeAreaList = types;
+      });
 
       this.buildTalentsReadOnly(this.data);
       this.dataAssertiveComunication = new MatTableDataSource(res.assertiveComunication);
@@ -662,9 +716,7 @@ export class ProfileTemplateComponent implements OnInit {
       this.historyFilter = this.history;
     });
   }
-  uniq(data: any, key: any) {
-    return [...new Map(data.map((el: any) => [key(el), el])).values()];
-  }
+
   /**
    * @author Hanna
    * @description Esta función muestra las fechas en la sección de historial,
@@ -708,6 +760,17 @@ export class ProfileTemplateComponent implements OnInit {
     coursesCertiform.forEach((row: any, index: number) => {
       this.filerSelectList(row, index, 'coursesAndCertifications');
     });
+
+    /* Specific Knowledge */
+    (this.specificKnowledgeForm.controls.specificKnowledge as FormArray).clear();
+    this.data.specificKnowledge.forEach((el: any) =>
+      this.addRowIntoSpecificKnowledgeTable(el, false)
+    );
+    this.refreshSpecificKnowledgeTable();
+    const specificKnowledgeForm = this.specificKnowledgeForm.value.specificKnowledge;
+    specificKnowledgeForm.forEach((row: any, index: number) => {
+      this.filerSelectList(row, index, 'specificKnowledge');
+    });
     /* Rol Responsabilities */
     (this.rolResponsabilitiesForm.controls.rolResponsabilities as FormArray).clear();
     this.data.rolResponsabilities.forEach((el: any) =>
@@ -719,7 +782,7 @@ export class ProfileTemplateComponent implements OnInit {
       this.filerSelectList(row, index, 'rolResponsabilities');
     });
     /* Areas */
-    await this.profileTemplateService.getAllAreas().then((res: AcademicEducation[]) => {
+    await this.profileTemplateService.getAllAreas().then((res: Master[]) => {
       this.areasList = res;
     });
     /* Specific Knowledge */
@@ -741,6 +804,7 @@ export class ProfileTemplateComponent implements OnInit {
       });
     });
     this.coursesAndCertificationsColumns.push('actions');
+    this.specificKnowledgeColumns.push('actions');
     this.rolResponsabilitiesColumns.push('actions');
     this.isEditable = true;
     this.educationError = false;
@@ -764,9 +828,7 @@ export class ProfileTemplateComponent implements OnInit {
   /**
    * @author Hanna
    * @description Función que construye las columnas de las opciones que se mostrarán en
-   * cada página o tab de las secciones que contengan listas.Esta función arma un máximo
-   * de 3 columnas. La función "buildPagesList", por ser secciones de menor tamaño,
-   * arma solo una columna con listas de máximo 6 items.
+   * cada página o tab de las secciones que contengan listas.
    */
 
   buildPagesAndColumnsList(res: any, section: string) {
@@ -903,6 +965,7 @@ export class ProfileTemplateComponent implements OnInit {
             this.existentDate = '';
             this.getData();
             this.removeActionsColumn(this.coursesAndCertificationsColumns);
+            this.removeActionsColumn(this.specificKnowledgeColumns);
             this.removeActionsColumn(this.rolResponsabilitiesColumns);
             this.isEditable = false;
           })
@@ -937,6 +1000,7 @@ export class ProfileTemplateComponent implements OnInit {
       this.existentDate = '';
       this.getData();
       this.removeActionsColumn(this.coursesAndCertificationsColumns);
+      this.removeActionsColumn(this.specificKnowledgeColumns);
       this.removeActionsColumn(this.rolResponsabilitiesColumns);
       this.isEditable = false;
     });
@@ -1034,12 +1098,14 @@ export class ProfileTemplateComponent implements OnInit {
       return;
     }
     this.requiredCertificatesError = false;
-
+    /* Construye la data como la necesita el back */
     for (const i of this.coursesCertificationsForm.value.coursesAndCertifications) {
       newCoursesCertificationsArray.push({
         optional: i.optional,
         required: i.required,
-        course: i.name,
+        idDomain: i.domain,
+        type: i.type,
+        knowledgeArea: i.name,
       });
     }
     this.sendInformation = {
@@ -1049,21 +1115,49 @@ export class ProfileTemplateComponent implements OnInit {
     return true;
   }
   onSaveSpecificKnowledge() {
-    if (this.specificKnowledge.selectedOptions.selected.length === 0) {
+    let emptyFields: object[] = [];
+    let newResponse: any[] = [];
+    for (const i of this.specificKnowledgeForm.value.specificKnowledge) {
+      if (i.domain === null || i.knowledgeArea === null || i.specificKnowledge === null) {
+        emptyFields.push(i);
+      }
+    }
+
+    if (this.specificKnowledgeForm.value.specificKnowledge.length === 0) {
       this.notificationService.openSimpleSnackBar({
         title: 'Acción Incorrecta',
-        message: 'Debe seleccionar al menos un item de la lista de "Conocimientos Específicos".',
+        message: 'La selección de "Conocimientos Específicos" no puede estar vacía.',
+        type: 'error',
+      });
+      this.specificKnowledgeError = true;
+      return;
+    }
+    if (emptyFields.length !== 0) {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Acción Incorrecta',
+        message: 'Ninguno de los campos de "Conocimientos Específicos" puede estar vacío.',
         type: 'error',
       });
       this.specificKnowledgeError = true;
       return;
     }
     this.specificKnowledgeError = false;
+    /* Arma la estructura que recibe el back */
+    for (const i of this.specificKnowledgeForm.value.specificKnowledge) {
+      this.profileTemplateService
+        .getSyllabi(i.domain, i.knowledgeArea, i.specificKnowledge)
+        .then((resp: any) => {
+          newResponse.push({
+            idSyllabi: resp[0]._id,
+            years: i.yearsExperience,
+            projects: i.pojectsExperience,
+          });
+        });
+    }
+    console.log(newResponse);
     this.sendInformation = {
       ...this.sendInformation,
-      specificKnowledge: this.specificKnowledge.selectedOptions.selected.map(
-        (value) => value.value
-      ),
+      specificKnowledge: newResponse,
     };
     return true;
   }
@@ -1171,6 +1265,7 @@ export class ProfileTemplateComponent implements OnInit {
   onCancel() {
     this.sendInformation = {};
     this.removeActionsColumn(this.coursesAndCertificationsColumns);
+    this.removeActionsColumn(this.specificKnowledgeColumns);
     this.removeActionsColumn(this.rolResponsabilitiesColumns);
     this.isEditable = false;
   }
@@ -1223,11 +1318,17 @@ export class ProfileTemplateComponent implements OnInit {
       this.readOnlyRolResponsabilitiesDatasource.filteredData.length === 0
         ? (this.showNotFoundMessageRolResponsabilities = true)
         : (this.showNotFoundMessageRolResponsabilities = false);
+    } else if (source === 'specificKnowledge') {
+      this.readOnlySpecificKnowledgeDatasource.filter = event.value;
+      this.readOnlySpecificKnowledgeDatasource.filteredData.length === 0
+        ? (this.showNotFoundMessageSpecificKnowledge = true)
+        : (this.showNotFoundMessageSpecificKnowledge = false);
     }
   }
 
   selectedValor() {
-    this._dialog.open(ValoraciontotalComponent)
+    this._dialog
+      .open(ValoraciontotalComponent)
       .afterClosed()
       .subscribe((resp: any) => {});
   }
@@ -1256,5 +1357,9 @@ export class ProfileTemplateComponent implements OnInit {
       this.educationError = true;
       return;
     }
+  }
+
+  uniq(data: any, key: any) {
+    return [...new Map(data.map((el: any) => [key(el), el])).values()];
   }
 }
