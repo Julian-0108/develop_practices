@@ -13,18 +13,33 @@ export class MasterInfoService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   getData(url: string, id?: string): Promise<Master[]> {
-    // if (id) {
     return this.http
       .get<Response>(
         id ? `${environment.API_MASTER_INFO}/${url}/${id}` : `${environment.API_MASTER_INFO}/${url}`
       )
       .pipe(pluck<Response, Master[]>('payload'))
       .toPromise();
-    // }
-    // return this.http
-    //   .get<Response>(`${environment.API_MASTER_INFO}/${url}`)
-    //   .pipe(pluck<Response, Master[]>('payload') )
-    //   .toPromise();
+  }
+
+  async getSyllabiLists(idDomain: string, knowledgeArea?: string, specificKnowledge?: string) {
+    return idDomain && knowledgeArea && specificKnowledge
+      ? await this.http
+          .get(
+            `${environment.API_MASTER_INFO}/syllabi?status=true&idDomain=${idDomain}&knowledgeArea=${knowledgeArea}&specificKnowledge=${specificKnowledge}`
+          )
+          .pipe(pluck('payload'))
+          .toPromise()
+      : idDomain && knowledgeArea
+      ? await this.http
+          .get(
+            `${environment.API_MASTER_INFO}/syllabi?status=true&idDomain=${idDomain}&knowledgeArea=${knowledgeArea}`
+          )
+          .pipe(pluck('payload'))
+          .toPromise()
+      : await this.http
+          .get(`${environment.API_MASTER_INFO}/syllabi?status=true&idDomain=${idDomain}`)
+          .pipe(pluck('payload'))
+          .toPromise();
   }
 
   getTypes(param: any): Promise<any> {
@@ -38,7 +53,6 @@ export class MasterInfoService {
       .pipe(pluck('payload'))
       .toPromise();
   }
-
 
   getSkills() {
     return this.http
@@ -84,7 +98,6 @@ export class MasterInfoService {
   }
 
   updateToMasterWithImages(url: string, id: any, register: any) {
-    console.log(url, id, register);
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onreadystatechange = () => {
@@ -108,7 +121,5 @@ export class MasterInfoService {
       .get(`${environment.API_MASTER_INFO}/domain/${id}`)
       .pipe(pluck('payload'))
       .toPromise();
-
   }
 }
-

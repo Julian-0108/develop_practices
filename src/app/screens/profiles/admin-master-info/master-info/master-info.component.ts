@@ -29,6 +29,10 @@ export class MasterInfoComponent implements OnInit {
   domains: any[] = [];
   skills: any[] = [];
   masters: Masters[] = [];
+  knowledgeAreaList: any = [];
+  specificKnowledgeList: any = [];
+  idSyllabi!: string;
+  formationList = ['Específica', 'Básica'];
 
   constructor(
     private datePipe: DatePipe,
@@ -50,6 +54,48 @@ export class MasterInfoComponent implements OnInit {
     this.fillSkillsList();
     this.fillDomainsList();
     console.log(this.data);
+  }
+
+  filerSelectList(source: string) {
+    switch (source) {
+      case 'dominioField':
+        this.masterInfoService.getSyllabiLists(this.form.value.idDomain).then((res: any) => {
+          const allAreaKnowledgeWithOutDuplicates = res.filter(
+            (obj: any, index: number, arraySource: any[]) =>
+              arraySource.findIndex(
+                (element: any) => element.knowledgeArea === obj.knowledgeArea
+              ) === index
+          );
+          this.knowledgeAreaList = allAreaKnowledgeWithOutDuplicates;
+        });
+        this.notNullData('knowledgeArea');
+        break;
+      case 'knowledgeAreaField':
+        this.masterInfoService
+          .getSyllabiLists(this.form.value.idDomain, this.form.value.knowledgeArea)
+          .then((res: any) => {
+            const allSpecificKnowledgeWithOutDuplicates = res.filter(
+              (obj: any, index: number, arraySource: any[]) =>
+                arraySource.findIndex(
+                  (element: any) => element.specificKnowledge === obj.specificKnowledge
+                ) === index
+            );
+            this.specificKnowledgeList = allSpecificKnowledgeWithOutDuplicates;
+          });
+        this.notNullData('specificKnowledge');
+        break;
+      case 'specificKnowledgeField':
+        this.masterInfoService
+          .getSyllabiLists(
+            this.form.value.idDomain,
+            this.form.value.knowledgeArea,
+            this.form.value.specificKnowledge
+          )
+          .then((res: any) => {
+            this.idSyllabi = res[0]._id;
+          });
+        break;
+    }
   }
 
   fillTypesList() {
@@ -80,7 +126,10 @@ export class MasterInfoComponent implements OnInit {
   createForm(): FormGroup {
     return this.formBuilder.group({
       _id: new FormControl(),
-      name: new FormControl('', [Validators.required, this.customValidator.noWhitespaceValidator]),
+      platform: new FormControl(null),
+      technology: new FormControl(null),
+      formation: new FormControl(null),
+      name: new FormControl(''),
       description: new FormControl({
         value: '',
         disabled:
@@ -97,6 +146,8 @@ export class MasterInfoComponent implements OnInit {
           this.data?.url === 'domain',
       }),
       idDomain: new FormControl(null),
+      knowledgeArea: new FormControl(null),
+      specificKnowledge: new FormControl(null),
       masterReference: new FormControl(null),
       idParent: new FormControl({
         value: null,
@@ -114,8 +165,7 @@ export class MasterInfoComponent implements OnInit {
     });
   }
 
-  initForm(): void {
-    console.log(this.data);
+  formValidations() {
     if (
       this.data.element &&
       this.data.element.type !== 'Habilidad' &&
@@ -124,21 +174,53 @@ export class MasterInfoComponent implements OnInit {
       this.form.get('submenu')?.disable();
       this.form.get('idParent')?.enable();
     }
+    if (this.data.url !== 'syllabi') {
+      this.form.controls.name?.setValidators([Validators.required]);
+      this.form.controls.name?.updateValueAndValidity();
+    } else {
+      this.form.controls.name?.clearValidators();
+    }
     if (this.data.url !== 'types') {
-      this.form.controls.type?.setValidators([Validators.required]);
-      this.form.controls.type?.updateValueAndValidity();
-      this.form.controls.description?.setValidators([
-        Validators.required,
-        this.customValidator.noWhitespaceValidator,
-      ]);
-      this.form.controls.description?.updateValueAndValidity();
-      this.form.controls.masterReference?.clearValidators();
-      if (this.data.url === 'security-responsabilities') {
-        this.form.controls.description?.clearValidators();
+      if (this.data.url !== 'syllabi') {
+        this.form.controls.type?.setValidators([Validators.required]);
+        this.form.controls.type?.updateValueAndValidity();
+        this.form.controls.description?.setValidators([
+          Validators.required,
+          this.customValidator.noWhitespaceValidator,
+        ]);
         this.form.controls.description?.updateValueAndValidity();
+        this.form.controls.masterReference?.clearValidators();
+        if (this.data.url === 'security-responsabilities') {
+          this.form.controls.description?.clearValidators();
+          this.form.controls.description?.updateValueAndValidity();
+        }
       }
-      if (this.data.url === 'courses-certifications' || this.data.url === 'functions') {
+      if (this.data.url === 'functions' || this.data.url === 'syllabi') {
         this.form.controls.idDomain?.setValidators([Validators.required]);
+        this.form.controls.idDomain?.updateValueAndValidity();
+      } else {
+        this.form.controls.idDomain?.clearValidators();
+      }
+      if (this.data.url === 'courses-certifications') {
+        this.form.controls.idDomain?.setValidators([Validators.required]);
+        this.form.controls.idDomain?.updateValueAndValidity();
+        this.form.controls.knowledgeArea?.setValidators([Validators.required]);
+        this.form.controls.knowledgeArea?.updateValueAndValidity();
+        this.form.controls.specificKnowledge?.setValidators([Validators.required]);
+        this.form.controls.specificKnowledge?.updateValueAndValidity();
+        this.form.controls.platform?.setValidators([Validators.required]);
+        this.form.controls.platform?.updateValueAndValidity();
+        this.form.controls.technology?.setValidators([Validators.required]);
+        this.form.controls.technology?.updateValueAndValidity();
+        this.form.controls.formation?.setValidators([Validators.required]);
+        this.form.controls.formation?.updateValueAndValidity();
+      } else {
+        this.form.controls.idDomain?.clearValidators();
+        this.form.controls.knowledgeArea?.clearValidators();
+        this.form.controls.specificKnowledge?.clearValidators();
+        this.form.controls.platform?.clearValidators();
+        this.form.controls.technology?.clearValidators();
+        this.form.controls.formation?.clearValidators();
       }
     } else {
       this.masters = this.data.masters.filter((master) => master.name !== 'Tipos');
@@ -147,12 +229,33 @@ export class MasterInfoComponent implements OnInit {
       this.form.controls.type?.clearValidators();
       this.form.controls.description?.clearValidators();
     }
+  }
+
+  notNullData(field: any) {
+    if (
+      this.form.value[`field`] === null ||
+      this.form.value[`field`] === undefined ||
+      this.form.value[`field`] === ''
+    ) {
+      this.form.get(field)?.setErrors({ error: 'Campo obligatorio' });
+    }
+  }
+
+  initForm(): void {
+    this.formValidations();
 
     if (this.data?.element) {
-    console.log(this.data);
-
-      if (this.data.element.domain) {
-      this.data.element.idDomain = this.data.element.domain[0]._id;
+      if (this.data.element.syllabi) {
+        this.form.get('idDomain')?.patchValue(this.data.element.syllabi[0].idDomain);
+        this.filerSelectList('dominioField');
+        this.form.get('knowledgeArea')?.patchValue(this.data.element.syllabi[0].knowledgeArea);
+        this.filerSelectList('knowledgeAreaField');
+        this.form
+          .get('specificKnowledge')
+          ?.patchValue(this.data.element.syllabi[0].specificKnowledge);
+        this.filerSelectList('specificKnowledgeField');
+      } else if (this.data.element.domain) {
+        this.form.get('idDomain')?.patchValue(this.data.element.domain[0]._id);
       }
 
       this.form.patchValue(this.data.element);
@@ -181,8 +284,6 @@ export class MasterInfoComponent implements OnInit {
     const data = new FormData();
     data.append('image', this.archivo);
     data.append('body', JSON.stringify(this.form.getRawValue()));
-    console.log(JSON.stringify(this.form.value));
-    console.log(JSON.stringify(this.form.getRawValue()));
     return data;
   }
 
@@ -196,7 +297,6 @@ export class MasterInfoComponent implements OnInit {
   }
 
   addRegisterWithImageToMaster() {
-    console.log(this.data.url, this.form.value);
     this.masterInfoService
       .addRegisterToMasterWithImages(this.data.url, this.createFormData())
       .then((response: any) => this.showNotification(response))
@@ -210,7 +310,9 @@ export class MasterInfoComponent implements OnInit {
   }
 
   addRegisterToMaster() {
-    console.log(this.data.url, this.form.value);
+    if (this.data.url === 'courses-certifications') {
+      this.form.value.idSyllabi = this.idSyllabi;
+    }
     this.masterInfoService
       .addRegisterToMaster(this.data.url, this.form.value)
       .then((response: any) => this.showNotification(response))
@@ -231,7 +333,6 @@ export class MasterInfoComponent implements OnInit {
   }
 
   updateRegister(haveImage: boolean) {
-    console.log(this.data.url, this.data.element._id, this.createFormData());
     const saveHistorial: SnackOptionsInterface = {
       title: 'Guardar en Historial',
       message: '¿Desea que el registro de los cambios se guarde en el historial?',
@@ -251,7 +352,7 @@ export class MasterInfoComponent implements OnInit {
         }
       });
   }
-   onUpdatewithHistory(id: any, data: any, withImage: boolean) {
+  onUpdatewithHistory(id: any, data: any, withImage: boolean) {
     /*
      * Se abre el formulario donde se ingresa la descripción de los cambios,
      * que se guardarán en el historial.
@@ -270,9 +371,7 @@ export class MasterInfoComponent implements OnInit {
          * Acciones que se activan al dar click en el botón "guardar" del formulario.
          */
         const domainName: any = await this.masterInfoService.getDomain(this.form.value.idDomain);
-        console.log(domainName)
         // resp = domainName.name
-        console.log(this.form.value)
         resp = {
           ...resp,
           idMaster: id,
@@ -286,6 +385,9 @@ export class MasterInfoComponent implements OnInit {
          * Se Guarda la información en historial y se actualiza la información del
          * perfil.
          */
+        if (this.data.url === 'courses-certifications') {
+          this.form.value.idSyllabi = this.idSyllabi;
+        }
         if (withImage) {
           this.masterInfoService
             .updateToMasterWithImages(this.data.url, this.data.element._id, this.createFormData())
@@ -293,7 +395,6 @@ export class MasterInfoComponent implements OnInit {
               this.historyMastersService.hitoryActionsAdminMaster('post', id, resp);
             })
             .then((response: any) => {
-              console.log(response);
               this.notificationService.openSimpleSnackBar({
                 title: 'Operación Finalizada',
                 message: 'La información se ha actualizado con éxito y su historial fue creado.',
@@ -309,14 +410,12 @@ export class MasterInfoComponent implements OnInit {
               });
             });
         } else {
-          console.log(resp)
           this.masterInfoService
             .updateRegisterToMaster(this.data.url, this.data.element._id, this.form.value)
             ?.then(() => {
               this.historyMastersService.hitoryActionsAdminMaster('post', id, resp);
             })
             .then((response: any) => {
-              console.log(response);
               this.notificationService.openSimpleSnackBar({
                 title: 'Operación Finalizada',
                 message: 'La información se ha actualizado con éxito y su historial fue creado.',
@@ -336,6 +435,9 @@ export class MasterInfoComponent implements OnInit {
   }
 
   onUpdateWithOutHistory(withImage: boolean) {
+    if (this.data.url === 'courses-certifications') {
+      this.form.value.idSyllabi = this.idSyllabi;
+    }
     if (withImage) {
       this.masterInfoService
         .updateToMasterWithImages(this.data.url, this.data.element._id, this.createFormData())
@@ -382,7 +484,6 @@ export class MasterInfoComponent implements OnInit {
   }
 
   onSubmit() {
-
     if (
       this.form.get('submenu')?.value === null &&
       this.data.url === 'base-teams-categories' &&
@@ -407,7 +508,6 @@ export class MasterInfoComponent implements OnInit {
     }
 
     if (this.data?.element) {
-      console.log(this.form.value);
       this.manage_images.includes(this.data.url)
         ? this.updateRegisterWithImageToMaster()
         : this.updateRegisterToMaster();
@@ -424,8 +524,6 @@ export class MasterInfoComponent implements OnInit {
       this.form.get('submenu')?.disable();
       this.form.get('submenu')?.patchValue(false);
       this.form.get('idParent')?.enable();
-      console.log('FORM', this.form.value);
-      console.log('FORM2', this.form.getRawValue());
       this.form.controls.idParent?.setValidators([Validators.required]);
       this.form.controls.idParent?.updateValueAndValidity();
       return;
@@ -509,5 +607,47 @@ export class MasterInfoComponent implements OnInit {
     }
     this.form.get('submenu')?.disable();
     this.form.get('idParent')?.disable();
+  }
+
+  showOrHide(field: string) {
+    const URL = this.data?.url;
+    switch (field) {
+      case 'name':
+        if (URL !== 'syllabi') return true;
+        break;
+      case 'platform':
+        if (URL === 'courses-certifications') return true;
+        break;
+      case 'technology':
+        if (URL === 'courses-certifications') return true;
+        break;
+      case 'formation':
+        if (URL === 'courses-certifications') return true;
+        break;
+      case 'description':
+        if (
+          URL !== 'security-responsabilities' &&
+          URL !== 'courses-certifications' &&
+          URL !== 'syllabi'
+        )
+          return true;
+        break;
+      case 'idDomain':
+        if (URL === 'courses-certifications' || URL === 'functions' || URL === 'syllabi')
+          return true;
+        break;
+      case 'masterReference':
+        if (URL === 'types') return true;
+        break;
+      case 'type':
+        if (URL !== 'types' && URL !== 'functions' && URL !== 'syllabi') return true;
+        break;
+      case 'knowledgeArea':
+        if (URL === 'syllabi' || URL === 'courses-certifications') return true;
+        break;
+      case 'specificKnowledge':
+        if (URL === 'syllabi' || URL === 'courses-certifications') return true;
+        break;
+    }
   }
 }

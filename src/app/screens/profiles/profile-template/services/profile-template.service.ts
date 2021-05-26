@@ -2,33 +2,25 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { pluck } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-//import { Master } from '@shared/interfaces/master.interface';
+import { Master } from '@shared/interfaces/master.interface';
 
-export interface AcademicEducation {
-  _id: string;
-  name: string;
-  description: string;
-  status: boolean;
-  type?: string;
-  updatedAt: string;
-  createdAt: string;
-}
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileTemplateService {
   constructor(private httpClient: HttpClient) {}
 
-  async getAllEstudies(): Promise<AcademicEducation[]> {
+  async getAllEstudies(): Promise<Master[]> {
     return await this.httpClient
       .get(`${environment.API_MASTER_INFO}/studies?status=true`)
-      .pipe<AcademicEducation[]>(pluck('payload'))
+      .pipe<Master[]>(pluck('payload'))
       .toPromise();
   }
-  async getAllAreas(): Promise<AcademicEducation[]> {
+
+  async getAllAreas(): Promise<Master[]> {
     return await this.httpClient
       .get(`${environment.API_MASTER_INFO}/education-area?status=true`)
-      .pipe<AcademicEducation[]>(pluck('payload'))
+      .pipe<Master[]>(pluck('payload'))
       .toPromise();
   }
   async getAllTypes(masterReference?: string | boolean, idType?: string | boolean) {
@@ -50,11 +42,7 @@ export class ProfileTemplateService {
       i._id = i.id;
     }
   }
-  async getAllCertificates(
-    idDomain?: string,
-    type?: string,
-    name?: string
-  ) {
+  async getAllCertificates(idDomain?: string, type?: string, name?: string) {
     if (idDomain && type) {
       const response: any = await this.httpClient
         .get(
@@ -185,6 +173,7 @@ export class ProfileTemplateService {
         );
       }
     });
+    console.log(data);
     return data;
   }
   async updateProfile(id: any, body: any) {
@@ -192,5 +181,43 @@ export class ProfileTemplateService {
       .put(`${environment.API_BASE_PROFILES}/bases-profiles/${id}`, body)
       .pipe(pluck('payload'))
       .toPromise();
+  }
+  async getAllKnowledgeArea(idDomain: string) {
+    return await this.httpClient
+      .get(`${environment.API_MASTER_INFO}/syllabi?status=true&idDomain=${idDomain}`)
+      .pipe(pluck('payload'))
+      .toPromise();
+  }
+  async getAllSpecificKnowledge(idDomain: string, knowledgeArea: string) {
+    return await this.httpClient
+      .get(
+        `${environment.API_MASTER_INFO}/syllabi?status=true&idDomain=${idDomain}&knowledgeArea=${knowledgeArea}`
+      )
+      .pipe(pluck('payload'))
+      .toPromise();
+  }
+
+  async getSyllabi(idDomain?: string, knowledgeArea?: string, specificKnowledge?: string) {
+    if (idDomain && knowledgeArea && specificKnowledge) {
+      return await this.httpClient
+        .get(
+          `${environment.API_MASTER_INFO}/syllabi?status=true&idDomain=${idDomain}&knowledgeArea=${knowledgeArea}&specificKnowledge=${specificKnowledge}`
+        )
+        .pipe(pluck('payload'))
+        .toPromise();
+    }
+    /** Con la información que trae del servicio de Sylaby, arma las listas de los filtros
+     * de knowledgeArea y specificKnowledge.
+     */
+    let allLists: any = { knowledgeArea: [], specificKnowledge: [] };
+    let response: any = await this.httpClient
+      .get(`${environment.API_MASTER_INFO}/syllabi?status=true`)
+      .pipe(pluck('payload'))
+      .toPromise();
+    response.forEach((element: any) => {
+      allLists.knowledgeArea.push(element.knowledgeArea);
+      allLists.specificKnowledge.push(element.specificKnowledge);
+    });
+    return allLists;
   }
 }

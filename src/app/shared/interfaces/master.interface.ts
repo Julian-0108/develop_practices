@@ -15,4 +15,9 @@ export interface Master {
   idParent?: string;
   idDomain?: string;
   domain?: any;
+  masterReference?: any;
+  syllabi?: any;
+  knowledgeArea?: string;
+  specificKnowledge?: string;
+  idSyllabi: string
 }
