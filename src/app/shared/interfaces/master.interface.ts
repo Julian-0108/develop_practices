@@ -19,4 +19,5 @@ export interface Master {
   syllabi?: any;
   knowledgeArea?: string;
   specificKnowledge?: string;
+  idSyllabi: string
 }

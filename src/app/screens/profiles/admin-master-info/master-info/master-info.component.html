@@ -34,10 +34,12 @@
                     <mat-label class="label">Área de Conocimiento</mat-label>
                     <mat-select #ej formControlName="knowledgeArea" placeholder="Seleccione un área"
                         (selectionChange)="filerSelectList('knowledgeAreaField')">
-                        <mat-option *ngFor="let area of knowledgeAreaList" [value]="area.knowledgeArea">
-                            {{area.knowledgeArea}}
+                        <mat-option *ngFor="let area of data.url !== 'syllabi' ? knowledgeAreaList : types"
+                            [value]="data.url !== 'syllabi' ? area.knowledgeArea : area.name">
+                            {{data.url !== 'syllabi' ? area.knowledgeArea : area.name}}
                         </mat-option>
-                        <mat-option *ngIf="knowledgeAreaList?.length === 0" disabled>
+                        <mat-option *ngIf="(data.url === 'syllabi' ? types.length : knowledgeAreaList.length) === 0"
+                            disabled>
                             <i>No hay tipos disponibles</i>
                         </mat-option>
                     </mat-select>
@@ -48,7 +50,7 @@
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Conocimiento Específico</mat-label>
                     <mat-select #ej formControlName="specificKnowledge" placeholder="Seleccione un conocimiento"
-                        (selectionChange)="filerSelectList('specificKnowledgeField')">
+                        (selectionChange)="filerSelectList('specificKnowledgeField')" *ngIf="data.url !== 'syllabi'">
                         <mat-option *ngFor="let specificKnowledge of specificKnowledgeList"
                             [value]="specificKnowledge.specificKnowledge">
                             {{specificKnowledge.specificKnowledge}}
@@ -57,6 +59,8 @@
                             <i>No hay tipos disponibles</i>
                         </mat-option>
                     </mat-select>
+                    <input matInput formControlName="specificKnowledge" placeholder="Seleccione un conocimiento"
+                        *ngIf="data.url === 'syllabi'">
                     <app-validator [form]="form" name="specificKnowledge" [otherIcon]="true"></app-validator>
                 </mat-form-field>
             </div>
@@ -132,7 +136,12 @@
             <div *ngIf="showOrHide('formation')" class="item" fxFlex="30">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Formación</mat-label>
-                    <input matInput formControlName="formation" placeholder="Digite una formación">
+                    <mat-select #ej formControlName="formation" placeholder="Seleccione un formación">
+                        <mat-option *ngFor="let formation of formationList" [value]="formation">
+                            {{formation}}
+                        </mat-option>
+                    </mat-select>
+                    <!-- <input matInput formControlName="formation" placeholder="Digite una formación"> -->
                     <app-validator [form]="form" name="formation"></app-validator>
                 </mat-form-field>
             </div>

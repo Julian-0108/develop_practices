@@ -32,6 +32,7 @@ export class MasterInfoComponent implements OnInit {
   knowledgeAreaList: any = [];
   specificKnowledgeList: any = [];
   idSyllabi!: string;
+  formationList = ['Específica', 'Básica'];
 
   constructor(
     private datePipe: DatePipe,
@@ -81,7 +82,7 @@ export class MasterInfoComponent implements OnInit {
             );
             this.specificKnowledgeList = allSpecificKnowledgeWithOutDuplicates;
           });
-          this.notNullData('specificKnowledge');
+        this.notNullData('specificKnowledge');
         break;
       case 'specificKnowledgeField':
         this.masterInfoService
@@ -194,18 +195,13 @@ export class MasterInfoComponent implements OnInit {
           this.form.controls.description?.updateValueAndValidity();
         }
       }
-      if (
-        this.data.url === 'functions' ||
-        this.data.url === 'syllabi'
-      ) {
+      if (this.data.url === 'functions' || this.data.url === 'syllabi') {
         this.form.controls.idDomain?.setValidators([Validators.required]);
         this.form.controls.idDomain?.updateValueAndValidity();
       } else {
         this.form.controls.idDomain?.clearValidators();
       }
-      if (
-        this.data.url === 'courses-certifications'
-      ) {
+      if (this.data.url === 'courses-certifications') {
         this.form.controls.idDomain?.setValidators([Validators.required]);
         this.form.controls.idDomain?.updateValueAndValidity();
         this.form.controls.knowledgeArea?.setValidators([Validators.required]);
@@ -235,7 +231,7 @@ export class MasterInfoComponent implements OnInit {
     }
   }
 
-  notNullData(field: any){
+  notNullData(field: any) {
     if (
       this.form.value[`field`] === null ||
       this.form.value[`field`] === undefined ||
@@ -246,13 +242,9 @@ export class MasterInfoComponent implements OnInit {
   }
 
   initForm(): void {
-    console.log(this.data);
-
     this.formValidations();
 
     if (this.data?.element) {
-      console.log(this.data);
-
       if (this.data.element.syllabi) {
         this.form.get('idDomain')?.patchValue(this.data.element.syllabi[0].idDomain);
         this.filerSelectList('dominioField');
@@ -261,11 +253,10 @@ export class MasterInfoComponent implements OnInit {
         this.form
           .get('specificKnowledge')
           ?.patchValue(this.data.element.syllabi[0].specificKnowledge);
-        // this.data.element.idDomain = this.data.element.syllabi[0].idDomain;
-        // this.data.element.knowledgeArea = this.data.element.syllabi[0].knowledgeArea;
-        // this.data.element.specificKnowledge = this.data.element.syllabi[0].specificKnowledge;
+        this.filerSelectList('specificKnowledgeField');
+      } else if (this.data.element.domain) {
+        this.form.get('idDomain')?.patchValue(this.data.element.domain[0]._id);
       }
-      console.log(this.data);
 
       this.form.patchValue(this.data.element);
       this.form
@@ -293,8 +284,6 @@ export class MasterInfoComponent implements OnInit {
     const data = new FormData();
     data.append('image', this.archivo);
     data.append('body', JSON.stringify(this.form.getRawValue()));
-    console.log(JSON.stringify(this.form.value));
-    console.log(JSON.stringify(this.form.getRawValue()));
     return data;
   }
 
@@ -308,7 +297,6 @@ export class MasterInfoComponent implements OnInit {
   }
 
   addRegisterWithImageToMaster() {
-    console.log(this.data.url, this.form.value);
     this.masterInfoService
       .addRegisterToMasterWithImages(this.data.url, this.createFormData())
       .then((response: any) => this.showNotification(response))
@@ -325,7 +313,6 @@ export class MasterInfoComponent implements OnInit {
     if (this.data.url === 'courses-certifications') {
       this.form.value.idSyllabi = this.idSyllabi;
     }
-    console.log(this.data.url, this.form.value);
     this.masterInfoService
       .addRegisterToMaster(this.data.url, this.form.value)
       .then((response: any) => this.showNotification(response))
@@ -346,7 +333,6 @@ export class MasterInfoComponent implements OnInit {
   }
 
   updateRegister(haveImage: boolean) {
-    console.log(this.data.url, this.data.element._id, this.createFormData());
     const saveHistorial: SnackOptionsInterface = {
       title: 'Guardar en Historial',
       message: '¿Desea que el registro de los cambios se guarde en el historial?',
@@ -385,9 +371,7 @@ export class MasterInfoComponent implements OnInit {
          * Acciones que se activan al dar click en el botón "guardar" del formulario.
          */
         const domainName: any = await this.masterInfoService.getDomain(this.form.value.idDomain);
-        console.log(domainName);
         // resp = domainName.name
-        console.log(this.form.value);
         resp = {
           ...resp,
           idMaster: id,
@@ -401,6 +385,9 @@ export class MasterInfoComponent implements OnInit {
          * Se Guarda la información en historial y se actualiza la información del
          * perfil.
          */
+        if (this.data.url === 'courses-certifications') {
+          this.form.value.idSyllabi = this.idSyllabi;
+        }
         if (withImage) {
           this.masterInfoService
             .updateToMasterWithImages(this.data.url, this.data.element._id, this.createFormData())
@@ -408,7 +395,6 @@ export class MasterInfoComponent implements OnInit {
               this.historyMastersService.hitoryActionsAdminMaster('post', id, resp);
             })
             .then((response: any) => {
-              console.log(response);
               this.notificationService.openSimpleSnackBar({
                 title: 'Operación Finalizada',
                 message: 'La información se ha actualizado con éxito y su historial fue creado.',
@@ -424,14 +410,12 @@ export class MasterInfoComponent implements OnInit {
               });
             });
         } else {
-          console.log(resp);
           this.masterInfoService
             .updateRegisterToMaster(this.data.url, this.data.element._id, this.form.value)
             ?.then(() => {
               this.historyMastersService.hitoryActionsAdminMaster('post', id, resp);
             })
             .then((response: any) => {
-              console.log(response);
               this.notificationService.openSimpleSnackBar({
                 title: 'Operación Finalizada',
                 message: 'La información se ha actualizado con éxito y su historial fue creado.',
@@ -451,6 +435,9 @@ export class MasterInfoComponent implements OnInit {
   }
 
   onUpdateWithOutHistory(withImage: boolean) {
+    if (this.data.url === 'courses-certifications') {
+      this.form.value.idSyllabi = this.idSyllabi;
+    }
     if (withImage) {
       this.masterInfoService
         .updateToMasterWithImages(this.data.url, this.data.element._id, this.createFormData())
@@ -521,7 +508,6 @@ export class MasterInfoComponent implements OnInit {
     }
 
     if (this.data?.element) {
-      console.log(this.form.value);
       this.manage_images.includes(this.data.url)
         ? this.updateRegisterWithImageToMaster()
         : this.updateRegisterToMaster();

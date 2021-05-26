@@ -98,7 +98,6 @@ export class MasterInfoService {
   }
 
   updateToMasterWithImages(url: string, id: any, register: any) {
-    console.log(url, id, register);
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onreadystatechange = () => {

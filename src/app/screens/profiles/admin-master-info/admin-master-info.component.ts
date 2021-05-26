@@ -129,7 +129,6 @@ export class AdminMasterInfoComponent implements OnInit {
 
   getDataMaster() {
     this.masterInfoService.getData(this.masterSeleted).then((res: Master[]) => {
-      console.log(res);
       this.dataSource.data = res;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -284,14 +283,12 @@ export class AdminMasterInfoComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log(this.dataSource);
   }
 
   applyDirectFilter(filterValue: any) {
     this.dataSource.filter = filterValue;
   }
   setId(el: any) {
-    console.log(el);
     this.idHistory = el;
   }
 
