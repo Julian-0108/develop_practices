@@ -131,11 +131,30 @@ export class ProfileTemplateService {
       .toPromise();
   }
 
-  historyPreview(id: any) {
-    return this.httpClient
+  async historyPreview(id: any) {
+    let data: any = await this.httpClient
       .get(`${environment.API_BASE_PROFILES}/historical-records/${id}`)
       .pipe(pluck('payload'))
       .toPromise();
+
+    this.changeKeyName(data.coursesAndCertifications);
+    data.academicEducation = data.academicEducation.map((item: any) => {
+      return { education: item._id, name: item.name, area: item.area };
+    });
+    data.rolResponsabilities = data.jobFunctions;
+    delete data.jobFunctions;
+    /* SecurityResponsabilities */
+    data.responsabilitiesGroupbyType = {};
+    data.securityResponsabilities.forEach((resp: any) => {
+      if (!data.responsabilitiesGroupbyType.hasOwnProperty(resp.type)) {
+        data.responsabilitiesGroupbyType[resp.type] = data.securityResponsabilities.map(
+          (type: any) => {
+            if (type.type === resp.type) return type;
+          }
+        );
+      }
+    });
+    return data;
   }
   historyActions(action: string, idProfile: string, data?: any) {
     if (action === 'get') {
@@ -158,7 +177,7 @@ export class ProfileTemplateService {
       .toPromise();
     this.changeKeyName(data.coursesAndCertifications);
     data.academicEducation = data.academicEducation.map((item: any) => {
-      return { education: item._id, name: item.name, area: item.area };
+      return { _id: item._id, education: item._id, name: item.name, area: item.area };
     });
     data.rolResponsabilities = data.jobFunctions;
     delete data.jobFunctions;
@@ -173,7 +192,6 @@ export class ProfileTemplateService {
         );
       }
     });
-    console.log(data);
     return data;
   }
   async updateProfile(id: any, body: any) {
