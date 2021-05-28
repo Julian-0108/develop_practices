@@ -244,9 +244,7 @@ export class ProfileTemplateComponent implements OnInit {
     this.getData();
   }
 
-  ngOnInit(): void {
-    console.log(moment.version);
-  }
+  ngOnInit(): void {}
 
   checkBoxChanged(el: any, sourceCheck: string) {
     if (sourceCheck === 'optional' && el.optional) {
@@ -272,7 +270,7 @@ export class ProfileTemplateComponent implements OnInit {
       type: d && d.type ? d.type : null,
       name: d && d.knowledgeArea ? d.knowledgeArea : null,
       required: d && d.required ? d.required : false,
-      optional: d && d.optional ? d.optional : false
+      optional: d && d.optional ? d.optional : false,
       // id: d && d._id ? d._id : null,
     });
     this.coursesCertificationsFormRows.push(row);
@@ -289,7 +287,6 @@ export class ProfileTemplateComponent implements OnInit {
       yearsExperience: d && d.years ? d.years : 0,
       pojectsExperience: d && d.projects ? d.projects : 0,
     });
-    console.log(row);
     this.specificKnowledgeFormRows.push(row);
     if (!noUpdate) {
       this.refreshSpecificKnowledgeTable();
@@ -334,7 +331,6 @@ export class ProfileTemplateComponent implements OnInit {
               ) === index
           );
           this.knowledgeAreaList[index] = allSpecificKnowledgeWithOutDuplicates;
-          console.log(this.knowledgeAreaList);
         });
         this.profileTemplateService
           .getAllSpecificKnowledge(row.domain, row.knowledgeArea)
@@ -480,6 +476,35 @@ export class ProfileTemplateComponent implements OnInit {
   async onPreview(id: any, drawer: any) {
     this.profileTemplateService.historyPreview(id).then((res: any) => {
       this.data = res;
+      this.readOnlyEducationDatasource = new MatTableDataSource(res.academicEducation);
+      this.readOnlyRolResponsabilitiesDatasource = new MatTableDataSource(res.rolResponsabilities);
+      this.readOnlyCoursesCertificationsDatasource = new MatTableDataSource(
+        res.coursesAndCertifications
+      );
+      this.readOnlySpecificKnowledgeDatasource = new MatTableDataSource(res.specificKnowledge);
+      this.dataAssertiveComunication = new MatTableDataSource(
+        res.corporativeCompetences.assertiveComunication
+      );
+      res.corporativeCompetences.assertiveComunication.forEach((el: any) => {
+        this.percent[el._id] = el.measureApproval;
+      });
+      this.dataAchievementOrientation = new MatTableDataSource(
+        res.corporativeCompetences.achievementOrientation
+      );
+      res.corporativeCompetences.achievementOrientation.forEach((el: any) => {
+        this.percent[el._id] = el.measureApproval;
+      });
+      this.dataServiceOrientation = new MatTableDataSource(
+        res.corporativeCompetences.serviceOrientation
+      );
+      res.corporativeCompetences.serviceOrientation.forEach((el: any) => {
+        this.percent[el._id] = el.measureApproval;
+      });
+      this.dataTeamwork = new MatTableDataSource(res.corporativeCompetences.teamwork);
+      res.corporativeCompetences.teamwork.forEach((el: any) => {
+        this.percent[el._id] = el.measureApproval;
+      });
+      this.buildTalentsReadOnly(this.data);
     });
     this.onHistory = true;
     drawer.toggle();
@@ -687,8 +712,8 @@ export class ProfileTemplateComponent implements OnInit {
       this.profileTemplateService.getAllTypes('Temario', false).then((types: any) => {
         this.allCoursesAndCertificationsKnowledgeAreaList = types;
       });
-
       this.buildTalentsReadOnly(this.data);
+      /* Corporative Competences */
       this.dataAssertiveComunication = new MatTableDataSource(res.assertiveComunication);
       res.assertiveComunication.forEach((el: any) => {
         this.percent[el._id] = el.measureApproval;
@@ -948,6 +973,7 @@ export class ProfileTemplateComponent implements OnInit {
           teamName: this.data.teamName,
           status: this.data.status,
         };
+
         delete resp[`_id`];
         /*
          * Se Guarda la información en historial y se actualiza la información del
@@ -955,7 +981,22 @@ export class ProfileTemplateComponent implements OnInit {
          */
         this.profileTemplateService
           .updateProfile(this.idProfile, resp)
-          ?.then(() => this.profileTemplateService.historyActions('post', this.idProfile, resp))
+          ?.then(() => this.profileTemplateService.getData(this.idProfile))
+          .then((res: any) => {
+            delete res._id;
+            this.profileTemplateService.historyActions('post', this.idProfile, {
+              ...res,
+              author: resp.author,
+              commentary: resp.commentary,
+              idBaseProfile: this.data._id,
+              jobFunctions: res.rolResponsabilities,
+              corporativeCompetences: resp.corporativeCompetences,
+              name: this.data.charge,
+              charge: this.data.charge,
+              teamName: this.data.teamName,
+              status: this.data.status,
+            });
+          })
           .then(() => {
             this.notificationService.openSimpleSnackBar({
               title: 'Operación Finalizada',
@@ -1154,7 +1195,6 @@ export class ProfileTemplateComponent implements OnInit {
           });
         });
     }
-    console.log(newResponse);
     this.sendInformation = {
       ...this.sendInformation,
       specificKnowledge: newResponse,
