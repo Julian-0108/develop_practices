@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.loginFormGroup = this.createForm();
     this.ifTokenExists();
-    // window.localStorage.clear();
+    window.localStorage.clear();
   }
 
   createForm(): FormGroup {
