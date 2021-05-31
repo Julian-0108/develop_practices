@@ -967,6 +967,7 @@ export class ProfileTemplateComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((resp: any) => {
+        if (resp === 'close') return;
         /*
          * Acciones que se activan al dar click en el botón "guardar" del formulario.
          */
