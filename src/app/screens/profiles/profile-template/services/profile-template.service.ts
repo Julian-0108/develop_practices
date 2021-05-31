@@ -200,11 +200,16 @@ export class ProfileTemplateService {
       .pipe(pluck('payload'))
       .toPromise();
   }
-  async getAllKnowledgeArea(idDomain: string) {
-    return await this.httpClient
-      .get(`${environment.API_MASTER_INFO}/syllabi?status=true&idDomain=${idDomain}`)
-      .pipe(pluck('payload'))
-      .toPromise();
+  async getAllKnowledgeArea(idDomain?: string) {
+    return idDomain
+      ? await this.httpClient
+          .get(`${environment.API_MASTER_INFO}/syllabi?status=true&idDomain=${idDomain}`)
+          .pipe(pluck('payload'))
+          .toPromise()
+      : await this.httpClient
+          .get(`${environment.API_MASTER_INFO}/syllabi?status=true`)
+          .pipe(pluck('payload'))
+          .toPromise();
   }
   async getAllSpecificKnowledge(idDomain: string, knowledgeArea: string) {
     return await this.httpClient

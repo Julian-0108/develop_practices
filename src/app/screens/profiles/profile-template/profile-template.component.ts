@@ -24,6 +24,7 @@ import { ResponsabilitiesDescComponent } from './responsabilitiesDesc/responsabi
 import { ValoraciontotalComponent } from './valoraciontotal/valoraciontotal.component';
 //import { ValorTotalComponent } from './valortotal/valortotal.component';
 import { Master } from '@shared/interfaces/master.interface';
+import { isFunctionOrConstructorTypeNode } from 'typescript';
 
 export interface AcademicEducationTable {
   education: string;
@@ -708,10 +709,15 @@ export class ProfileTemplateComponent implements OnInit {
         .then((types: any) => {
           this.typeList = types;
         });
-
-      this.profileTemplateService.getAllTypes('Temario', false).then((types: any) => {
-        this.allCoursesAndCertificationsKnowledgeAreaList = types;
+      this.profileTemplateService.getAllKnowledgeArea().then((res: any) => {
+        const allAreaKnowledgeWithOutDuplicates = res.filter(
+          (obj: any, index: number, arraySource: any[]) =>
+            arraySource.findIndex((element: any) => element.knowledgeArea === obj.knowledgeArea) ===
+            index
+        );
+        this.allCoursesAndCertificationsKnowledgeAreaList = allAreaKnowledgeWithOutDuplicates;
       });
+
       this.buildTalentsReadOnly(this.data);
       /* Corporative Competences */
       this.dataAssertiveComunication = new MatTableDataSource(res.assertiveComunication);
@@ -961,6 +967,7 @@ export class ProfileTemplateComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((resp: any) => {
+        if (resp === 'close') return;
         /*
          * Acciones que se activan al dar click en el botón "guardar" del formulario.
          */
