@@ -936,47 +936,52 @@ export class ProfileTemplateComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((resp: any) => {
-        /*
-         * Acciones que se activan al dar click en el botón "guardar" del formulario.
-         */
-        resp = {
-          ...resp,
-          idBaseTeam: this.data.idBaseTeam,
-          idBaseProfile: this.data._id,
-          name: this.data.charge,
-          charge: this.data.charge,
-          teamName: this.data.teamName,
-          status: this.data.status,
-        };
-        delete resp[`_id`];
-        /*
-         * Se Guarda la información en historial y se actualiza la información del
-         * perfil.
-         */
-        this.profileTemplateService
-          .updateProfile(this.idProfile, resp)
-          ?.then(() => this.profileTemplateService.historyActions('post', this.idProfile, resp))
-          .then(() => {
-            this.notificationService.openSimpleSnackBar({
-              title: 'Operación Finalizada',
-              message: 'La información se ha actualizado con éxito y su historial fue creado.',
-              type: 'success',
+        if(resp !== 'close'){//console.log(resp=='close'?1:0)
+         
+        
+          /*
+          * Acciones que se activan al dar click en el botón "guardar" del formulario.
+          */
+          resp = {
+            ...resp,
+            idBaseTeam: this.data.idBaseTeam,
+            idBaseProfile: this.data._id,
+            name: this.data.charge,
+            charge: this.data.charge,
+            teamName: this.data.teamName,
+            status: this.data.status,
+          };
+          delete resp[`_id`];
+          /*
+          * Se Guarda la información en historial y se actualiza la información del
+          * perfil.
+          */
+          this.profileTemplateService
+            .updateProfile(this.idProfile, resp)
+            ?.then(() => this.profileTemplateService.historyActions('post', this.idProfile, resp))
+            .then(() => {
+              this.notificationService.openSimpleSnackBar({
+                title: 'Operación Finalizada',
+                message: 'La información se ha actualizado con éxito y su historial fue creado.',
+                type: 'success',
+              });
+              this.existentDate = '';
+              this.getData();
+              this.removeActionsColumn(this.coursesAndCertificationsColumns);
+              this.removeActionsColumn(this.specificKnowledgeColumns);
+              this.removeActionsColumn(this.rolResponsabilitiesColumns);
+              this.isEditable = false;
+            })
+            .catch((error) => {
+              this.notificationService.openSimpleSnackBar({
+                title: 'Ocurrió un Error',
+                message: error.message,
+                type: 'error',
+              });
             });
-            this.existentDate = '';
-            this.getData();
-            this.removeActionsColumn(this.coursesAndCertificationsColumns);
-            this.removeActionsColumn(this.specificKnowledgeColumns);
-            this.removeActionsColumn(this.rolResponsabilitiesColumns);
-            this.isEditable = false;
-          })
-          .catch((error) => {
-            this.notificationService.openSimpleSnackBar({
-              title: 'Ocurrió un Error',
-              message: error.message,
-              type: 'error',
-            });
-          });
-      });
+        }  
+     });
+        
   }
   onSaveWithOutHistory() {
     this.sendInformation = {
