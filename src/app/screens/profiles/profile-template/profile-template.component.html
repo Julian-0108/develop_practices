@@ -103,7 +103,7 @@
     <div fxLayout="row">
       <mat-card class="profile__card" fxFlex="70">
         <mat-card-header>
-          <mat-card-title class="profile-card__title">Objetivo del Cargo.</mat-card-title>
+          <mat-card-title class="profile-card__title">Objetivo del Cargo</mat-card-title>
         </mat-card-header>
         <mat-card-content fxLayout="row" *ngIf="!isEditable">
           <div class="profile-card__content">
@@ -331,8 +331,8 @@
                             Ver Todos
                           </mat-option>
                           <mat-option *ngFor="let area of allCoursesAndCertificationsKnowledgeAreaList"
-                            [value]="area.name">
-                            {{area.name}}
+                            [value]="area.knowledgeArea">
+                            {{area.knowledgeArea}}
                           </mat-option>
                         </mat-select>
                       </mat-form-field>

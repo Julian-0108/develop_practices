@@ -59,30 +59,36 @@ export class MasterInfoComponent implements OnInit {
   filerSelectList(source: string) {
     switch (source) {
       case 'dominioField':
-        this.masterInfoService.getSyllabiLists(this.form.value.idDomain).then((res: any) => {
-          const allAreaKnowledgeWithOutDuplicates = res.filter(
-            (obj: any, index: number, arraySource: any[]) =>
-              arraySource.findIndex(
-                (element: any) => element.knowledgeArea === obj.knowledgeArea
-              ) === index
-          );
-          this.knowledgeAreaList = allAreaKnowledgeWithOutDuplicates;
-        });
-        this.notNullData('knowledgeArea');
-        break;
-      case 'knowledgeAreaField':
-        this.masterInfoService
-          .getSyllabiLists(this.form.value.idDomain, this.form.value.knowledgeArea)
-          .then((res: any) => {
-            const allSpecificKnowledgeWithOutDuplicates = res.filter(
+        console.log(this.data.url);
+
+        if (this.data.url !== 'syllabi') {
+          this.masterInfoService.getSyllabiLists(this.form.value.idDomain).then((res: any) => {
+            const allAreaKnowledgeWithOutDuplicates = res.filter(
               (obj: any, index: number, arraySource: any[]) =>
                 arraySource.findIndex(
-                  (element: any) => element.specificKnowledge === obj.specificKnowledge
+                  (element: any) => element.knowledgeArea === obj.knowledgeArea
                 ) === index
             );
-            this.specificKnowledgeList = allSpecificKnowledgeWithOutDuplicates;
+            this.knowledgeAreaList = allAreaKnowledgeWithOutDuplicates;
           });
-        this.notNullData('specificKnowledge');
+          this.notNullData('knowledgeArea');
+        }
+        break;
+      case 'knowledgeAreaField':
+        if (this.data.url !== 'syllabi') {
+          this.masterInfoService
+            .getSyllabiLists(this.form.value.idDomain, this.form.value.knowledgeArea)
+            .then((res: any) => {
+              const allSpecificKnowledgeWithOutDuplicates = res.filter(
+                (obj: any, index: number, arraySource: any[]) =>
+                  arraySource.findIndex(
+                    (element: any) => element.specificKnowledge === obj.specificKnowledge
+                  ) === index
+              );
+              this.specificKnowledgeList = allSpecificKnowledgeWithOutDuplicates;
+            });
+          this.notNullData('specificKnowledge');
+        }
         break;
       case 'specificKnowledgeField':
         this.masterInfoService
@@ -177,8 +183,6 @@ export class MasterInfoComponent implements OnInit {
     if (this.data.url !== 'syllabi') {
       this.form.controls.name?.setValidators([Validators.required]);
       this.form.controls.name?.updateValueAndValidity();
-    } else {
-      this.form.controls.name?.clearValidators();
     }
     if (this.data.url !== 'types') {
       if (this.data.url !== 'syllabi') {
@@ -195,7 +199,7 @@ export class MasterInfoComponent implements OnInit {
           this.form.controls.description?.updateValueAndValidity();
         }
       }
-      if (this.data.url === 'functions' || this.data.url === 'syllabi') {
+      if (this.data.url === 'functions') {
         this.form.controls.idDomain?.setValidators([Validators.required]);
         this.form.controls.idDomain?.updateValueAndValidity();
       } else {
@@ -222,6 +226,15 @@ export class MasterInfoComponent implements OnInit {
         this.form.controls.technology?.clearValidators();
         this.form.controls.formation?.clearValidators();
       }
+      if (this.data.url === 'syllabi') {
+        this.form.controls.name?.clearValidators();
+        this.form.controls.idDomain?.setValidators([Validators.required]);
+        this.form.controls.idDomain?.updateValueAndValidity();
+        this.form.controls.knowledgeArea?.setValidators([Validators.required]);
+        this.form.controls.knowledgeArea?.updateValueAndValidity();
+        this.form.controls.specificKnowledge?.setValidators([Validators.required]);
+        this.form.controls.specificKnowledge?.updateValueAndValidity();
+      }
     } else {
       this.masters = this.data.masters.filter((master) => master.name !== 'Tipos');
       this.form.controls.masterReference?.setValidators([Validators.required]);
@@ -232,6 +245,8 @@ export class MasterInfoComponent implements OnInit {
   }
 
   notNullData(field: any) {
+    console.log(this.form.value[`field`]);
+
     if (
       this.form.value[`field`] === null ||
       this.form.value[`field`] === undefined ||
