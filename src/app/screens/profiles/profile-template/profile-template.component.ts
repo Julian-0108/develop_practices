@@ -703,12 +703,13 @@ export class ProfileTemplateComponent implements OnInit {
       this.profileTemplateService.getAllFunctions().then((rolResponsabilities: any) => {
         this.allRolResponsabilities = rolResponsabilities;
       });
-
-      this.profileTemplateService
-        .getAllTypes('Cursos y certificaciones', false)
-        .then((types: any) => {
-          this.typeList = types;
-        });
+      
+      this.typeList = ['Curso', 'Certificación'];
+      // this.profileTemplateService
+      //   .getAllTypes('Cursos y certificaciones', false)
+      //   .then((types: any) => {
+      //     this.typeList = types;
+      //   });
       this.profileTemplateService.getAllKnowledgeArea().then((res: any) => {
         const allAreaKnowledgeWithOutDuplicates = res.filter(
           (obj: any, index: number, arraySource: any[]) =>

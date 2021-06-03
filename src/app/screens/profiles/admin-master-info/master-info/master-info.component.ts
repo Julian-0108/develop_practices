@@ -25,7 +25,8 @@ export class MasterInfoComponent implements OnInit {
   public manage_images = ['modules', 'base-teams-categories'];
   private archivo!: string;
   private readonly DATE_FORM_CONTROL = 'yyyy-MM-dd';
-  types: any[] = [];
+  types: string[] = [];
+  platforms: any[] = [];
   domains: any[] = [];
   skills: any[] = [];
   masters: Masters[] = [];
@@ -33,6 +34,7 @@ export class MasterInfoComponent implements OnInit {
   specificKnowledgeList: any = [];
   idSyllabi!: string;
   formationList = ['Específica', 'Básica'];
+  private readonly CERTIFICATION = 'Certificación';
 
   constructor(
     private datePipe: DatePipe,
@@ -51,6 +53,7 @@ export class MasterInfoComponent implements OnInit {
     this.form = this.createForm();
     this.initForm();
     this.fillTypesList();
+    this.fillPlatformList();
     this.fillSkillsList();
     this.fillDomainsList();
     console.log(this.data);
@@ -105,16 +108,26 @@ export class MasterInfoComponent implements OnInit {
   }
 
   fillTypesList() {
+    if (this.data.url === 'base-teams-categories') {
+      this.types = ['Habilidad', 'Subgrupo'];
+      return;
+    }
+    this.types = ['Curso', 'Certificación'];
+  }
+
+  fillPlatformList() {
     this.masterInfoService
       .getTypes(this.data)
       .then((response: any) => {
-        if (response.length === 0 && this.data.url === 'base-teams-categories') {
-          this.types = [{ name: 'Habilidad' }, { name: 'Subgrupo' }];
-          return;
-        }
-        this.types = response;
+        this.platforms = response;
       })
-      .catch((err) => {});
+      .catch((err) => {
+        this.notificationService.openSimpleSnackBar({
+          title: 'Ha ocurrido un error',
+          message: err.message,
+          type: 'error',
+        });
+      });
   }
 
   fillSkillsList() {
@@ -214,8 +227,8 @@ export class MasterInfoComponent implements OnInit {
         this.form.controls.specificKnowledge?.updateValueAndValidity();
         this.form.controls.platform?.setValidators([Validators.required]);
         this.form.controls.platform?.updateValueAndValidity();
-        this.form.controls.technology?.setValidators([Validators.required]);
-        this.form.controls.technology?.updateValueAndValidity();
+        // this.form.controls.technology?.setValidators([Validators.required]);
+        // this.form.controls.technology?.updateValueAndValidity();
         this.form.controls.formation?.setValidators([Validators.required]);
         this.form.controls.formation?.updateValueAndValidity();
       } else {
@@ -223,7 +236,7 @@ export class MasterInfoComponent implements OnInit {
         this.form.controls.knowledgeArea?.clearValidators();
         this.form.controls.specificKnowledge?.clearValidators();
         this.form.controls.platform?.clearValidators();
-        this.form.controls.technology?.clearValidators();
+        // this.form.controls.technology?.clearValidators();
         this.form.controls.formation?.clearValidators();
       }
       if (this.data.url === 'syllabi') {
@@ -258,7 +271,6 @@ export class MasterInfoComponent implements OnInit {
 
   initForm(): void {
     this.formValidations();
-
     if (this.data?.element) {
       if (this.data.element.syllabi) {
         this.form.get('idDomain')?.patchValue(this.data.element.syllabi[0].idDomain);
@@ -274,6 +286,7 @@ export class MasterInfoComponent implements OnInit {
       }
 
       this.form.patchValue(this.data.element);
+      this.platformValidation(this.form.get('type')?.value === this.CERTIFICATION);
       this.form
         .get('createdAt')
         ?.patchValue(this.datePipe.transform(this.data.element.createdAt, this.DATE_FORM_CONTROL));
@@ -292,6 +305,18 @@ export class MasterInfoComponent implements OnInit {
     this.form
       .get('updatedAt')
       ?.patchValue(this.datePipe.transform(new Date(), this.DATE_FORM_CONTROL));
+  }
+
+  platformValidation(validation: boolean) {
+    if (validation) {
+      this.form.get('platform')?.reset();
+      this.form.get('platform')?.disable();
+      this.form.controls.platform?.clearValidators();
+    } else {
+      this.form.controls.platform?.setValidators([Validators.required]);
+      this.form.controls.platform?.updateValueAndValidity();
+      this.form.get('platform')?.enable();
+    }
   }
 
   /* Para enviar las imagenes */
@@ -620,6 +645,7 @@ export class MasterInfoComponent implements OnInit {
       }
       return;
     }
+    this.platformValidation(ev.value === this.CERTIFICATION);
     this.form.get('submenu')?.disable();
     this.form.get('idParent')?.disable();
   }

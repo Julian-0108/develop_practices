@@ -364,8 +364,8 @@
                           <mat-option [value]="''">
                             Ver Todos
                           </mat-option>
-                          <mat-option *ngFor="let type of typeList" [value]="type.name">
-                            {{type.name}}
+                          <mat-option *ngFor="let type of typeList" [value]="type">
+                            {{type}}
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
@@ -379,8 +379,8 @@
                       <mat-form-field floatLabel="always" appearance="none">
                         <mat-select placeholder="Click para activar la lista" formControlName="type"
                           (selectionChange)="filerSelectList(row.value, index, 'coursesAndCertifications')">
-                          <mat-option *ngFor="let type of typeList" [value]="type.name">
-                            {{type.name}}
+                          <mat-option *ngFor="let type of typeList" [value]="type">
+                            {{type}}
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
