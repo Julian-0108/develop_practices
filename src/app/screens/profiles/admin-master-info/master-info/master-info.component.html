@@ -32,13 +32,13 @@
             <div *ngIf="showOrHide('knowledgeArea')" class="item" fxFlex="30">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Área de Conocimiento</mat-label>
-                    <mat-select #ej formControlName="knowledgeArea" placeholder="Seleccione un área"
+                    <mat-select formControlName="knowledgeArea" placeholder="Seleccione un área"
                         (selectionChange)="filerSelectList('knowledgeAreaField')">
-                        <mat-option *ngFor="let area of data.url !== 'syllabi' ? knowledgeAreaList : types"
+                        <mat-option *ngFor="let area of knowledgeAreaList"
                             [value]="data.url !== 'syllabi' ? area.knowledgeArea : area.name">
                             {{data.url !== 'syllabi' ? area.knowledgeArea : area.name}}
                         </mat-option>
-                        <mat-option *ngIf="(data.url === 'syllabi' ? types.length : knowledgeAreaList.length) === 0"
+                        <mat-option *ngIf="knowledgeAreaList.length === 0"
                             disabled>
                             <i>No hay tipos disponibles</i>
                         </mat-option>
@@ -49,7 +49,7 @@
             <div *ngIf="showOrHide('specificKnowledge')" class="item" fxFlex="40">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Conocimiento Específico</mat-label>
-                    <mat-select #ej formControlName="specificKnowledge" placeholder="Seleccione un conocimiento"
+                    <mat-select formControlName="specificKnowledge" placeholder="Seleccione un conocimiento"
                         (selectionChange)="filerSelectList('specificKnowledgeField')" *ngIf="data.url !== 'syllabi'">
                         <mat-option *ngFor="let specificKnowledge of specificKnowledgeList"
                             [value]="specificKnowledge.specificKnowledge">
@@ -105,7 +105,7 @@
             <div *ngIf="showOrHide('type') && data.url === 'courses-certifications'" class="item" fxFlex="25">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Tipo</mat-label>
-                    <mat-select #ej formControlName="type" (selectionChange)="typeValidation($event)"
+                    <mat-select #typeReference formControlName="type" (selectionChange)="typeValidation($event)"
                         placeholder="Seleccione un tipo">
                         <mat-option *ngFor="let type of types" [value]="type">
                             {{type}}
@@ -120,7 +120,7 @@
             <div *ngIf="showOrHide('platform')" class="item" fxFlex="30">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Plataforma</mat-label>
-                    <mat-select #ej formControlName="platform" placeholder="Seleccione una plataforma">
+                    <mat-select formControlName="platform" placeholder="Seleccione una plataforma">
                         <mat-option *ngFor="let platform of platforms" [value]="platform.name">
                             {{platform.name}}
                         </mat-option>
@@ -144,7 +144,7 @@
             <div *ngIf="showOrHide('formation')" class="item" fxFlex="30">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Formación</mat-label>
-                    <mat-select #ej formControlName="formation" placeholder="Seleccione una formación">
+                    <mat-select formControlName="formation" placeholder="Seleccione una formación">
                         <mat-option *ngFor="let formation of formationList" [value]="formation">
                             {{formation}}
                         </mat-option>
