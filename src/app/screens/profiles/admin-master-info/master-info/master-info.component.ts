@@ -258,7 +258,7 @@ export class MasterInfoComponent implements OnInit {
       }
     } else {
       console.log(this.data.masters);
-      this.masters = this.data.masters.filter((master) => master.name !== 'Tipos');
+      this.masters = this.data.masters.filter((master) => master.haveTypeField);
       this.form.controls.masterReference?.setValidators([Validators.required]);
       this.form.controls.masterReference?.updateValueAndValidity();
       this.form.controls.type?.clearValidators();
