@@ -11,6 +11,7 @@ import { SnackOptionsInterface } from '@shared/interfaces/notification.interface
 import { MatSelect } from '@angular/material/select';
 import { ProfileFormHistoryComponent } from '../../profile-template/profile-form-history/profile-form-history.component';
 import { HistoryMastersService } from '../history/service/history-master.service';
+import { GeneralMaster, Syllabi, Type } from './interfaces.interface';
 
 @Component({
   selector: 'app-master-info',
@@ -19,19 +20,19 @@ import { HistoryMastersService } from '../history/service/history-master.service
 })
 export class MasterInfoComponent implements OnInit {
   form!: FormGroup;
-  @ViewChild('ej') ej: MatSelect | any;
+  @ViewChild('typeReference') typeReference: MatSelect | any;
 
   /* Rutas que manejan imagenes */
   public manage_images = ['modules', 'base-teams-categories'];
   private archivo!: string;
   private readonly DATE_FORM_CONTROL = 'yyyy-MM-dd';
   types: string[] = [];
-  platforms: any[] = [];
-  domains: any[] = [];
-  skills: any[] = [];
+  platforms: Type[] = [];
+  domains: GeneralMaster[] = [];
+  skills: GeneralMaster[] = [];
   masters: Masters[] = [];
-  knowledgeAreaList: any = [];
-  specificKnowledgeList: any = [];
+  knowledgeAreaList: Syllabi[] | Type[] = [];
+  specificKnowledgeList: Syllabi[] = [];
   idSyllabi!: string;
   formationList = ['Específica', 'Básica'];
   private readonly CERTIFICATION = 'Certificación';
@@ -56,24 +57,35 @@ export class MasterInfoComponent implements OnInit {
     this.fillPlatformList();
     this.fillSkillsList();
     this.fillDomainsList();
-    console.log(this.data);
   }
 
   filerSelectList(source: string) {
     switch (source) {
       case 'dominioField':
-        console.log(this.data.url);
-
         if (this.data.url !== 'syllabi') {
           this.masterInfoService.getSyllabiLists(this.form.value.idDomain).then((res: any) => {
             const allAreaKnowledgeWithOutDuplicates = res.filter(
-              (obj: any, index: number, arraySource: any[]) =>
+              (obj: Syllabi, index: number, arraySource: Syllabi[]) =>
                 arraySource.findIndex(
-                  (element: any) => element.knowledgeArea === obj.knowledgeArea
+                  (element: Syllabi) => element.knowledgeArea === obj.knowledgeArea
                 ) === index
             );
             this.knowledgeAreaList = allAreaKnowledgeWithOutDuplicates;
           });
+          this.notNullData('knowledgeArea');
+        } else {
+          this.masterInfoService
+            .getTypes(this.data)
+            .then((response: Type[]) => {
+              this.knowledgeAreaList = response;
+            })
+            .catch((err) => {
+              this.notificationService.openSimpleSnackBar({
+                title: 'Ha ocurrido un error',
+                message: err.message,
+                type: 'error',
+              });
+            });
           this.notNullData('knowledgeArea');
         }
         break;
@@ -83,9 +95,9 @@ export class MasterInfoComponent implements OnInit {
             .getSyllabiLists(this.form.value.idDomain, this.form.value.knowledgeArea)
             .then((res: any) => {
               const allSpecificKnowledgeWithOutDuplicates = res.filter(
-                (obj: any, index: number, arraySource: any[]) =>
+                (obj: Syllabi, index: number, arraySource: Syllabi[]) =>
                   arraySource.findIndex(
-                    (element: any) => element.specificKnowledge === obj.specificKnowledge
+                    (element: Syllabi) => element.specificKnowledge === obj.specificKnowledge
                   ) === index
               );
               this.specificKnowledgeList = allSpecificKnowledgeWithOutDuplicates;
@@ -118,7 +130,7 @@ export class MasterInfoComponent implements OnInit {
   fillPlatformList() {
     this.masterInfoService
       .getTypes(this.data)
-      .then((response: any) => {
+      .then((response: Type[]) => {
         this.platforms = response;
       })
       .catch((err) => {
@@ -227,8 +239,6 @@ export class MasterInfoComponent implements OnInit {
         this.form.controls.specificKnowledge?.updateValueAndValidity();
         this.form.controls.platform?.setValidators([Validators.required]);
         this.form.controls.platform?.updateValueAndValidity();
-        // this.form.controls.technology?.setValidators([Validators.required]);
-        // this.form.controls.technology?.updateValueAndValidity();
         this.form.controls.formation?.setValidators([Validators.required]);
         this.form.controls.formation?.updateValueAndValidity();
       } else {
@@ -236,7 +246,6 @@ export class MasterInfoComponent implements OnInit {
         this.form.controls.knowledgeArea?.clearValidators();
         this.form.controls.specificKnowledge?.clearValidators();
         this.form.controls.platform?.clearValidators();
-        // this.form.controls.technology?.clearValidators();
         this.form.controls.formation?.clearValidators();
       }
       if (this.data.url === 'syllabi') {
@@ -258,8 +267,6 @@ export class MasterInfoComponent implements OnInit {
   }
 
   notNullData(field: any) {
-    console.log(this.form.value[`field`]);
-
     if (
       this.form.value[`field`] === null ||
       this.form.value[`field`] === undefined ||
@@ -272,6 +279,10 @@ export class MasterInfoComponent implements OnInit {
   initForm(): void {
     this.formValidations();
     if (this.data?.element) {
+      /**
+       * Si entra por este condicional, llena los campos del formulario, con la información
+       * que venga de la fila que se va a editar.
+       */
       if (this.data.element.syllabi) {
         this.form.get('idDomain')?.patchValue(this.data.element.syllabi[0].idDomain);
         this.filerSelectList('dominioField');
@@ -283,6 +294,7 @@ export class MasterInfoComponent implements OnInit {
         this.filerSelectList('specificKnowledgeField');
       } else if (this.data.element.domain) {
         this.form.get('idDomain')?.patchValue(this.data.element.domain[0]._id);
+        this.filerSelectList('dominioField');
       }
 
       this.form.patchValue(this.data.element);
@@ -308,6 +320,7 @@ export class MasterInfoComponent implements OnInit {
   }
 
   platformValidation(validation: boolean) {
+    if (this.data.url !== 'courses-certifications') return;
     if (validation) {
       this.form.get('platform')?.reset();
       this.form.get('platform')?.disable();
@@ -611,6 +624,11 @@ export class MasterInfoComponent implements OnInit {
 
   typeValidation(ev: any) {
     if (this.data.url === 'base-teams-categories') {
+      /** 
+       * Si data.element es diferente de vacío, significa que la función
+        fue activada desde el botón editar y la información que hay en element, 
+        es la información de la fila que se está editando.
+      */
       if (this.data.element) {
         const id: any = this.data.element._id;
         if (ev.value === 'Subgrupo') {
@@ -630,7 +648,7 @@ export class MasterInfoComponent implements OnInit {
                   if (resp === 'close') return;
                   if (resp) return;
                 });
-              this.ej.value = 'Habilidad';
+              this.typeReference.value = 'Habilidad';
               return;
             }
             this.skills = this.skills.filter((el: any) => el._id !== this.data.element._id);
