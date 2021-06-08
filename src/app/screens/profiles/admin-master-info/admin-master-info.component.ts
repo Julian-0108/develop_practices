@@ -232,7 +232,8 @@ export class AdminMasterInfoComponent implements OnInit {
           (el) =>
             el !== 'submenu' &&
             el !== 'reference' &&
-            el !== 'description'          
+            el !== 'specificKnowledge' &&
+            el !== 'description'
         );
       case 'syllabi':
         return this.displayedColumns.filter(
