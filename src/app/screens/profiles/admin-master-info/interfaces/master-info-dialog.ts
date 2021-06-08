@@ -15,5 +15,6 @@ export interface MasterInfoDialog {
   title: string;
   url: string;
   name: string;
+  subtitle?: string;
   masters: Masters[];
 }

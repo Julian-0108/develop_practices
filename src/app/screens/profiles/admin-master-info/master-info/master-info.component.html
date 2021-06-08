@@ -1,5 +1,7 @@
 <div class="dialog__title">
     <h2 mat-dialog-title> {{ data?.title }}</h2>
+    <h3 class="subtitle">{{ data?.subtitle }}</h3>
+
 </div>
 <mat-dialog-content>
     <form [formGroup]="form" novalidate autocomplete="off">
@@ -8,7 +10,7 @@
             <div class="item" *ngIf="showOrHide('name')"
                 [fxFlex]="data?.url === 'security-responsabilities' ? '75' : '25'">
                 <mat-form-field floatLabel="always" appearance="none">
-                    <mat-label class="label">Nombre</mat-label>
+                    <mat-label class="label">Nombre {{ data?.subtitle }}</mat-label>
                     <input matInput type="text" formControlName="name" placeholder="Digite el nombre">
                     <app-validator [form]="form" name="name"></app-validator>
                 </mat-form-field>

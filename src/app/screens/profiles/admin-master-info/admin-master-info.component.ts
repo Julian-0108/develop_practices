@@ -271,6 +271,7 @@ export class AdminMasterInfoComponent implements OnInit {
           url: this.masterSeleted,
           name: this.masters.filter((el: any) => el.url === this.masterSeleted),
           masters: this.masters,
+          subtitle: this.subtitle.name,
         },
       })
       .afterClosed();
