@@ -102,7 +102,7 @@ export class MasterInfoComponent implements OnInit {
               );
               this.specificKnowledgeList = allSpecificKnowledgeWithOutDuplicates;
             });
-          this.notNullData('specificKnowledge');
+            if (this.data.url !== 'courses-certifications') this.notNullData('specificKnowledge');
         }
         break;
       case 'specificKnowledgeField':
@@ -235,16 +235,15 @@ export class MasterInfoComponent implements OnInit {
         this.form.controls.idDomain?.updateValueAndValidity();
         this.form.controls.knowledgeArea?.setValidators([Validators.required]);
         this.form.controls.knowledgeArea?.updateValueAndValidity();
-        this.form.controls.specificKnowledge?.setValidators([Validators.required]);
-        this.form.controls.specificKnowledge?.updateValueAndValidity();
+        this.form.controls.specificKnowledge?.clearValidators();
+        // this.form.controls.specificKnowledge?.setValidators([Validators.required]);
+        // this.form.controls.specificKnowledge?.updateValueAndValidity();
         this.form.controls.platform?.setValidators([Validators.required]);
         this.form.controls.platform?.updateValueAndValidity();
-        this.form.controls.formation?.setValidators([Validators.required]);
-        this.form.controls.formation?.updateValueAndValidity();
       } else {
         this.form.controls.idDomain?.clearValidators();
         this.form.controls.knowledgeArea?.clearValidators();
-        this.form.controls.specificKnowledge?.clearValidators();
+        // this.form.controls.specificKnowledge?.clearValidators();
         this.form.controls.platform?.clearValidators();
         this.form.controls.formation?.clearValidators();
       }
@@ -258,7 +257,8 @@ export class MasterInfoComponent implements OnInit {
         this.form.controls.specificKnowledge?.updateValueAndValidity();
       }
     } else {
-      this.masters = this.data.masters.filter((master) => master.name !== 'Tipos');
+      console.log(this.data.masters);
+      this.masters = this.data.masters.filter((master) => master.haveTypeField);
       this.form.controls.masterReference?.setValidators([Validators.required]);
       this.form.controls.masterReference?.updateValueAndValidity();
       this.form.controls.type?.clearValidators();
@@ -551,6 +551,8 @@ export class MasterInfoComponent implements OnInit {
     }
 
     if (this.form.invalid) {
+      console.log(this.form);
+      
       this.form.markAllAsTouched();
       this.notificationService.openSimpleSnackBar({
         title: 'Campos obligatorios',
@@ -705,7 +707,7 @@ export class MasterInfoComponent implements OnInit {
         if (URL === 'syllabi' || URL === 'courses-certifications') return true;
         break;
       case 'specificKnowledge':
-        if (URL === 'syllabi' || URL === 'courses-certifications') return true;
+        if (URL === 'syllabi') return true;
         break;
     }
   }

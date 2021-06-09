@@ -9,6 +9,7 @@ export interface Masters {
   url?: string;
   sumary?: string;
   icon?: string;
+  haveTypeField?: boolean;
 }
 export interface MasterInfoDialog {
   element: Master;
