@@ -39,7 +39,6 @@ export class AdminMasterInfoComponent implements OnInit {
     'status',
     'submenu',
     'actions',
-    
   ];
 
   public readonly masters: Masters[] = [
@@ -47,11 +46,13 @@ export class AdminMasterInfoComponent implements OnInit {
       name: 'Area de Formación',
       url: 'education-area',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: false,
     },
     {
       name: 'Competencias corporativas y talentos',
       url: 'skills',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: true,
     },
     // {
     //   name: 'Conocimientos específicos del cargo',
@@ -63,52 +64,62 @@ export class AdminMasterInfoComponent implements OnInit {
       url: 'courses-certifications',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
       icon: 'help',
+      haveTypeField: true,
     },
     {
       name: 'Dominio',
       url: 'domain',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: false,
     },
     {
       name: 'Formación académica',
       url: 'studies',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: false,
     },
     {
       name: 'Funciones del Cargo',
       url: 'functions',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: false,
     },
     {
       name: 'Habilidades de equipo',
       url: 'base-teams-categories',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: true,
     },
     {
       name: 'Herramientas de trabajo',
       url: 'work-tools',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: true,
     },
     {
       name: 'Módulos',
       url: 'modules',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: true,
     },
     {
       name: 'Responsabilidades Corporativas',
       url: 'security-responsabilities',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: true,
     },
     {
       name: 'Temario',
       url: 'syllabi',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: false,
     },
     {
       name: 'Tipos',
       url: 'types',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
-    }
+      haveTypeField: false,
+    },
   ];
 
   public masterSeleted: string = '';
@@ -232,7 +243,8 @@ export class AdminMasterInfoComponent implements OnInit {
           (el) =>
             el !== 'submenu' &&
             el !== 'reference' &&
-            el !== 'description'          
+            el !== 'specificKnowledge' &&
+            el !== 'description'
         );
       case 'syllabi':
         return this.displayedColumns.filter(
@@ -253,7 +265,7 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'submenu' &&
             el !== 'idDomain' &&
             el !== 'knowledgeArea' &&
-            el !== 'specificKnowledge'&&
+            el !== 'specificKnowledge' &&
             el !== 'platform' &&
             el !== 'technology' &&
             el !== 'formation'
