@@ -110,7 +110,7 @@ export class AdminMasterInfoComponent implements OnInit {
       name: 'Temario',
       url: 'syllabi',
       sumary: 'Lorem Ipsum is simply dummy text of the printing ',
-      haveTypeField: false,
+      haveTypeField: true,
     },
     {
       name: 'Tipos',
