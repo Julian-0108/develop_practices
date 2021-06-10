@@ -26,7 +26,7 @@ export class MasterInfoComponent implements OnInit {
   public manage_images = ['modules', 'base-teams-categories'];
   private archivo!: string;
   private readonly DATE_FORM_CONTROL = 'yyyy-MM-dd';
-  types: string[] = [];
+  types: {name:string}[] | Type[] = [];
   platforms: Type[] = [];
   domains: GeneralMaster[] = [];
   skills: GeneralMaster[] = [];
@@ -102,7 +102,7 @@ export class MasterInfoComponent implements OnInit {
               );
               this.specificKnowledgeList = allSpecificKnowledgeWithOutDuplicates;
             });
-            if (this.data.url !== 'courses-certifications') this.notNullData('specificKnowledge');
+          if (this.data.url !== 'courses-certifications') this.notNullData('specificKnowledge');
         }
         break;
       case 'specificKnowledgeField':
@@ -121,10 +121,27 @@ export class MasterInfoComponent implements OnInit {
 
   fillTypesList() {
     if (this.data.url === 'base-teams-categories') {
-      this.types = ['Habilidad', 'Subgrupo'];
+      this.types = [{name:'Habilidad'}, {name:'Subgrupo'}];
       return;
     }
-    this.types = ['Curso', 'Certificación'];
+    if (this.data.url === 'courses-certifications') {
+      this.types = [{name: 'Curso'}, {name: 'Certificación'}];
+      return;
+    }
+    this.masterInfoService
+      .getTypes(this.data)
+      .then((response: Type[]) => {
+        console.log(response);
+        
+        this.types = response;
+      })
+      .catch((err) => {
+        this.notificationService.openSimpleSnackBar({
+          title: 'Ha ocurrido un error',
+          message: err.message,
+          type: 'error',
+        });
+      });
   }
 
   fillPlatformList() {
@@ -420,16 +437,19 @@ export class MasterInfoComponent implements OnInit {
       .afterClosed()
       .subscribe(async (resp: any) => {
         if (resp === 'close') return;
+        let domainName: any;
         /*
          * Acciones que se activan al dar click en el botón "guardar" del formulario.
          */
-        const domainName: any = await this.masterInfoService.getDomain(this.form.value.idDomain);
+        if (this.form.value.idDomain !== null) {
+          domainName = await this.masterInfoService.getDomain(this.form.value.idDomain);
+        }
         // resp = domainName.name
         resp = {
           ...resp,
           idMaster: id,
           ...(withImage ? this.form.getRawValue() : this.form.value),
-          idDomain: domainName.name,
+          idDomain: this.form.value.idDomain !== null ? domainName.name : null,
         };
         delete resp[`_id`];
         delete resp[`updatedAt`];
@@ -552,7 +572,7 @@ export class MasterInfoComponent implements OnInit {
 
     if (this.form.invalid) {
       console.log(this.form);
-      
+
       this.form.markAllAsTouched();
       this.notificationService.openSimpleSnackBar({
         title: 'Campos obligatorios',
