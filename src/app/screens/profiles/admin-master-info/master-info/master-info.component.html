@@ -90,8 +90,8 @@
                     <mat-label class="label">Tipo</mat-label>
                     <mat-select #ej formControlName="type" (selectionChange)="typeValidation($event)"
                         placeholder="Seleccione un tipo">
-                        <mat-option *ngFor="let type of types" [value]="type">
-                            {{type}}
+                        <mat-option *ngFor="let type of types" [value]="type.name">
+                            {{type.name}}
                         </mat-option>
                         <mat-option *ngIf="types?.length === 0" disabled>
                             <i>No hay tipos disponibles</i>
@@ -107,8 +107,8 @@
                     <mat-label class="label">Tipo</mat-label>
                     <mat-select #typeReference formControlName="type" (selectionChange)="typeValidation($event)"
                         placeholder="Seleccione un tipo">
-                        <mat-option *ngFor="let type of types" [value]="type">
-                            {{type}}
+                        <mat-option *ngFor="let type of types" [value]="type.name">
+                            {{type.name}}
                         </mat-option>
                         <mat-option *ngIf="types?.length === 0" disabled>
                             <i>No hay tipos disponibles</i>
