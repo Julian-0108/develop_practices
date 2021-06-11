@@ -131,20 +131,17 @@ table.mat-table {
   text-align: center !important;
 }
 
+.mat-column-name, .mat-column-domain  {
+  padding-left: 0px !important;
+  padding-right: 15px;
+}
 .mat-column-description {
   width: 20em;
+  text-align: center;
 }
 
 .mat-column-status {
   width: 6em;
-}
-
-.description__icon {
-  color: #6f6f6f;
-  top: 8px;
-  position: absolute;
-  left: 7px;
-  font-size: 15px;
 }
 
 mat-datepicker-toggle {
