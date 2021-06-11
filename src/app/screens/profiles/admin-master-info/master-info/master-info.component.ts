@@ -131,8 +131,6 @@ export class MasterInfoComponent implements OnInit {
     this.masterInfoService
       .getTypes(this.data)
       .then((response: Type[]) => {
-        console.log(response);
-        
         this.types = response;
       })
       .catch((err) => {

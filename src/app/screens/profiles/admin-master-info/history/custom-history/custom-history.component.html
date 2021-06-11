@@ -1,0 +1,43 @@
+<div class="table__container">
+    <mat-icon class="close__icon" (click)="dialogRef.close()">clear</mat-icon>
+    <mat-icon matTooltipPosition="right" matTooltipClass="custom-tooltip__history" class="description__icon"
+        aria-hidden="false"
+        matTooltip="Esta previsualización corresponde a la modificación que se realizó el día: {{data[0].updatedAt | date: 'dd/MM/yyyy'}}">
+        info</mat-icon>
+    <table mat-table [dataSource]="data" class="mat-elevation-z0">
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <ng-container matColumnDef="domain">
+            <th mat-header-cell *matHeaderCellDef> Dominio </th>
+            <td mat-cell *matCellDef="let element">{{element.idDomain}}</td>
+        </ng-container>
+        <ng-container matColumnDef="knowledgeArea">
+            <th mat-header-cell *matHeaderCellDef> Área de conocimiento </th>
+            <td mat-cell *matCellDef="let element">{{element.knowledgeArea}}</td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef> Tipo </th>
+            <td mat-cell *matCellDef="let element">{{element.type}}</td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Nombre</th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="platform">
+            <th mat-header-cell *matHeaderCellDef> Plataforma </th>
+            <td mat-cell *matCellDef="let element">{{element.platform}}</td>
+        </ng-container>
+        <ng-container matColumnDef="tecnology">
+            <th mat-header-cell *matHeaderCellDef> Tecnología </th>
+            <td mat-cell *matCellDef="let element">{{element.technology}}</td>
+        </ng-container>
+        <ng-container matColumnDef="formation">
+            <th mat-header-cell *matHeaderCellDef> Formación </th>
+            <td mat-cell *matCellDef="let element">{{element.formation}}</td>
+        </ng-container>
+
+    </table>
+
+</div>

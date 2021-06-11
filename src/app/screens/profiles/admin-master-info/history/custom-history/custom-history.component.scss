@@ -1,0 +1,25 @@
+.mat-column-domain,
+.mat-column-knowledgeArea,
+.mat-column-type,
+.mat-column-name,
+.mat-column-platform,
+.mat-column-tecnology,
+.mat-column-formation {
+  padding: 20px;
+}
+.description__icon {
+  position: relative !important;
+  left: -13px !important;
+}
+.close__icon {
+    position: relative !important;
+  font-size: 18px;
+  top: 5px;
+  font-weight: 600;
+  left: 45em;
+  color: #707070;
+  cursor: pointer;
+}
+.table__container {
+  padding: 5px;
+}
