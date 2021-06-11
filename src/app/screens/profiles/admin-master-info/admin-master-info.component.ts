@@ -8,8 +8,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Masters } from './interfaces/master-info-dialog';
-import { BehaviorSubject } from 'rxjs';
-import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-master-info',
@@ -39,76 +37,81 @@ export class AdminMasterInfoComponent implements OnInit {
     'status',
     'submenu',
     'actions',
-    
   ];
 
   public readonly masters: Masters[] = [
     {
       name: 'Area de Formación',
       url: 'education-area',
-      sumary: 'Conjunto de conocimientos que por su afinidad conceptual, teórica y metodológica, conforman los contenidos de un plan de estudios: Ejemplo Sistemas, Comunicación, Contaduría.',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: false,
     },
     {
       name: 'Competencias corporativas y talentos',
       url: 'skills',
-      sumary: 'Se refiere a los rasgos y competencias personales que caracterizan a los individuos y permiten establecer como se relacionan con los demás en  su entorno laboral y personal. ',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: true,
     },
-    // {
-    //   name: 'Conocimientos específicos del cargo',
-    //   url: 'specific-knowledge',
-    //   sumary: 'Lorem Ipsum is simply dummy text of the printing ',
-    // },
     {
       name: 'Cursos y certificaciones',
       url: 'courses-certifications',
       sumary: 'Conjunto de conocimientos académicos sobre un tema estructurado a través de un plan. Comprendido por talleres, diplomados, certificaciones, cursos, entre otros. ',
       icon: 'help',
+      haveTypeField: true,
     },
     {
       name: 'Dominio',
       url: 'domain',
-      sumary: 'Representa las áreas de la tecnología y las de apoyo  sobre las cuales la organización realiza algún tipo de gestión o requiere algún conocimiento. Ejemplo: Bases de datos, Sistemas Operativos, Servidores de Aplicación, Redes, Almacenamiento, Cloud, Gestión Financiera, Gestión Administrativa',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: false,
     },
     {
       name: 'Formación académica',
       url: 'studies',
-      sumary: 'Nivel académico obtenido al finalizar un proceso formativo  en una carrera tecnológica, técnica superior o profesional. ',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: false,
     },
     {
       name: 'Funciones del Cargo',
       url: 'functions',
-      sumary: 'Conjunto de responsabilidades, tareas, actividades requeridas  para desempeñar un determinado cargo o rol.',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: false,
     },
     {
       name: 'Habilidades de equipo',
       url: 'base-teams-categories',
-      sumary: 'Representa la estructura interna operativa y administrativa de la compañía',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: true,
     },
     {
       name: 'Herramientas de trabajo',
       url: 'work-tools',
-      sumary: 'Es cualquier software o hardware que ayuda a realizar una tarea. Ejemplo: Golden Gate: Software que permite la replicación de una base de datos a otra',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: true,
     },
     {
       name: 'Módulos',
       url: 'modules',
-      sumary: 'Es la agrupación de funcionalidades que componen mundo SETI.',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: true,
     },
     {
       name: 'Responsabilidades Corporativas',
       url: 'security-responsabilities',
+
       sumary: 'Conjunto de compromisos que deben cumplir  los integrantes de las compañía. ',
     },
     {
       name: 'Temario',
-      url: 'syllabi',
-      sumary: 'Representa la relación entre dominio, área de conocimiento y conocimiento específico, para facilitar el uso de estos conceptos en Mundo SETI. ',
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: true,
     },
     {
       name: 'Tipos',
       url: 'types',
-      sumary: 'A través de esta opción se registrará la información de las tablas maestras que incluyen campos de concepto y descripción.',
-    }
+      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      haveTypeField: false,
+    },
   ];
 
   public masterSeleted: string = '';
@@ -232,7 +235,8 @@ export class AdminMasterInfoComponent implements OnInit {
           (el) =>
             el !== 'submenu' &&
             el !== 'reference' &&
-            el !== 'description'          
+            el !== 'specificKnowledge' &&
+            el !== 'description'
         );
       case 'syllabi':
         return this.displayedColumns.filter(
@@ -253,7 +257,7 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'submenu' &&
             el !== 'idDomain' &&
             el !== 'knowledgeArea' &&
-            el !== 'specificKnowledge'&&
+            el !== 'specificKnowledge' &&
             el !== 'platform' &&
             el !== 'technology' &&
             el !== 'formation'

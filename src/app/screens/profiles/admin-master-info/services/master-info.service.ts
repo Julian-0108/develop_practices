@@ -5,7 +5,7 @@ import { pluck } from 'rxjs/operators';
 import { Master } from '@shared/interfaces/master.interface';
 import { Response } from '@app/shared/interfaces/response.interface';
 import { AuthService } from '@app/screens/login/services/auth/auth.service';
-
+import { GeneralMaster, Syllabi } from '../master-info/interfaces.interface';
 @Injectable({
   providedIn: 'root',
 })
