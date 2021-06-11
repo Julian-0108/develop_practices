@@ -46,12 +46,12 @@ export class AdminMasterInfoComponent implements OnInit {
     {
       name: 'Area de Formación',
       url: 'education-area',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      sumary: 'Conjunto de conocimientos que por su afinidad conceptual, teórica y metodológica, conforman los contenidos de un plan de estudios: Ejemplo Sistemas, Comunicación, Contaduría.',
     },
     {
       name: 'Competencias corporativas y talentos',
       url: 'skills',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      sumary: 'Se refiere a los rasgos y competencias personales que caracterizan a los individuos y permiten establecer como se relacionan con los demás en  su entorno laboral y personal. ',
     },
     // {
     //   name: 'Conocimientos específicos del cargo',
@@ -61,53 +61,53 @@ export class AdminMasterInfoComponent implements OnInit {
     {
       name: 'Cursos y certificaciones',
       url: 'courses-certifications',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      sumary: 'Conjunto de conocimientos académicos sobre un tema estructurado a través de un plan. Comprendido por talleres, diplomados, certificaciones, cursos, entre otros. ',
       icon: 'help',
     },
     {
       name: 'Dominio',
       url: 'domain',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      sumary: 'Representa las áreas de la tecnología y las de apoyo  sobre las cuales la organización realiza algún tipo de gestión o requiere algún conocimiento. Ejemplo: Bases de datos, Sistemas Operativos, Servidores de Aplicación, Redes, Almacenamiento, Cloud, Gestión Financiera, Gestión Administrativa',
     },
     {
       name: 'Formación académica',
       url: 'studies',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      sumary: 'Nivel académico obtenido al finalizar un proceso formativo  en una carrera tecnológica, técnica superior o profesional. ',
     },
     {
       name: 'Funciones del Cargo',
       url: 'functions',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      sumary: 'Conjunto de responsabilidades, tareas, actividades requeridas  para desempeñar un determinado cargo o rol.',
     },
     {
       name: 'Habilidades de equipo',
       url: 'base-teams-categories',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      sumary: 'Representa la estructura interna operativa y administrativa de la compañía',
     },
     {
       name: 'Herramientas de trabajo',
       url: 'work-tools',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      sumary: 'Es cualquier software o hardware que ayuda a realizar una tarea. Ejemplo: Golden Gate: Software que permite la replicación de una base de datos a otra',
     },
     {
       name: 'Módulos',
       url: 'modules',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      sumary: 'Es la agrupación de funcionalidades que componen mundo SETI.',
     },
     {
       name: 'Responsabilidades Corporativas',
       url: 'security-responsabilities',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      sumary: 'Conjunto de compromisos que deben cumplir  los integrantes de las compañía. ',
     },
     {
       name: 'Temario',
       url: 'syllabi',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      sumary: 'Representa la relación entre dominio, área de conocimiento y conocimiento específico, para facilitar el uso de estos conceptos en Mundo SETI. ',
     },
     {
       name: 'Tipos',
       url: 'types',
-      sumary: 'Lorem Ipsum is simply dummy text of the printing ',
+      sumary: 'A través de esta opción se registrará la información de las tablas maestras que incluyen campos de concepto y descripción.',
     }
   ];
 

@@ -10,7 +10,7 @@
             <div class="item" *ngIf="showOrHide('name')"
                 [fxFlex]="data?.url === 'security-responsabilities' ? '75' : '25'">
                 <mat-form-field floatLabel="always" appearance="none">
-                    <mat-label class="label">Nombre {{ data?.subtitle }}</mat-label>
+                    <mat-label class="label">Nombre</mat-label>
                     <input matInput type="text" formControlName="name" placeholder="Digite el nombre">
                     <app-validator [form]="form" name="name"></app-validator>
                 </mat-form-field>
@@ -151,7 +151,7 @@
                             {{formation}}
                         </mat-option>
                     </mat-select>
-                    <!-- <input matInput formControlName="formation" placeholder="Digite una formación"> -->
+                    <input matInput formControlName="formation" placeholder="Digite una formación"> 
                     <app-validator [form]="form" name="formation"></app-validator>
                 </mat-form-field>
             </div>
@@ -232,7 +232,7 @@
             </div>
             <div class="item file__container" fxFlex="49">
                 <button class="file__button" (click)="fileInput.click()">
-                    <mat-icon class="file__icon">attach_file</mat-icon>
+                    <mat-icon class="file__icon">attach_file</mat-icon> 
                     <input #fileInput type="file" (change)="onFileChange($event)" style="display:none;" />
                 </button>
                 <mat-form-field floatLabel="always" appearance="none">

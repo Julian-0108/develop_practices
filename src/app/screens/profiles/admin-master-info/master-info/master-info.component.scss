@@ -57,7 +57,8 @@
 }
 
 .mat-dialog-title {
-    font-weight: 600;
+    font-weight: 500;
+    margin: 0 !important;
 }
 
 .disabled {
@@ -75,5 +76,9 @@ mat-form-field {
 }
 
 .subtitle{
-    color: green;
+    text-align: center;
+    color: #707070;
+    font-weight: 500;
+    //margin-top: 5px;
+
 }
