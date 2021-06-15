@@ -72,7 +72,9 @@ export class MasterInfoComponent implements OnInit {
             );
             this.knowledgeAreaList = allAreaKnowledgeWithOutDuplicates;
           });
-          this.notNullData('knowledgeArea');
+          if (this.data.url !== 'functions') {
+            this.notNullData('knowledgeArea');
+          }
         } else {
           this.masterInfoService
             .getTypes(this.data)
@@ -270,6 +272,10 @@ export class MasterInfoComponent implements OnInit {
         this.form.controls.knowledgeArea?.updateValueAndValidity();
         this.form.controls.specificKnowledge?.setValidators([Validators.required]);
         this.form.controls.specificKnowledge?.updateValueAndValidity();
+      } else {
+        this.form.controls.knowledgeArea?.clearValidators();
+        this.form.controls.specificKnowledge?.clearValidators();
+        this.form.controls.idDomain?.clearValidators();
       }
     } else {
       console.log(this.data.masters);
