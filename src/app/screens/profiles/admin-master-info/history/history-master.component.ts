@@ -5,6 +5,8 @@ import isBetween from 'dayjs/plugin/isBetween';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import { HistoryMastersService } from './service/history-master.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CustomHistoryComponent } from './custom-history/custom-history.component';
 dayjs.extend(isBetween);
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
@@ -26,7 +28,15 @@ export class HistoryMasterComponent implements OnInit {
   historySelected = '';
   visivility = false;
   existentDate!: string;
-  displayedColumns: string[] = ['name', 'description', 'type', 'domain', 'master'];
+  displayedColumns: string[] = [
+    'domain',
+    'knowledgeArea',
+    'specificKnowledge',
+    'name',
+    'description',
+    'type',
+    'master',
+  ];
   formFilterHistory = new FormGroup({
     startDate: new FormControl(),
     endDate: new FormControl(),
@@ -46,32 +56,14 @@ export class HistoryMasterComponent implements OnInit {
     'Diciembre',
   ];
 
-  constructor(private historyMastersService: HistoryMastersService) {}
+  constructor(private historyMastersService: HistoryMastersService, private _dialog: MatDialog) {}
   @Input() idHistory: any;
   @Input() masterSeleted: any;
   idHistoryassigned!: any;
-  ngOnInit(): void {
-  }
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   this.existentDate = '';
-  //   if (changes.idHistory.currentValue !== undefined) {
-  //     console.log(changes.idHistory.currentValue._id);
-  //     this.idHistoryassigned = changes.idHistory.currentValue._id;
-  //     this.historyMastersService
-  //       .hitoryActionsAdminMaster('get', this.idHistoryassigned)
-  //       .then((res: any) => {
-  //         // this.setShowDate(this.historyFilter, res);
-  //         this.historyFilter = res.map((item: any) => {
-  //           // delete item.showDate;
-  //           item.updatedAt = dayjs.default(item.updatedAt).format('YYYY-MM-DD');
-  //           item[`showDate`] = this.showDate(item.updatedAt);
-  //           return item;
-  //         });
-  //         console.log(this.historyFilter);
-  //       });
-  //   }
-  // }
+  ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+
     this.existentDate = '';
     if (changes.idHistory) {
       if (changes.idHistory.currentValue !== undefined) {
@@ -93,32 +85,85 @@ export class HistoryMasterComponent implements OnInit {
     switch (this.masterSeleted) {
       case 'types':
         return this.displayedColumns.filter(
-          (el) => el !== 'description' && el !== 'type' && el !== 'domain'
+          (el) =>
+            el !== 'description' &&
+            el !== 'type' &&
+            el !== 'domain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge'
         );
       case 'studies':
         return this.displayedColumns.filter(
-          (el) => el !== 'type' && el !== 'domain' && el !== 'master'
+          (el) =>
+            el !== 'type' &&
+            el !== 'domain' &&
+            el !== 'master' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge'
         );
       case 'security-responsabilities':
         return this.displayedColumns.filter(
-          (el) => el !== 'description' && el !== 'domain' && el !== 'master'
+          (el) =>
+            el !== 'description' &&
+            el !== 'domain' &&
+            el !== 'master' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge'
         );
       case 'education-area':
         return this.displayedColumns.filter(
-          (el) => el !== 'type' && el !== 'domain' && el !== 'master'
+          (el) =>
+            el !== 'type' &&
+            el !== 'domain' &&
+            el !== 'master' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge'
         );
       case 'base-teams-categories':
-        return this.displayedColumns.filter((el) => el !== 'domain' && el !== 'master');
+        return this.displayedColumns.filter(
+          (el) =>
+            el !== 'domain' &&
+            el !== 'master' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge'
+        );
       case 'domain':
         return this.displayedColumns.filter(
-          (el) => el !== 'type' && el !== 'domain' && el !== 'master'
+          (el) =>
+            el !== 'type' &&
+            el !== 'domain' &&
+            el !== 'master' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge'
         );
       case 'functions':
-        return this.displayedColumns.filter((el) => el !== 'type' && el !== 'master');
+        return this.displayedColumns.filter(
+          (el) =>
+            el !== 'type' && el !== 'master' && el !== 'knowledgeArea' && el !== 'specificKnowledge'
+        );
       case 'courses-certifications':
-        return this.displayedColumns.filter((el) => el !== 'description' && el !== 'master');
+        return this.displayedColumns.filter(
+          (el) =>
+            el !== 'description' &&
+            el !== 'master' &&
+            el !== 'knowledgeArea' &&
+            el !== 'type' &&
+            el !== 'domain' &&
+            el !== 'name' &&
+            el !== 'specificKnowledge'
+        );
+      case 'syllabi':
+        return this.displayedColumns.filter(
+          (el) => el !== 'description' && el !== 'master' && el !== 'name' && el !== 'type'
+        );
       default:
-        return this.displayedColumns.filter((el) => el !== 'domain' && el !== 'master');
+        return this.displayedColumns.filter(
+          (el) =>
+            el !== 'domain' &&
+            el !== 'master' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge'
+        );
     }
   }
 
@@ -180,14 +225,6 @@ export class HistoryMasterComponent implements OnInit {
     return (filter = response.map((item: any) => {
       item.updatedAt = dayjs.default(item.updatedAt).format('YYYY-MM-DD');
       item[`showDate`] = this.showDate(item.updatedAt);
-      // if (this.existentDate !== dateTransformad) {
-      //   this.existentDate = dateTransformad;
-      //   item[`showDate`] = `${this.monthNames[new Date(item.updatedAt).getMonth()]} ${new Date(
-      //     item.updatedAt
-      //   ).getFullYear()}`;
-      // } else {
-      //   item[`showDate`] = null;
-      // }
       return item;
     }));
   }
@@ -210,16 +247,28 @@ export class HistoryMasterComponent implements OnInit {
   onPreview(id: any) {
     this.historySelected = id;
     this.visivility = true;
+    if (this.masterSeleted === 'courses-certifications') {
+      this.customPreview();
+      return;
+    }
     this.dataSource = this.historyFilter.filter((el: any) => el._id === id);
-    // for (let i of this.dataSource) {
-
-    // }
-    console.log(this.historyFilter)
-    console.log(this.dataSource)
+    console.log(this.historyFilter);
+    console.log(this.dataSource);
+  }
+  customPreview() {
+    this._dialog
+      .open(CustomHistoryComponent, {
+        data: this.historyFilter.filter((el: any) => el._id === this.historySelected),
+        autoFocus: false,
+      })
+      .afterClosed()
+      .subscribe(async (resp: any) => {
+        this.historySelected = '';
+        this.visivility = false;
+      });
   }
   outPreview() {
     this.historySelected = '';
     this.visivility = false;
-    // this.displayedColumns = ['name'];
   }
 }

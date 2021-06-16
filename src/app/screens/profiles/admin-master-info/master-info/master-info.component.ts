@@ -72,7 +72,9 @@ export class MasterInfoComponent implements OnInit {
             );
             this.knowledgeAreaList = allAreaKnowledgeWithOutDuplicates;
           });
-          this.notNullData('knowledgeArea');
+          if (this.data.url !== 'functions') {
+            this.notNullData('knowledgeArea');
+          }
         } else {
           this.masterInfoService
             .getTypes(this.data)
@@ -131,8 +133,6 @@ export class MasterInfoComponent implements OnInit {
     this.masterInfoService
       .getTypes(this.data)
       .then((response: Type[]) => {
-        console.log(response);
-        
         this.types = response;
       })
       .catch((err) => {
@@ -272,6 +272,10 @@ export class MasterInfoComponent implements OnInit {
         this.form.controls.knowledgeArea?.updateValueAndValidity();
         this.form.controls.specificKnowledge?.setValidators([Validators.required]);
         this.form.controls.specificKnowledge?.updateValueAndValidity();
+      } else {
+        this.form.controls.knowledgeArea?.clearValidators();
+        this.form.controls.specificKnowledge?.clearValidators();
+        this.form.controls.idDomain?.clearValidators();
       }
     } else {
       console.log(this.data.masters);
@@ -383,6 +387,7 @@ export class MasterInfoComponent implements OnInit {
     if (this.data.url === 'courses-certifications') {
       this.form.value.idSyllabi = this.idSyllabi;
     }
+    this.form.value.name = this.removeWhiteSpaces(this.form.value.name);
     this.masterInfoService
       .addRegisterToMaster(this.data.url, this.form.value)
       .then((response: any) => this.showNotification(response))
@@ -393,6 +398,10 @@ export class MasterInfoComponent implements OnInit {
           type: 'error',
         });
       });
+  }
+
+  removeWhiteSpaces(element: string){
+    return element.trim()
   }
 
   updateRegisterToMaster() {
@@ -461,6 +470,7 @@ export class MasterInfoComponent implements OnInit {
         if (this.data.url === 'courses-certifications') {
           this.form.value.idSyllabi = this.idSyllabi;
         }
+        this.form.value.name = this.removeWhiteSpaces(this.form.value.name);
         if (withImage) {
           this.masterInfoService
             .updateToMasterWithImages(this.data.url, this.data.element._id, this.createFormData())
@@ -511,6 +521,7 @@ export class MasterInfoComponent implements OnInit {
     if (this.data.url === 'courses-certifications') {
       this.form.value.idSyllabi = this.idSyllabi;
     }
+    this.form.value.name = this.removeWhiteSpaces(this.form.value.name);
     if (withImage) {
       this.masterInfoService
         .updateToMasterWithImages(this.data.url, this.data.element._id, this.createFormData())
