@@ -14,10 +14,11 @@ export interface Master {
   updatedAt?: string;
   idParent?: string;
   idDomain?: string;
+  nameDomain?: string;
   domain?: any;
   masterReference?: any;
   syllabi?: any;
   knowledgeArea?: string;
   specificKnowledge?: string;
-  idSyllabi: string
+  idSyllabi: string;
 }

@@ -10,7 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Masters } from './interfaces/master-info-dialog';
-
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-admin-master-info',
@@ -46,38 +46,44 @@ export class AdminMasterInfoComponent implements OnInit {
     {
       name: 'Area de Formación',
       url: 'education-area',
-      sumary: 'Conjunto de conocimientos que por su afinidad conceptual, teórica y metodológica, conforman los contenidos de un plan de estudios: Ejemplo Sistemas, Comunicación, Contaduría.',
+      sumary:
+        'Conjunto de conocimientos que por su afinidad conceptual, teórica y metodológica, conforman los contenidos de un plan de estudios: Ejemplo Sistemas, Comunicación, Contaduría.',
       haveTypeField: false,
     },
     {
       name: 'Competencias corporativas y talentos',
       url: 'skills',
-      sumary: 'Se refiere a los rasgos y competencias personales que caracterizan a los individuos y permiten establecer como se relacionan con los demás en  su entorno laboral y personal.',
+      sumary:
+        'Se refiere a los rasgos y competencias personales que caracterizan a los individuos y permiten establecer como se relacionan con los demás en  su entorno laboral y personal.',
       haveTypeField: true,
     },
     {
       name: 'Cursos y certificaciones',
       url: 'courses-certifications',
-      sumary: 'Conjunto de conocimientos académicos sobre un tema estructurado a través de un plan. Comprendido por talleres, diplomados, certificaciones, cursos, entre otros. ',
+      sumary:
+        'Conjunto de conocimientos académicos sobre un tema estructurado a través de un plan. Comprendido por talleres, diplomados, certificaciones, cursos, entre otros. ',
       icon: 'help',
       haveTypeField: true,
     },
     {
       name: 'Dominio',
       url: 'domain',
-      sumary: 'Representa las áreas de la tecnología y las de apoyo  sobre las cuales la organización realiza algún tipo de gestión o requiere algún conocimiento. Ejemplo: Bases de datos, Sistemas Operativos, Servidores de Aplicación, Redes, Almacenamiento, Cloud, Gestión Financiera, Gestión Administrativa.',
+      sumary:
+        'Representa las áreas de la tecnología y las de apoyo  sobre las cuales la organización realiza algún tipo de gestión o requiere algún conocimiento. Ejemplo: Bases de datos, Sistemas Operativos, Servidores de Aplicación, Redes, Almacenamiento, Cloud, Gestión Financiera, Gestión Administrativa.',
       haveTypeField: false,
     },
     {
       name: 'Formación académica',
       url: 'studies',
-      sumary: 'Nivel académico obtenido al finalizar un proceso formativo  en una carrera tecnológica, técnica superior o profesional.',
+      sumary:
+        'Nivel académico obtenido al finalizar un proceso formativo  en una carrera tecnológica, técnica superior o profesional.',
       haveTypeField: false,
     },
     {
       name: 'Funciones del Cargo',
       url: 'functions',
-      sumary: 'Conjunto de responsabilidades, tareas, actividades requeridas  para desempeñar un determinado cargo o rol.',
+      sumary:
+        'Conjunto de responsabilidades, tareas, actividades requeridas  para desempeñar un determinado cargo o rol.',
       haveTypeField: false,
     },
     {
@@ -89,7 +95,8 @@ export class AdminMasterInfoComponent implements OnInit {
     {
       name: 'Herramientas de trabajo',
       url: 'work-tools',
-      sumary: 'Es cualquier software o hardware que ayuda a realizar una tarea. Ejemplo: Golden Gate: Software que permite la replicación de una base de datos a otra. ',
+      sumary:
+        'Es cualquier software o hardware que ayuda a realizar una tarea. Ejemplo: Golden Gate: Software que permite la replicación de una base de datos a otra. ',
       haveTypeField: true,
     },
     {
@@ -105,13 +112,15 @@ export class AdminMasterInfoComponent implements OnInit {
     },
     {
       name: 'Temario',
-      sumary: 'Representa la relación entre dominio, área de conocimiento y conocimiento específico, para facilitar el uso de estos conceptos en Mundo SETI.',
+      sumary:
+        'Representa la relación entre dominio, área de conocimiento y conocimiento específico, para facilitar el uso de estos conceptos en Mundo SETI.',
       haveTypeField: true,
     },
     {
       name: 'Tipos',
       url: 'types',
-      sumary: 'A través de esta opción se registrará la información de las tablas maestras que incluyen campos de concepto y descripción.',
+      sumary:
+        'A través de esta opción se registrará la información de las tablas maestras que incluyen campos de concepto y descripción.',
       haveTypeField: false,
     },
   ];
@@ -126,9 +135,7 @@ export class AdminMasterInfoComponent implements OnInit {
   domainList: any[] = [];
   areaList: any[] = [];
   knowledgeAreaList: any[] = [];
-  formationList = [{ name: 'Básica'}, { name: 'Específica' }];
-  
-
+  formationList = [{ name: 'Básica' }, { name: 'Específica' }];
 
   public coursesAndCertificationsColumns: string[] = [
     'domain',
@@ -147,10 +154,11 @@ export class AdminMasterInfoComponent implements OnInit {
     this.title.setTitle('Mundo SETI - administrar maestros');
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   getDataMaster() {
-    this.masterInfoService.getData(this.masterSeleted).then((res: Master[]) => {
+    this.masterInfoService.getData(this.masterSeleted).then((res: Master[] | any) => {
+      res.forEach((element: Master) => (element.nameDomain = element.domain[0].name));
       this.dataSource.data = res;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -287,51 +295,37 @@ export class AdminMasterInfoComponent implements OnInit {
     }
   }
 
-  fillDomainList(){
+  fillDomainList() {
     this.masterInfoService.getAllDomains().then((resp: any) => {
-      console.log('resp ==>', resp);
-      
       this.domainList = resp;
     });
   }
 
-  fillAreaList(){
+  fillAreaList() {
     this.masterInfoService.getSyllabi().then((res: any) => {
       const allAreaKnowledgeWithOutDuplicates = res.knowledgeArea.filter(
         (obj: any, index: number, arraySource: any[]) =>
-          arraySource.findIndex(
-            (element: any) => element === obj
-          ) === index
+          arraySource.findIndex((element: any) => element === obj) === index
       );
-      console.log(allAreaKnowledgeWithOutDuplicates);
       this.knowledgeAreaList = allAreaKnowledgeWithOutDuplicates;
     });
   }
 
-
   fillTypeList() {
-    let masterName = this.masters.filter(el => el.url === this.masterSeleted);
-    console.log(masterName);
-    
+    let masterName = this.masters.filter((el) => el.url === this.masterSeleted);
     if (this.masterSeleted === 'base-teams-categories') {
-
       this.types = [{ name: 'Habilidad' }, { name: 'Subgrupo' }];
 
       return;
-
     }
 
     if (this.masterSeleted === 'courses-certifications') {
-
       this.types = [{ name: 'Curso' }, { name: 'Certificación' }];
       this.masterInfoService.getTypes(masterName, true).then((response: any) => {
-
         this.platform = response;
-
-      })
+      });
 
       return;
-
     }
 
     this.masterInfoService
@@ -339,25 +333,18 @@ export class AdminMasterInfoComponent implements OnInit {
       .getTypes(masterName, true)
 
       .then((response: any) => {
-
         this.types = response;
-
       })
 
       .catch((err) => {
-
         this.notificationService.openSimpleSnackBar({
-
           title: 'Ha ocurrido un error',
 
           message: err.message,
 
           type: 'error',
-
         });
-
       });
-
   }
 
   openDialog(element?: Master) {
@@ -386,9 +373,6 @@ export class AdminMasterInfoComponent implements OnInit {
   }
 
   applyDirectFilter(filterValue: any) {
-    console.log(this.dataSource);
-    console.log(this.dataSource.filter);
-    
     this.dataSource.filter = filterValue;
   }
   setId(el: any) {
@@ -399,4 +383,3 @@ export class AdminMasterInfoComponent implements OnInit {
     this.open = true;
   }
 }
-

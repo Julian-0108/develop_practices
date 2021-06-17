@@ -10,7 +10,7 @@ import { GeneralMaster, Syllabi } from '../master-info/interfaces.interface';
   providedIn: 'root',
 })
 export class MasterInfoService {
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   getData(url: string, id?: string): Promise<Master[]> {
     return this.http
@@ -24,19 +24,19 @@ export class MasterInfoService {
   async getSyllabiLists(idDomain: string, knowledgeArea?: string, specificKnowledge?: string) {
     return idDomain && knowledgeArea && specificKnowledge
       ? await this.http
-        .get(
-          `${environment.API_MASTER_INFO}/syllabi?status=true&idDomain=${idDomain}&knowledgeArea=${knowledgeArea}&specificKnowledge=${specificKnowledge}`
-        )
-        .pipe(pluck('payload'))
-        .toPromise()
+          .get(
+            `${environment.API_MASTER_INFO}/syllabi?status=true&idDomain=${idDomain}&knowledgeArea=${knowledgeArea}&specificKnowledge=${specificKnowledge}`
+          )
+          .pipe(pluck('payload'))
+          .toPromise()
       : idDomain && knowledgeArea
-        ? await this.http
+      ? await this.http
           .get(
             `${environment.API_MASTER_INFO}/syllabi?status=true&idDomain=${idDomain}&knowledgeArea=${knowledgeArea}`
           )
           .pipe(pluck('payload'))
           .toPromise()
-        : await this.http
+      : await this.http
           .get(`${environment.API_MASTER_INFO}/syllabi?status=true&idDomain=${idDomain}`)
           .pipe(pluck('payload'))
           .toPromise();
@@ -54,7 +54,18 @@ export class MasterInfoService {
       .toPromise();
   }
 
-  getAllDomains() {
+   getAllDomains() {
+    // let domainList: any = await this.http
+    //   .get(`${environment.API_MASTER_INFO}/domain?status=true`)
+    //   .pipe(pluck('payload'))
+    //   .toPromise();
+    // domainList.forEach((item: any) => {
+    //   item.idDomain = item._id;
+    //   item.nameDomain = item.name;
+    // });
+    // console.log(domainList);
+    
+    // return domainList;
     return this.http
       .get(`${environment.API_MASTER_INFO}/domain?status=true`)
       .pipe(pluck('payload'))
@@ -62,7 +73,6 @@ export class MasterInfoService {
   }
 
   async getSyllabi() {
-
     /** Con la información que trae del servicio de Sylaby, arma las listas de los filtros
      * de knowledgeArea y specificKnowledge.
      */
@@ -71,15 +81,13 @@ export class MasterInfoService {
       .get(`${environment.API_MASTER_INFO}/syllabi?status=true`)
       .pipe(pluck('payload'))
       .toPromise();
-      console.log (response)
+    console.log(response);
     response.forEach((element: any) => {
       allLists.knowledgeArea.push(element.knowledgeArea);
       allLists.specificKnowledge.push(element.specificKnowledge);
     });
     return allLists;
   }
-
-
 
   getSkills() {
     return this.http
