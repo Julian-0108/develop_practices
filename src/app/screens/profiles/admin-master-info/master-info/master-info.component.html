@@ -40,8 +40,7 @@
                             [value]="data.url !== 'syllabi' ? area.knowledgeArea : area.name">
                             {{data.url !== 'syllabi' ? area.knowledgeArea : area.name}}
                         </mat-option>
-                        <mat-option *ngIf="knowledgeAreaList.length === 0"
-                            disabled>
+                        <mat-option *ngIf="knowledgeAreaList.length === 0" disabled>
                             <i>No hay tipos disponibles</i>
                         </mat-option>
                     </mat-select>
@@ -130,7 +129,6 @@
                             <i>No hay tipos disponibles</i>
                         </mat-option>
                     </mat-select>
-                    <!-- <input matInput formControlName="platform" placeholder="Digite una plataforma"> -->
                     <app-validator [form]="form" name="platform" [otherIcon]="true"></app-validator>
                 </mat-form-field>
             </div>
@@ -138,7 +136,6 @@
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Tecnologia</mat-label>
                     <input matInput formControlName="technology" placeholder="Digite una tecnologia">
-                    <!-- <app-validator [form]="form" name="technology"></app-validator> -->
                 </mat-form-field>
             </div>
 
@@ -151,7 +148,6 @@
                             {{formation}}
                         </mat-option>
                     </mat-select>
-                    <!-- <input matInput formControlName="formation" placeholder="Digite una formación">  -->
                     <app-validator [form]="form" name="formation"></app-validator>
                 </mat-form-field>
             </div>
@@ -232,7 +228,7 @@
             </div>
             <div class="item file__container" fxFlex="49">
                 <button class="file__button" (click)="fileInput.click()">
-                    <mat-icon class="file__icon">attach_file</mat-icon> 
+                    <mat-icon class="file__icon">attach_file</mat-icon>
                     <input #fileInput type="file" (change)="onFileChange($event)" style="display:none;" />
                 </button>
                 <mat-form-field floatLabel="always" appearance="none">

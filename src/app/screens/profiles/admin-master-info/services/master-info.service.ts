@@ -5,7 +5,6 @@ import { pluck } from 'rxjs/operators';
 import { Master } from '@shared/interfaces/master.interface';
 import { Response } from '@app/shared/interfaces/response.interface';
 import { AuthService } from '@app/screens/login/services/auth/auth.service';
-import { GeneralMaster, Syllabi } from '../master-info/interfaces.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -55,17 +54,6 @@ export class MasterInfoService {
   }
 
    getAllDomains() {
-    // let domainList: any = await this.http
-    //   .get(`${environment.API_MASTER_INFO}/domain?status=true`)
-    //   .pipe(pluck('payload'))
-    //   .toPromise();
-    // domainList.forEach((item: any) => {
-    //   item.idDomain = item._id;
-    //   item.nameDomain = item.name;
-    // });
-    // console.log(domainList);
-    
-    // return domainList;
     return this.http
       .get(`${environment.API_MASTER_INFO}/domain?status=true`)
       .pipe(pluck('payload'))
@@ -81,7 +69,6 @@ export class MasterInfoService {
       .get(`${environment.API_MASTER_INFO}/syllabi?status=true`)
       .pipe(pluck('payload'))
       .toPromise();
-    console.log(response);
     response.forEach((element: any) => {
       allLists.knowledgeArea.push(element.knowledgeArea);
       allLists.specificKnowledge.push(element.specificKnowledge);
