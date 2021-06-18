@@ -112,6 +112,7 @@ export class AdminMasterInfoComponent implements OnInit {
     },
     {
       name: 'Temario',
+      url: 'syllabi',
       sumary:
         'Representa la relación entre dominio, área de conocimiento y conocimiento específico, para facilitar el uso de estos conceptos en Mundo SETI.',
       haveTypeField: true,
@@ -158,14 +159,16 @@ export class AdminMasterInfoComponent implements OnInit {
 
   getDataMaster() {
     this.dataSource.filter = '';
+    console.log(this.masterSeleted);
+
     this.masterInfoService.getData(this.masterSeleted).then((res: Master[] | any) => {
       console.log(res);
-      
-        res.forEach((element: Master) => {
-          if (element.domain) {
-            return element.nameDomain = element.domain[0].name;
-          }
-        });
+
+      res.forEach((element: Master) => {
+        if (element.domain) {
+          return (element.nameDomain = element.domain[0].name);
+        }
+      });
       this.dataSource.data = res;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
