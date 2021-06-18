@@ -157,8 +157,15 @@ export class AdminMasterInfoComponent implements OnInit {
   ngOnInit(): void {}
 
   getDataMaster() {
+    this.dataSource.filter = '';
     this.masterInfoService.getData(this.masterSeleted).then((res: Master[] | any) => {
-      res.forEach((element: Master) => (element.nameDomain = element.domain[0].name));
+      console.log(res);
+      
+        res.forEach((element: Master) => {
+          if (element.domain) {
+            return element.nameDomain = element.domain[0].name;
+          }
+        });
       this.dataSource.data = res;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
