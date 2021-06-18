@@ -455,9 +455,9 @@ mat-dialog-container {
     width: 100% !important;
 }
 
-.mat-dialog-title {
-    padding: 5px 0px !important;
-}
+// .mat-dialog-title {
+//     padding: 5px 0px !important;
+// }
 
 mat-dialog-content {
     padding: 0 2em !important;
@@ -635,6 +635,14 @@ mat-dialog-actions {
 .chip__level--none {
     background-color: #c7c4c4 !important;
     color: #707070 !important;
+}
+
+.description__icon {
+  color: #6f6f6f !important;
+  top: 8px !important;
+  position: absolute !important;
+  left: 7px !important;
+  font-size: 15px !important;
 }
 
 .custom-tooltip__history {

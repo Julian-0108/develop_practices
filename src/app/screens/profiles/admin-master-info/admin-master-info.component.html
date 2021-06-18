@@ -21,9 +21,7 @@
               <mat-select-trigger>{{subtitle.name}}</mat-select-trigger>
               <mat-option *ngFor="let master of masters | orderAlphabetically:'name'" [value]="master.url">
                 {{master.name}}
-
-                <mat-icon matTooltipClass="custom-tooltip" [matTooltip]="master.sumary" class="content__icon">help
-                </mat-icon>
+                <mat-icon matTooltipClass="custom-tooltip" [matTooltip]="master.sumary" class="content__icon"  >help </mat-icon>
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -48,19 +46,19 @@
             <th mat-header-cell *matHeaderCellDef> Dominio
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text">
-                  <mat-icon class="icon-search" matSuffix>search</mat-icon>
+                  <mat-select class="filter" (selectionChange)="applyDirectFilter($event.value)">
+                    <mat-option [value]="''">
+                      Ver Todos
+                    </mat-option>
+                    <mat-option *ngFor="let domain of domainList" [value]="domain.name">
+                      {{domain.name}}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
-              </div>
+              </div> 
             </th>
             <td mat-cell *matCellDef="let element">
               <ng-container *ngFor="let domain of element.domain">{{domain.name}}</ng-container>
-              <!-- <ng-container *ngIf="masterSeleted === 'courses-certifications'">
-                <ng-container *ngFor="let domain of element.syllabi">{{domain.name}}</ng-container>
-              </ng-container>
-              <ng-container *ngIf="masterSeleted !== 'courses-certifications'">
-                <ng-container *ngFor="let domain of element.domain">{{domain.name}}</ng-container>
-              </ng-container> -->
             </td>
           </ng-container>
 
@@ -69,19 +67,20 @@
             <th mat-header-cell *matHeaderCellDef> Área de conocimiento
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text">
-                  <mat-icon class="icon-search" matSuffix>search</mat-icon>
+                  <mat-select class="filter" (selectionChange)="applyDirectFilter($event.value)">
+                    <mat-option [value]="''">
+                      Ver Todos
+                    </mat-option>
+                    <mat-option *ngFor="let area of  knowledgeAreaList" [value]="area">
+                      {{area}}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
-              </div>
+              </div> 
+
             </th>
             <td mat-cell *matCellDef="let element">
               <ng-container>{{element.knowledgeArea}}</ng-container>
-              <!-- <ng-container *ngIf="masterSeleted === 'courses-certifications'">
-                <ng-container *ngFor="let area of element.syllabi">{{area.knowledgeArea}}</ng-container>
-              </ng-container>
-              <ng-container *ngIf="masterSeleted !== 'courses-certifications'">
-                {{element.knowledgeArea}}
-              </ng-container> -->
             </td>
           </ng-container>
 
@@ -105,18 +104,28 @@
             </td>
           </ng-container>
 
-          <!-- Platform Column -->
           <ng-container matColumnDef="platform">
             <th mat-header-cell *matHeaderCellDef> Plataforma
-              <div class="filter-inputs">
+              <div class="filter-inputs" >
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text">
-                  <mat-icon class="icon-search" matSuffix>search</mat-icon>
+                  <mat-select class="filter filter__courses-certifications"
+                    (selectionChange)="applyDirectFilter($event.value)">
+                    <mat-option [value]="''">
+                      Ver Todos
+                    </mat-option>
+                    <mat-option *ngFor="let element of platform"
+                      [value]="element.name">
+                      {{element.name}} 
+                    </mat-option> 
+                  </mat-select>
                 </mat-form-field>
               </div>
             </th>
             <td mat-cell *matCellDef="let element"> {{element.platform}} </td>
-          </ng-container>
+          </ng-container> 
+          <!-- fin de prueba de plataforma  -->
+
+          
 
           <!--Technology Column -->
           <ng-container matColumnDef="technology">
@@ -134,10 +143,18 @@
           <!-- formation Column -->
           <ng-container matColumnDef="formation">
             <th mat-header-cell *matHeaderCellDef> Formación
-              <div class="filter-inputs">
+              <div class="filter-inputs" >
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text">
-                  <mat-icon class="icon-search" matSuffix>search</mat-icon>
+                  <mat-select class="filter filter__courses-certifications"
+                    (selectionChange)="applyDirectFilter($event.value)">
+                    <mat-option [value]="''">
+                      Ver Todos
+                    </mat-option>
+                    <mat-option *ngFor="let element of formationList"
+                      [value]="element.name">
+                      {{element.name}}
+                    </mat-option> 
+                  </mat-select>
                 </mat-form-field>
               </div>
             </th>
@@ -193,9 +210,16 @@
             <th mat-header-cell *matHeaderCellDef> Tipo
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text"
-                    autocomplete="off">
-                  <mat-icon class="icon-search" matSuffix>search</mat-icon>
+                  <mat-select class="filter filter__courses-certifications"
+                    (selectionChange)="applyDirectFilter($event.value)">
+                    <mat-option [value]="''">
+                      Ver Todos
+                    </mat-option>
+                    <mat-option *ngFor="let type of types"
+                      [value]="type.name">
+                      {{type.name}}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
               </div>
             </th>

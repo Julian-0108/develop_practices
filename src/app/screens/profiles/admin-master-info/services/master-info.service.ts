@@ -5,7 +5,6 @@ import { pluck } from 'rxjs/operators';
 import { Master } from '@shared/interfaces/master.interface';
 import { Response } from '@app/shared/interfaces/response.interface';
 import { AuthService } from '@app/screens/login/services/auth/auth.service';
-import { GeneralMaster, Syllabi } from '../master-info/interfaces.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -42,8 +41,8 @@ export class MasterInfoService {
           .toPromise();
   }
 
-  getTypes(param: any): Promise<any> {
-    const url = param.name[0].name;
+  getTypes(param: any, customParam?: boolean): Promise<any> {
+    const url = customParam ? param[0].name : param.name[0].name;
     return this.http
       .get(
         `${environment.API_MASTER_INFO}/types?masterReference=${encodeURIComponent(
@@ -52,6 +51,29 @@ export class MasterInfoService {
       )
       .pipe(pluck('payload'))
       .toPromise();
+  }
+
+   getAllDomains() {
+    return this.http
+      .get(`${environment.API_MASTER_INFO}/domain?status=true`)
+      .pipe(pluck('payload'))
+      .toPromise();
+  }
+
+  async getSyllabi() {
+    /** Con la información que trae del servicio de Sylaby, arma las listas de los filtros
+     * de knowledgeArea y specificKnowledge.
+     */
+    let allLists: any = { knowledgeArea: [], specificKnowledge: [] };
+    let response: any = await this.http
+      .get(`${environment.API_MASTER_INFO}/syllabi?status=true`)
+      .pipe(pluck('payload'))
+      .toPromise();
+    response.forEach((element: any) => {
+      allLists.knowledgeArea.push(element.knowledgeArea);
+      allLists.specificKnowledge.push(element.specificKnowledge);
+    });
+    return allLists;
   }
 
   getSkills() {

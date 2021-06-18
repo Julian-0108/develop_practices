@@ -22,9 +22,7 @@ import { OnlyNumbers } from '@shared/functions/onlyNumbers';
 import { BehaviorSubject } from 'rxjs';
 import { ResponsabilitiesDescComponent } from './responsabilitiesDesc/responsabilities-desc.component';
 import { ValoraciontotalComponent } from './valoraciontotal/valoraciontotal.component';
-//import { ValorTotalComponent } from './valortotal/valortotal.component';
 import { Master } from '@shared/interfaces/master.interface';
-import { isFunctionOrConstructorTypeNode } from 'typescript';
 
 export interface AcademicEducationTable {
   education: string;
@@ -272,7 +270,6 @@ export class ProfileTemplateComponent implements OnInit {
       name: d && d.knowledgeArea ? d.knowledgeArea : null,
       required: d && d.required ? d.required : false,
       optional: d && d.optional ? d.optional : false,
-      // id: d && d._id ? d._id : null,
     });
     this.coursesCertificationsFormRows.push(row);
     if (!noUpdate) {
@@ -691,25 +688,12 @@ export class ProfileTemplateComponent implements OnInit {
         this.allSpecificKnowledgeList = resp;
       });
 
-      // this.profileTemplateService.getAllCertificates().then((allNames: any) => {
-      // const allNamesWithOutDuplicates = allNames.filter(
-      //   (obj: any, index: number, arraySource: any[]) =>
-      //     arraySource.findIndex((element: any) => element.name === obj.name) === index
-      // );
-      //   this.allNamesList = allNamesWithOutDuplicates;
-      // });
-
       /* Rol Responsabilities */
       this.profileTemplateService.getAllFunctions().then((rolResponsabilities: any) => {
         this.allRolResponsabilities = rolResponsabilities;
       });
-      
+
       this.typeList = ['Curso', 'Certificación'];
-      // this.profileTemplateService
-      //   .getAllTypes('Cursos y certificaciones', false)
-      //   .then((types: any) => {
-      //     this.typeList = types;
-      //   });
       this.profileTemplateService.getAllKnowledgeArea().then((res: any) => {
         const allAreaKnowledgeWithOutDuplicates = res.filter(
           (obj: any, index: number, arraySource: any[]) =>
@@ -968,63 +952,50 @@ export class ProfileTemplateComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((resp: any) => {
-        if (resp === 'close') return;
-        /*
-         * Acciones que se activan al dar click en el botón "guardar" del formulario.
-         */
-        resp = {
-          ...resp,
-          idBaseTeam: this.data.idBaseTeam,
-          idBaseProfile: this.data._id,
-          name: this.data.charge,
-          charge: this.data.charge,
-          teamName: this.data.teamName,
-          status: this.data.status,
-        };
+        if (resp !== 'close') {
+          //console.log(resp=='close'?1:0)
 
-        delete resp[`_id`];
-        /*
-         * Se Guarda la información en historial y se actualiza la información del
-         * perfil.
-         */
-        this.profileTemplateService
-          .updateProfile(this.idProfile, resp)
-          ?.then(() => this.profileTemplateService.getData(this.idProfile))
-          .then((res: any) => {
-            delete res._id;
-            this.profileTemplateService.historyActions('post', this.idProfile, {
-              ...res,
-              author: resp.author,
-              commentary: resp.commentary,
-              idBaseProfile: this.data._id,
-              jobFunctions: res.rolResponsabilities,
-              corporativeCompetences: resp.corporativeCompetences,
-              name: this.data.charge,
-              charge: this.data.charge,
-              teamName: this.data.teamName,
-              status: this.data.status,
+          /*
+           * Acciones que se activan al dar click en el botón "guardar" del formulario.
+           */
+          resp = {
+            ...resp,
+            idBaseTeam: this.data.idBaseTeam,
+            idBaseProfile: this.data._id,
+            name: this.data.charge,
+            charge: this.data.charge,
+            teamName: this.data.teamName,
+            status: this.data.status,
+          };
+          delete resp[`_id`];
+          /*
+           * Se Guarda la información en historial y se actualiza la información del
+           * perfil.
+           */
+          this.profileTemplateService
+            .updateProfile(this.idProfile, resp)
+            ?.then(() => this.profileTemplateService.historyActions('post', this.idProfile, resp))
+            .then(() => {
+              this.notificationService.openSimpleSnackBar({
+                title: 'Operación Finalizada',
+                message: 'La información se ha actualizado con éxito y su historial fue creado.',
+                type: 'success',
+              });
+              this.existentDate = '';
+              this.getData();
+              this.removeActionsColumn(this.coursesAndCertificationsColumns);
+              this.removeActionsColumn(this.specificKnowledgeColumns);
+              this.removeActionsColumn(this.rolResponsabilitiesColumns);
+              this.isEditable = false;
+            })
+            .catch((error) => {
+              this.notificationService.openSimpleSnackBar({
+                title: 'Ocurrió un Error',
+                message: error.message,
+                type: 'error',
+              });
             });
-          })
-          .then(() => {
-            this.notificationService.openSimpleSnackBar({
-              title: 'Operación Finalizada',
-              message: 'La información se ha actualizado con éxito y su historial fue creado.',
-              type: 'success',
-            });
-            this.existentDate = '';
-            this.getData();
-            this.removeActionsColumn(this.coursesAndCertificationsColumns);
-            this.removeActionsColumn(this.specificKnowledgeColumns);
-            this.removeActionsColumn(this.rolResponsabilitiesColumns);
-            this.isEditable = false;
-          })
-          .catch((error) => {
-            this.notificationService.openSimpleSnackBar({
-              title: 'Ocurrió un Error',
-              message: error.message,
-              type: 'error',
-            });
-          });
+        }
       });
   }
   onSaveWithOutHistory() {
