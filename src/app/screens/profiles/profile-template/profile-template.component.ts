@@ -243,7 +243,7 @@ export class ProfileTemplateComponent implements OnInit {
     this.getData();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   checkBoxChanged(el: any, sourceCheck: string) {
     if (sourceCheck === 'optional' && el.optional) {
@@ -278,6 +278,7 @@ export class ProfileTemplateComponent implements OnInit {
   }
 
   addRowIntoSpecificKnowledgeTable(d?: any, noUpdate?: boolean) {
+    console.log("..........area", d)
     const row = this.formBuilder.group({
       domain: d && d.idDomain ? d.idDomain : null,
       knowledgeArea: d && d.knowledgeArea ? d.knowledgeArea : null,
@@ -330,12 +331,48 @@ export class ProfileTemplateComponent implements OnInit {
           );
           this.knowledgeAreaList[index] = allSpecificKnowledgeWithOutDuplicates;
         });
+        console.log("datos d ela columna",row)
+        if(row.specificKnowledge == null){
         this.profileTemplateService
           .getAllSpecificKnowledge(row.domain, row.knowledgeArea)
           .then((res: any) => {
-            this.specificKnowledgeList[index] = res;
+            console.log("datos cargados", res);
+            if (this.readOnlySpecificKnowledgeDatasource.data.length > 0 && res.length >0) {
+              for (let i of this.readOnlySpecificKnowledgeDatasource.data) {
+                for (let d of res) {
+                  if(i.idDomain == d.domain[0]._id && i.knowledgeArea == d.knowledgeArea && i.id == d._id){
+                    console.log("..........entro",i,d)
+                    res.splice(res.indexOf(d, 0), 1);
+
+                  }
+                }
+              }
+              this.specificKnowledgeList[index] =res;
+              console.log("datos finales",this.specificKnowledgeList[index])
+            }else{
+              this.specificKnowledgeList[index] =res;
+            }
           });
-        break;
+          break;
+        }else{
+          console.log("row final",row)
+          this.profileTemplateService
+          .getAllSpecificKnowledge(row.domain, row.knowledgeArea)
+          .then((res: any) => {
+            if (this.readOnlySpecificKnowledgeDatasource.data.length > 0 && res.length >0) {
+              for (let i of this.readOnlySpecificKnowledgeDatasource.data) {
+                for (let d of res) {
+                  if(i.idDomain == d.domain[0]._id && i.knowledgeArea == d.knowledgeArea && i.id == d._id){
+                    if(i.specificKnowledge != row.specificKnowledge){
+                      res.splice(res.indexOf(d, 0), 1);
+                    }
+                  }
+                }
+              }
+            }
+            this.specificKnowledgeList[index] =res;
+          });
+        }
     }
   }
 
@@ -677,6 +714,7 @@ export class ProfileTemplateComponent implements OnInit {
       this.readOnlyCoursesCertificationsDatasource = new MatTableDataSource(
         res.coursesAndCertifications
       );
+      console.log("....okis", res.specificKnowledge)
       this.readOnlySpecificKnowledgeDatasource = new MatTableDataSource(res.specificKnowledge);
       this.profileTemplateService.getAllEstudies().then((resp: Master[]) => {
         this.educationList = resp;
@@ -1163,10 +1201,12 @@ export class ProfileTemplateComponent implements OnInit {
     }
     this.specificKnowledgeError = false;
     /* Arma la estructura que recibe el back */
+    //console.log("....... datos sin consulta",this.specificKnowledgeForm.value.specificKnowledge)
     for (const i of this.specificKnowledgeForm.value.specificKnowledge) {
       this.profileTemplateService
         .getSyllabi(i.domain, i.knowledgeArea, i.specificKnowledge)
         .then((resp: any) => {
+          console.log("....... datos respuesta consulta", resp[0], "...dato consulta", i);
           newResponse.push({
             idSyllabi: resp[0]._id,
             years: i.yearsExperience,
@@ -1349,7 +1389,7 @@ export class ProfileTemplateComponent implements OnInit {
     this._dialog
       .open(ValoraciontotalComponent)
       .afterClosed()
-      .subscribe((resp: any) => {});
+      .subscribe((resp: any) => { });
   }
 
   selectedResponsability(event: any) {
@@ -1360,7 +1400,7 @@ export class ProfileTemplateComponent implements OnInit {
         autoFocus: false,
       })
       .afterClosed()
-      .subscribe((resp: any) => {});
+      .subscribe((resp: any) => { });
   }
 
   selectAcademicEducationValidation(event: any) {
