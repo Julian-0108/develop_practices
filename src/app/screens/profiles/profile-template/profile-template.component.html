@@ -584,16 +584,17 @@
                   <ng-container *ngIf="isEditable">
                     <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
                       <mat-form-field class="input-number__container" floatLabel="always" appearance="none">
-                        <input #yearsExperienceField class="input-number" min="0" max="99" matInput type="number"
+                        <input #yearsExperienceField class="input-number" min="0" max="50" matInput type="number"
                           formControlName="yearsExperience"
-                          (keypress)="onlyNumbers.classicOnlyNumbers($event); onlyNumbers.lenghtValidator(yearsExperienceField.value, 2, $event)">
+                          (keypress)="onlyNumbers.classicOnlyNumbers($event); onlyNumbers.lenghtValidator(yearsExperienceField.value, 2, $event)"
+                          >
                       </mat-form-field>
                     </td>
                   </ng-container>
                 </ng-container>
 
                 <ng-container matColumnDef="pojectsExperience">
-                  <th scope="col" mat-header-cell *matHeaderCellDef> Experiencia en Proyectos
+                  <th scope="col" mat-header-cell *matHeaderCellDef> Número de Proyectos
                     <div class="filter-inputs filter-inputs--area" *ngIf="showSpecificKnowledgeFilter && !isEditable">
 
                     </div>
@@ -785,7 +786,8 @@
                       <mat-select placeholder="Seleccione una función" formControlName="function"
                         (selectionChange)="changeDescriptionBySelection(row.value)">
                         <mat-option *ngFor="let function of rolResponsabilitiesList[index]" [value]="function._id">
-                          {{function.name}}
+                          {{function.name}} <mat-icon matTooltipClass="custom-tooltip" [matTooltip]="function.description" class="content__icon"
+                          aria-hidden="false">help</mat-icon>
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
@@ -851,7 +853,8 @@
                   <!-- assertiveCommunication column -->
                   <ng-container matColumnDef="assertiveCommunication">
                     <th scope="col" mat-header-cell *matHeaderCellDef> Comunicación Asertiva </th>
-                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    <td mat-cell *matCellDef="let element"><mat-icon matTooltipClass="custom-tooltip" [matTooltip]="element.description" class="content__icon"
+                      aria-hidden="false">help</mat-icon> {{element.name}} </td>
                     <td mat-footer-cell *matFooterCellDef>Total</td>
                   </ng-container>
 
@@ -885,7 +888,8 @@
                   <!--  achievementOrientation column -->
                   <ng-container matColumnDef="achievementOrientation">
                     <th scope="col" mat-header-cell *matHeaderCellDef> Orientación al Logro </th>
-                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    <td mat-cell *matCellDef="let element"><mat-icon matTooltipClass="custom-tooltip" [matTooltip]="element.description" class="content__icon"
+                      aria-hidden="false">help</mat-icon> {{element.name}} </td>
                     <td mat-footer-cell *matFooterCellDef> Total </td>
                   </ng-container>
 
@@ -920,7 +924,8 @@
                   <!-- serviceOrientation column -->
                   <ng-container matColumnDef="serviceOrientation">
                     <th scope="col" mat-header-cell *matHeaderCellDef> Orientación al Servicio </th>
-                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    <td mat-cell *matCellDef="let element"><mat-icon matTooltipClass="custom-tooltip" [matTooltip]="element.description" class="content__icon"
+                      aria-hidden="false">help</mat-icon> {{element.name}} </td>
                     <td mat-footer-cell *matFooterCellDef> Total </td>
                   </ng-container>
 
@@ -955,7 +960,8 @@
                   <!-- teamwork column -->
                   <ng-container matColumnDef="teamwork">
                     <th scope="col" mat-header-cell *matHeaderCellDef> Trabajo en Equipo </th>
-                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    <td mat-cell *matCellDef="let element"><mat-icon matTooltipClass="custom-tooltip" [matTooltip]="element.description" class="content__icon"
+                      aria-hidden="false">help</mat-icon> {{element.name}} </td>
                     <td mat-footer-cell *matFooterCellDef> Total </td>
                   </ng-container>
 
