@@ -23,6 +23,7 @@ import { BehaviorSubject, empty } from 'rxjs';
 import { ResponsabilitiesDescComponent } from './responsabilitiesDesc/responsabilities-desc.component';
 import { ValoraciontotalComponent } from './valoraciontotal/valoraciontotal.component';
 import { Master } from '@shared/interfaces/master.interface';
+import { elementAt } from 'rxjs/operators';
 
 export interface AcademicEducationTable {
   education: string;
@@ -53,6 +54,7 @@ export interface AcademicEducation {
   styleUrls: ['./profile-template.component.scss'],
 })
 export class ProfileTemplateComponent implements OnInit {
+  x1 = 0;
   @ViewChild('educationTable') _educationTable!: MatTable<any>;
   @ViewChild('coursesCertifications') _coursesCertifications!: MatTable<any>;
   @ViewChild('specificKnowledge') _specificKnowledge!: MatTable<any>;
@@ -312,27 +314,17 @@ export class ProfileTemplateComponent implements OnInit {
       this.refreshRolResponsabilitiesTable();
     }
   }
-  filerSelectList(row: any, index: number, source: string) {
+
+  async filerSelectList(row: any, index: number, source: string) {
     switch (source) {
       case 'coursesAndCertifications':
-        this.profileTemplateService.getAllKnowledgeArea(row.domain).then((res: any) => {
+      await  this.profileTemplateService.getAllKnowledgeArea(row.domain).then((res: any) => {
           const allAreaKnowledgeWithOutDuplicates = res.filter(
             (obj: any, index: number, arraySource: any[]) =>
               arraySource.findIndex(
                 (element: any) => element.knowledgeArea === obj.knowledgeArea
               ) === index
           );
-                let data:any[]=[];
-                console.log(allAreaKnowledgeWithOutDuplicates)
-          allAreaKnowledgeWithOutDuplicates.forEach((element:any,index:number,array:any[]) => {
-            if(element.knowledgeArea != array[index].knowledgeArea && element.domain._id != array[index+1].domain._id && element._id != array[index+1]._id){
-              this.data.push(element)
-            }
-
-          });
-          console.log(data);
-
-
           this.coursesAndCertificationsKnowledgeAreaList[index] = allAreaKnowledgeWithOutDuplicates;
 
         });
@@ -340,9 +332,11 @@ export class ProfileTemplateComponent implements OnInit {
         break;
       case 'rolResponsabilities':
         this.profileTemplateService.getAllFunctions(row.domain).then((res: any) => {
+
           this.rolResponsabilitiesList[index] = res;
         });
         break;
+
       case 'specificKnowledge':
         this.profileTemplateService.getAllKnowledgeArea(row.domain).then((res: any) => {
           const allSpecificKnowledgeWithOutDuplicates = res.filter(
@@ -1162,7 +1156,23 @@ export class ProfileTemplateComponent implements OnInit {
   onSaveRequiredCertificates() {
     let newCoursesCertificationsArray: any = [];
     let emptyFields: object[] = [];
-      let repeatedFields: object[] = [];
+    let repeatedFields: object[] = [];
+    let repeatedData: object[] = [];
+
+    for (let i=0;i<=this.coursesCertificationsForm.value.coursesAndCertifications.length;i++){
+
+      for (let x=i+1; x <= this.coursesCertificationsForm.value.coursesAndCertifications.length-1; x++ ){
+
+      if((this.coursesCertificationsForm.value.coursesAndCertifications[i].domain == this.coursesCertificationsForm.value.coursesAndCertifications[x].domain
+        && this.coursesCertificationsForm.value.coursesAndCertifications[i].type == this.coursesCertificationsForm.value.coursesAndCertifications[x].type
+        && this.coursesCertificationsForm.value.coursesAndCertifications[i].name == this.coursesCertificationsForm.value.coursesAndCertifications[x].name)
+        && (this.coursesCertificationsForm.value.coursesAndCertifications[i].optional == this.coursesCertificationsForm.value.coursesAndCertifications[x].optional
+        ||this.coursesCertificationsForm.value.coursesAndCertifications[i].required == this.coursesCertificationsForm.value.coursesAndCertifications[x].required)
+       ){
+        repeatedData.push(this.coursesCertificationsForm.value.coursesAndCertifications[i])
+      }
+    }
+    }
     for (const i of this.coursesCertificationsForm.value.coursesAndCertifications) {
       if (
         i.domain === null ||
@@ -1194,6 +1204,15 @@ export class ProfileTemplateComponent implements OnInit {
       this.notificationService.openSimpleSnackBar({
         title: 'Acción Incorrecta',
         message: 'Ambos campos requerido y opcional no pueden estar marcados',
+        type: 'error',
+      });
+      this.requiredCertificatesError = true;
+      return;
+    }
+    if (repeatedData.length !== 0) {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Acción Incorrecta',
+        message: 'No puedes tener datos con la misma información',
         type: 'error',
       });
       this.requiredCertificatesError = true;
@@ -1283,7 +1302,26 @@ export class ProfileTemplateComponent implements OnInit {
     return validador;
   }
   onSaveRolResponsabilities() {
+
+
     let emptyFields: object[] = [];
+    let repeatedData: object[] = [];
+
+    console.log('funciones del cargo');
+    console.log(this.rolResponsabilitiesForm.value.rolResponsabilities);
+
+
+    for (let i=0;i<=this.rolResponsabilitiesForm.value.rolResponsabilities.length;i++){
+      for (let x=i+1; x <= this.rolResponsabilitiesForm.value.rolResponsabilities.length-1; x++ ){
+      if(this.rolResponsabilitiesForm.value.rolResponsabilities[i].domain == this.rolResponsabilitiesForm.value.rolResponsabilities[x].domain
+        && this.rolResponsabilitiesForm.value.rolResponsabilities[i].function == this.rolResponsabilitiesForm.value.rolResponsabilities[x].function
+        ){
+          repeatedData.push(this.rolResponsabilitiesForm.value.rolResponsabilities[i]);
+      }
+
+
+    }
+    }
     for (const i of this.rolResponsabilitiesForm.value.rolResponsabilities) {
       if (i.domain === null || i.function === null) {
         emptyFields.push(i);
@@ -1295,7 +1333,7 @@ export class ProfileTemplateComponent implements OnInit {
         message: 'La selección de "Funciones del Cargo" no puede estar vacía.',
         type: 'error',
       });
-      this.requiredCertificatesError = true;
+      this.rolResponsabilitiesError = true;
       return;
     }
     if (emptyFields.length !== 0) {
@@ -1304,10 +1342,19 @@ export class ProfileTemplateComponent implements OnInit {
         message: 'Ninguno de los campos de "Funciones del Cargo" puede estar vacío.',
         type: 'error',
       });
-      this.requiredCertificatesError = true;
+      this.rolResponsabilitiesError = true;
       return;
     }
-    this.requiredCertificatesError = false;
+    if (repeatedData.length !== 0) {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Acción Incorrecta',
+        message: 'No puedes tener datos con la misma información',
+        type: 'error',
+      });
+      this.rolResponsabilitiesError = true;
+      return;
+    }
+    this.rolResponsabilitiesError = false;
 
     this.sendInformation = {
       ...this.sendInformation,
