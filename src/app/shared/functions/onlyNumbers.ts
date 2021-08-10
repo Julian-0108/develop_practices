@@ -16,12 +16,24 @@
      * que se requiera.
      * @param inputValue Valor del campo origen desde donde se ejecuta la función
      * @param maxNumber Numero límite de dígitos que puede contener el campo
-     * @param event Evento que fue emitido desde el campo origen y contiene la información 
+     * @param event Evento que fue emitido desde el campo origen y contiene la información
      * necesaria, para retornar el valor.
      */
     lenghtValidator(inputValue: Array<number | string>, maxNumber: number, event: Event) {
       if (inputValue.length == maxNumber) {
+        console.log("entra")
+        console.log(inputValue)
         event.returnValue = false;
       }
+
+    }
+    ValidatorMath(inputValue:any  , maxNumber: number, event: Event){
+      console.log("",event)
+      console.log(inputValue)
+     /* if (inputValue > 50) {
+        console.log("entra")
+
+        event.returnValue = false;
+      }*/
     }
   }

@@ -19,10 +19,12 @@ import { ProfileFormHistoryComponent } from './profile-form-history/profile-form
 import { SnackOptionsInterface } from '@shared/interfaces/notification.interface';
 import { ActivatedRoute } from '@angular/router';
 import { OnlyNumbers } from '@shared/functions/onlyNumbers';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, empty } from 'rxjs';
 import { ResponsabilitiesDescComponent } from './responsabilitiesDesc/responsabilities-desc.component';
 import { ValoraciontotalComponent } from './valoraciontotal/valoraciontotal.component';
 import { Master } from '@shared/interfaces/master.interface';
+
+
 
 export interface AcademicEducationTable {
   education: string;
@@ -53,6 +55,7 @@ export interface AcademicEducation {
   styleUrls: ['./profile-template.component.scss'],
 })
 export class ProfileTemplateComponent implements OnInit {
+  x1 = 0;
   @ViewChild('educationTable') _educationTable!: MatTable<any>;
   @ViewChild('coursesCertifications') _coursesCertifications!: MatTable<any>;
   @ViewChild('specificKnowledge') _specificKnowledge!: MatTable<any>;
@@ -73,12 +76,12 @@ export class ProfileTemplateComponent implements OnInit {
   typeList: any[] = [];
   coursesAndCertificationsKnowledgeAreaList: any = {};
   allCoursesAndCertificationsKnowledgeAreaList: any[] = [];
-  // nameList: any = {};
+
   rolResponsabilitiesList: any = {};
   knowledgeAreaList: any = {};
   specificKnowledgeList: any = {};
   allSpecificKnowledgeList: any = {};
-  // allNamesList: any = [];
+
   allRolResponsabilities: any = [];
   areasList: Master[] = [];
   contentPagesSpecificKnowledge = [];
@@ -271,6 +274,11 @@ export class ProfileTemplateComponent implements OnInit {
       required: d && d.required ? d.required : false,
       optional: d && d.optional ? d.optional : false,
     });
+    if (row.get('required')?.value == true && row.get('optional')?.value == true) {
+      row.get('required')?.patchValue(false);
+      row.get('optional')?.patchValue(false);
+    }
+
     this.coursesCertificationsFormRows.push(row);
     if (!noUpdate) {
       this.refreshCoursesCertificationsTable();
@@ -302,10 +310,11 @@ export class ProfileTemplateComponent implements OnInit {
       this.refreshRolResponsabilitiesTable();
     }
   }
-  filerSelectList(row: any, index: number, source: string) {
+
+  async filerSelectList(row: any, index: number, source: string) {
     switch (source) {
       case 'coursesAndCertifications':
-        this.profileTemplateService.getAllKnowledgeArea(row.domain).then((res: any) => {
+        await this.profileTemplateService.getAllKnowledgeArea(row.domain).then((res: any) => {
           const allAreaKnowledgeWithOutDuplicates = res.filter(
             (obj: any, index: number, arraySource: any[]) =>
               arraySource.findIndex(
@@ -314,12 +323,14 @@ export class ProfileTemplateComponent implements OnInit {
           );
           this.coursesAndCertificationsKnowledgeAreaList[index] = allAreaKnowledgeWithOutDuplicates;
         });
+
         break;
       case 'rolResponsabilities':
         this.profileTemplateService.getAllFunctions(row.domain).then((res: any) => {
           this.rolResponsabilitiesList[index] = res;
         });
         break;
+
       case 'specificKnowledge':
         this.profileTemplateService.getAllKnowledgeArea(row.domain).then((res: any) => {
           const allSpecificKnowledgeWithOutDuplicates = res.filter(
@@ -330,12 +341,51 @@ export class ProfileTemplateComponent implements OnInit {
           );
           this.knowledgeAreaList[index] = allSpecificKnowledgeWithOutDuplicates;
         });
-        this.profileTemplateService
-          .getAllSpecificKnowledge(row.domain, row.knowledgeArea)
-          .then((res: any) => {
-            this.specificKnowledgeList[index] = res;
-          });
-        break;
+
+        if (row.specificKnowledge == null) {
+          this.profileTemplateService
+            .getAllSpecificKnowledge(row.domain, row.knowledgeArea)
+            .then((res: any) => {
+              if (this.readOnlySpecificKnowledgeDatasource.data.length > 0 && res.length > 0) {
+                for (let i of this.readOnlySpecificKnowledgeDatasource.data) {
+                  for (let d of res) {
+                    if (
+                      i.idDomain == d.domain[0]._id &&
+                      i.knowledgeArea == d.knowledgeArea &&
+                      i.id == d._id
+                    ) {
+                      res.splice(res.indexOf(d, 0), 1);
+                    }
+                  }
+                }
+                this.specificKnowledgeList[index] = res;
+              } else {
+                this.specificKnowledgeList[index] = res;
+              }
+            });
+          break;
+        } else {
+          this.profileTemplateService
+            .getAllSpecificKnowledge(row.domain, row.knowledgeArea)
+            .then((res: any) => {
+              if (this.readOnlySpecificKnowledgeDatasource.data.length > 0 && res.length > 0) {
+                for (let i of this.readOnlySpecificKnowledgeDatasource.data) {
+                  for (let d of res) {
+                    if (
+                      i.idDomain == d.domain[0]._id &&
+                      i.knowledgeArea == d.knowledgeArea &&
+                      i.id == d._id
+                    ) {
+                      if (i.specificKnowledge != row.specificKnowledge) {
+                        res.splice(res.indexOf(d, 0), 1);
+                      }
+                    }
+                  }
+                }
+              }
+              this.specificKnowledgeList[index] = res;
+            });
+        }
     }
   }
 
@@ -415,47 +465,50 @@ export class ProfileTemplateComponent implements OnInit {
     switch (table) {
       case 'assertiveCommunication':
         if (this.dataAssertiveComunication) {
-          return this.dataAssertiveComunication.filteredData
-            .map((item) => item.measureApproval)
-            .reduce(
-              (acc, value) =>
-                Math.round(acc + value / this.dataAssertiveComunication.filteredData.length),
-              0
-            );
+          return Math.round(
+            this.dataAssertiveComunication.filteredData
+              .map((item) => item.measureApproval)
+              .reduce(
+                (acc, value) => acc + value / this.dataAssertiveComunication.filteredData.length,
+                0
+              )
+          );
         }
+
         break;
       case 'achievementOrientation':
         if (this.dataAchievementOrientation) {
-          return this.dataAchievementOrientation.filteredData
-            .map((item) => item.measureApproval)
-            .reduce(
-              (acc, value) =>
-                Math.round(acc + value / this.dataAchievementOrientation.filteredData.length),
-              0
-            );
+          return Math.round(
+            this.dataAchievementOrientation.filteredData
+              .map((item) => item.measureApproval)
+              .reduce(
+                (acc, value) => acc + value / this.dataAchievementOrientation.filteredData.length,
+                0
+              )
+          );
         }
         break;
 
       case 'serviceOrientation':
         if (this.dataServiceOrientation) {
-          return this.dataServiceOrientation.filteredData
-            .map((item) => item.measureApproval)
-            .reduce(
-              (acc, value) =>
-                Math.round(acc + value / this.dataServiceOrientation.filteredData.length),
-              0
-            );
+          return Math.round(
+            this.dataServiceOrientation.filteredData
+              .map((item) => item.measureApproval)
+              .reduce(
+                (acc, value) => acc + value / this.dataServiceOrientation.filteredData.length,
+                0
+              )
+          );
         }
         break;
 
       case 'teamwork':
         if (this.dataTeamwork) {
-          return this.dataTeamwork.filteredData
-            .map((item) => item.measureApproval)
-            .reduce(
-              (acc, value) => Math.round(acc + value / this.dataTeamwork.filteredData.length),
-              0
-            );
+          return Math.round(
+            this.dataTeamwork.filteredData
+              .map((item) => item.measureApproval)
+              .reduce((acc, value) => acc + value / this.dataTeamwork.filteredData.length, 0)
+          );
         }
         break;
     }
@@ -479,10 +532,12 @@ export class ProfileTemplateComponent implements OnInit {
       this.readOnlyCoursesCertificationsDatasource = new MatTableDataSource(
         res.coursesAndCertifications
       );
+
       this.readOnlySpecificKnowledgeDatasource = new MatTableDataSource(res.specificKnowledge);
       this.dataAssertiveComunication = new MatTableDataSource(
         res.corporativeCompetences.assertiveComunication
       );
+
       res.corporativeCompetences.assertiveComunication.forEach((el: any) => {
         this.percent[el._id] = el.measureApproval;
       });
@@ -677,6 +732,7 @@ export class ProfileTemplateComponent implements OnInit {
       this.readOnlyCoursesCertificationsDatasource = new MatTableDataSource(
         res.coursesAndCertifications
       );
+
       this.readOnlySpecificKnowledgeDatasource = new MatTableDataSource(res.specificKnowledge);
       this.profileTemplateService.getAllEstudies().then((resp: Master[]) => {
         this.educationList = resp;
@@ -768,12 +824,16 @@ export class ProfileTemplateComponent implements OnInit {
 
     /* Courses and Certifications */
     (this.coursesCertificationsForm.controls.coursesAndCertifications as FormArray).clear();
-    this.data.coursesAndCertifications.forEach((el: CoursesCertificationsTable) =>
-      this.addRowIntoCoursesAndCertificationsTable(el, false)
-    );
+    this.data.coursesAndCertifications.forEach((el: CoursesCertificationsTable) => {
+      this.addRowIntoCoursesAndCertificationsTable(el, false);
+    });
     this.refreshCoursesCertificationsTable();
     const coursesCertiform = this.coursesCertificationsForm.value.coursesAndCertifications;
     coursesCertiform.forEach((row: any, index: number) => {
+      if (row.required && row.optional) {
+        row.required = false;
+        row.optional = false;
+      }
       this.filerSelectList(row, index, 'coursesAndCertifications');
     });
 
@@ -905,13 +965,13 @@ export class ProfileTemplateComponent implements OnInit {
     }
   }
 
-  onSave() {
+  async onSave() {
     if (
       this.onSaveObjective() &&
       this.onSaveEperience() &&
       this.onSaveeEucation() &&
       this.onSaveRequiredCertificates() &&
-      this.onSaveSpecificKnowledge() &&
+      (await this.onSaveSpecificKnowledge()) &&
       this.onSaveRolResponsabilities() &&
       this.onSaveTalents() &&
       this.onSaveSecurityResp() &&
@@ -953,8 +1013,6 @@ export class ProfileTemplateComponent implements OnInit {
       .afterClosed()
       .subscribe((resp: any) => {
         if (resp !== 'close') {
-          //console.log(resp=='close'?1:0)
-
           /*
            * Acciones que se activan al dar click en el botón "guardar" del formulario.
            */
@@ -1089,6 +1147,35 @@ export class ProfileTemplateComponent implements OnInit {
   onSaveRequiredCertificates() {
     let newCoursesCertificationsArray: any = [];
     let emptyFields: object[] = [];
+    let repeatedFields: object[] = [];
+    let repeatedData: object[] = [];
+
+    for (
+      let i = 0;
+      i <= this.coursesCertificationsForm.value.coursesAndCertifications.length;
+      i++
+    ) {
+      for (
+        let x = i + 1;
+        x <= this.coursesCertificationsForm.value.coursesAndCertifications.length - 1;
+        x++
+      ) {
+        if (
+          this.coursesCertificationsForm.value.coursesAndCertifications[i].domain ==
+            this.coursesCertificationsForm.value.coursesAndCertifications[x].domain &&
+          this.coursesCertificationsForm.value.coursesAndCertifications[i].type ==
+            this.coursesCertificationsForm.value.coursesAndCertifications[x].type &&
+          this.coursesCertificationsForm.value.coursesAndCertifications[i].name ==
+            this.coursesCertificationsForm.value.coursesAndCertifications[x].name &&
+          (this.coursesCertificationsForm.value.coursesAndCertifications[i].optional ==
+            this.coursesCertificationsForm.value.coursesAndCertifications[x].optional ||
+            this.coursesCertificationsForm.value.coursesAndCertifications[i].required ==
+              this.coursesCertificationsForm.value.coursesAndCertifications[x].required)
+        ) {
+          repeatedData.push(this.coursesCertificationsForm.value.coursesAndCertifications[i]);
+        }
+      }
+    }
     for (const i of this.coursesCertificationsForm.value.coursesAndCertifications) {
       if (
         i.domain === null ||
@@ -1098,11 +1185,37 @@ export class ProfileTemplateComponent implements OnInit {
       ) {
         emptyFields.push(i);
       }
+      if (
+        i.domain === null ||
+        i.type === null ||
+        i.name === null ||
+        (i.optional === true && i.required === true)
+      ) {
+        repeatedFields.push(i);
+      }
     }
     if (this.coursesCertificationsForm.value.coursesAndCertifications.length === 0) {
       this.notificationService.openSimpleSnackBar({
         title: 'Acción Incorrecta',
         message: 'La selección de "Cursos y Certificaciones" no puede estar vacía.',
+        type: 'error',
+      });
+      this.requiredCertificatesError = true;
+      return;
+    }
+    if (repeatedFields.length !== 0) {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Acción Incorrecta',
+        message: 'Ambos campos requerido y opcional no pueden estar marcados',
+        type: 'error',
+      });
+      this.requiredCertificatesError = true;
+      return;
+    }
+    if (repeatedData.length !== 0) {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Acción Incorrecta',
+        message: 'No puedes tener datos con la misma información',
         type: 'error',
       });
       this.requiredCertificatesError = true;
@@ -1134,7 +1247,7 @@ export class ProfileTemplateComponent implements OnInit {
     };
     return true;
   }
-  onSaveSpecificKnowledge() {
+  async onSaveSpecificKnowledge() {
     let emptyFields: object[] = [];
     let newResponse: any[] = [];
     for (const i of this.specificKnowledgeForm.value.specificKnowledge) {
@@ -1163,10 +1276,20 @@ export class ProfileTemplateComponent implements OnInit {
     }
     this.specificKnowledgeError = false;
     /* Arma la estructura que recibe el back */
+
+    let validador = true;
     for (const i of this.specificKnowledgeForm.value.specificKnowledge) {
-      this.profileTemplateService
+      await this.profileTemplateService
         .getSyllabi(i.domain, i.knowledgeArea, i.specificKnowledge)
         .then((resp: any) => {
+          if (i.yearsExperience > 50) {
+            this.notificationService.openSimpleSnackBar({
+              title: 'Acción Incorrecta',
+              message: `El campo años de experiencia es mayor a 50`,
+              type: 'error',
+            });
+            validador = false;
+          }
           newResponse.push({
             idSyllabi: resp[0]._id,
             years: i.yearsExperience,
@@ -1178,10 +1301,28 @@ export class ProfileTemplateComponent implements OnInit {
       ...this.sendInformation,
       specificKnowledge: newResponse,
     };
-    return true;
+    return validador;
   }
   onSaveRolResponsabilities() {
     let emptyFields: object[] = [];
+    let repeatedData: object[] = [];
+
+    for (let i = 0; i <= this.rolResponsabilitiesForm.value.rolResponsabilities.length; i++) {
+      for (
+        let x = i + 1;
+        x <= this.rolResponsabilitiesForm.value.rolResponsabilities.length - 1;
+        x++
+      ) {
+        if (
+          this.rolResponsabilitiesForm.value.rolResponsabilities[i].domain ==
+            this.rolResponsabilitiesForm.value.rolResponsabilities[x].domain &&
+          this.rolResponsabilitiesForm.value.rolResponsabilities[i].function ==
+            this.rolResponsabilitiesForm.value.rolResponsabilities[x].function
+        ) {
+          repeatedData.push(this.rolResponsabilitiesForm.value.rolResponsabilities[i]);
+        }
+      }
+    }
     for (const i of this.rolResponsabilitiesForm.value.rolResponsabilities) {
       if (i.domain === null || i.function === null) {
         emptyFields.push(i);
@@ -1193,7 +1334,7 @@ export class ProfileTemplateComponent implements OnInit {
         message: 'La selección de "Funciones del Cargo" no puede estar vacía.',
         type: 'error',
       });
-      this.requiredCertificatesError = true;
+      this.rolResponsabilitiesError = true;
       return;
     }
     if (emptyFields.length !== 0) {
@@ -1202,10 +1343,19 @@ export class ProfileTemplateComponent implements OnInit {
         message: 'Ninguno de los campos de "Funciones del Cargo" puede estar vacío.',
         type: 'error',
       });
-      this.requiredCertificatesError = true;
+      this.rolResponsabilitiesError = true;
       return;
     }
-    this.requiredCertificatesError = false;
+    if (repeatedData.length !== 0) {
+      this.notificationService.openSimpleSnackBar({
+        title: 'Acción Incorrecta',
+        message: 'No puedes tener datos con la misma información',
+        type: 'error',
+      });
+      this.rolResponsabilitiesError = true;
+      return;
+    }
+    this.rolResponsabilitiesError = false;
 
     this.sendInformation = {
       ...this.sendInformation,
@@ -1301,6 +1451,30 @@ export class ProfileTemplateComponent implements OnInit {
       this.formExperience.get(field)?.setErrors({ error: 'El número ingresado no es válido.' });
       return;
     }
+    if (
+      this.formExperience.value['professionalExperience'] <
+      this.formExperience.value['chargeExperience']
+    ) {
+      this.formExperience
+        .get(field)
+        ?.setErrors({ error: 'La experiencia profesional debe ser mayor a la experiencia del cargo.' });
+      return;
+    }
+    if (
+      this.formExperience.value['professionalExperience'] >=
+      this.formExperience.value['chargeExperience']
+    ) {
+      if (field == 'professionalExperience') {
+        this.formExperience
+          .get('chargeExperience')
+          ?.patchValue(this.formExperience.value['chargeExperience']);
+      }
+      if (field == 'chargeExperience') {
+        this.formExperience
+          .get('professionalExperience')
+          ?.patchValue(this.formExperience.value['professionalExperience']);
+      }
+    }
     this.formExperience.value[field] = Number(this.formExperience.value[field]);
   }
 
@@ -1381,4 +1555,5 @@ export class ProfileTemplateComponent implements OnInit {
   uniq(data: any, key: any) {
     return [...new Map(data.map((el: any) => [key(el), el])).values()];
   }
+  check() {}
 }

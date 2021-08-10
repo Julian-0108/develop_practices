@@ -214,7 +214,7 @@ export class ProfileTemplateService {
   async getAllSpecificKnowledge(idDomain: string, knowledgeArea: string) {
     return await this.httpClient
       .get(
-        `${environment.API_MASTER_INFO}/syllabi?status=true&idDomain=${idDomain}&knowledgeArea=${knowledgeArea}`
+        `${environment.API_MASTER_INFO}/syllabi?status=true&idDomain=${idDomain}&knowledgeArea=${knowledgeArea.replace('&','%26')}`
       )
       .pipe(pluck('payload'))
       .toPromise();
@@ -224,7 +224,7 @@ export class ProfileTemplateService {
     if (idDomain && knowledgeArea && specificKnowledge) {
       return await this.httpClient
         .get(
-          `${environment.API_MASTER_INFO}/syllabi?status=true&idDomain=${idDomain}&knowledgeArea=${knowledgeArea}&specificKnowledge=${specificKnowledge}`
+          `${environment.API_MASTER_INFO}/syllabi?status=true&idDomain=${idDomain}&knowledgeArea=${knowledgeArea.replace('&','%26')}&specificKnowledge=${specificKnowledge.replace('&','%26')}`
         )
         .pipe(pluck('payload'))
         .toPromise();
