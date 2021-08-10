@@ -23,7 +23,8 @@ import { BehaviorSubject, empty } from 'rxjs';
 import { ResponsabilitiesDescComponent } from './responsabilitiesDesc/responsabilities-desc.component';
 import { ValoraciontotalComponent } from './valoraciontotal/valoraciontotal.component';
 import { Master } from '@shared/interfaces/master.interface';
-import { elementAt } from 'rxjs/operators';
+
+
 
 export interface AcademicEducationTable {
   education: string;
@@ -75,12 +76,12 @@ export class ProfileTemplateComponent implements OnInit {
   typeList: any[] = [];
   coursesAndCertificationsKnowledgeAreaList: any = {};
   allCoursesAndCertificationsKnowledgeAreaList: any[] = [];
-  // nameList: any = {};
+
   rolResponsabilitiesList: any = {};
   knowledgeAreaList: any = {};
   specificKnowledgeList: any = {};
   allSpecificKnowledgeList: any = {};
-  // allNamesList: any = [];
+
   allRolResponsabilities: any = [];
   areasList: Master[] = [];
   contentPagesSpecificKnowledge = [];
@@ -245,18 +246,14 @@ export class ProfileTemplateComponent implements OnInit {
     this.getData();
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   checkBoxChanged(el: any, sourceCheck: string) {
-
     if (sourceCheck === 'optional' && el.optional) {
       el.required = false;
     } else if (sourceCheck === 'required' && el.required) {
       el.optional = false;
     }
-
   }
 
   addRowIntoEducationTable(d?: AcademicEducationTable, noUpdate?: boolean) {
@@ -270,7 +267,6 @@ export class ProfileTemplateComponent implements OnInit {
     }
   }
   addRowIntoCoursesAndCertificationsTable(d?: CoursesCertificationsTable, noUpdate?: boolean) {
-
     const row = this.formBuilder.group({
       domain: d && d.idDomain ? d.idDomain : null,
       type: d && d.type ? d.type : null,
@@ -278,7 +274,7 @@ export class ProfileTemplateComponent implements OnInit {
       required: d && d.required ? d.required : false,
       optional: d && d.optional ? d.optional : false,
     });
-    if(row.get('required')?.value == true && row.get('optional')?.value == true){
+    if (row.get('required')?.value == true && row.get('optional')?.value == true) {
       row.get('required')?.patchValue(false);
       row.get('optional')?.patchValue(false);
     }
@@ -318,7 +314,7 @@ export class ProfileTemplateComponent implements OnInit {
   async filerSelectList(row: any, index: number, source: string) {
     switch (source) {
       case 'coursesAndCertifications':
-      await  this.profileTemplateService.getAllKnowledgeArea(row.domain).then((res: any) => {
+        await this.profileTemplateService.getAllKnowledgeArea(row.domain).then((res: any) => {
           const allAreaKnowledgeWithOutDuplicates = res.filter(
             (obj: any, index: number, arraySource: any[]) =>
               arraySource.findIndex(
@@ -326,13 +322,11 @@ export class ProfileTemplateComponent implements OnInit {
               ) === index
           );
           this.coursesAndCertificationsKnowledgeAreaList[index] = allAreaKnowledgeWithOutDuplicates;
-
         });
 
         break;
       case 'rolResponsabilities':
         this.profileTemplateService.getAllFunctions(row.domain).then((res: any) => {
-
           this.rolResponsabilitiesList[index] = res;
         });
         break;
@@ -836,8 +830,7 @@ export class ProfileTemplateComponent implements OnInit {
     this.refreshCoursesCertificationsTable();
     const coursesCertiform = this.coursesCertificationsForm.value.coursesAndCertifications;
     coursesCertiform.forEach((row: any, index: number) => {
-
-      if(row.required && row.optional){
+      if (row.required && row.optional) {
         row.required = false;
         row.optional = false;
       }
@@ -1020,8 +1013,6 @@ export class ProfileTemplateComponent implements OnInit {
       .afterClosed()
       .subscribe((resp: any) => {
         if (resp !== 'close') {
-
-
           /*
            * Acciones que se activan al dar click en el botón "guardar" del formulario.
            */
@@ -1159,19 +1150,31 @@ export class ProfileTemplateComponent implements OnInit {
     let repeatedFields: object[] = [];
     let repeatedData: object[] = [];
 
-    for (let i=0;i<=this.coursesCertificationsForm.value.coursesAndCertifications.length;i++){
-
-      for (let x=i+1; x <= this.coursesCertificationsForm.value.coursesAndCertifications.length-1; x++ ){
-
-      if((this.coursesCertificationsForm.value.coursesAndCertifications[i].domain == this.coursesCertificationsForm.value.coursesAndCertifications[x].domain
-        && this.coursesCertificationsForm.value.coursesAndCertifications[i].type == this.coursesCertificationsForm.value.coursesAndCertifications[x].type
-        && this.coursesCertificationsForm.value.coursesAndCertifications[i].name == this.coursesCertificationsForm.value.coursesAndCertifications[x].name)
-        && (this.coursesCertificationsForm.value.coursesAndCertifications[i].optional == this.coursesCertificationsForm.value.coursesAndCertifications[x].optional
-        ||this.coursesCertificationsForm.value.coursesAndCertifications[i].required == this.coursesCertificationsForm.value.coursesAndCertifications[x].required)
-       ){
-        repeatedData.push(this.coursesCertificationsForm.value.coursesAndCertifications[i])
+    for (
+      let i = 0;
+      i <= this.coursesCertificationsForm.value.coursesAndCertifications.length;
+      i++
+    ) {
+      for (
+        let x = i + 1;
+        x <= this.coursesCertificationsForm.value.coursesAndCertifications.length - 1;
+        x++
+      ) {
+        if (
+          this.coursesCertificationsForm.value.coursesAndCertifications[i].domain ==
+            this.coursesCertificationsForm.value.coursesAndCertifications[x].domain &&
+          this.coursesCertificationsForm.value.coursesAndCertifications[i].type ==
+            this.coursesCertificationsForm.value.coursesAndCertifications[x].type &&
+          this.coursesCertificationsForm.value.coursesAndCertifications[i].name ==
+            this.coursesCertificationsForm.value.coursesAndCertifications[x].name &&
+          (this.coursesCertificationsForm.value.coursesAndCertifications[i].optional ==
+            this.coursesCertificationsForm.value.coursesAndCertifications[x].optional ||
+            this.coursesCertificationsForm.value.coursesAndCertifications[i].required ==
+              this.coursesCertificationsForm.value.coursesAndCertifications[x].required)
+        ) {
+          repeatedData.push(this.coursesCertificationsForm.value.coursesAndCertifications[i]);
+        }
       }
-    }
     }
     for (const i of this.coursesCertificationsForm.value.coursesAndCertifications) {
       if (
@@ -1218,7 +1221,7 @@ export class ProfileTemplateComponent implements OnInit {
       this.requiredCertificatesError = true;
       return;
     }
-    if(emptyFields.length !== 0){
+    if (emptyFields.length !== 0) {
       this.notificationService.openSimpleSnackBar({
         title: 'Acción Incorrecta',
         message: 'Ninguno de los campos de "Cursos y Certificaciones" puede estar vacío.',
@@ -1286,7 +1289,6 @@ export class ProfileTemplateComponent implements OnInit {
               type: 'error',
             });
             validador = false;
-
           }
           newResponse.push({
             idSyllabi: resp[0]._id,
@@ -1302,25 +1304,24 @@ export class ProfileTemplateComponent implements OnInit {
     return validador;
   }
   onSaveRolResponsabilities() {
-
-
     let emptyFields: object[] = [];
     let repeatedData: object[] = [];
 
-    console.log('funciones del cargo');
-    console.log(this.rolResponsabilitiesForm.value.rolResponsabilities);
-
-
-    for (let i=0;i<=this.rolResponsabilitiesForm.value.rolResponsabilities.length;i++){
-      for (let x=i+1; x <= this.rolResponsabilitiesForm.value.rolResponsabilities.length-1; x++ ){
-      if(this.rolResponsabilitiesForm.value.rolResponsabilities[i].domain == this.rolResponsabilitiesForm.value.rolResponsabilities[x].domain
-        && this.rolResponsabilitiesForm.value.rolResponsabilities[i].function == this.rolResponsabilitiesForm.value.rolResponsabilities[x].function
-        ){
+    for (let i = 0; i <= this.rolResponsabilitiesForm.value.rolResponsabilities.length; i++) {
+      for (
+        let x = i + 1;
+        x <= this.rolResponsabilitiesForm.value.rolResponsabilities.length - 1;
+        x++
+      ) {
+        if (
+          this.rolResponsabilitiesForm.value.rolResponsabilities[i].domain ==
+            this.rolResponsabilitiesForm.value.rolResponsabilities[x].domain &&
+          this.rolResponsabilitiesForm.value.rolResponsabilities[i].function ==
+            this.rolResponsabilitiesForm.value.rolResponsabilities[x].function
+        ) {
           repeatedData.push(this.rolResponsabilitiesForm.value.rolResponsabilities[i]);
+        }
       }
-
-
-    }
     }
     for (const i of this.rolResponsabilitiesForm.value.rolResponsabilities) {
       if (i.domain === null || i.function === null) {
@@ -1456,8 +1457,23 @@ export class ProfileTemplateComponent implements OnInit {
     ) {
       this.formExperience
         .get(field)
-        ?.setErrors({ error: 'El número ingresado no puede ser menor al cargo.' });
+        ?.setErrors({ error: 'La experiencia profesional debe ser mayor a la experiencia del cargo.' });
       return;
+    }
+    if (
+      this.formExperience.value['professionalExperience'] >=
+      this.formExperience.value['chargeExperience']
+    ) {
+      if (field == 'professionalExperience') {
+        this.formExperience
+          .get('chargeExperience')
+          ?.patchValue(this.formExperience.value['chargeExperience']);
+      }
+      if (field == 'chargeExperience') {
+        this.formExperience
+          .get('professionalExperience')
+          ?.patchValue(this.formExperience.value['professionalExperience']);
+      }
     }
     this.formExperience.value[field] = Number(this.formExperience.value[field]);
   }
