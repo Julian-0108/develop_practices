@@ -23,7 +23,7 @@ export class MasterInfoComponent implements OnInit {
   @ViewChild('typeReference') typeReference: MatSelect | any;
 
   /* Rutas que manejan imagenes */
-  public manage_images = ['modules', 'base-teams-categories'];
+  public manage_images = ['modules', 'base-teams-categories','member-carousel'];
   private archivo!: string;
   private readonly DATE_FORM_CONTROL = 'yyyy-MM-dd';
   types: {name:string}[] | Type[] = [];
@@ -183,7 +183,9 @@ export class MasterInfoComponent implements OnInit {
         disabled:
           this.data?.url === 'types' ||
           this.data?.url === 'security-responsabilities' ||
-          this.data?.url === 'courses-certifications',
+          this.data?.url === 'courses-certifications' ||
+          this.data?.url == 'member-carousel'
+
       }),
       type: new FormControl({
         value: null,
@@ -191,7 +193,8 @@ export class MasterInfoComponent implements OnInit {
           this.data?.url === 'education-area' ||
           this.data?.url === 'studies' ||
           this.data?.url === 'functions' ||
-          this.data?.url === 'domain',
+          this.data?.url === 'domain' ||
+          this.data?.url === 'member-carousel'
       }),
       idDomain: new FormControl(null),
       knowledgeArea: new FormControl(null),
@@ -203,11 +206,11 @@ export class MasterInfoComponent implements OnInit {
       }),
       createdAt: new FormControl({ value: '', disabled: true }),
       updatedAt: new FormControl({ value: '', disabled: true }),
-      url: new FormControl({ value: null, disabled: this.data?.url === 'base-teams-categories' }),
+      url: new FormControl({ value: null, disabled: this.data?.url === 'base-teams-categories' || this.data?.url === 'member-carousel' }),
       status: new FormControl(''),
       submenu: new FormControl({
         value: null,
-        disabled: this.data?.url !== 'base-teams-categories',
+        disabled: this.data?.url !== 'base-teams-categories'
       }),
       imagePath: new FormControl({ value: '', disabled: true }),
     });
@@ -223,6 +226,10 @@ export class MasterInfoComponent implements OnInit {
       this.form.get('idParent')?.enable();
     }
     if (this.data.url !== 'syllabi') {
+      this.form.controls.name?.setValidators([Validators.required]);
+      this.form.controls.name?.updateValueAndValidity();
+    }
+    if (this.data.url !== 'member-carousel') {
       this.form.controls.name?.setValidators([Validators.required]);
       this.form.controls.name?.updateValueAndValidity();
     }
@@ -288,6 +295,15 @@ export class MasterInfoComponent implements OnInit {
   }
 
   notNullData(field: any) {
+    if (
+      this.form.value[`field`] === null ||
+      this.form.value[`field`] === undefined ||
+      this.form.value[`field`] === ''
+    ) {
+      this.form.get(field)?.setErrors({ error: 'Campo obligatorio' });
+    }
+  }
+  notNullImage(field: any) {
     if (
       this.form.value[`field`] === null ||
       this.form.value[`field`] === undefined ||
@@ -549,6 +565,7 @@ export class MasterInfoComponent implements OnInit {
   onFileChange(event: any) {
     this.form.get('imagePath')?.patchValue(event.target.files[0].name);
 
+
     if (
       event.target.files.length > 0 &&
       ['jpg', 'png', 'svg'].includes(event.target.files[0].name.split('.')[1])
@@ -568,6 +585,21 @@ export class MasterInfoComponent implements OnInit {
   }
 
   onSubmit() {
+
+    console.log();
+
+    if (this.data.url === 'member-carousel' &&
+    this.form.get('imagePath')?.value == ''
+    ){
+      this.notificationService.openSimpleSnackBar({
+        title: 'Campo Obligatorio',
+        message: 'Inserte una imagen para guardad.',
+        type: 'error',
+      });
+      return;
+    }
+
+
     if (
       this.form.get('submenu')?.value === null &&
       this.data.url === 'base-teams-categories' &&
@@ -657,9 +689,9 @@ export class MasterInfoComponent implements OnInit {
 
   typeValidation(ev: any) {
     if (this.data.url === 'base-teams-categories') {
-      /** 
+      /**
        * Si data.element es diferente de vacío, significa que la función
-        fue activada desde el botón editar y la información que hay en element, 
+        fue activada desde el botón editar y la información que hay en element,
         es la información de la fila que se está editando.
       */
       if (this.data.element) {
