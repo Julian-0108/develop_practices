@@ -92,15 +92,25 @@ export class HistoryMasterComponent implements OnInit {
             el !== 'knowledgeArea' &&
             el !== 'specificKnowledge'
         );
-      case 'studies':
+      case 'member-carousel':
         return this.displayedColumns.filter(
           (el) =>
             el !== 'type' &&
             el !== 'domain' &&
             el !== 'master' &&
             el !== 'knowledgeArea' &&
-            el !== 'specificKnowledge'
+            el !== 'specificKnowledge' &&
+            el !== 'description'
         );
+        case 'studies':
+          return this.displayedColumns.filter(
+            (el) =>
+              el !== 'type' &&
+              el !== 'domain' &&
+              el !== 'master' &&
+              el !== 'knowledgeArea' &&
+              el !== 'specificKnowledge'
+          );
       case 'security-responsabilities':
         return this.displayedColumns.filter(
           (el) =>

@@ -124,6 +124,14 @@ export class AdminMasterInfoComponent implements OnInit {
         'A través de esta opción se registrará la información de las tablas maestras que incluyen campos de concepto y descripción.',
       haveTypeField: false,
     },
+    {
+      name: 'Fotos Carousel',
+      url: 'member-carousel',
+      sumary:
+        'Fotos para reflejar en el carousel de mundo seti integrante.',
+      haveTypeField: true,
+    },
+
   ];
 
   public masterSeleted: string = '';
@@ -135,6 +143,7 @@ export class AdminMasterInfoComponent implements OnInit {
   platform: any[] = [];
   domainList: any[] = [];
   areaList: any[] = [];
+  pruebaData:any[]=[{name:"nombre 1",createdAt:new Date(),updatedAt:new Date(),status:true,imagePath:"ruta//jpg1"},{name:"nombre 2",createdAt:new Date(),updatedAt:new Date(new Date().setDate(24)),status:false,imagePath:"ruta//jpg2"}]
   knowledgeAreaList: any[] = [];
   formationList = [{ name: 'Básica' }, { name: 'Específica' }];
 
@@ -160,10 +169,18 @@ export class AdminMasterInfoComponent implements OnInit {
   getDataMaster() {
     this.dataSource.filter = '';
     console.log(this.masterSeleted);
-
+    if(this.masterSeleted == "prueba"){
+      this.dataSource.data = this.pruebaData;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.subtitle = this.masters.find((el: any) => el.url === this.masterSeleted);
+      console.log("Subtitulo",this.subtitle)
+      this.fillTypeList();
+      this.fillDomainList();
+      this.fillAreaList();
+    }else{
     this.masterInfoService.getData(this.masterSeleted).then((res: Master[] | any) => {
-      console.log(res);
-
+      console.log(res)
       res.forEach((element: Master) => {
         if (element.domain) {
           return (element.nameDomain = element.domain[0].name);
@@ -177,6 +194,7 @@ export class AdminMasterInfoComponent implements OnInit {
       this.fillDomainList();
       this.fillAreaList();
     });
+  }
   }
 
   getDisplayedColumns(): string[] {
@@ -270,6 +288,20 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'technology' &&
             el !== 'formation'
         );
+        case 'member-carousel':
+          return this.displayedColumns.filter(
+            (el) =>
+            el !== 'reference' &&
+            el !== 'submenu' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation' &&
+            el !== 'description' &&
+            el !== 'type'
+          );
       case 'courses-certifications':
         return this.displayedColumns.filter(
           (el) =>
