@@ -13,12 +13,28 @@ import { ProfileFormHistoryComponent } from '../../profile-template/profile-form
 import { HistoryMastersService } from '../history/service/history-master.service';
 import { GeneralMaster, Syllabi, Type } from './interfaces.interface';
 
+interface Urls {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-master-info',
   templateUrl: './master-info.component.html',
   styleUrls: ['./master-info.component.scss'],
 })
 export class MasterInfoComponent implements OnInit {
+
+  selectedValue!: string;
+
+
+  urls: Urls[] = [
+    {value: 'home-0', viewValue: 'Home'},
+    {value: 'master-1', viewValue: 'Masters'},
+  ];
+
+
+
   form!: FormGroup;
   @ViewChild('typeReference') typeReference: MatSelect | any;
 
