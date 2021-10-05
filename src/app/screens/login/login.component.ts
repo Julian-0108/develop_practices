@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.loginFormGroup = this.createForm();
     this.ifTokenExists();
-    window.localStorage.clear();
+
   }
 
   createForm(): FormGroup {
@@ -43,6 +43,9 @@ export class LoginComponent implements OnInit {
   ifTokenExists(): void {
     if (this._authService.isLoggedIn()) {
       this.router.navigate(['/home']);
+    }
+    else{
+      window.localStorage.clear();
     }
   }
 
