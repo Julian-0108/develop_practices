@@ -48,7 +48,7 @@ table {
 //     margin: 0 8px 8px 0;
 // }
 .filter-inputs {
-  min-height: 53.8px;
+  min-height: 55.8px;
 }
 
 .chip__status {
@@ -233,7 +233,7 @@ table {
   }
   /// KCBKDJBCJKBCKSA
   .icon-search {
-    margin: 0 -37px !important;
+    margin: 0 -30px !important;
   }
   .icon-description {
     margin: 0 -49px !important;
@@ -271,12 +271,17 @@ table {
   margin: 0 -30px;
 }
 
+.icon-search-carousel {
+  margin: 0 -37px;
+}
+
+
 .icon-description {
   margin: 0 -35px;
 }
 
 .icon-search-security {
-  margin: 0 -45px;
+  margin: 0 -30px;
 }
 
 .button-back {
