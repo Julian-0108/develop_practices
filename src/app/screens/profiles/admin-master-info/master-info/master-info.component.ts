@@ -29,8 +29,12 @@ export class MasterInfoComponent implements OnInit {
 
 
   urls: Urls[] = [
-    {value: 'home-0', viewValue: 'Home'},
-    {value: 'master-1', viewValue: 'Masters'},
+    {value: '/home', viewValue: 'Home'},
+    {value: '/master-info', viewValue: 'Maestros'},
+    {value: '/generateqr', viewValue: 'Generar QR'},
+    {value: '/admin-profiles', viewValue: 'Perfilamiento'},
+    {value: '/profile-options', viewValue: 'Habilidades-Construcción perfiles'},
+    {value: '/underConstruction', viewValue: 'Pagina en construcción'},
   ];
 
 
