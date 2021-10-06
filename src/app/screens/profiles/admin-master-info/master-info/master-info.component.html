@@ -11,7 +11,7 @@
                 [fxFlex]="data?.url === 'security-responsabilities' ? '75' : '25'">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Nombre</mat-label>
-                    <input matInput type="text" formControlName="name" placeholder="Digite el nombre">
+                    <input matInput type="text" formControlName="name">
                     <app-validator [form]="form" name="name"></app-validator>
                 </mat-form-field>
             </div>
@@ -220,13 +220,11 @@
             <div *ngIf='this.data?.url !=="member-carousel" && this.data?.url !== "base-teams-categories"' class="item" fxFlex="49">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">URL</mat-label>
-
-                      <mat-select [(ngModel)]="selectedValue" name="url">
-                        <mat-option formControlName="url"  *ngFor="let url of urls" [value]="url.value">
+                        <mat-select formControlName="url" name="url">
+                        <mat-option  *ngFor="let url of urls" [value]="url.value">
                           {{url.viewValue}}
                         </mat-option>
                       </mat-select>
-
                     <app-validator [form]="form" name="url"></app-validator>
                 </mat-form-field>
             </div>
