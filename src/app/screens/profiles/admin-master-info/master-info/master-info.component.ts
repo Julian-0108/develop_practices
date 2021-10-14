@@ -606,7 +606,6 @@ export class MasterInfoComponent implements OnInit {
 
   onSubmit() {
 
-    console.log();
 
     if (this.data.url === 'member-carousel' &&
     this.form.get('imagePath')?.value == ''
@@ -634,8 +633,6 @@ export class MasterInfoComponent implements OnInit {
     }
 
     if (this.form.invalid) {
-      console.log(this.form);
-
       this.form.markAllAsTouched();
       this.notificationService.openSimpleSnackBar({
         title: 'Campos obligatorios',
