@@ -131,6 +131,13 @@ export class AdminMasterInfoComponent implements OnInit {
         'Fotos para reflejar en el carousel de mundo seti integrante.',
       haveTypeField: true,
     },
+    {
+      name: 'Competencias Corporativas',
+      url: 'corporate-competencies',
+      sumary:
+        'conjunto de conocimientos, habilidades, actitudes y destrezas.',
+      haveTypeField: true,
+    },
 
   ];
 
@@ -301,6 +308,18 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'formation' &&
             el !== 'description' &&
             el !== 'type'
+          );
+          case 'corporate-competencies':
+          return this.displayedColumns.filter(
+            (el) =>
+            el !== 'reference' &&
+            el !== 'submenu' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
           );
       case 'courses-certifications':
         return this.displayedColumns.filter(

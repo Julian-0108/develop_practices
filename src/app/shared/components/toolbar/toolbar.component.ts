@@ -11,7 +11,7 @@ export class ToolbarComponent implements OnInit {
   private readonly SITES_SETI = ['/movements', '/temperature', '/kits', '/generateqr'];
 
   constructor(private authService: AuthService, private router: Router) {}
-  adminRol: boolean = this.authService.validateAccessPage('manage-roles');
+  adminRol: any;
   userName: any;
   ngOnInit() {
     // this.userName = JSON.parse(String(localStorage.getItem('MSauthData')));
@@ -33,10 +33,11 @@ export class ToolbarComponent implements OnInit {
     if (!this.authService.isLoggedIn()) {
       return false;
     }
+    this.adminRol =  this.authService.validateAccessPage('manage-roles');
     this.userName = JSON.parse(String(localStorage.getItem('MSauthData'))).user.displayName;
     return this.router.url !== '/login';
   }
-  
+
   redirect(){
     this.router.navigate(['/home'])
   }
