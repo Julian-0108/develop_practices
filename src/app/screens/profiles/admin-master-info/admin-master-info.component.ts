@@ -32,6 +32,7 @@ export class AdminMasterInfoComponent implements OnInit {
     'name',
     'platform',
     'technology',
+    'version',
     'formation',
     'reference',
     'description',
@@ -138,6 +139,13 @@ export class AdminMasterInfoComponent implements OnInit {
         'conjunto de conocimientos, habilidades, actitudes y destrezas.',
       haveTypeField: true,
     },
+     {
+      name: 'Tecgnologia',
+      url: 'technology',
+      sumary:
+        'Esta es la tecnologia',
+      haveTypeField: true,
+    },
 
   ];
 
@@ -210,6 +218,7 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'type' &&
+            el !== 'version' &&
             el !== 'description' &&
             el !== 'submenu' &&
             el !== 'idDomain' &&
@@ -223,6 +232,7 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'type' &&
+            el !== 'version' &&
             el !== 'submenu' &&
             el !== 'reference' &&
             el !== 'idDomain' &&
@@ -236,6 +246,7 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'description' &&
+            el !== 'version' &&
             el !== 'submenu' &&
             el !== 'reference' &&
             el !== 'idDomain' &&
@@ -249,6 +260,7 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'type' &&
+            el !== 'version' &&
             el !== 'submenu' &&
             el !== 'reference' &&
             el !== 'idDomain' &&
@@ -262,6 +274,7 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'submenu' &&
+            el !== 'version' &&
             el !== 'reference' &&
             el !== 'idDomain' &&
             el !== 'knowledgeArea' &&
@@ -274,6 +287,7 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'submenu' &&
+            el !== 'version' &&
             el !== 'reference' &&
             el !== 'type' &&
             el !== 'idDomain' &&
@@ -287,6 +301,7 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'submenu' &&
+            el !== 'version' &&
             el !== 'reference' &&
             el !== 'type' &&
             el !== 'knowledgeArea' &&
@@ -299,6 +314,7 @@ export class AdminMasterInfoComponent implements OnInit {
           return this.displayedColumns.filter(
             (el) =>
             el !== 'reference' &&
+            el !== 'version' &&
             el !== 'submenu' &&
             el !== 'idDomain' &&
             el !== 'knowledgeArea' &&
@@ -313,6 +329,7 @@ export class AdminMasterInfoComponent implements OnInit {
           return this.displayedColumns.filter(
             (el) =>
             el !== 'reference' &&
+            el !== 'version' &&
             el !== 'submenu' &&
             el !== 'idDomain' &&
             el !== 'knowledgeArea' &&
@@ -321,10 +338,24 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'technology' &&
             el !== 'formation'
           );
+          case 'technology':
+            return this.displayedColumns.filter(
+              (el) =>
+              el !== 'reference' &&
+              el !== 'submenu' &&
+              el !== 'knowledgeArea' &&
+              el !== 'specificKnowledge' &&
+              el !== 'platform' &&
+              el !== 'type' &&
+              el !== 'formation' &&
+              el !== 'description'&&
+              el !== 'name'
+            );
       case 'courses-certifications':
         return this.displayedColumns.filter(
           (el) =>
             el !== 'submenu' &&
+            el !== 'version' &&
             el !== 'reference' &&
             el !== 'specificKnowledge' &&
             el !== 'description'
@@ -333,6 +364,7 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'submenu' &&
+            el !== 'version' &&
             el !== 'name' &&
             el !== 'reference' &&
             el !== 'type' &&
@@ -345,6 +377,7 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'reference' &&
+            el !== 'version' &&
             el !== 'submenu' &&
             el !== 'idDomain' &&
             el !== 'knowledgeArea' &&

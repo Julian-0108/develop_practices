@@ -6,8 +6,7 @@
 <mat-dialog-content>
     <form [formGroup]="form" novalidate autocomplete="off">
         <div fxLayout="row">
-
-            <div class="item" *ngIf="showOrHide('name')"
+            <div  class="item" *ngIf="this.data?.url !=='technology' && showOrHide('name')"
                 [fxFlex]="data?.url === 'security-responsabilities' ? '75' : '25'">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Nombre</mat-label>
@@ -66,7 +65,7 @@
                 </mat-form-field>
             </div>
 
-            <div *ngIf="showOrHide('description')" class="item" fxFlex="30">
+            <div *ngIf="this.data?.url !=='technology' && showOrHide('description')" class="item" fxFlex="30">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Descripción</mat-label>
                     <input matInput formControlName="description" placeholder="Descripción">
@@ -138,7 +137,12 @@
                     <input matInput formControlName="technology" placeholder="Digite una tecnologia">
                 </mat-form-field>
             </div>
-
+            <div *ngIf="showOrHide('version')" class="item" fxFlex="30">
+              <mat-form-field floatLabel="always" appearance="none">
+                  <mat-label class="label">Versión</mat-label>
+                  <input matInput formControlName="version" placeholder="Digite una tecnologia">
+              </mat-form-field>
+          </div>
 
             <div *ngIf="showOrHide('formation')" class="item" fxFlex="30">
                 <mat-form-field floatLabel="always" appearance="none">
@@ -153,7 +157,7 @@
             </div>
         </div>
         <div fxLayout="row">
-            <div *ngIf='this.data?.url !=="member-carousel"' class="item" fxFlex="25">
+            <div *ngIf='this.data?.url !=="member-carousel" && this.data?.url !=="technology"' class="item" fxFlex="25">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Habilidades Actuales</mat-label>
                     <mat-select #currentHabilities [ngClass]="{disabled:form.get('idParent')?.disabled}"

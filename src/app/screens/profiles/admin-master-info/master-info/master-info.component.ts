@@ -77,6 +77,7 @@ export class MasterInfoComponent implements OnInit {
     this.fillPlatformList();
     this.fillSkillsList();
     this.fillDomainsList();
+    console.log(this.data)
   }
 
   filerSelectList(source: string) {
@@ -92,7 +93,7 @@ export class MasterInfoComponent implements OnInit {
             );
             this.knowledgeAreaList = allAreaKnowledgeWithOutDuplicates;
           });
-          if (this.data.url !== 'functions') {
+          if (this.data.url !== 'functions' && this.data.url !== 'technology') {
             this.notNullData('knowledgeArea');
           }
         } else {
@@ -196,15 +197,20 @@ export class MasterInfoComponent implements OnInit {
       _id: new FormControl(),
       platform: new FormControl(null),
       technology: new FormControl(null),
+      version: new FormControl(null),
       formation: new FormControl(null),
-      name: new FormControl(''),
+      name: new FormControl({ value: '',
+      disabled:
+        this.data?.url === 'technology'
+      }),
       description: new FormControl({
         value: '',
         disabled:
           this.data?.url === 'types' ||
           this.data?.url === 'security-responsabilities' ||
           this.data?.url === 'courses-certifications' ||
-          this.data?.url == 'member-carousel'
+          this.data?.url == 'member-carousel' ||
+          this.data?.url === 'technology'
 
       }),
       type: new FormControl({
@@ -214,7 +220,8 @@ export class MasterInfoComponent implements OnInit {
           this.data?.url === 'studies' ||
           this.data?.url === 'functions' ||
           this.data?.url === 'domain' ||
-          this.data?.url === 'member-carousel'
+          this.data?.url === 'member-carousel' ||
+          this.data?.url === 'technology'
       }),
       idDomain: new FormControl(null),
       knowledgeArea: new FormControl(null),
@@ -226,7 +233,7 @@ export class MasterInfoComponent implements OnInit {
       }),
       createdAt: new FormControl({ value: '', disabled: true }),
       updatedAt: new FormControl({ value: '', disabled: true }),
-      url: new FormControl({ value: null, disabled: this.data?.url === 'base-teams-categories' || this.data?.url === 'member-carousel' }),
+      url: new FormControl({ value: null, disabled: this.data?.url === 'base-teams-categories' || this.data?.url === 'member-carousel' || this.data?.url === 'technology'}),
       status: new FormControl(''),
       submenu: new FormControl({
         value: null,
@@ -237,6 +244,7 @@ export class MasterInfoComponent implements OnInit {
   }
 
   formValidations() {
+    console.log('entra');
     if (
       this.data.element &&
       this.data.element.type !== 'Habilidad' &&
@@ -249,10 +257,12 @@ export class MasterInfoComponent implements OnInit {
       this.form.controls.name?.setValidators([Validators.required]);
       this.form.controls.name?.updateValueAndValidity();
     }
+    /*
     if (this.data.url !== 'member-carousel') {
       this.form.controls.name?.setValidators([Validators.required]);
       this.form.controls.name?.updateValueAndValidity();
     }
+    */
     if (this.data.url !== 'types') {
       if (this.data.url !== 'syllabi') {
         this.form.controls.type?.setValidators([Validators.required]);
@@ -273,6 +283,10 @@ export class MasterInfoComponent implements OnInit {
         this.form.controls.idDomain?.updateValueAndValidity();
       } else {
         this.form.controls.idDomain?.clearValidators();
+      }
+
+      if (this.data.url === 'technology') {
+        this.form.controls.knowledgeArea?.clearValidators();
       }
       if (this.data.url === 'courses-certifications') {
         this.form.controls.idDomain?.setValidators([Validators.required]);
@@ -423,7 +437,9 @@ export class MasterInfoComponent implements OnInit {
     if (this.data.url === 'courses-certifications') {
       this.form.value.idSyllabi = this.idSyllabi;
     }
-    this.form.value.name = this.removeWhiteSpaces(this.form.value.name);
+    if(this.data.url !== 'technology'){
+      this.form.value.name = this.removeWhiteSpaces(this.form.value.name);
+    }
     this.masterInfoService
       .addRegisterToMaster(this.data.url, this.form.value)
       .then((response: any) => this.showNotification(response))
@@ -506,7 +522,9 @@ export class MasterInfoComponent implements OnInit {
         if (this.data.url === 'courses-certifications') {
           this.form.value.idSyllabi = this.idSyllabi;
         }
-        this.form.value.name = this.removeWhiteSpaces(this.form.value.name);
+        if(this.data.url !== 'technology'){
+          this.form.value.name = this.removeWhiteSpaces(this.form.value.name);
+        }
         if (withImage) {
           this.masterInfoService
             .updateToMasterWithImages(this.data.url, this.data.element._id, this.createFormData())
@@ -557,7 +575,9 @@ export class MasterInfoComponent implements OnInit {
     if (this.data.url === 'courses-certifications') {
       this.form.value.idSyllabi = this.idSyllabi;
     }
-    this.form.value.name = this.removeWhiteSpaces(this.form.value.name);
+    if(this.data.url !== 'technology'){
+      this.form.value.name = this.removeWhiteSpaces(this.form.value.name);
+    }
     if (withImage) {
       this.masterInfoService
         .updateToMasterWithImages(this.data.url, this.data.element._id, this.createFormData())
@@ -605,8 +625,6 @@ export class MasterInfoComponent implements OnInit {
   }
 
   onSubmit() {
-
-
     if (this.data.url === 'member-carousel' &&
     this.form.get('imagePath')?.value == ''
     ){
@@ -631,9 +649,19 @@ export class MasterInfoComponent implements OnInit {
       });
       return;
     }
+    const invalid = [];
+    const controls = this.form.controls;
+    for (const name in controls) {
+        if (controls[name].invalid) {
+            invalid.push(name);
+        }
+    }
+  console.log(invalid);
 
+  const data=this.form.controls['knowledgeArea'].validator ;
+  console.log(data)
     if (this.form.invalid) {
-      this.form.markAllAsTouched();
+      this.form.markAllAsTouched()
       this.notificationService.openSimpleSnackBar({
         title: 'Campos obligatorios',
         message: 'Revisa la información del formulario',
@@ -760,8 +788,12 @@ export class MasterInfoComponent implements OnInit {
         if (URL === 'courses-certifications') return true;
         break;
       case 'technology':
-        if (URL === 'courses-certifications') return true;
+        if (URL === 'courses-certifications' || URL === 'technology') return true;
         break;
+        case 'version':
+          if (URL === 'technology')
+            return true;
+          break;
       case 'formation':
         if (URL === 'courses-certifications') return true;
         break;
@@ -774,7 +806,7 @@ export class MasterInfoComponent implements OnInit {
           return true;
         break;
       case 'idDomain':
-        if (URL === 'courses-certifications' || URL === 'functions' || URL === 'syllabi')
+        if (URL === 'courses-certifications' || URL === 'functions' || URL === 'syllabi' || URL === 'technology')
           return true;
         break;
       case 'masterReference':
