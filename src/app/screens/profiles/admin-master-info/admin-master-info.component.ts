@@ -147,7 +147,7 @@ export class AdminMasterInfoComponent implements OnInit {
       haveTypeField: true,
     },
      {
-      name: 'Tecgnologia',
+      name: 'Tecnologia',
       url: 'technology',
       sumary:
         'Esta es la tecnologia',
@@ -305,19 +305,58 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'technology' &&
             el !== 'formation'
         );
-      case 'functions':
-        return this.displayedColumns.filter(
-          (el) =>
-            el !== 'submenu' &&
-            el !== 'version' &&
-            el !== 'reference' &&
-            el !== 'type' &&
-            el !== 'knowledgeArea' &&
-            el !== 'specificKnowledge' &&
-            el !== 'platform' &&
-            el !== 'technology' &&
-            el !== 'formation'
-        );
+        case 'skills':
+          return this.displayedColumns.filter(
+            (el) =>
+              el !== 'version' &&
+              el !== 'idDomain' &&
+              el !== 'knowledgeArea' &&
+              el !== 'specificKnowledge' &&
+              el !== 'platform' &&
+              el !== 'technology' &&
+              el !== 'formation' &&
+              el !== 'reference' &&
+              el !== 'submenu'
+          );
+        case 'modules':
+          return this.displayedColumns.filter(
+            (el) =>
+              el !== 'version' &&
+              el !== 'idDomain' &&
+              el !== 'knowledgeArea' &&
+              el !== 'specificKnowledge' &&
+              el !== 'platform' &&
+              el !== 'technology' &&
+              el !== 'formation' &&
+              el !== 'reference' &&
+              el !== 'submenu'
+          );
+          case 'work-tools':
+            return this.displayedColumns.filter(
+              (el) =>
+                el !== 'version' &&
+                el !== 'idDomain' &&
+                el !== 'knowledgeArea' &&
+                el !== 'specificKnowledge' &&
+                el !== 'platform' &&
+                el !== 'technology' &&
+                el !== 'formation' &&
+                el !== 'reference' &&
+                el !== 'submenu'
+            );
+        case 'functions':
+          return this.displayedColumns.filter(
+            (el) =>
+              el !== 'submenu' &&
+              el !== 'version' &&
+              el !== 'reference' &&
+              el !== 'type' &&
+              el !== 'knowledgeArea' &&
+              el !== 'specificKnowledge' &&
+              el !== 'platform' &&
+              el !== 'technology' &&
+              el !== 'formation'
+          );
         case 'member-carousel':
           return this.displayedColumns.filter(
             (el) =>
@@ -331,20 +370,20 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'technology' &&
             el !== 'formation' &&
             el !== 'description' &&
-            el !== 'type'
+            el !== 'type' &&
+            el !== 'master'
           );
-     case 'methodologies':
-           return this.displayedColumns.filter(
-                (el) =>
-                el !== 'reference' &&
-                el !== 'idDomain' &&
-                el !== 'submenu' &&
-                el !== 'knowledgeArea' &&
-                el !== 'specificKnowledge' &&
-                el !== 'platform' &&
-                 el !== 'technology' &&
-                el !== 'formation'
-              );
+          case 'methodologies':
+            return this.displayedColumns.filter(
+              (el) =>
+              el !== 'reference' &&
+              el !== 'submenu' &&
+              el !== 'knowledgeArea' &&
+              el !== 'specificKnowledge' &&
+              el !== 'platform' &&
+              el !== 'technology' &&
+              el !== 'formation'
+            );
           case 'corporate-competencies':
           return this.displayedColumns.filter(
             (el) =>
@@ -397,7 +436,6 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'reference' &&
-            el !== 'version' &&
             el !== 'submenu' &&
             el !== 'idDomain' &&
             el !== 'knowledgeArea' &&
