@@ -139,6 +139,13 @@ export class AdminMasterInfoComponent implements OnInit {
         'conjunto de conocimientos, habilidades, actitudes y destrezas.',
       haveTypeField: true,
     },
+    {
+      name: 'Metodologías',
+      url: 'methodology',
+      sumary:
+        'este es el maestro metodologíasc.',
+      haveTypeField: true,
+    },
      {
       name: 'Tecgnologia',
       url: 'technology',
@@ -146,6 +153,7 @@ export class AdminMasterInfoComponent implements OnInit {
         'Esta es la tecnologia',
       haveTypeField: true,
     },
+
 
   ];
 
@@ -325,6 +333,18 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'description' &&
             el !== 'type'
           );
+     case 'methodologies':
+           return this.displayedColumns.filter(
+                (el) =>
+                el !== 'reference' &&
+                el !== 'idDomain' &&
+                el !== 'submenu' &&
+                el !== 'knowledgeArea' &&
+                el !== 'specificKnowledge' &&
+                el !== 'platform' &&
+                 el !== 'technology' &&
+                el !== 'formation'
+              );
           case 'corporate-competencies':
           return this.displayedColumns.filter(
             (el) =>

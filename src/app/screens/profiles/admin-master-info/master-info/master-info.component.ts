@@ -93,7 +93,7 @@ export class MasterInfoComponent implements OnInit {
             );
             this.knowledgeAreaList = allAreaKnowledgeWithOutDuplicates;
           });
-          if (this.data.url !== 'functions' && this.data.url !== 'technology') {
+          if (this.data.url !== 'functions' && this.data.url !== 'technology' && this.data.url !== 'methodology') {
             this.notNullData('knowledgeArea');
           }
         } else {
@@ -791,7 +791,7 @@ export class MasterInfoComponent implements OnInit {
         if (URL === 'courses-certifications' || URL === 'technology') return true;
         break;
         case 'version':
-          if (URL === 'technology')
+          if (URL === 'technology' || URL === 'methodology')
             return true;
           break;
       case 'formation':
