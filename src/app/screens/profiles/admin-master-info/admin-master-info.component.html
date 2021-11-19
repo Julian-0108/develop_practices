@@ -140,6 +140,25 @@
             <td mat-cell *matCellDef="let element"> {{element.technology}} </td>
           </ng-container>
 
+          <!-- version Column -->
+        <ng-container matColumnDef="version">
+          <th mat-header-cell *matHeaderCellDef> Versión
+            <div class="filter-inputs">
+              <mat-form-field floatLabel="always" appearance="none">
+                <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text"
+                  autocomplete="off">
+                <mat-icon
+                  [ngClass]="{'icon-search-security' : masterSeleted == 'security-responsabilities', 'icon-search' : masterSeleted != 'security-responsabilities', 'icon-search-carousel': masterSeleted == 'member-carousel'}"
+                  matSuffix>search</mat-icon>
+              </mat-form-field>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.version}} </td>
+        </ng-container>
+
+
+
+
           <!-- formation Column -->
           <ng-container matColumnDef="formation">
             <th mat-header-cell *matHeaderCellDef> Formación
@@ -160,6 +179,7 @@
             </th>
             <td mat-cell *matCellDef="let element"> {{element.formation}} </td>
           </ng-container>
+
 
           <!-- Reference Column -->
           <ng-container matColumnDef="reference">
@@ -189,6 +209,8 @@
             </th>
             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
           </ng-container>
+
+
 
           <!-- Description Column -->
           <ng-container matColumnDef="description">
@@ -225,7 +247,6 @@
             </th>
             <td mat-cell *matCellDef="let element"> {{element.type}} </td>
           </ng-container>
-
 
           <!-- CreatedAt Column -->
           <ng-container matColumnDef="createdAt">

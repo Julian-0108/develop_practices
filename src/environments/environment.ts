@@ -8,7 +8,7 @@ export const environment = {
   // API_MASTER_INFO : 'http://localhost:80',
   API_BASE_PROFILES : 'http://192.168.27.27:6083/api/v1/baseprofiles',
   // API_BASE_PROFILES: 'http://localhost:81',
-  API_SECURITY: 'http://192.168.27.27:6083/api/v1/security'
+  API_SECURITY: 'http://192.168.27.27:6083/api/v1/security-admin'
 };
 
 export const API_URL = 'https://sitios.setiaws.com';
