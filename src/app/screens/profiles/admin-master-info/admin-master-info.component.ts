@@ -32,6 +32,7 @@ export class AdminMasterInfoComponent implements OnInit {
     'name',
     'platform',
     'technology',
+    'idTechnology',
     'version',
     'formation',
     'reference',
@@ -153,6 +154,13 @@ export class AdminMasterInfoComponent implements OnInit {
         'Esta es la tecnologia',
       haveTypeField: true,
     },
+    {
+      name: 'Herramientas/Opciones',
+      url: 'optional-tools',
+      sumary:
+        'Esta son las herramientas y opciones',
+      haveTypeField: true,
+    },
 
 
   ];
@@ -165,6 +173,7 @@ export class AdminMasterInfoComponent implements OnInit {
   types: any[] = [];
   platform: any[] = [];
   domainList: any[] = [];
+  technologyList: any[] = [];
   areaList: any[] = [];
   pruebaData:any[]=[{name:"nombre 1",createdAt:new Date(),updatedAt:new Date(),status:true,imagePath:"ruta//jpg1"},{name:"nombre 2",createdAt:new Date(),updatedAt:new Date(new Date().setDate(24)),status:false,imagePath:"ruta//jpg2"}]
   knowledgeAreaList: any[] = [];
@@ -191,21 +200,26 @@ export class AdminMasterInfoComponent implements OnInit {
 
   getDataMaster() {
     this.dataSource.filter = '';
-    console.log(this.masterSeleted);
     if(this.masterSeleted == "prueba"){
       this.dataSource.data = this.pruebaData;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.subtitle = this.masters.find((el: any) => el.url === this.masterSeleted);
-      console.log("Subtitulo",this.subtitle)
       this.fillTypeList();
       this.fillDomainList();
+      this.fillTechnologyList();
       this.fillAreaList();
     }else{
     this.masterInfoService.getData(this.masterSeleted).then((res: Master[] | any) => {
-      console.log(res)
+      console.log(res);
       res.forEach((element: Master) => {
+        if (element.technology) {
+          console.log('entra al tecgnology')
+          console.log(element.technology[0])
+          return (element.technology[0].technology);
+        }
         if (element.domain) {
+          console.log('entra al domain')
           return (element.nameDomain = element.domain[0].name);
         }
       });
@@ -215,6 +229,7 @@ export class AdminMasterInfoComponent implements OnInit {
       this.subtitle = this.masters.find((el: any) => el.url === this.masterSeleted);
       this.fillTypeList();
       this.fillDomainList();
+      this.fillTechnologyList();
       this.fillAreaList();
     });
   }
@@ -226,6 +241,7 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'type' &&
+            el !== 'idTechnology' &&
             el !== 'version' &&
             el !== 'description' &&
             el !== 'submenu' &&
@@ -240,6 +256,7 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'type' &&
+            el !== 'idTechnology' &&
             el !== 'version' &&
             el !== 'submenu' &&
             el !== 'reference' &&
@@ -254,6 +271,7 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'description' &&
+            el !== 'idTechnology' &&
             el !== 'version' &&
             el !== 'submenu' &&
             el !== 'reference' &&
@@ -268,6 +286,7 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'type' &&
+            el !== 'idTechnology' &&
             el !== 'version' &&
             el !== 'submenu' &&
             el !== 'reference' &&
@@ -282,6 +301,7 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'submenu' &&
+            el !== 'idTechnology' &&
             el !== 'version' &&
             el !== 'reference' &&
             el !== 'idDomain' &&
@@ -295,6 +315,7 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'submenu' &&
+            el !== 'idTechnology' &&
             el !== 'version' &&
             el !== 'reference' &&
             el !== 'type' &&
@@ -309,6 +330,7 @@ export class AdminMasterInfoComponent implements OnInit {
           return this.displayedColumns.filter(
             (el) =>
               el !== 'version' &&
+              el !== 'idTechnology' &&
               el !== 'idDomain' &&
               el !== 'knowledgeArea' &&
               el !== 'specificKnowledge' &&
@@ -322,6 +344,7 @@ export class AdminMasterInfoComponent implements OnInit {
           return this.displayedColumns.filter(
             (el) =>
               el !== 'version' &&
+              el !== 'idTechnology' &&
               el !== 'idDomain' &&
               el !== 'knowledgeArea' &&
               el !== 'specificKnowledge' &&
@@ -335,6 +358,7 @@ export class AdminMasterInfoComponent implements OnInit {
             return this.displayedColumns.filter(
               (el) =>
                 el !== 'version' &&
+                el !== 'idTechnology' &&
                 el !== 'idDomain' &&
                 el !== 'knowledgeArea' &&
                 el !== 'specificKnowledge' &&
@@ -348,6 +372,7 @@ export class AdminMasterInfoComponent implements OnInit {
           return this.displayedColumns.filter(
             (el) =>
               el !== 'submenu' &&
+              el !== 'idTechnology' &&
               el !== 'version' &&
               el !== 'reference' &&
               el !== 'type' &&
@@ -357,10 +382,25 @@ export class AdminMasterInfoComponent implements OnInit {
               el !== 'technology' &&
               el !== 'formation'
           );
+          case 'optional-tools':
+            return this.displayedColumns.filter(
+              (el) =>
+              el !== 'reference' &&
+              el !== 'submenu' &&
+              el !== 'idDomain' &&
+              el !== 'technology' &&
+              el !== 'knowledgeArea' &&
+              el !== 'specificKnowledge' &&
+              el !== 'platform' &&
+              el !== 'formation' &&
+              el !== 'description' &&
+              el !== 'master'
+            );
         case 'member-carousel':
           return this.displayedColumns.filter(
             (el) =>
             el !== 'reference' &&
+            el !== 'idTechnology' &&
             el !== 'version' &&
             el !== 'submenu' &&
             el !== 'idDomain' &&
@@ -377,6 +417,7 @@ export class AdminMasterInfoComponent implements OnInit {
             return this.displayedColumns.filter(
               (el) =>
               el !== 'reference' &&
+              el !== 'idTechnology' &&
               el !== 'submenu' &&
               el !== 'knowledgeArea' &&
               el !== 'specificKnowledge' &&
@@ -388,6 +429,7 @@ export class AdminMasterInfoComponent implements OnInit {
           return this.displayedColumns.filter(
             (el) =>
             el !== 'reference' &&
+            el !== 'idTechnology' &&
             el !== 'version' &&
             el !== 'submenu' &&
             el !== 'idDomain' &&
@@ -401,6 +443,7 @@ export class AdminMasterInfoComponent implements OnInit {
             return this.displayedColumns.filter(
               (el) =>
               el !== 'reference' &&
+              el !== 'idTechnology' &&
               el !== 'submenu' &&
               el !== 'knowledgeArea' &&
               el !== 'specificKnowledge' &&
@@ -414,6 +457,7 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'submenu' &&
+            el !== 'idTechnology' &&
             el !== 'version' &&
             el !== 'reference' &&
             el !== 'specificKnowledge' &&
@@ -423,6 +467,7 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'submenu' &&
+            el !== 'idTechnology' &&
             el !== 'version' &&
             el !== 'name' &&
             el !== 'reference' &&
@@ -436,6 +481,7 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'reference' &&
+            el !== 'idTechnology' &&
             el !== 'submenu' &&
             el !== 'idDomain' &&
             el !== 'knowledgeArea' &&
@@ -450,6 +496,12 @@ export class AdminMasterInfoComponent implements OnInit {
   fillDomainList() {
     this.masterInfoService.getAllDomains().then((resp: any) => {
       this.domainList = resp;
+    });
+  }
+  fillTechnologyList() {
+    this.masterInfoService.getAllTechnologies().then((resp: any) => {
+
+      this.technologyList = resp;
     });
   }
 
@@ -525,6 +577,7 @@ export class AdminMasterInfoComponent implements OnInit {
   }
 
   applyDirectFilter(filterValue: any) {
+    console.log(filterValue);
     this.dataSource.filter = filterValue;
   }
   setId(el: any) {

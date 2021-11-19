@@ -60,6 +60,13 @@ export class MasterInfoService {
       .toPromise();
   }
 
+  getAllTechnologies() {
+    return this.http
+      .get(`${environment.API_MASTER_INFO}/technology?status=true`)
+      .pipe(pluck('payload'))
+      .toPromise();
+  }
+
   async getSyllabi() {
     /** Con la información que trae del servicio de Sylaby, arma las listas de los filtros
      * de knowledgeArea y specificKnowledge.
