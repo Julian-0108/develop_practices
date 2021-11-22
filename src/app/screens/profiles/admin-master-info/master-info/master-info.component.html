@@ -30,6 +30,7 @@
                 </mat-form-field>
             </div>
 
+
             <div *ngIf="showOrHide('knowledgeArea')" class="item" fxFlex="30">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Área de Conocimiento</mat-label>
@@ -172,6 +173,23 @@
                   <input matInput formControlName="version" placeholder="Digite una versión">
               </mat-form-field>
           </div>
+
+          <div *ngIf="showOrHide('idTecnology')" class="item" fxFlex="25">
+            <mat-form-field floatLabel="always" appearance="none">
+                <mat-label class="label">Tecnología</mat-label>
+                <mat-select #idTecnology formControlName="idTechnology" placeholder="Seleccione una tecnología"
+                    (selectionChange)="filerSelectList('tecnologytField')">
+                    <mat-option *ngFor="let technology of technologies" [value]="technology._id">
+                        {{technology.technology}}
+                    </mat-option>
+                    <mat-option *ngIf="technologies?.length === 0" disabled>
+                        <i>No hay technologías disponibles</i>
+                    </mat-option>
+                </mat-select>
+                <app-validator [form]="form" name="idTechnology" [otherIcon]="true"></app-validator>
+            </mat-form-field>
+        </div>
+
             <div class="item" fxFlex="20">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Fecha de creación</mat-label>
