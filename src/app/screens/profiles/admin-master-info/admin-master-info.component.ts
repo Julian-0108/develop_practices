@@ -213,13 +213,11 @@ export class AdminMasterInfoComponent implements OnInit {
     this.masterInfoService.getData(this.masterSeleted).then((res: Master[] | any) => {
       console.log(res);
       res.forEach((element: Master) => {
+        console.log(element)
         if (element.technology) {
-          console.log('entra al tecgnology')
-          console.log(element.technology[0])
           return (element.technology[0].technology);
         }
         if (element.domain) {
-          console.log('entra al domain')
           return (element.nameDomain = element.domain[0].name);
         }
       });
