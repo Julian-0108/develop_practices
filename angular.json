@@ -10,7 +10,7 @@
           "style": "scss"
         }
       },
-      "root": "",
+      "root": "/api/v1/ui",
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
