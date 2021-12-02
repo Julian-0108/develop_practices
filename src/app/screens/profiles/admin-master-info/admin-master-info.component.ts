@@ -211,6 +211,7 @@ export class AdminMasterInfoComponent implements OnInit {
       this.fillAreaList();
     }else{
     this.masterInfoService.getData(this.masterSeleted).then((res: Master[] | any) => {
+      console.log('este es el res')
       console.log(res);
       res.forEach((element: Master) => {
         console.log(element)
@@ -385,7 +386,6 @@ export class AdminMasterInfoComponent implements OnInit {
               (el) =>
               el !== 'reference' &&
               el !== 'submenu' &&
-              el !== 'idDomain' &&
               el !== 'technology' &&
               el !== 'knowledgeArea' &&
               el !== 'specificKnowledge' &&
@@ -455,7 +455,7 @@ export class AdminMasterInfoComponent implements OnInit {
         return this.displayedColumns.filter(
           (el) =>
             el !== 'submenu' &&
-            el !== 'idTechnology' &&
+            el !== 'technology' &&
             el !== 'version' &&
             el !== 'reference' &&
             el !== 'specificKnowledge' &&

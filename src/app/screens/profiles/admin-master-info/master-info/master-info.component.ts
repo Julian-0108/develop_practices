@@ -14,6 +14,8 @@ import { HistoryMastersService } from '../history/service/history-master.service
 import { GeneralMaster, Syllabi, Type } from './interfaces.interface';
 import { threadId } from 'worker_threads';
 import { isArray } from 'util';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+import { element } from 'protractor';
 
 interface Urls {
   value: string;
@@ -48,6 +50,8 @@ export class MasterInfoComponent implements OnInit {
   public manage_images = ['modules', 'base-teams-categories','member-carousel'];
   private archivo!: string;
   private readonly DATE_FORM_CONTROL = 'yyyy-MM-dd';
+  statusTechnology: boolean = false;
+  editCoursesAndCertification: boolean = false;
   types: {name:string}[] | Type[] = [];
   platforms: Type[] = [];
   domains: GeneralMaster[] = [];
@@ -75,33 +79,51 @@ export class MasterInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.createForm();
+    this.updateTechnologies()
     this.initForm();
     this.fillTypesList();
     this.fillPlatformList();
     this.fillSkillsList();
     this.fillDomainsList();
-    this.fillTechnologiesList();
     console.log('este es')
-    console.log(this.data)
   }
 
-  filerSelectList(source: string) {
+  updateTechnologies(){
+    if(this.data?.title == "Editar" && this.data?.url =="courses-certifications"){
+      console.log('metodo')
+    this.filterTechnology(this.data?.element?.domain[0]?._id);
+    }
+  }
+
+  async filerSelectList(source: string) {
     switch (source) {
       case 'dominioField':
         if (this.data.url !== 'syllabi') {
-          this.masterInfoService.getSyllabiLists(this.form.value.idDomain).then((res: any) => {
+         await this.masterInfoService.getSyllabiLists(this.form.value.idDomain).then(async (res: any) => {
             const allAreaKnowledgeWithOutDuplicates = res.filter(
               (obj: Syllabi, index: number, arraySource: Syllabi[]) =>
                 arraySource.findIndex(
                   (element: Syllabi) => element.knowledgeArea === obj.knowledgeArea
                 ) === index
             );
-            this.knowledgeAreaList = allAreaKnowledgeWithOutDuplicates;
+            this.knowledgeAreaList = await allAreaKnowledgeWithOutDuplicates;
+            console.log("szs mi fay",this.knowledgeAreaList)
           });
           if (this.data.url !== 'functions' && this.data.url !== 'technology' && this.data.url !== 'methodology' && this.data.url !== 'optional-tools') {
+            if(this.data.url =="courses-certifications"){
+              if(!this.editCoursesAndCertification){
+                this.form.get('idTechnology')?.setValue(null);
+                this.form.get('knowledgeArea')?.setValue(null)
+              }else{
+              this.form.get('idTechnology')?.setValue(this.data?.element?.technology);
+              }
+              this.notNullData('idTechnology');
+            }
             this.notNullData('knowledgeArea');
+            this.editCoursesAndCertification=false;
           }
         } else {
+          console.log(this.form.get('knowledgeArea')?.value);
           this.masterInfoService
             .getTypes(this.data)
             .then((response: Type[]) => {
@@ -118,7 +140,7 @@ export class MasterInfoComponent implements OnInit {
         }
         break;
         case 'tecnologytField':
-          if (this.data.url !== 'syllabi') {
+          if (this.data.url !== 'syllabi' && this.data.url !== 'courses-certifications') {
             this.masterInfoService.getSyllabiLists(this.form.value.idTechnology).then((res: any) => {
               const allAreaKnowledgeWithOutDuplicates = res.filter(
                 (obj: Syllabi, index: number, arraySource: Syllabi[]) =>
@@ -226,10 +248,20 @@ export class MasterInfoComponent implements OnInit {
       this.domains = response;
     });
   }
-  fillTechnologiesList() {
-    this.masterInfoService.getAllTechnologies().then((response: any) => {
-      this.technologies = response;
-    });
+
+
+  async filterTechnology(event: any){
+    this.technologies.length = 0
+      await this.masterInfoService.getAllTechnologies().then((resp: any) => {
+        resp.forEach((element:any) => {
+          console.log(element)
+           if(event === element.domain[0]._id){
+             this.technologies.push(element)
+           }
+          });
+
+      })
+    this.statusTechnology = true;
   }
 
   createForm(): FormGroup {
@@ -334,6 +366,7 @@ export class MasterInfoComponent implements OnInit {
         this.form.controls.knowledgeArea?.clearValidators();
       }
       if (this.data.url === 'courses-certifications') {
+        console.log("entreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
         this.form.controls.idDomain?.setValidators([Validators.required]);
         this.form.controls.idDomain?.updateValueAndValidity();
         this.form.controls.knowledgeArea?.setValidators([Validators.required]);
@@ -343,6 +376,10 @@ export class MasterInfoComponent implements OnInit {
         // this.form.controls.specificKnowledge?.updateValueAndValidity();
         this.form.controls.platform?.setValidators([Validators.required]);
         this.form.controls.platform?.updateValueAndValidity();
+        this.form.controls.idTechnology?.setValidators([Validators.required]);
+        this.form.controls.idTechnology?.updateValueAndValidity();
+        this.form.controls.formation?.setValidators([Validators.required]);
+        this.form.controls.formation?.updateValueAndValidity();
       } else {
         this.form.controls.idDomain?.clearValidators();
         this.form.controls.knowledgeArea?.clearValidators();
@@ -359,9 +396,11 @@ export class MasterInfoComponent implements OnInit {
         this.form.controls.specificKnowledge?.setValidators([Validators.required]);
         this.form.controls.specificKnowledge?.updateValueAndValidity();
       } else {
-        this.form.controls.knowledgeArea?.clearValidators();
-        this.form.controls.specificKnowledge?.clearValidators();
-        this.form.controls.idDomain?.clearValidators();
+        if(this.data.url != 'courses-certifications'){
+          this.form.controls.knowledgeArea?.clearValidators();
+          this.form.controls.specificKnowledge?.clearValidators();
+          this.form.controls.idDomain?.clearValidators();
+        }
       }
     } else {
       console.log(this.data.masters);
@@ -374,11 +413,14 @@ export class MasterInfoComponent implements OnInit {
   }
 
   notNullData(field: any) {
+    console.log('el fieeeeeeeeeeeeeeeeeeeeeeeeeeeld');
+    console.log(field);
     if (
-      this.form.value[`field`] === null ||
-      this.form.value[`field`] === undefined ||
-      this.form.value[`field`] === ''
+      this.form.get(`${field}`)?.value === null ||
+      this.form.get(`${field}`)?.value === undefined ||
+      this.form.get(`${field}`)?.value === ''
     ) {
+      console.log("szssssssssssssssssssssssssssssss",this.form.value.knowledgeArea)
       this.form.get(field)?.setErrors({ error: 'Campo obligatorio' });
     }
   }
@@ -401,7 +443,7 @@ export class MasterInfoComponent implements OnInit {
        * que venga de la fila que se va a editar.
        */
       if (this.data.element.syllabi) {
-
+console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhshshshhshshshshshhshshshshhshshshshshsh")
         this.form.get('idDomain')?.patchValue(this.data.element.syllabi[0].idDomain);
         this.filerSelectList('dominioField');
         this.form.get('knowledgeArea')?.patchValue(this.data.element.syllabi[0].knowledgeArea);
@@ -413,6 +455,7 @@ export class MasterInfoComponent implements OnInit {
       } else if (this.data.element.domain) {
         this.form.get('idDomain')?.patchValue(this.data.element.domain[0]._id);
         this.filerSelectList('dominioField');
+        this.editCoursesAndCertification=true;
         if(this.data.element.technology){
           if(isArray(this.data.element.technology)){
           console.log('entra al condicional technology')
@@ -490,10 +533,12 @@ export class MasterInfoComponent implements OnInit {
   addRegisterToMaster() {
     if (this.data.url === 'courses-certifications') {
       this.form.value.idSyllabi = this.idSyllabi;
+      this.form.get('technology')?.setValue(this.form.get('idTechnology')?.value);
     }
     if(this.data.url !== 'technology'){
       this.form.value.name = this.removeWhiteSpaces(this.form.value.name);
     }
+
     this.masterInfoService
       .addRegisterToMaster(this.data.url, this.form.value)
       .then((response: any) => this.showNotification(response))
@@ -518,6 +563,9 @@ export class MasterInfoComponent implements OnInit {
   }
 
   updateRegister(haveImage: boolean) {
+    console.log('estamos en el updateeeeee');
+    console.log('este es el foooooooooorm')
+    console.log(this.form.get('knowledgeArea')?.value)
     const saveHistorial: SnackOptionsInterface = {
       title: 'Guardar en Historial',
       message: '¿Desea que el registro de los cambios se guarde en el historial?',
@@ -679,12 +727,14 @@ export class MasterInfoComponent implements OnInit {
   }
 
   onSubmit() {
+console.log(this.form.value)
+
     if (this.data.url === 'member-carousel' &&
     this.form.get('imagePath')?.value == ''
     ){
       this.notificationService.openSimpleSnackBar({
         title: 'Campo Obligatorio',
-        message: 'Inserte una imagen para guardad.',
+        message: 'Inserte una imagen para guardar.',
         type: 'error',
       });
       return;
@@ -713,8 +763,6 @@ export class MasterInfoComponent implements OnInit {
     console.log('el error')
   console.log(invalid);
 
-  const data=this.form.controls['knowledgeArea'].validator ;
-  console.log(data)
 
     if (this.form.invalid) {
       this.form.markAllAsTouched()
@@ -844,7 +892,7 @@ export class MasterInfoComponent implements OnInit {
         if (URL === 'courses-certifications') return true;
         break;
       case 'technology':
-        if (URL === 'courses-certifications' || URL === 'technology') return true;
+        if (URL === 'technology') return true;
         break;
         case 'version':
           if (URL === 'technology' || URL === 'methodology' || URL === 'optional-tools')
@@ -862,11 +910,11 @@ export class MasterInfoComponent implements OnInit {
           return true;
         break;
       case 'idDomain':
-        if (URL === 'courses-certifications' || URL === 'functions' || URL === 'syllabi' || URL === 'technology')
+        if (URL === 'courses-certifications' || URL === 'functions' || URL === 'syllabi' || URL === 'technology' || URL === 'optional-tools')
           return true;
         break;
         case 'idTecnology':
-          if (URL === 'optional-tools')
+          if (URL === 'optional-tools' || URL === 'courses-certifications')
             return true;
           break;
       case 'masterReference':
