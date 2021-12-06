@@ -18,7 +18,7 @@
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label class="label">Dominio</mat-label>
                     <mat-select #idDomain formControlName="idDomain" placeholder="Seleccione un dominio"
-                        (selectionChange)="filerSelectList('dominioField')">
+                        (selectionChange)="filerSelectList('dominioField'); filterTechnology($event.value)">
                         <mat-option *ngFor="let domain of domains" [value]="domain._id">
                             {{domain.name}}
                         </mat-option>
@@ -151,6 +151,7 @@
                 </mat-form-field>
             </div>
         </div>
+
         <div fxLayout="row">
             <div *ngIf='this.data?.url !=="member-carousel" && this.data?.url !=="technology"' class="item" fxFlex="25">
                 <mat-form-field floatLabel="always" appearance="none">
@@ -174,11 +175,12 @@
               </mat-form-field>
           </div>
 
-          <div *ngIf="showOrHide('idTecnology')" class="item" fxFlex="25">
+
+
+          <div *ngIf="showOrHide('idTecnology') && this.data?.url !='courses-certifications'" class="item" fxFlex="25">
             <mat-form-field floatLabel="always" appearance="none">
                 <mat-label class="label">Tecnología</mat-label>
-                <mat-select #idTecnology formControlName="idTechnology" placeholder="Seleccione una tecnología"
-                    (selectionChange)="filerSelectList('tecnologytField')">
+                <mat-select  #idTecnology formControlName="idTechnology" placeholder="Seleccione una tecnología">
                     <mat-option *ngFor="let technology of technologies" [value]="technology._id">
                         {{technology.technology}}
                     </mat-option>
@@ -189,6 +191,21 @@
                 <app-validator [form]="form" name="idTechnology" [otherIcon]="true"></app-validator>
             </mat-form-field>
         </div>
+
+        <div *ngIf="showOrHide('idTecnology') && this.data?.url =='courses-certifications'" class="item" fxFlex="25">
+          <mat-form-field floatLabel="always" appearance="none">
+              <mat-label class="label">Tecnología</mat-label>
+              <mat-select *ngIf='this.data?.url =="courses-certifications"' #idTecnology formControlName="idTechnology" placeholder="Seleccione una tecnología">
+                <mat-option *ngFor="let technology of technologies" [value]="technology.technology">
+                    {{technology.technology}}
+                </mat-option>
+                <mat-option *ngIf="technologies?.length === 0" disabled>
+                    <i>No hay technologías disponibles</i>
+                </mat-option>
+            </mat-select>
+              <app-validator [form]="form" name="idTechnology" [otherIcon]="true"></app-validator>
+          </mat-form-field>
+      </div>
 
             <div class="item" fxFlex="20">
                 <mat-form-field floatLabel="always" appearance="none">

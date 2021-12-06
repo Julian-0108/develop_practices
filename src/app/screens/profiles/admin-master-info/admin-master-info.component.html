@@ -156,9 +156,17 @@
                 </mat-form-field>
               </div>
             </th>
-            <td mat-cell *matCellDef="let element">
-              <ng-container *ngFor="let technology of element.technology">{{technology.technology}}</ng-container>
-            </td>
+            <div *ngIf="masterSeleted != 'courses-certifications'">
+              <td  mat-cell *matCellDef="let element" >
+                <ng-container *ngFor="let technology of element.technology">{{technology.technology}}</ng-container>
+              </td>
+            </div>
+            <div *ngIf="masterSeleted === 'courses-certifications'">
+              <td  mat-cell *matCellDef="let element" >
+                <ng-container>{{element.technology}}</ng-container>
+              </td>
+            </div>
+
           </ng-container>
 
           <!-- version Column -->

@@ -67,6 +67,7 @@ export class MasterInfoService {
       .toPromise();
   }
 
+
   async getSyllabi() {
     /** Con la información que trae del servicio de Sylaby, arma las listas de los filtros
      * de knowledgeArea y specificKnowledge.
@@ -100,6 +101,7 @@ export class MasterInfoService {
   }
 
   addRegisterToMaster(url: string, register: any) {
+    console.log("dtaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",url,register)
     return this.http.post(`${environment.API_MASTER_INFO}/${url}`, register).toPromise();
   }
 
