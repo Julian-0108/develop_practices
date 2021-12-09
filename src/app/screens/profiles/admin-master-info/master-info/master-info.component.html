@@ -120,7 +120,7 @@
             </div>
             <div *ngIf="showOrHide('platform')" class="item" fxFlex="30">
                 <mat-form-field floatLabel="always" appearance="none">
-                    <mat-label class="label">Plataforma</mat-label>
+                    <mat-label class="label">Centro de estudio</mat-label>
                     <mat-select formControlName="platform" placeholder="Seleccione una plataforma">
                         <mat-option *ngFor="let platform of platforms" [value]="platform.name">
                             {{platform.name}}
