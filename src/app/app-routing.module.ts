@@ -69,6 +69,14 @@ const routes: Routes = [
       canActivate: [AuthGuard]
   },
   {
+    path: 'selection-profiles',
+    loadChildren: () =>
+    import('./screens/profiles/profile-selection/profile-selection.module').then(
+      (m) => m.ProfileSelectionModule
+    ),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'manage-base-teams/:id',
     loadChildren: () =>
       import('./screens/profiles/manage-base-teams/manage-base-teams.module').then(
