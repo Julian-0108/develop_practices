@@ -1,1 +1,15 @@
-<p>profile-manage-resumes works!</p>
+<body class="background">
+    <button routerLink="/selection-profiles" class="button-back" mat-mini-fab
+        aria-label="back button">
+    </button>
+    <div class="container">
+        <h1 class="title">{{title}}</h1>
+    </div>
+    <div class="card__container carta" fxLayout="row wrap" fxLayoutAlign="center center">
+        <mat-card *ngFor="let card of cards" [routerLink]="card.url" class="card">
+            <img class="card__image" src="{{ API_MASTER_INFO }}{{ card.imagePath }}" [alt]="card.name" appNotImage>
+            <h1 class="card__title">{{ card.name }}</h1>
+            <p class="card__description"> {{ card.description }}</p>
+        </mat-card>
+    </div>
+</body>
