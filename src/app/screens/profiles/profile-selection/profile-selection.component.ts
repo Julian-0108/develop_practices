@@ -14,7 +14,7 @@ export class ProfileSelectionComponent implements OnInit {
     {
       name: 'Gestión HV',
       description: 'Repositorio de hojas de vida',
-      url: '/underConstruction',
+      url: '/manage-resumes',
       imagePath: '',
     },
     {
