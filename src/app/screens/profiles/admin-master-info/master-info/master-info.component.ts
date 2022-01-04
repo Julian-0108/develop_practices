@@ -85,12 +85,10 @@ export class MasterInfoComponent implements OnInit {
     this.fillPlatformList();
     this.fillSkillsList();
     this.fillDomainsList();
-    console.log('este es')
   }
 
   updateTechnologies(){
     if(this.data?.title == "Editar" && this.data?.url =="courses-certifications"){
-      console.log('metodo')
     this.filterTechnology(this.data?.element?.domain[0]?._id);
     }
   }
@@ -107,7 +105,6 @@ export class MasterInfoComponent implements OnInit {
                 ) === index
             );
             this.knowledgeAreaList = await allAreaKnowledgeWithOutDuplicates;
-            console.log("szs mi fay",this.knowledgeAreaList)
           });
           if (this.data.url !== 'functions' && this.data.url !== 'technology' && this.data.url !== 'methodology' && this.data.url !== 'optional-tools') {
             if(this.data.url =="courses-certifications"){
@@ -123,7 +120,6 @@ export class MasterInfoComponent implements OnInit {
             this.editCoursesAndCertification=false;
           }
         } else {
-          console.log(this.form.get('knowledgeArea')?.value);
           this.masterInfoService
             .getTypes(this.data)
             .then((response: Type[]) => {
@@ -254,7 +250,6 @@ export class MasterInfoComponent implements OnInit {
     this.technologies.length = 0
       await this.masterInfoService.getAllTechnologies().then((resp: any) => {
         resp.forEach((element:any) => {
-          console.log(element)
            if(event === element.domain[0]._id){
              this.technologies.push(element)
            }
@@ -318,7 +313,6 @@ export class MasterInfoComponent implements OnInit {
   }
 
   formValidations() {
-    console.log('entra');
     if (
       this.data.element &&
       this.data.element.type !== 'Habilidad' &&
@@ -366,7 +360,6 @@ export class MasterInfoComponent implements OnInit {
         this.form.controls.knowledgeArea?.clearValidators();
       }
       if (this.data.url === 'courses-certifications') {
-        console.log("entreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
         this.form.controls.idDomain?.setValidators([Validators.required]);
         this.form.controls.idDomain?.updateValueAndValidity();
         this.form.controls.knowledgeArea?.setValidators([Validators.required]);
@@ -403,7 +396,6 @@ export class MasterInfoComponent implements OnInit {
         }
       }
     } else {
-      console.log(this.data.masters);
       this.masters = this.data.masters.filter((master) => master.haveTypeField);
       this.form.controls.masterReference?.setValidators([Validators.required]);
       this.form.controls.masterReference?.updateValueAndValidity();
@@ -413,14 +405,11 @@ export class MasterInfoComponent implements OnInit {
   }
 
   notNullData(field: any) {
-    console.log('el fieeeeeeeeeeeeeeeeeeeeeeeeeeeld');
-    console.log(field);
     if (
       this.form.get(`${field}`)?.value === null ||
       this.form.get(`${field}`)?.value === undefined ||
       this.form.get(`${field}`)?.value === ''
     ) {
-      console.log("szssssssssssssssssssssssssssssss",this.form.value.knowledgeArea)
       this.form.get(field)?.setErrors({ error: 'Campo obligatorio' });
     }
   }
@@ -443,7 +432,6 @@ export class MasterInfoComponent implements OnInit {
        * que venga de la fila que se va a editar.
        */
       if (this.data.element.syllabi) {
-console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhshshshhshshshshshhshshshshhshshshshshsh")
         this.form.get('idDomain')?.patchValue(this.data.element.syllabi[0].idDomain);
         this.filerSelectList('dominioField');
         this.form.get('knowledgeArea')?.patchValue(this.data.element.syllabi[0].knowledgeArea);
@@ -458,7 +446,6 @@ console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhshshshhshshshshshhshshshshhs
         this.editCoursesAndCertification=true;
         if(this.data.element.technology){
           if(isArray(this.data.element.technology)){
-          console.log('entra al condicional technology')
           this.form.get('idTechnology')?.patchValue(this.data.element.technology[0]._id);
         this.filerSelectList('tecnologytField');
           }
@@ -563,9 +550,6 @@ console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhshshshhshshshshshhshshshshhs
   }
 
   updateRegister(haveImage: boolean) {
-    console.log('estamos en el updateeeeee');
-    console.log('este es el foooooooooorm')
-    console.log(this.form.get('knowledgeArea')?.value)
     const saveHistorial: SnackOptionsInterface = {
       title: 'Guardar en Historial',
       message: '¿Desea que el registro de los cambios se guarde en el historial?',
@@ -727,7 +711,6 @@ console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhshshshhshshshshshhshshshshhs
   }
 
   onSubmit() {
-console.log(this.form.value)
 
     if (this.data.url === 'member-carousel' &&
     this.form.get('imagePath')?.value == ''
@@ -760,10 +743,6 @@ console.log(this.form.value)
             invalid.push(name);
         }
     }
-    console.log('el error')
-  console.log(invalid);
-
-
     if (this.form.invalid) {
       this.form.markAllAsTouched()
       this.notificationService.openSimpleSnackBar({

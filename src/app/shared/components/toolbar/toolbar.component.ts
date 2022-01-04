@@ -14,8 +14,7 @@ export class ToolbarComponent implements OnInit {
   adminRol: any;
   userName: any;
   ngOnInit() {
-    // this.userName = JSON.parse(String(localStorage.getItem('MSauthData')));
-    // console.log(this.userName)
+
   }
 
   logout() {

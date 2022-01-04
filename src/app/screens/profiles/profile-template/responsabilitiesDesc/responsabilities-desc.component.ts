@@ -14,7 +14,6 @@ export class ResponsabilitiesDescComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.data)
   }
 
 }
