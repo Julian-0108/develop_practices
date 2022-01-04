@@ -10,7 +10,6 @@ export class HistoryBaseTeamsService {
 
   constructor(private httpClient: HttpClient) { }
   async hitoryActionsManageBaseProfiles(action: string, idProfile: string, data?: any) {
-    console.log(data);
     if (action === 'get') {
       return this.httpClient
         .get(`${environment.API_BASE_PROFILES}/historical-profiles?idProfile=${idProfile}`)
