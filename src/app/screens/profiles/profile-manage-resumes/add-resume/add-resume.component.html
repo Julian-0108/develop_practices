@@ -1,0 +1,310 @@
+<body>
+    <button routerLink="/manage-resumes" class="button-back " mat-mini-fab aria-label="back button"></button>
+    <div fxLayout="column">
+        <div class="title__container">
+            <h1 class="main-title">Agregar hoja de vida</h1>
+        </div>
+    </div>
+    <div>
+        <form [formGroup]="addResumeForm" (ngSubmit)="saveForm()">
+            <mat-card>
+                <mat-card-title class="full-width">Datos personales</mat-card-title>
+                <mat-card-content>
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <div fxFlex="30">
+                            <p>Tipo de documento</p>
+                        </div>
+                        <mat-form-field appearance="none" fxFlex="70">
+                            <mat-select placeholder="Seleccione un tipo de documento"
+                                formControlName="typeIdentification">
+                                <mat-option *ngFor="let td of typeIdentificationdata" [value]="td">{{td}}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="!addResumeForm.controls['typeIdentification'].valid && addResumeForm.controls['typeIdentification'].touched">Tipo de documento requerido</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="none">
+                            <input matInput placeholder="Numero de documento" formControlName="numberIdentification" type="number">
+                            <mat-error *ngIf="!addResumeForm.controls['numberIdentification'].valid && addResumeForm.controls['numberIdentification'].touched">Numero de documento requerido</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <div fxFlex="30">
+                            <p>Nombres</p>
+                        </div>
+
+                        <mat-form-field appearance="none" fxFlex="70">
+                            <input matInput placeholder="Nombre" formControlName="name">
+                            <mat-error *ngIf="!addResumeForm.controls['name'].valid && addResumeForm.controls['name'].touched">Nombre requerido</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <div fxFlex="30">
+                            <p>Apellidos</p>
+                        </div>
+
+                        <mat-form-field appearance="none" fxFlex="70">
+                            <input matInput placeholder="Apellidos" formControlName="lastName">
+                            <mat-error *ngIf="!addResumeForm.controls['lastName'].valid && addResumeForm.controls['lastName'].touched">Apellido requerido</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <div fxFlex="30">
+                            <p>Pais</p>
+                        </div>
+
+                        <mat-form-field appearance="none" fxFlex="70">
+                            <mat-select placeholder="Seleccione un pais" formControlName="city">
+                                <mat-option>data1</mat-option>
+                                <mat-option>data2</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="!addResumeForm.controls['city'].valid && addResumeForm.controls['city'].touched">Pais requerido</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <div fxFlex="30">
+                            <p>Ciudad</p>
+                        </div>
+
+                        <mat-form-field appearance="none" fxFlex="70">
+                            <mat-select placeholder="Seleccione una ciudad" formControlName="country">
+                                <mat-option>data1</mat-option>
+                                <mat-option>data2</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="!addResumeForm.controls['country'].valid && addResumeForm.controls['country'].touched">Cuidad requerida</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <div fxFlex="30">
+                            <p>Añadir telefono</p>
+                        </div>
+
+                        <div appearance="none" fxFlex="70">
+                            <button type="button" mat-mini-fab color="warn" aria-label="Example icon button with a filter list icon" (click)="addPhone()">
+                                <mat-icon>phone</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div formArrayName="phone">
+                        <div fxLayout="row" fxLayoutAlign="center center" *ngFor="let phone of phoneArray.controls; let i = index" [formGroupName]="i">
+                            <div fxFlex="30">
+                                Telefono {{i+1}}
+                            </div>
+
+                            <div fxFlex="70">
+                                <mat-form-field appearance="none" fxFlex="25">
+                                    <mat-select placeholder="Seleccione" formControlName="type">
+                                        <mat-option *ngFor="let type of phoneType" [value]="type">{{type}}</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="!this.phoneArray.controls[i].valid && this.phoneArray.controls[i].touched">requerido</mat-error>
+                                    <!-- <mat-error *ngIf="!addResumeForm.controls['typeIdentification'].valid && addResumeForm.controls['typeIdentification'].touched">Tipo de documento requerido</mat-error> -->
+                                </mat-form-field>
+
+                                <mat-form-field appearance="none" fxFlex="25">
+                                    <mat-select matInput placeholder="+" formControlName="prefix">
+                                        <mat-option *ngFor="let prefix of phonePrefix">{{prefix}}</mat-option>
+                                    </mat-select>
+                                    <!-- <mat-error *ngIf="!addResumeForm.controls['numberIdentification'].valid && addResumeForm.controls['numberIdentification'].touched">Numero de documento requerido</mat-error> -->
+                                </mat-form-field>
+
+                                <mat-form-field appearance="none" fxFlex="25">
+                                    <input matInput placeholder="Numero" type="number" formControlName="number">
+                                </mat-form-field>
+
+                                <div appearance="none" fxLayoutAlign="center center" fxFlex="25">
+                                    <button type="button" mat-raised-button color="warn" class="deletePhone" (click)="deletePhone(i)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <div fxFlex="30">
+                            <p>Correo</p>
+                        </div>
+
+                        <mat-form-field appearance="none" fxFlex="70">
+                            <input matInput type="email" placeholder="abc@seti.com.co" formControlName="email">
+                            <mat-error *ngIf="!addResumeForm.controls['email'].valid && addResumeForm.controls['email'].touched">Correo es requerido</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <div fxFlex="30">
+                            <p>Tarjeta profesional</p>
+                        </div>
+
+                        <div fxFlex="70">
+                            <mat-radio-group formControlName="professionalCard">
+                                <mat-radio-button class="radioProfesionalCard" value="Si">Si</mat-radio-button>
+                                <mat-radio-button class="radioProfesionalCard" value="No">No</mat-radio-button>
+                                <mat-radio-button class="radioProfesionalCard" value="En proceso">En proceso</mat-radio-button>
+                            </mat-radio-group>
+                            <mat-error *ngIf="!addResumeForm.controls['professionalCard'].valid && addResumeForm.controls['professionalCard'].touched">Tarjeta profesional requerida</mat-error>
+                        </div>
+
+                    </div>
+
+                    <div fxLayout="row">
+                        <div appearance="none" align="end center" fxFlex="30">
+                            <mat-checkbox color="warn" formControlName="referred" class="referred">¿Esta hoja de vida ha sido referida<br> por un integrante de SETI?</mat-checkbox>
+                        </div>
+                        <mat-form-field appearance="none" fxFlex="70" *ngIf="addResumeForm.value.referred == true">
+                            <mat-select placeholder="Seleccione el referido" formControlName="nameReferred">
+                                <mat-option>data1</mat-option>
+                                <mat-option>data2</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="!addResumeForm.controls['nameReferred'].valid && addResumeForm.controls['nameReferred'].touched">Es requerido el referido</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <div fxFlex="30">
+                            <p>Hoja de vida</p>
+                        </div>
+
+                        <mat-form-field appearance="none" fxFlex="70">
+                            <mat-select placeholder="Fuente" formControlName="source">
+                                <mat-option>data1</mat-option>
+                                <mat-option>data2</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="!addResumeForm.controls['source'].valid && addResumeForm.controls['source'].touched">Es requerida la fuente de la Hoja de Vida</mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-card-content>
+
+
+                <mat-card-title class="full-width">Aspiracion Salarial</mat-card-title>
+                <mat-card-content>
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-form-field appearance="none" fxFlex="50">
+                            <input matInput type="number" placeholder="Minima" formControlName="minAspiration">
+                            <mat-error *ngIf="!addResumeForm.controls['minAspiration'].valid && addResumeForm.controls['minAspiration'].touched">La aspiracion es requerida</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="none" fxFlex="50">
+                            <input matInput type="number" placeholder="Maxima" formControlName="maxAspiration">
+                            <mat-error *ngIf="!addResumeForm.controls['maxAspiration'].valid && addResumeForm.controls['maxAspiration'].touched">La aspiracion es requerida</mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-card-content>
+
+                <mat-card-title class="full-width">Idiomas</mat-card-title>
+                <mat-card-content>
+                    <mat-selection-list>
+                        <mat-list-option checkboxPosition="before" *ngFor="let idioma of Languagesdata">
+                            {{idioma}}
+                        </mat-list-option>
+                    </mat-selection-list>
+                    <!-- <mat-error>Es requerido un idioma</mat-error> -->
+                </mat-card-content>
+
+                <mat-card-title class="full-width">Nivel de Estudio</mat-card-title>
+                <mat-card-content>
+                    <div fxLayout="row" fxLayoutAlign="center center">
+
+                        <div appearance="none" fxFlex="10">
+                            <button mat-mini-fab color="warn">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+
+                        <mat-form-field appearance="none" fxFlex="90">
+                            <mat-select placeholder="Seleccione un estudio">
+                                <option>Volvo</option>
+                                <option>Saab</option>
+                                <option>Mercedes</option>
+                                <option>Audi</option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="none">
+                            <input matInput placeholder="Descripción del estudio">
+                        </mat-form-field>
+                    </div>
+                </mat-card-content>
+
+                <mat-card-title class="full-width">Referencias Laborales</mat-card-title>
+                <mat-card-content>
+                    <div fxLayout="row" fxLayoutAlign="center center">
+
+                        <mat-form-field appearance="none" fxFlex="25">
+                            <input matInput placeholder="Nombre Empresa">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="none" fxFlex="25">
+                            <input matInput placeholder="Cargo ejercido">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="none" fxFlex="25">
+                            <input matInput type="number" placeholder="$">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="none" fxFlex="25">
+                            <input matInput type="number" placeholder="Tiempo laborado">
+                        </mat-form-field>
+
+                    </div>
+
+                    <div fxLayout="row">
+                        <button mat-raised-button color="warn">Añadir referia
+                            <mat-icon>work</mat-icon>
+                        </button>
+                    </div>
+
+                </mat-card-content>
+
+                <mat-card-title class="full-width">Conocimientos</mat-card-title>
+                <mat-card-content>
+                    <mat-selection-list>
+                        <mat-list-option checkboxPosition="before" *ngFor="let conocimiento of knowledge">
+                            {{conocimiento}}
+                        </mat-list-option>
+                    </mat-selection-list>
+                    <!-- <mat-error>Es requerido un conocimiento</mat-error> -->
+                </mat-card-content>
+
+                <mat-card-title class="full-width">Equipo Base</mat-card-title>
+                <mat-card-content>
+                    <mat-selection-list>
+                        <mat-list-option checkboxPosition="before" *ngFor="let perfilamiento of profiling">
+                            {{perfilamiento}}
+                        </mat-list-option>
+                    </mat-selection-list>
+                    <!-- <mat-error>Es requerido un perfilamiento</mat-error> -->
+                </mat-card-content>
+
+                <mat-card-title class="full-width">Observaciones generales</mat-card-title>
+                <mat-card-content>
+                    <div fxLayoutAlign="center center">
+                        <p>Puede escribir aquí datos importantes sobre el perfil o aspectos más relevantes del candidato</p>
+                    </div>
+
+                    <mat-form-field class="example-full-width" appearance="none">
+                        <textarea matInput placeholder="Observaciones candidato" class="textareaObservations"></textarea>
+                      </mat-form-field>
+                </mat-card-content>
+
+                <mat-card-content>
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <button mat-raised-button color="warn" class="newRegister">
+                            Nuevo Registro
+                        </button>
+                        <button type="submit" mat-raised-button color="warn">
+                            Guardar
+                        </button>
+                    </div>
+                </mat-card-content>
+
+            </mat-card>
+        </form>
+    </div>
+</body>

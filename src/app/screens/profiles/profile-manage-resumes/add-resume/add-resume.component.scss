@@ -1,0 +1,56 @@
+.full-width {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+mat-card-title {
+  font-size: large;
+  border: 1px solid #ddd;
+  padding: 10px 20px;
+  background: #F7F7F7;
+  display: flex !important;
+}
+
+mat-form-field {
+  margin: 10px;
+}
+
+mat-list-option {
+  width: 33.33333333% !important;
+  float: left;
+  text-transform: capitalize !important;
+}
+
+mat-card {
+  box-shadow: none !important;
+}
+
+p{
+  margin: 0% !important;
+}
+
+.radioProfesionalCard {
+  width: 33.33% !important;
+}
+
+.referred {
+  font-size: 11px;
+}
+
+.textareaObservations{
+  height: 68px;
+}
+
+.newRegister{
+  margin-right: 3%;
+}
+
+::ng-deep .mat-form-field-subscript-wrapper{
+  top: 100% !important;
+}
+
+.deletePhone{
+  height: 31px;
+  align-items: center;
+  margin: 10px 10px 0 0;
+}
