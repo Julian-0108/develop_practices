@@ -2,14 +2,96 @@
     <button routerLink="/selection-profiles" class="button-back" mat-mini-fab
         aria-label="back button">
     </button>
-    <div class="container">
-        <h1 class="title">{{title}}</h1>
-    </div>
-    <div class="card__container carta" fxLayout="row wrap" fxLayoutAlign="center center">
-        <mat-card *ngFor="let card of cards" [routerLink]="card.url" class="card">
-            <img class="card__image" src="{{ API_MASTER_INFO }}{{ card.imagePath }}" [alt]="card.name" appNotImage>
-            <h1 class="card__title">{{ card.name }}</h1>
-            <p class="card__description"> {{ card.description }}</p>
-        </mat-card>
+    <div fxLayout="column">
+        <div class="title__container">
+            <h1 class="title">{{title}}</h1>
+        </div>
+
+        <div fxLayoutAlign="end end">
+            <div class="layer2" (click)="openDialogAdd()">
+              <div mat-button class="layer">
+                <mat-icon>add</mat-icon>
+              </div>
+              Añadir
+            </div>
+          </div>
+
+          <div class="table__container">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Nombre
+                  <div class="filter-inputs">
+                    <mat-form-field floatLabel="always" appearance="none">
+                      <mat-select class="filter filter__courses-certifications">
+                        <mat-option>
+                          ver Todos
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </th>
+              </ng-container>
+
+              <ng-container matColumnDef="documentNumber">
+                <th mat-header-cell *matHeaderCellDef> Numero de documento
+                  <div class="filter-inputs">
+                    <mat-form-field floatLabel="always" appearance="none">
+                      <mat-select class="filter filter__courses-certifications">
+                        <mat-option>
+                          ver Todos
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </th>
+              </ng-container>
+
+              <ng-container matColumnDef="tool">
+                <th mat-header-cell *matHeaderCellDef> Herramienta
+                  <div class="filter-inputs">
+                    <mat-form-field floatLabel="always" appearance="none">
+                      <mat-select class="filter filter__courses-certifications">
+                        <mat-option>
+                          ver Todos
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </th>
+              </ng-container>
+
+              <ng-container matColumnDef="processStatus">
+                <th mat-header-cell *matHeaderCellDef> Estado del proceso
+                  <div class="filter-inputs">
+                    <mat-form-field floatLabel="always" appearance="none">
+                      <mat-select class="filter filter__courses-certifications">
+                        <mat-option>
+                          ver Todos
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </th>
+              </ng-container>
+
+              <ng-container matColumnDef="wageAspiration">
+                <th mat-header-cell *matHeaderCellDef> Aspiracion Salarial
+                  <div class="filter-inputs">
+                    <mat-form-field floatLabel="always" appearance="none">
+                      <mat-select class="filter filter__courses-certifications">
+                        <mat-option>
+                          ver Todos
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </th>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
     </div>
 </body>
