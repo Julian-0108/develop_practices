@@ -1,36 +1,62 @@
 .container {
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 3em 0 0;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3em 0 0;
 }
 
 .title {
-    color: #DE1920;
-    font-weight: bold;
-    font-size: 2em;
+  color: #de1920;
+  font-weight: bold;
+  font-size: 2em;
 }
 
 .background {
-    background-color: #fff !important;
-    background: url(../../../../assets/images/baseTeams_backgorund.svg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    min-height: calc(100vh - (45px + 30px));
-    background-attachment: fixed;
+  background-color: #fff !important;
+  background: url(../../../../assets/images/baseTeams_backgorund.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: calc(100vh - (45px + 30px));
+  background-attachment: fixed;
 }
 
-.carta{
-    margin-top: 7% !important;
+.carta {
+  margin-top: 7% !important;
 }
 
-.card:hover {
-    background-color: #f9eeee;
-    transition: all 0.5s;
+.layer2 {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  border: solid 1px #de1920;
+  font-size: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin: 10px 10px 0 0;
 }
 
-mat-card:hover {
-    cursor: pointer;
+.layer {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  background: #de1920;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.table__container {
+  margin-top: 10px;
+  height: 25em;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
 }
