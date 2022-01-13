@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { environment } from '@environments/environment';
 import { ProfileSelectionService } from './services/profile-selection.service';
 import { NotificationService } from '../../../shared/components/notification/services/notification.service';
@@ -15,33 +14,24 @@ export class ProfileSelectionComponent implements OnInit {
       name: 'Gestión HV',
       description: 'Repositorio de hojas de vida',
       url: '/manage-resumes',
-      imagePath: '',
+      imagePath: 'assets/images/Gestion_HV.svg'
     },
     {
       name: 'Estado procesos',
       description: 'Estado de requisiciones',
       url: '/underConstruction',
-      imagePath: '',
+      imagePath: 'assets/images/Estado_procesos.svg'
     }
   ];
   public API_MASTER_INFO: string = environment.API_MASTER_INFO;
 
   constructor(
-    private router: Router,
     private profileSelectionService: ProfileSelectionService,
     private notificationService: NotificationService
     ) {}
 
   ngOnInit(): void {
     // this.getItemSelection();
-  }
-
-  redirect() {
-    this.router.navigate(['/home']).then((res) => {
-      window.scrollTo({
-        top: 10000,
-      });
-    });
   }
 
 
