@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormArray,Validators } from '@angular/forms';
-import { Type } from '../../admin-master-info/master-info/interfaces.interface';
+import { AddResumeService } from './service/add-resume.service';
+import { url } from 'inspector';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-resume',
@@ -15,9 +17,73 @@ export class AddResumeComponent implements OnInit {
   profiling:string[] = ['Control interno','Recursos físicos y tecnológicos','Desarrollo','Administración de datos'];
   phoneType:string[] = ['Movil','Casa','Oficina'];
   phonePrefix:string[] = ['+57','+51','+56'];
+  dataCloud: any[]= []
 
 
-  constructor(private fb: FormBuilder) {}
+
+
+  addProfile:any = {
+    "maxAspiration": 10000000,
+    "minAspiration": 10000000,
+    "companyFrom": [
+        {
+            "name": "Cualquiera",
+            "charge": "Aprendiz",
+            "salary": 0,
+            "timeWorked": 2
+        },
+        {
+            "name": "Cualquiera",
+            "charge": "Aprendiz",
+            "salary": 0,
+            "timeWorked": 2
+        }
+    ],
+    "observations": "ninguna",
+    "processStatus": "seleccionado",
+    "source": "Lasalle",
+    "referred": true,
+    "nameReferred": "cualquier persona",
+    "professionalCard": "No",
+    "currentJob": "Seti",
+    "email": "shirleybenavides@gmail.com.co",
+   "phone": [
+        {
+            "type": "Móvil",
+            "prefix": "+57",
+            "number": "3008255241"
+        },
+        {
+            "type": "Fijo",
+            "prefix": "+57",
+            "number": "1234567890"
+        }
+    ],
+    "city": "Zipaquira",
+    "country": "Colombia",
+    "numberIdentification": "12345678",
+    "typeIdentification": "Cedula de Ciudadania", 
+    "name": "Ricardo",
+    "lastName": "Fraile",
+    "skills": [
+        {
+            "domain": "base de datos",
+            "knowledgeArea": "MSQL"
+        }
+    ],
+    "levelStudy": [],
+    "languages": [
+        {
+            "name": "Frances",
+            "writing": "Alto",
+            "reading": "Alto",
+            "speaking": "Medio"
+        }
+    ]
+};
+
+
+  constructor(private fb: FormBuilder, private addResumeService:AddResumeService) {}
 
   addResumeForm = this.fb.group({
     maxAspiration:['',Validators.required],
@@ -85,9 +151,44 @@ export class AddResumeComponent implements OnInit {
     return this.addResumeForm.get('phone') as FormArray;
   }
 
+  /*
   saveForm(){
-    console.log('data de addResumeForm', this.addResumeForm.value);
-    // console.log('phone valid', this.phoneArray.controls[0].Type.);
+    this.addResumeService.addResume("http://localhost/life-story",this.addProfile)
+    .then(value => console.log(value))
+    .catch(value => console.log(value));
+  }
+  */
+
+  saveForm(){
+    this.getDataStudies()
+  }
+
+
+
+  getDataStudies(): void {
+    this.addResumeService.getDataStudies()
+    .then(dataValue =>{
+      if (dataValue.length > 0) {
+        this.dataCloud =  dataValue
+        console.log("Response del metodo getDataStudies" ,this.dataCloud)
+      }
+    }).catch(error =>{
+      console.log("error",error)
+    })
+  }
+
+  getDataDomain():void {
+    this.addResumeService.getDataDomain()
+    .then(dataValue => {
+      if(dataValue.length > 0){
+        this.dataCloud = dataValue
+        console.log("Response del metodo getDataDomain" ,this.dataCloud)
+      }
+    }).catch(error =>{
+      console.log("error", error)
+    })
   }
 
 }
+
+
