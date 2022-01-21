@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder,FormArray,Validators } from '@angular/forms';
-import { type } from 'os';
-import { Type } from '../../admin-master-info/master-info/interfaces.interface';
+import { FormBuilder, FormArray, Validators } from '@angular/forms';
+import { AddResumeService } from './service/add-resume.service';
+import { url } from 'inspector';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-resume',
@@ -10,40 +11,79 @@ import { Type } from '../../admin-master-info/master-info/interfaces.interface';
 })
 export class AddResumeComponent implements OnInit {
 
-  Languagesdata:string[] = ['Ingles', 'Español', 'Frances', 'Chino', 'Mandarin', 'Portugues'];
-  typeIdentificationdata:string[] = ['Cedula de Cuidania', 'Cedula de extranjeria', 'tarjeta de identidad'];
+  Languagesdata: string[] = ['Ingles', 'Español', 'Frances', 'Chino', 'Mandarin', 'Portugues'];
+  typeIdentificationdata: string[] = ['Cedula de Cuidania', 'Cedula de extranjeria', 'tarjeta de identidad'];
   // knowledge:string[] = ['Datastage','Power BI','Java','Python','Angular','PLSQL'];
-  knowledge:string[] = ['Base de datos','Integracion','Desarrollo'];
-  profiling:string[] = ['Control interno','Recursos físicos y tecnológicos','Desarrollo','Administración de datos'];
-  phoneType:string[] = ['Movil','Casa','Oficina'];
-  phonePrefix:string[] = ['+57','+51','+56'];
+  // profiling: string[] = ['Control interno', 'Recursos físicos y tecnológicos', 'Desarrollo', 'Administración de datos'];
+  phoneType: string[] = ['Movil', 'Casa', 'Oficina'];
+  phonePrefix: string[] = ['+57', '+51', '+56'];
+  // Propiedades listadas desde servicio
+  knowledge: any = {};
+  Study: any = {};
 
-  displayedColumns: string[] = ['type', 'name','actions'];
 
-  constructor(private fb: FormBuilder) {}
+  displayedColumns: string[] = ['type', 'name', 'actions'];
+  displayedColumnsJob: string[] = ['company','charge','wage','time','actions'];
+
+
+  addProfile: any = {
+    maxAspiration: 100000,
+    minAspiration: 10000000,
+    companyFrom: [
+      { name: 'Cualquiera', charge: 'Aprendiz', salary: 0, timeWorked: 2 },
+      { name: 'Cualquiera', charge: 'Aprendiz', salary: 0, timeWorked: 2 }
+    ], observations: 'ninguna',
+    processStatus: 'seleccionado',
+    source: 'Lasalle',
+    jobReferences: [
+      { company: 'Seti', charge: 'Aprendiz', wage: 1200000, time: 2 }
+    ],
+    referred: true,
+    nameReferred: 'cualquier persona',
+    professionalCard: 'No',
+    currentJob: 'Seti',
+    email: 'andres@gmail.com.co',
+    phone: [
+      { type: 'Móvil', prefix: '+57', number: '3008255241' },
+      { type: 'Fijo', prefix: '+57', number: '1234567890' }
+    ], city: 'Cali',
+    country: 'Colombia',
+    numberIdentification: '12345678',
+    typeIdentification: 'Cedula de Ciudadania',
+    name: 'Andres',
+    lastName: 'Duque Palacio',
+    skills: [
+      { domain: 'base de datos', knowledgeArea: 'MSQL' }
+    ], levelStudy: [],
+    languages: [{ name: 'Frances', writing: 'Alto', reading: 'Alto', speaking: 'Medio' }]
+  };
+
+
+  constructor(private fb: FormBuilder, private addResumeService: AddResumeService) { }
 
   addResumeForm = this.fb.group({
-    maxAspiration:['',Validators.required],
-    minAspiration:['',Validators.required],
+    maxAspiration: ['', Validators.required],
+    minAspiration: ['', Validators.required],
     observations: [''],
-    processStatus:['',Validators.required],
-    source:['',Validators.required],
-    referred:[false],
-    nameReferred:[''],
-    professionalCard:['',Validators.required],
-    currentJob:['',Validators.required],
-    email:['',Validators.email],
-    city:['',Validators.required],
-    country:['',Validators.required],
-    numberIdentification:['',Validators.required],
-    typeIdentification:['',Validators.required],
-    name:['',Validators.required],
-    lastName:['',Validators.required],
+    processStatus: ['', Validators.required],
+    source: ['', Validators.required],
+    referred: [false],
+    nameReferred: [''],
+    professionalCard: ['', Validators.required],
+    currentJob: ['', Validators.required],
+    email: ['', Validators.email],
+    city: ['', Validators.required],
+    country: ['', Validators.required],
+    numberIdentification: ['', Validators.required],
+    typeIdentification: ['', Validators.required],
+    name: ['', Validators.required],
+    lastName: ['', Validators.required],
     phone: new FormArray([]),
     companyFrom: new FormArray([]),
     skills: new FormArray([]),
     levelStudy: new FormArray([]),
-    languages: new FormArray([])
+    languages: new FormArray([]),
+    jobReferences: new FormArray([])
     // profiling:
   });
 
@@ -52,106 +92,147 @@ export class AddResumeComponent implements OnInit {
     name: ''
   }
 
+  references = {
+    company:'',
+    charge: '',
+    wage:'',
+    time:''
+  }
+
   ngOnInit(): void {
+    this.getDataStudies();
+    this.getDataDomain();
   }
 
   // Creacion item
-  createItemCompanyFrom(){
+
+  createJobRefence(dataJob: {company:string,charge:string,wage:any,time:any}) {
     return this.fb.group({
-      name: ['',Validators.required],
-      charge: ['',Validators.required],
-      salary: ['',Validators.required],
-      timeWorked: ['',Validators.required]
+      company: [dataJob.company],
+      charge: [dataJob.charge],
+      wage: [dataJob.wage],
+      time: [dataJob.time]
     })
   }
 
-  createItemSkills(value:string){
+
+
+  createItemCompanyFrom() {
+    return this.fb.group({
+      name: ['', Validators.required],
+      charge: ['', Validators.required],
+      salary: ['', Validators.required],
+      timeWorked: ['', Validators.required]
+    })
+  }
+
+  createItemSkills(value: string) {
     return this.fb.group({
       domain: [value],
-      knowledgeArea: ['',Validators.required]
+      knowledgeArea: ['', Validators.required]
     })
   }
 
-  createItemLanguages(value:string){
+  createItemLanguages(value: string) {
     return this.fb.group({
       name: [value],
-      writing: ['',Validators.required],
-      reading: ['',Validators.required],
-      speaking: ['',Validators.required]
+      writing: ['', Validators.required],
+      reading: ['', Validators.required],
+      speaking: ['', Validators.required]
     });
   }
 
-  createItemStudy(dataStudy:{type:string,name:string}){
+  createItemStudy(dataStudy: { type: string, name: string }) {
     return this.fb.group({
       type: [dataStudy.type],
       name: [dataStudy.name]
     });
   }
 
-  createItemPhone(){
+  createItemPhone() {
     return this.fb.group({
-      type: ['',Validators.required],
-      prefix: ['',Validators.required],
-      number: ['',Validators.required]
+      type: ['', Validators.required],
+      prefix: ['', Validators.required],
+      number: ['', Validators.required]
     });
   }
 
   // Añadir items a FormArray
-  addPhone(){
+  addJobReference(){
+    if(this.references.company !== '' && this.references.charge !== '' && this.references.wage !== '' && this.references.time !== ''){
+      this.jobReferencesArray.push(this.createJobRefence(this.references));
+      this.references.company = '';
+      this.references.charge = '';
+      this.references.wage = '';
+      this.references.time = '';
+    }
+  }
+
+
+  addPhone() {
     this.phoneArray.push(this.createItemPhone());
   }
 
-  addStudy(){
-    if(this.nevelStudy.type !== '' &&  this.nevelStudy.name !== ''){
+  addStudy() {
+    if (this.nevelStudy.type !== '' && this.nevelStudy.name !== '') {
       this.studyArray.push(this.createItemStudy(this.nevelStudy));
       this.nevelStudy.type = '';
       this.nevelStudy.name = '';
     }
   }
 
-  addLanguages(value:string){
+  addLanguages(value: string) {
     this.languagesArray.push(this.createItemLanguages(value));
   }
 
-  addSkills(value:string){
+  addSkills(value: string) {
     this.skillsArray.push(this.createItemSkills(value));
   }
 
-  addCompanyFrom(){
+  addCompanyFrom() {
     this.companyFromArray.push(this.createItemCompanyFrom());
   }
 
 
   // Eliminar item de FormArray
-  deletePhone(index:number){
+  deleteJobReference(index:number){
+    this.jobReferencesArray.removeAt(index);
+  }
+
+
+  deletePhone(index: number) {
     this.phoneArray.removeAt(index);
   }
 
-  deleteStudy(index:number){
+  deleteStudy(index: number) {
     this.studyArray.removeAt(index);
   }
 
-  deleteLanguages(value:string){
-    const index =  this.languagesArray.value.findIndex((languague: { name: string; }) => languague.name === value);
+  deleteLanguages(value: string) {
+    const index = this.languagesArray.value.findIndex((languague: { name: string; }) => languague.name === value);
     this.languagesArray.removeAt(index);
   }
 
-  deleteSkills(value:string){
-    const index = this.skillsArray.value.findIndex((skill: {domain: string;}) => skill.domain === value);
+  deleteSkills(value: string) {
+    const index = this.skillsArray.value.findIndex((skill: { domain: string; }) => skill.domain === value);
     this.skillsArray.removeAt(index);
   }
 
-  deleteCompanyFrom(index:number){
+  deleteCompanyFrom(index: number) {
     this.companyFromArray.removeAt(index);
   }
 
 
   // obtener items de formArray
+  get jobReferencesArray(): FormArray {
+    return this.addResumeForm.get('jobReferences') as FormArray;
+  }
+
   get phoneArray(): FormArray {
     return this.addResumeForm.get('phone') as FormArray;
   }
 
-  get studyArray():FormArray {
+  get studyArray(): FormArray {
     return this.addResumeForm.get('levelStudy') as FormArray;
   }
 
@@ -168,39 +249,80 @@ export class AddResumeComponent implements OnInit {
   }
 
   // Validacion formArray
-  getValidatorPhone(index:number, position: string) {
+  getValidatorPhone(index: number, position: string) {
     return this.phoneArray?.controls[index].get(position)?.invalid && this.phoneArray?.controls[index].get(position)?.touched;
   }
 
-  getValidationLanguage(index:number, position: string){
+  getValidationLanguage(index: number, position: string) {
     return this.languagesArray?.controls[index].get(position)?.invalid && this.languagesArray?.controls[index].get(position)?.touched;
   }
 
-  getValidationDomain(index:number){
+  getValidationDomain(index: number) {
     return this.skillsArray?.controls[index].get('knowledgeArea')?.invalid &&
-    this.skillsArray?.controls[index].get('knowledgeArea')?.touched;
+      this.skillsArray?.controls[index].get('knowledgeArea')?.touched;
   }
 
-  addOrRemoveLanguage(status:boolean,value:string){
-    if(status === true){
+  addOrRemoveLanguage(status: boolean, value: string) {
+    if (status === true) {
       this.addLanguages(value);
-    }else{
+    } else {
       this.deleteLanguages(value);
     }
   }
 
-  addOrRemoveSkill(status:boolean,value:string){
-    if(status === true){
+  addOrRemoveSkill(status: boolean, value: string) {
+    if (status === true) {
       this.addSkills(value);
-    }else{
+    } else {
       this.deleteSkills(value);
     }
   }
 
-  // Insertar hoja de vida
+  // saveForm() {
+    //   console.log('data de addResumeForm', this.addResumeForm.value);
+    //   console.log('form is valid', this.addResumeForm.valid);
+    // }
+
+
+    // Post (añadir Hojja de vida)
   saveForm(){
-    console.log('data de addResumeForm', this.addResumeForm.value);
-    console.log('form is valid', this.addResumeForm.valid);
+    this.addResumeService.addResume('http://localhost/life-story',this.addProfile)
+    .then(value => console.log(value))
+    .catch(value => console.log(value));
   }
 
+
+
+  // Metodos Get
+
+  getDataStudies() {
+    this.addResumeService.getDataStudies()
+      .then((dataValue: string | any[]) => {
+        if (dataValue.length > 0) {
+          this.Study = dataValue;
+          console.log('Respuesta estudios', this.Study);
+        }
+      }).catch(error => {
+        console.log('error', error)
+      })
+  }
+
+  getDataDomain() {
+    this.addResumeService.getDataDomain()
+      .then((dataValue: string | any[]) => {
+        if (dataValue.length > 0) {
+          this.knowledge = dataValue;
+          console.log('Respuesta dominios:', this.knowledge);
+        }
+      }).catch(error => {
+        console.log('error', error)
+      })
+  }
+
+
+
+
+
 }
+
+
