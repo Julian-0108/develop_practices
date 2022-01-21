@@ -160,7 +160,7 @@ export class AddResumeComponent implements OnInit {
   */
 
   saveForm(){
-    this.getDataStudies()
+    this.getDataSyllabi()
   }
 
 
@@ -186,6 +186,18 @@ export class AddResumeComponent implements OnInit {
       }
     }).catch(error =>{
       console.log("error", error)
+    })
+  }
+
+  getDataSyllabi():void{
+    this.addResumeService.getDataSyllabi()
+    .then(dataValue =>{
+      if(dataValue.length > 0){
+        this.dataCloud = dataValue
+        console.log("Response del metodo getDataSyllabi" ,this.dataCloud)
+      }
+    }).catch(error =>{
+      console.log("error",error)
     })
   }
 

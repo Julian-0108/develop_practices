@@ -29,4 +29,11 @@ getDataDomain():Promise<any>{
   .pipe(pluck('payload'))
   .toPromise();
 }
+
+getDataSyllabi():Promise<any>{
+  return this.http
+  .get(`${environment.API_MASTER_INFO}/syllabi?status=true`)
+  .pipe(pluck('payload'))
+  .toPromise();
+}
 }
