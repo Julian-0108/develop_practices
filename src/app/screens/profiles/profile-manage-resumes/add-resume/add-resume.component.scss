@@ -7,7 +7,8 @@ mat-card-title {
   font-size: large;
   border: 1px solid #ddd;
   padding: 10px 20px;
-  background: #F7F7F7;
+  background: #cfcece;
+  border-radius: 5px;
   display: flex !important;
 }
 
@@ -15,10 +16,11 @@ mat-form-field {
   margin: 10px;
 }
 
-mat-list-option {
+mat-checkbox {
   width: 33.33333333% !important;
   float: left;
   text-transform: capitalize !important;
+  margin: 10px 0px 10px 0px;
 }
 
 mat-card {
@@ -53,4 +55,25 @@ p{
   height: 31px;
   align-items: center;
   margin: 10px 10px 0 0;
+}
+
+.block{
+  display: block !important;
+}
+
+.center{
+  text-align: center;
+}
+
+.inline-flex{
+  width: 100%;
+  display: inline-flex !important;
+}
+
+.flow-root{
+  display: flow-root;
+}
+
+input.mat-input-element {
+  margin-top: -1px;
 }

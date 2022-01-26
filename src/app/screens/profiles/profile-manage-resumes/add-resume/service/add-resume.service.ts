@@ -11,9 +11,8 @@ export class AddResumeService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  addResume(url: string, register: any) {
-    console.log('Metodo post de addResume',url,register)
-    return this.http.post(`${url}`, register).toPromise();
+addResume(url: string, register: any) {
+  return this.http.post(url, register).toPromise();
 }
 
 getDataStudies(): Promise<any>{
@@ -29,4 +28,26 @@ getDataDomain():Promise<any>{
   .pipe(pluck('payload'))
   .toPromise();
 }
+
+getDataSyllabi():Promise<any>{
+  return this.http
+  .get(`${environment.API_MASTER_INFO}/syllabi?status=true`)
+  .pipe(pluck('payload'))
+  .toPromise();
+}
+
+getDataUsers():Promise<any>{
+  return this.http
+  .get('http://localhost:80/users')
+  .pipe(pluck('payload'))
+  .toPromise();
+}
+
+getDataExist(id:number):Promise<any>{
+  return this.http
+  .get(`http://localhost:80/life-story?numberIdentification=${id}`)
+  .pipe(pluck('payload'))
+  .toPromise();
+}
+
 }

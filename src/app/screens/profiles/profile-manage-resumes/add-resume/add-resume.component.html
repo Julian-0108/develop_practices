@@ -8,7 +8,7 @@
     <div>
         <form [formGroup]="addResumeForm" (ngSubmit)="saveForm()">
             <mat-card>
-                <mat-card-title class="full-width">Datos personales</mat-card-title>
+                <mat-card-title>Datos personales</mat-card-title>
                 <mat-card-content>
                     <div fxLayout="row" fxLayoutAlign="center center">
                         <div fxFlex="30">
@@ -23,7 +23,7 @@
                         </mat-form-field>
 
                         <mat-form-field appearance="none">
-                            <input matInput placeholder="Numero de documento" formControlName="numberIdentification" type="number">
+                            <input matInput placeholder="Numero de documento" formControlName="numberIdentification" (blur)="validateHvExist()">
                             <mat-error *ngIf="!addResumeForm.controls['numberIdentification'].valid && addResumeForm.controls['numberIdentification'].touched">Numero de documento requerido</mat-error>
                         </mat-form-field>
                     </div>
@@ -55,9 +55,8 @@
                         </div>
 
                         <mat-form-field appearance="none" fxFlex="70">
-                            <mat-select placeholder="Seleccione un pais" formControlName="city">
-                                <mat-option>data1</mat-option>
-                                <mat-option>data2</mat-option>
+                            <mat-select placeholder="Seleccione un pais" formControlName="country">
+                                <mat-option value="Colombia">Colombia</mat-option>
                             </mat-select>
                             <mat-error *ngIf="!addResumeForm.controls['city'].valid && addResumeForm.controls['city'].touched">Pais requerido</mat-error>
                         </mat-form-field>
@@ -69,9 +68,8 @@
                         </div>
 
                         <mat-form-field appearance="none" fxFlex="70">
-                            <mat-select placeholder="Seleccione una ciudad" formControlName="country">
-                                <mat-option>data1</mat-option>
-                                <mat-option>data2</mat-option>
+                            <mat-select placeholder="Seleccione una ciudad" formControlName="city">
+                                <mat-option *ngFor="let city of cities" value="city">{{city}}</mat-option>
                             </mat-select>
                             <mat-error *ngIf="!addResumeForm.controls['country'].valid && addResumeForm.controls['country'].touched">Cuidad requerida</mat-error>
                         </mat-form-field>
@@ -100,19 +98,19 @@
                                     <mat-select placeholder="Seleccione" formControlName="type">
                                         <mat-option *ngFor="let type of phoneType" [value]="type">{{type}}</mat-option>
                                     </mat-select>
-                                    <mat-error *ngIf="!this.phoneArray.controls[i].valid && this.phoneArray.controls[i].touched">requerido</mat-error>
-                                    <!-- <mat-error *ngIf="!addResumeForm.controls['typeIdentification'].valid && addResumeForm.controls['typeIdentification'].touched">Tipo de documento requerido</mat-error> -->
+                                    <mat-error *ngIf="getValidatorPhone(i,'type')">Campo requerido</mat-error>
                                 </mat-form-field>
 
                                 <mat-form-field appearance="none" fxFlex="25">
                                     <mat-select matInput placeholder="+" formControlName="prefix">
-                                        <mat-option *ngFor="let prefix of phonePrefix">{{prefix}}</mat-option>
+                                        <mat-option *ngFor="let prefix of phonePrefix" [value]="prefix">{{prefix}}</mat-option>
                                     </mat-select>
-                                    <!-- <mat-error *ngIf="!addResumeForm.controls['numberIdentification'].valid && addResumeForm.controls['numberIdentification'].touched">Numero de documento requerido</mat-error> -->
+                                    <mat-error *ngIf="getValidatorPhone(i,'prefix')">Campo requerido</mat-error>
                                 </mat-form-field>
 
                                 <mat-form-field appearance="none" fxFlex="25">
                                     <input matInput placeholder="Numero" type="number" formControlName="number">
+                                    <mat-error *ngIf="getValidatorPhone(i,'number')">Campo requerido</mat-error>
                                 </mat-form-field>
 
                                 <div appearance="none" fxLayoutAlign="center center" fxFlex="25">
@@ -124,8 +122,6 @@
                         </div>
                     </div>
 
-
-
                     <div fxLayout="row" fxLayoutAlign="center center">
                         <div fxFlex="30">
                             <p>Correo</p>
@@ -133,7 +129,7 @@
 
                         <mat-form-field appearance="none" fxFlex="70">
                             <input matInput type="email" placeholder="abc@seti.com.co" formControlName="email">
-                            <mat-error *ngIf="!addResumeForm.controls['email'].valid && addResumeForm.controls['email'].touched">Correo es requerido</mat-error>
+                            <mat-error *ngIf="!addResumeForm.controls['email'].valid && addResumeForm.controls['email'].touched">Correo no valido</mat-error>
                         </mat-form-field>
                     </div>
 
@@ -148,19 +144,18 @@
                                 <mat-radio-button class="radioProfesionalCard" value="No">No</mat-radio-button>
                                 <mat-radio-button class="radioProfesionalCard" value="En proceso">En proceso</mat-radio-button>
                             </mat-radio-group>
-                            <mat-error *ngIf="!addResumeForm.controls['professionalCard'].valid && addResumeForm.controls['professionalCard'].touched">Tarjeta profesional requerida</mat-error>
+                            <mat-error *ngIf="!addResumeForm.controls['professionalCard'].valid && addResumeForm.controls['professionalCard'].touched">Campo requerido</mat-error>
                         </div>
 
                     </div>
 
                     <div fxLayout="row">
                         <div appearance="none" align="end center" fxFlex="30">
-                            <mat-checkbox color="warn" formControlName="referred" class="referred">¿Esta hoja de vida ha sido referida<br> por un integrante de SETI?</mat-checkbox>
+                            <mat-checkbox color="warn" formControlName="referred" class="referred" (change)="addValidationReferred($event.checked)">¿Esta hoja de vida ha sido referida<br> por un integrante de SETI?</mat-checkbox>
                         </div>
                         <mat-form-field appearance="none" fxFlex="70" *ngIf="addResumeForm.value.referred == true">
                             <mat-select placeholder="Seleccione el referido" formControlName="nameReferred">
-                                <mat-option>data1</mat-option>
-                                <mat-option>data2</mat-option>
+                                <mat-option *ngFor="let ref of referred" [value]="ref.name">{{ref.name}}</mat-option>
                             </mat-select>
                             <mat-error *ngIf="!addResumeForm.controls['nameReferred'].valid && addResumeForm.controls['nameReferred'].touched">Es requerido el referido</mat-error>
                         </mat-form-field>
@@ -173,123 +168,209 @@
 
                         <mat-form-field appearance="none" fxFlex="70">
                             <mat-select placeholder="Fuente" formControlName="source">
-                                <mat-option>data1</mat-option>
-                                <mat-option>data2</mat-option>
+                                <mat-option *ngFor="let fuente of source" [value]="fuente">{{fuente}}</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="!addResumeForm.controls['source'].valid && addResumeForm.controls['source'].touched">Es requerida la fuente de la Hoja de Vida</mat-error>
+                            <mat-error *ngIf="!addResumeForm.controls['source'].valid && addResumeForm.controls['source'].touched">Campo requerido</mat-error>
                         </mat-form-field>
                     </div>
                 </mat-card-content>
 
 
-                <mat-card-title class="full-width">Aspiracion Salarial</mat-card-title>
+                <mat-card-title>Aspiracion Salarial</mat-card-title>
                 <mat-card-content>
                     <div fxLayout="row" fxLayoutAlign="center center">
                         <mat-form-field appearance="none" fxFlex="50">
                             <input matInput type="number" placeholder="Minima" formControlName="minAspiration">
-                            <mat-error *ngIf="!addResumeForm.controls['minAspiration'].valid && addResumeForm.controls['minAspiration'].touched">La aspiracion es requerida</mat-error>
+                            <mat-error *ngIf="!addResumeForm.controls['minAspiration'].valid && addResumeForm.controls['minAspiration'].touched">Campo requerido</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="none" fxFlex="50">
                             <input matInput type="number" placeholder="Maxima" formControlName="maxAspiration">
-                            <mat-error *ngIf="!addResumeForm.controls['maxAspiration'].valid && addResumeForm.controls['maxAspiration'].touched">La aspiracion es requerida</mat-error>
+                            <mat-error *ngIf="!addResumeForm.controls['maxAspiration'].valid && addResumeForm.controls['maxAspiration'].touched">Campo requerido</mat-error>
                         </mat-form-field>
                     </div>
                 </mat-card-content>
 
-                <mat-card-title class="full-width">Idiomas</mat-card-title>
+                <mat-card-title>Idiomas</mat-card-title>
                 <mat-card-content>
-                    <mat-selection-list>
-                        <mat-list-option checkboxPosition="before" *ngFor="let idioma of Languagesdata">
+                    <section>
+                        <mat-checkbox checkboxPosition="before" *ngFor="let idioma of Languagesdata; let i = index" (change)="addOrRemoveLanguage($event.checked,idioma)">
                             {{idioma}}
-                        </mat-list-option>
-                    </mat-selection-list>
-                    <!-- <mat-error>Es requerido un idioma</mat-error> -->
+                        </mat-checkbox>
+                    </section>
+                    <div formArrayName="languages">
+                        <div fxLayout="row" fxLayoutAlign="center center" class="block" *ngFor="let language of languagesArray.controls; let i = index" [formGroupName]="i">
+                            <mat-form-field appearance="none" fxFlex="20">
+                                <input matInput formControlName="name">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="none" fxFlex="20">
+                                <input matInput placeholder="Escritura" formControlName="writing">
+                                <mat-error *ngIf="getValidationLanguage(i,'writing')">Campo Requerido</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="none" fxFlex="20">
+                                <input matInput placeholder="Lectura" formControlName="reading">
+                                <mat-error *ngIf="getValidationLanguage(i,'reading')">Campo Requerido</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="none" fxFlex="20">
+                                <input matInput placeholder="Habla" formControlName="speaking">
+                                <mat-error *ngIf="getValidationLanguage(i,'speaking')">Campo Requerido</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
                 </mat-card-content>
 
-                <mat-card-title class="full-width">Nivel de Estudio</mat-card-title>
+                <mat-card-title>Nivel de Estudio</mat-card-title>
                 <mat-card-content>
                     <div fxLayout="row" fxLayoutAlign="center center">
 
                         <div appearance="none" fxFlex="10">
-                            <button mat-mini-fab color="warn">
+                            <button mat-mini-fab type="button" color="warn" (click)="addStudy()">
                                 <mat-icon>add</mat-icon>
                             </button>
                         </div>
 
                         <mat-form-field appearance="none" fxFlex="90">
-                            <mat-select placeholder="Seleccione un estudio">
-                                <option>Volvo</option>
-                                <option>Saab</option>
-                                <option>Mercedes</option>
-                                <option>Audi</option>
+                            <mat-select placeholder="Seleccione un estudio" [(ngModel)]="nevelStudy.type" [ngModelOptions]="{standalone: true}">
+                                <mat-option *ngFor="let estudio of Study" [value]="estudio.name">{{estudio.name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
 
                         <mat-form-field appearance="none">
-                            <input matInput placeholder="Descripción del estudio">
+                            <input matInput placeholder="Descripción del estudio" [(ngModel)]="nevelStudy.name" [ngModelOptions]="{standalone: true}">
                         </mat-form-field>
+
                     </div>
+                    <mat-error *ngIf="addResumeForm.get('levelStudy')?.value.length == 0">Estudio requerido</mat-error>
+
+                    <table mat-table [dataSource]="studyArray.value" class="full-width center" *ngIf="studyArray.value.length != 0">
+                        <ng-container matColumnDef="type">
+                            <th mat-header-cell *matHeaderCellDef>Estudio</th>
+                            <td mat-cell *matCellDef="let element">{{element.type}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef>Descripcion</th>
+                            <td mat-cell *matCellDef="let element">{{element.name}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+                            <td mat-cell *matCellDef="let element; let i = index">
+                                <button mat-raised-button  color="warn" focusable="false" (click)="deleteStudy(i)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
                 </mat-card-content>
 
-                <mat-card-title class="full-width">Referencias Laborales</mat-card-title>
+                <mat-card-title>Experiencias Laborales</mat-card-title>
                 <mat-card-content>
                     <div fxLayout="row" fxLayoutAlign="center center">
 
                         <mat-form-field appearance="none" fxFlex="25">
-                            <input matInput placeholder="Nombre Empresa">
+                            <input matInput placeholder="Nombre Empresa" [(ngModel)]="references.company" [ngModelOptions]="{standalone: true}">
                         </mat-form-field>
 
                         <mat-form-field appearance="none" fxFlex="25">
-                            <input matInput placeholder="Cargo ejercido">
+                            <input matInput placeholder="Cargo ejercido" [(ngModel)]="references.charge" [ngModelOptions]="{standalone: true}">
                         </mat-form-field>
 
                         <mat-form-field appearance="none" fxFlex="25">
-                            <input matInput type="number" placeholder="$">
+                            <input matInput type="number" placeholder="$" [(ngModel)]="references.wage" [ngModelOptions]="{standalone: true}">
                         </mat-form-field>
 
                         <mat-form-field appearance="none" fxFlex="25">
-                            <input matInput type="number" placeholder="Tiempo laborado">
+                            <input matInput type="number" placeholder="Tiempo laborado" [(ngModel)]="references.time" [ngModelOptions]="{standalone: true}">
                         </mat-form-field>
 
                     </div>
 
                     <div fxLayout="row">
-                        <button mat-raised-button color="warn">Añadir referia
+                        <button mat-raised-button color="warn" type="button" (click)="addJobReference()">Añadir referia
                             <mat-icon>work</mat-icon>
                         </button>
                     </div>
 
+                    <table mat-table [dataSource]="jobReferencesArray.value" class="full-width center" *ngIf="jobReferencesArray.value.length != 0">
+                        <ng-container matColumnDef="company">
+                            <th mat-header-cell *matHeaderCellDef>Empresa</th>
+                            <td mat-cell *matCellDef="let element">{{element.company}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="charge">
+                            <th mat-header-cell *matHeaderCellDef>Cargo</th>
+                            <td mat-cell *matCellDef="let element">{{element.charge}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="wage">
+                            <th mat-header-cell *matHeaderCellDef>Salario</th>
+                            <td mat-cell *matCellDef="let element">{{element.wage}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="time">
+                            <th mat-header-cell *matHeaderCellDef>Tiempo</th>
+                            <td mat-cell *matCellDef="let element">{{element.time}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+                            <td mat-cell *matCellDef="let element; let i = index">
+                                <button mat-raised-button  color="warn" focusable="false" (click)="deleteJobReference(i)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsJob"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsJob;"></tr>
+                    </table>
+
                 </mat-card-content>
 
-                <mat-card-title class="full-width">Conocimientos</mat-card-title>
+                <mat-card-title>Dominio</mat-card-title>
                 <mat-card-content>
-                    <mat-selection-list>
-                        <mat-list-option checkboxPosition="before" *ngFor="let conocimiento of knowledge">
-                            {{conocimiento}}
-                        </mat-list-option>
-                    </mat-selection-list>
-                    <!-- <mat-error>Es requerido un conocimiento</mat-error> -->
+                    <section class="flow-root">
+                        <mat-checkbox checkboxPosition="before" *ngFor="let dominio of domain; let w = index" [value]="dominio.name" (change)="addOrRemoveSkill($event.checked,dominio.name)">
+                            {{dominio.name}}
+                        </mat-checkbox>
+                    </section>
+                    <mat-error *ngIf="addResumeForm.get('skills')?.value.length == 0">Es requerido un dominio</mat-error>
+                    <div formArrayName="skills">
+                        <div fxLayout="row" fxLayoutAlign="center center" class="inline-flex" *ngFor="let domain of skillsArray.controls; let i = index" [formGroupName]="i">
+                            <!-- <div class="aaa" fxFlex="80"> -->
+                                <mat-form-field appearance="none" fxFlex="40">
+                                    <input matInput formControlName="domain">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="none" fxFlex="40">
+                                    <mat-select matInput placeholder="Selecciona una herramienta" formControlName="knowledgeArea">
+                                        <mat-option *ngFor="let herramienta of knowledge[i]" [value]="herramienta.knowledgeArea">{{herramienta.knowledgeArea}}</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="getValidationDomain(i)">Campo Requerido</mat-error>
+                                </mat-form-field>
+                            <!-- </div> -->
+
+                        </div>
+                    </div>
                 </mat-card-content>
 
-                <mat-card-title class="full-width">Equipo Base</mat-card-title>
+
+                <!-- <mat-card-title class="full-width">Equipo Base</mat-card-title>
                 <mat-card-content>
-                    <mat-selection-list>
-                        <mat-list-option checkboxPosition="before" *ngFor="let perfilamiento of profiling">
+                    <section>
+                        <mat-checkbox checkboxPosition="before" *ngFor="let perfilamiento of profiling">
                             {{perfilamiento}}
-                        </mat-list-option>
-                    </mat-selection-list>
-                    <!-- <mat-error>Es requerido un perfilamiento</mat-error> -->
-                </mat-card-content>
+                        </mat-checkbox>
+                    </section>
+                </mat-card-content> -->
 
-                <mat-card-title class="full-width">Observaciones generales</mat-card-title>
+                <mat-card-title>Observaciones generales</mat-card-title>
                 <mat-card-content>
                     <div fxLayoutAlign="center center">
                         <p>Puede escribir aquí datos importantes sobre el perfil o aspectos más relevantes del candidato</p>
                     </div>
 
                     <mat-form-field class="example-full-width" appearance="none">
-                        <textarea matInput placeholder="Observaciones candidato" class="textareaObservations"></textarea>
+                        <textarea matInput placeholder="Observaciones candidato" class="textareaObservations" formControlName="observations"></textarea>
                       </mat-form-field>
                 </mat-card-content>
 
