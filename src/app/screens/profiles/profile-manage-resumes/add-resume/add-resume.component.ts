@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { AddResumeService } from './service/add-resume.service';
 import { NotificationService } from '@shared/components/notification/services/notification.service';
+// import { Type } from '../../admin-master-info/master-info/interfaces.interface';
+import {Observable} from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogExistRegisterComponent } from './dialog-exist-register/dialog-exist-register.component';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-add-resume',
@@ -10,24 +16,43 @@ import { NotificationService } from '@shared/components/notification/services/no
 })
 export class AddResumeComponent implements OnInit {
 
-  Languagesdata: string[] = ['Ingles', 'Español', 'Frances', 'Chino', 'Mandarin', 'Portugues'];
+  update=false;
+  id_registro:any;
+
+  Languagesdata: string[] = ['Ingles', 'Frances', 'Chino', 'Mandarin', 'Portugues'];
   typeIdentificationdata: string[] = ['Cedula de Ciudadania', 'Cedula de extranjeria', 'tarjeta de identidad'];
   knowledge:string[] = [];
   phoneType: string[] = ['Movil', 'Casa', 'Oficina'];
   phonePrefix: string[] = ['+57', '+51', '+56'];
   source: string[] = ['Correo','Linkedin','Computrabajo','Empleo.com','Ticjob'];
   cities: string[] = ['Bogota','Medellin','Cali','Leticia','Arauca','Barranquilla','Cartagena','Tunja','Manizalez','Florencia','Yopal','Popayan','Valledupar','Quibdo','Monteria'];
-  // profiling: string[] = ['Control interno', 'Recursos físicos y tecnológicos', 'Desarrollo', 'Administración de datos'];
   // Propiedades listadas desde servicio
   domain: any = {};
   Study: any = {};
   referred:any = {};
+  descriptionStudy: any = {};
+
+  registerLanguague:string[] = [];
+  registerSkills:string[] = [];
 
   // Columna tabla
   displayedColumns: string[] = ['type', 'name', 'actions'];
-  displayedColumnsJob: string[] = ['company', 'charge', 'wage', 'time', 'actions'];
+  displayedColumnsJob: string[] = ['company', 'charge', 'wage', 'timeStart','timeEnd', 'actions'];
 
-  constructor(private fb: FormBuilder, private addResumeService: AddResumeService,private notificationService: NotificationService) { }
+
+  filteredOptions: Observable<string[]> | undefined;
+
+  constructor(
+    private fb: FormBuilder,
+    private addResumeService: AddResumeService,
+    private notificationService: NotificationService,
+    public dialogo: MatDialog) {
+      this.filteredOptions = this.addResumeForm.controls.nameReferred.valueChanges
+      .pipe(
+        startWith(''),
+        map((ref: string) => ref ? this.filterRefered(ref) : this.referred.slice())
+      );
+     }
 
   addResumeForm = this.fb.group({
     maxAspiration: ['', Validators.required],
@@ -37,50 +62,51 @@ export class AddResumeComponent implements OnInit {
     source: ['', Validators.required],
     referred: [false],
     nameReferred: [''],
-    professionalCard: ['', Validators.required],
+    professionalCard: ['No', Validators.required],
     email: ['', Validators.email],
     city: ['', Validators.required],
     country: ['', Validators.required],
     numberIdentification: ['', Validators.required],
     typeIdentification: ['', Validators.required],
-    name: ['', Validators.required],
-    lastName: ['', Validators.required],
+    fullName: ['',Validators.required],
     phone: new FormArray([]),
-    // companyFrom: new FormArray([]),
     skills: new FormArray([]),
     levelStudy: new FormArray([]),
     languages: new FormArray([]),
-    jobReferences: new FormArray([])
-    // profiling:
+    workExperience: new FormArray([])
   });
+
+  formExperience = this.fb.group({
+    company: ['',Validators.required],
+    charge: ['',Validators.required],
+    wage: ['',Validators.required],
+    timeStart: ['',Validators.required],
+    timeEnd: ['',Validators.required]
+  });
+
+  phones ={
+    type: '',
+    prefix: '',
+    number: ''
+  }
 
   nevelStudy = {
     type: '',
     name: ''
   }
 
-  references = {
-    company: '',
-    charge: '',
-    wage: '',
-    time: ''
-  }
-
   ngOnInit(): void {
     this.getDataStudies();
     this.getDataDomain();
     this.getDataReferred();
+    this.getEducationArea();
   }
 
-  // Creacion item
-  createJobRefence(dataJob: { company: string, charge: string, wage: any, time: any }) {
-    return this.fb.group({
-      company: [dataJob.company],
-      charge: [dataJob.charge],
-      wage: [dataJob.wage],
-      time: [dataJob.time]
-    })
+  filterRefered(name: string) {
+    return this.referred.filter((ref: { name: string; }) =>
+      ref.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
   }
+  // Creacion item
 
   createItemCompanyFrom() {
     return this.fb.group({
@@ -91,19 +117,19 @@ export class AddResumeComponent implements OnInit {
     })
   }
 
-  createItemSkills(value: string) {
+  createItemSkills(value: {domain:string, knowledgeArea:string}) {
     return this.fb.group({
-      domain: [value],
-      knowledgeArea: ['', Validators.required]
+      domain: [value.domain],
+      knowledgeArea: [value.knowledgeArea, Validators.required]
     })
   }
 
-  createItemLanguages(value: string) {
+  createItemLanguages(value: {name:string, writing:string, reading:string, speaking:string}) {
     return this.fb.group({
-      name: [value],
-      writing: ['', Validators.required],
-      reading: ['', Validators.required],
-      speaking: ['', Validators.required]
+      name: [value.name],
+      writing: [value.writing, Validators.required],
+      reading: [value.reading, Validators.required],
+      speaking: [value.speaking, Validators.required]
     });
   }
 
@@ -114,52 +140,70 @@ export class AddResumeComponent implements OnInit {
     });
   }
 
-  createItemPhone() {
+  createItemPhone(dataPhone: {type:string, prefix:string, number:string}) {
     return this.fb.group({
-      type: ['', Validators.required],
-      prefix: ['', Validators.required],
-      number: ['', Validators.required]
+      type: [dataPhone.type, Validators.required],
+      prefix: [dataPhone.prefix, Validators.required],
+      number: [dataPhone.number, Validators.required]
     });
   }
 
   // Añadir items a FormArray
-  addJobReference() {
-    if (this.references.company !== '' && this.references.charge !== '' && this.references.wage !== '' && this.references.time !== '') {
-      this.jobReferencesArray.push(this.createJobRefence(this.references));
-      this.references.company = '';
-      this.references.charge = '';
-      this.references.wage = '';
-      this.references.time = '';
+  async addJobReference() {
+    if(this.formExperience.valid){
+      console.log(this.workExperienceArray.value);
+      this.workExperienceArray.push(await this.returnForm(this.formExperience.value));
+      this.formExperience.reset();
+    }else{
+      this.notificationService.openSimpleSnackBar(
+        {title: 'Experinecias laborales', message: 'los campos no se pueden añadir hasta encontrarse llenos', type: 'info'}
+      );
     }
   }
 
+  returnForm(data: {company:string, charge:string, wage:number, timeStart:string, timeEnd:string}){
+    return this.fb.group({
+      company: [data.company,Validators.required],
+      charge: [data.charge,Validators.required],
+      wage: [data.wage,Validators.required],
+      timeStart: [data.timeStart,Validators.required],
+      timeEnd: [data.timeEnd,Validators.required]
+    })
+  }
+
+  // domainChecked(domain:string){
+  //   this.addResumeForm.value.languages.forEach((element: { name: string; }) => {
+  //     if(element.name === domain){
+  //       return true;
+  //     }
+  //   });
+  //   return false;
+  // }
+
   addPhone() {
-    this.phoneArray.push(this.createItemPhone());
+    this.phoneArray.push(this.createItemPhone(this.phones));
+    this.phones.type = '';
+    this.phones.prefix = '';
+    this.phones.number = '';
   }
 
   addStudy() {
-    if (this.nevelStudy.type !== '' && this.nevelStudy.name !== '') {
-      this.studyArray.push(this.createItemStudy(this.nevelStudy));
-      this.nevelStudy.type = '';
-      this.nevelStudy.name = '';
-    }
+    this.studyArray.push(this.createItemStudy(this.nevelStudy));
+    this.nevelStudy.type = '';
+    this.nevelStudy.name = '';
   }
 
-  addLanguages(value: string) {
+  addLanguages(value: {name:string, writing:string, reading:string, speaking:string}) {
     this.languagesArray.push(this.createItemLanguages(value));
   }
 
-  addSkills(value: string) {
+  addSkills(value: {domain:string, knowledgeArea:string}) {
     this.skillsArray.push(this.createItemSkills(value));
-  }
-
-  addCompanyFrom() {
-    this.companyFromArray.push(this.createItemCompanyFrom());
   }
 
   // Eliminar item de FormArray
   deleteJobReference(index: number) {
-    this.jobReferencesArray.removeAt(index);
+    this.workExperienceArray.removeAt(index);
   }
 
   deletePhone(index: number) {
@@ -184,13 +228,9 @@ export class AddResumeComponent implements OnInit {
 
   }
 
-  deleteCompanyFrom(index: number) {
-    this.companyFromArray.removeAt(index);
-  }
-
   // obtener items de formArray
-  get jobReferencesArray(): FormArray {
-    return this.addResumeForm.get('jobReferences') as FormArray;
+  get workExperienceArray(): FormArray {
+    return this.addResumeForm.get('workExperience') as FormArray;
   }
 
   get phoneArray(): FormArray {
@@ -209,9 +249,6 @@ export class AddResumeComponent implements OnInit {
     return this.addResumeForm.get('skills') as FormArray;
   }
 
-  get companyFromArray(): FormArray {
-    return this.addResumeForm.get('companyFrom') as FormArray;
-  }
 
   // Validacion formArray
   getValidatorPhone(index: number, position: string) {
@@ -229,7 +266,8 @@ export class AddResumeComponent implements OnInit {
 
   addOrRemoveLanguage(status: boolean, value: string) {
     if (status === true) {
-      this.addLanguages(value);
+      const valor = {name: value,writing: '',reading: '',speaking: ''}
+      this.addLanguages(valor);
     } else {
       this.deleteLanguages(value);
     }
@@ -237,18 +275,22 @@ export class AddResumeComponent implements OnInit {
 
   addOrRemoveSkill(status: boolean, value: string) {
     if (status === true) {
-      this.getDataSyllabi(value);
+      this.getDataSyllabi(value,'Nuevo');
     } else {
       this.deleteSkills(value);
     }
   }
 
-  addValidationReferred(status:boolean){
-    if(status === true){
+  addValidationReferred(status:boolean,tipe:string){
+    if(status === true && tipe === 'S'){
       this.addResumeForm.get('nameReferred')?.setValidators(Validators.required);
-    }else{
+    }else if(status === false && tipe === 'N'){
+      this.addResumeForm.get('referred')?.setValue(true);
+    }
+    else{
       this.addResumeForm.get('nameReferred')?.clearValidators();
       this.addResumeForm.get('nameReferred')?.reset();
+      this.addResumeForm.get('referred')?.reset();
     }
   }
 
@@ -260,20 +302,22 @@ export class AddResumeComponent implements OnInit {
           console.log('Response del metodo getDataStudies', this.Study)
         }
       }).catch(error => {
-        console.log('error', error)
+        console.log('error', error);
       })
   }
 
 
-  getDataSyllabi(value:string) {
+  getDataSyllabi(value:string, type:string) {
     this.addResumeService.getDataSyllabi()
       .then(dataValue => {
         if (dataValue.length > 0) {
           const domainName = dataValue.filter((domain: { domain: { name: string; }[]; }) => domain.domain[0].name === value);
           if(domainName.length !== 0){
             this.knowledge.push(domainName);
-            this.addSkills(value);
-            console.log('skills of domain', this.knowledge);
+            if(type === 'Nuevo'){
+              const valor = {domain: value, knowledgeArea: ''}
+              this.addSkills(valor);
+            }
           }
         }
       }).catch(error => {
@@ -304,16 +348,44 @@ export class AddResumeComponent implements OnInit {
     })
   }
 
+  getEducationArea(){
+    this.addResumeService.getDataEducationArea()
+    .then(dataValue => {
+      if (dataValue.length > 0){
+        this.descriptionStudy = dataValue;
+      }
+    }).catch(error =>{
+      console.log(error);
+    })
+  }
+
+
   validateHvExist(){
     const Identification = this.addResumeForm.get('numberIdentification')?.value;
     if(Identification !== ''){
       this.addResumeService.getDataExist(Identification)
       .then(dataValue =>{
         if (dataValue.length > 0) {
-          this.notificationService.openSimpleSnackBar(
-            {title: 'Hoja de vida existente', message: `numero de identificacion ${Identification} existente`, type: 'info'}
-          );
-          this.addResumeForm.reset();
+          this.dialogo
+            .open(DialogExistRegisterComponent,{
+              width: '20%',
+              height: '20%'
+            })
+            .afterClosed()
+            .subscribe((confirmado:boolean) => {
+              if(confirmado){
+                this.update=true;
+                this.addResumeForm.patchValue(dataValue[0]);
+                this.id_registro = dataValue[0]._id;
+                this.addData(dataValue[0].phone,'phone');
+                this.addData(dataValue[0].skills,'skills');
+                this.addData(dataValue[0].levelStudy, 'levelStudy');
+                this.addData(dataValue[0].languages,'languages');
+                this.addData(dataValue[0].workExperience, 'workExperience');
+              }else{
+                this.addResumeForm.reset();
+              }
+            });
         }
       }).catch(error => {
         console.log('error', error);
@@ -321,18 +393,66 @@ export class AddResumeComponent implements OnInit {
     }
   }
 
+  addData(data:any, type:string){
+    switch (type) {
+      case 'phone':
+        data.forEach((element: { type: string; prefix: string; number: string; }) => {
+          this.phoneArray.push(this.createItemPhone(element));
+        });
+        break;
+      case 'skills':
+        data.forEach((element: { domain:string; knowledgeArea:string }) => {
+          this.addSkills(element);
+          this.getDataSyllabi(element.domain,'Existente');
+          this.registerSkills.push(element.domain);
+
+        });
+        break;
+      case 'levelStudy':
+        data.forEach((element: { type: string; name: string; }) => {
+          this.studyArray.push(this.createItemStudy(element));
+        });
+        break;
+      case 'languages':
+        data.forEach((element: {name:string; writing:string; reading:string; speaking:string}) => {
+          this.addLanguages(element);
+          this.registerLanguague.push(element.name);
+        });
+        break
+      case 'workExperience':
+        data.forEach((element: { company: string; charge: string; wage: number; timeStart: string; timeEnd: string; }) => {
+          this.workExperienceArray.push(this.returnForm(element));
+        });
+        break;
+    }
+  }
+
   // Post (añadir Hojja de vida)
   saveForm() {
     console.log('data de addResumeForm', this.addResumeForm.value);
     if(this.addResumeForm.valid){
-    this.addResumeService.addResume('http://localhost:80/life-story', this.addResumeForm.value)
-      .then(value => {
-        console.log('servicio enviado sin error',value);
-        this.notificationService.openSimpleSnackBar(
-          {title: 'Hoja de vida', message: 'Hoja de vida insertada correctamente', type: 'success'}
-        );
-      })
-      .catch(value => console.log(value));
+      if(this.update === false){
+        this.addResumeService.addResume('http://localhost:80/life-story', this.addResumeForm.value)
+        .then(value => {
+          console.log('servicio enviado sin error',value);
+          this.notificationService.openSimpleSnackBar(
+            {title: 'Hoja de vida', message: 'Hoja de vida insertada correctamente', type: 'success'}
+          );
+        })
+        .catch(value => console.log(value));
+        this.dialogo.closeAll();
+      }else if(this.update === true){
+        console.log(this.addResumeForm.value);
+        this.addResumeService.updateRegister(this.id_registro,this.addResumeForm.value)
+          .then(value => {
+            console.log('registro actulizado con exito', value);
+            this.notificationService.openSimpleSnackBar(
+              {title: 'Hoja de vida', message: 'Hoja de vida actulizada correctamente', type: 'success'}
+            );
+          })
+          .catch(value => console.log(value));
+        this.dialogo.closeAll();
+      }
     }else{
       this.notificationService.openSimpleSnackBar(
         {title: 'Campos ivalidos', message: 'La hoja de vida posee campos vacios o invalidos', type: 'error'}
@@ -341,5 +461,3 @@ export class AddResumeComponent implements OnInit {
   }
 
 }
-
-
