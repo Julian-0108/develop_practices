@@ -23,7 +23,7 @@
                 <th mat-header-cell *matHeaderCellDef> Nombre
                   <div class="filter-inputs">
                     <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select class="filter filter__courses-certifications">
+                      <mat-select>
                         <mat-option>
                           ver Todos
                         </mat-option>
@@ -31,13 +31,14 @@
                     </mat-form-field>
                   </div>
                 </th>
+                <td mat-cell *matCellDef="let element">{{element.fullName}}</td>
               </ng-container>
 
-              <ng-container matColumnDef="documentNumber">
+              <ng-container matColumnDef="numberIdentification">
                 <th mat-header-cell *matHeaderCellDef> Numero de documento
                   <div class="filter-inputs">
                     <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select class="filter filter__courses-certifications">
+                      <mat-select>
                         <mat-option>
                           ver Todos
                         </mat-option>
@@ -45,13 +46,14 @@
                     </mat-form-field>
                   </div>
                 </th>
+                <td mat-cell *matCellDef="let element">{{element.numberIdentification}}</td>
               </ng-container>
 
               <ng-container matColumnDef="tool">
                 <th mat-header-cell *matHeaderCellDef> Herramienta
                   <div class="filter-inputs">
                     <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select class="filter filter__courses-certifications">
+                      <mat-select>
                         <mat-option>
                           ver Todos
                         </mat-option>
@@ -65,7 +67,7 @@
                 <th mat-header-cell *matHeaderCellDef> Estado del proceso
                   <div class="filter-inputs">
                     <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select class="filter filter__courses-certifications">
+                      <mat-select>
                         <mat-option>
                           ver Todos
                         </mat-option>
@@ -73,13 +75,20 @@
                     </mat-form-field>
                   </div>
                 </th>
+                <td mat-cell *matCellDef="let element">
+                  <div>
+                    <label class="chip__status" [ngClass]="{'chip__status--seleccionado': element.processStatus === 'seleccionado', 'chip__status--descartado': element.processStatus === 'descartado', 'chip__status--proceso': element.processStatus === 'En proceso'}">
+                      {{element.processStatus}}
+                    </label>
+                  </div>
+                </td>
               </ng-container>
 
-              <ng-container matColumnDef="wageAspiration">
-                <th mat-header-cell *matHeaderCellDef> Aspiracion Salarial
+              <ng-container matColumnDef="city">
+                <th mat-header-cell *matHeaderCellDef>Ciudad
                   <div class="filter-inputs">
                     <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select class="filter filter__courses-certifications">
+                      <mat-select>
                         <mat-option>
                           ver Todos
                         </mat-option>
@@ -87,6 +96,37 @@
                     </mat-form-field>
                   </div>
                 </th>
+                <td mat-cell *matCellDef="let element">{{element.city}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="minAspiration">
+                <th mat-header-cell *matHeaderCellDef> Aspiracion salarial
+                  <div class="filter-inputs">
+                    <mat-form-field floatLabel="always" appearance="none">
+                      <mat-select>
+                        <mat-option>
+                          ver Todos
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let element">{{element.minAspiration | currency:'CAD':'symbol-narrow' }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="acciones" stickyEnd>
+                <th mat-header-cell *matHeaderCellDef>Opciones</th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button matTooltip="Ver Herramientas">
+                    <mat-icon class="table__buttons edit">description</mat-icon>
+                  </button>
+                  <button mat-icon-button matTooltip="Ver Hv">
+                    <mat-icon class="table__buttons history">find_in_page</mat-icon>
+                  </button>
+                  <button mat-icon-button matTooltip="Asociar GLPI">
+                    <mat-icon class="table__buttons add_glpi">how_to_reg</mat-icon>
+                  </button>
+                </td>
               </ng-container>
 
               <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
