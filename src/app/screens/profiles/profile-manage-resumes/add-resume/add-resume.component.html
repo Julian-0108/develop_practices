@@ -2,13 +2,14 @@
     <button routerLink="/manage-resumes" class="button-back " mat-mini-fab aria-label="back button"></button>
     <div fxLayout="column">
         <div class="title__container">
-            <h1 class="main-title">Agregar hoja de vida</h1>
+            <h1 class="main-title" *ngIf="!update">Agregar hoja de vida</h1>
+            <h1 class="main-title" *ngIf="update">Actualizar hoja de vida</h1>
         </div>
     </div>
     <div>
-        <form [formGroup]="addResumeForm" (ngSubmit)="saveForm()">
+        <form [formGroup]="addResumeForm" (ngSubmit)="saveForm()" autocomplete="off">
             <mat-card>
-                <mat-card-title>Datos personales</mat-card-title>
+                <mat-card-title>Datos personales<span class="label--red">*</span></mat-card-title>
                 <mat-card-content>
                     <div fxLayout="row" fxLayoutAlign="center center">
                         <div fxFlex="30">
@@ -29,23 +30,12 @@
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center center">
                         <div fxFlex="30">
-                            <p>Nombres</p>
+                            <p>Nombre Completo</p>
                         </div>
 
                         <mat-form-field appearance="none" fxFlex="70">
-                            <input matInput placeholder="Nombre" formControlName="name">
-                            <mat-error *ngIf="!addResumeForm.controls['name'].valid && addResumeForm.controls['name'].touched">Nombre requerido</mat-error>
-                        </mat-form-field>
-                    </div>
-
-                    <div fxLayout="row" fxLayoutAlign="center center">
-                        <div fxFlex="30">
-                            <p>Apellidos</p>
-                        </div>
-
-                        <mat-form-field appearance="none" fxFlex="70">
-                            <input matInput placeholder="Apellidos" formControlName="lastName">
-                            <mat-error *ngIf="!addResumeForm.controls['lastName'].valid && addResumeForm.controls['lastName'].touched">Apellido requerido</mat-error>
+                            <input matInput placeholder="Nombre Completo" formControlName="fullName">
+                            <mat-error *ngIf="!addResumeForm.controls['fullName'].valid && addResumeForm.controls['fullName'].touched">Nombre requerido</mat-error>
                         </mat-form-field>
                     </div>
 
@@ -81,9 +71,29 @@
                         </div>
 
                         <div appearance="none" fxFlex="70">
-                            <button type="button" mat-mini-fab color="warn" aria-label="Example icon button with a filter list icon" (click)="addPhone()">
-                                <mat-icon>phone</mat-icon>
-                            </button>
+                            <mat-form-field appearance="none" fxFlex="25">
+                                <mat-select placeholder="Seleccione" [(ngModel)]="phones.type" [ngModelOptions]="{standalone: true}">
+                                    <mat-option *ngFor="let type of phoneType" [value]="type">{{type}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="none" fxFlex="25">
+                                <mat-select matInput placeholder="+" [(ngModel)]="phones.prefix" [ngModelOptions]="{standalone: true}">
+                                    <mat-option *ngFor="let prefix of phonePrefix" [value]="prefix">{{prefix}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="none" fxFlex="25">
+                                <input matInput placeholder="Numero" type="number" [(ngModel)]="phones.number" [ngModelOptions]="{standalone: true}">
+                            </mat-form-field>
+
+                            <div appearance="none" fxLayoutAlign="center center" fxFlex="25">
+                                <div appearance="none" fxLayoutAlign="center center" fxFlex="25">
+                                    <div mat-button class="layer" (click)="addPhone()">
+                                        <mat-icon>add</mat-icon>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -114,9 +124,9 @@
                                 </mat-form-field>
 
                                 <div appearance="none" fxLayoutAlign="center center" fxFlex="25">
-                                    <button type="button" mat-raised-button color="warn" class="deletePhone" (click)="deletePhone(i)">
-                                        <mat-icon>delete</mat-icon>
-                                    </button>
+                                    <div mat-button class="layer" (click)="deletePhone(i)">
+                                        <mat-icon>remove</mat-icon>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -139,26 +149,13 @@
                         </div>
 
                         <div fxFlex="70">
-                            <mat-radio-group formControlName="professionalCard">
-                                <mat-radio-button class="radioProfesionalCard" value="Si">Si</mat-radio-button>
-                                <mat-radio-button class="radioProfesionalCard" value="No">No</mat-radio-button>
-                                <mat-radio-button class="radioProfesionalCard" value="En proceso">En proceso</mat-radio-button>
-                            </mat-radio-group>
-                            <mat-error *ngIf="!addResumeForm.controls['professionalCard'].valid && addResumeForm.controls['professionalCard'].touched">Campo requerido</mat-error>
+                            <section class="example-section">
+                                <mat-checkbox (change)="addResumeForm.get('professionalCard')?.setValue($event.checked?'Si':'No')" [checked]="addResumeForm.controls['professionalCard'].value == 'Si'">Si</mat-checkbox>
+                                <mat-checkbox (change)="addResumeForm.get('professionalCard')?.setValue($event.checked?'No':'No')" [checked]="addResumeForm.controls['professionalCard'].value == 'No'">No</mat-checkbox>
+                                <mat-checkbox (change)="addResumeForm.get('professionalCard')?.setValue($event.checked?'En proceso':'No')" [checked]="addResumeForm.controls['professionalCard'].value == 'En proceso'">En proceso</mat-checkbox>
+                            </section>
                         </div>
 
-                    </div>
-
-                    <div fxLayout="row">
-                        <div appearance="none" align="end center" fxFlex="30">
-                            <mat-checkbox color="warn" formControlName="referred" class="referred" (change)="addValidationReferred($event.checked)">¿Esta hoja de vida ha sido referida<br> por un integrante de SETI?</mat-checkbox>
-                        </div>
-                        <mat-form-field appearance="none" fxFlex="70" *ngIf="addResumeForm.value.referred == true">
-                            <mat-select placeholder="Seleccione el referido" formControlName="nameReferred">
-                                <mat-option *ngFor="let ref of referred" [value]="ref.name">{{ref.name}}</mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="!addResumeForm.controls['nameReferred'].valid && addResumeForm.controls['nameReferred'].touched">Es requerido el referido</mat-error>
-                        </mat-form-field>
                     </div>
 
                     <div fxLayout="row" fxLayoutAlign="center center">
@@ -173,10 +170,34 @@
                             <mat-error *ngIf="!addResumeForm.controls['source'].valid && addResumeForm.controls['source'].touched">Campo requerido</mat-error>
                         </mat-form-field>
                     </div>
+
+                    <div fxLayout="row">
+                        <div appearance="none" align="end center" class="vertical-align" fxFlex="50">
+                            <p>¿Esta hoja de vida ha sido referida por un integrante de SETI?</p>
+                        </div>
+                        <div fxFlex="50">
+                            <section class="example-section">
+                                <mat-checkbox (change)="addValidationReferred($event.checked,'S')" [checked]="addResumeForm.controls['referred'].value">Si</mat-checkbox>
+                                <mat-checkbox (change)="addValidationReferred($event.checked,'N')" [checked]="!addResumeForm.controls['referred'].value">No</mat-checkbox>
+                            </section>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row">
+                        <mat-form-field appearance="none" fxFlex="100" *ngIf="addResumeForm.value.referred == true">
+                            <input matInput type="text" placeholder="Seleccione el referido" [matAutocomplete]="auto" formControlName="nameReferred">
+                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                <mat-option *ngFor="let ref of filteredOptions | async" [value]="ref.name">
+                                  {{ref.name}}
+                                </mat-option>
+                              </mat-autocomplete>
+                            <mat-error *ngIf="!addResumeForm.controls['nameReferred'].valid && addResumeForm.controls['nameReferred'].touched">Es requerido el referido</mat-error>
+                        </mat-form-field>
+                    </div>
                 </mat-card-content>
 
 
-                <mat-card-title>Aspiracion Salarial</mat-card-title>
+                <mat-card-title>Aspiracion Salarial<span class="label--red">*</span></mat-card-title>
                 <mat-card-content>
                     <div fxLayout="row" fxLayoutAlign="center center">
                         <mat-form-field appearance="none" fxFlex="50">
@@ -194,11 +215,14 @@
                 <mat-card-title>Idiomas</mat-card-title>
                 <mat-card-content>
                     <section>
-                        <mat-checkbox checkboxPosition="before" *ngFor="let idioma of Languagesdata; let i = index" (change)="addOrRemoveLanguage($event.checked,idioma)">
+                        <mat-checkbox checkboxPosition="before" *ngFor="let idioma of Languagesdata; let i = index" (change)="addOrRemoveLanguage($event.checked,idioma)" [checked]="registerLanguague.includes(idioma)">
                             {{idioma}}
                         </mat-checkbox>
                     </section>
                     <div formArrayName="languages">
+                        <div fxLayout="row" class="inline-flex">
+                            <p>Escribir porcentaje de las habilidades. Ej: habla Alto</p>
+                        </div>
                         <div fxLayout="row" fxLayoutAlign="center center" class="block" *ngFor="let language of languagesArray.controls; let i = index" [formGroupName]="i">
                             <mat-form-field appearance="none" fxFlex="20">
                                 <input matInput formControlName="name">
@@ -222,14 +246,14 @@
                     </div>
                 </mat-card-content>
 
-                <mat-card-title>Nivel de Estudio</mat-card-title>
+                <mat-card-title>Nivel de Estudio<span class="label--red">*</span></mat-card-title>
                 <mat-card-content>
                     <div fxLayout="row" fxLayoutAlign="center center">
 
                         <div appearance="none" fxFlex="10">
-                            <button mat-mini-fab type="button" color="warn" (click)="addStudy()">
+                            <div mat-button class="layer" (click)="addStudy()">
                                 <mat-icon>add</mat-icon>
-                            </button>
+                            </div>
                         </div>
 
                         <mat-form-field appearance="none" fxFlex="90">
@@ -239,11 +263,12 @@
                         </mat-form-field>
 
                         <mat-form-field appearance="none">
-                            <input matInput placeholder="Descripción del estudio" [(ngModel)]="nevelStudy.name" [ngModelOptions]="{standalone: true}">
+                            <mat-select placeholder="Seleccione un estudio" [(ngModel)]="nevelStudy.name" [ngModelOptions]="{standalone: true}">
+                                <mat-option *ngFor="let descripcion of descriptionStudy" [value]="descripcion.name">{{descripcion.name}}</mat-option>
+                            </mat-select>
                         </mat-form-field>
 
                     </div>
-                    <mat-error *ngIf="addResumeForm.get('levelStudy')?.value.length == 0">Estudio requerido</mat-error>
 
                     <table mat-table [dataSource]="studyArray.value" class="full-width center" *ngIf="studyArray.value.length != 0">
                         <ng-container matColumnDef="type">
@@ -267,76 +292,88 @@
                     </table>
                 </mat-card-content>
 
-                <mat-card-title>Experiencias Laborales</mat-card-title>
+                <mat-card-title>Experiencias Laborales<span class="label--red">*</span></mat-card-title>
                 <mat-card-content>
-                    <div fxLayout="row" fxLayoutAlign="center center">
+                    <form [formGroup]="formExperience" autocomplete="off">
+                        <div fxLayout="row" fxLayoutAlign="center center">
 
-                        <mat-form-field appearance="none" fxFlex="25">
-                            <input matInput placeholder="Nombre Empresa" [(ngModel)]="references.company" [ngModelOptions]="{standalone: true}">
-                        </mat-form-field>
+                            <mat-form-field appearance="none" fxFlex="25">
+                                <input matInput placeholder="Nombre Empresa" formControlName="company">
+                            </mat-form-field>
 
-                        <mat-form-field appearance="none" fxFlex="25">
-                            <input matInput placeholder="Cargo ejercido" [(ngModel)]="references.charge" [ngModelOptions]="{standalone: true}">
-                        </mat-form-field>
+                            <mat-form-field appearance="none" fxFlex="25">
+                                <input matInput placeholder="Cargo ejercido" formControlName="charge">
+                            </mat-form-field>
 
-                        <mat-form-field appearance="none" fxFlex="25">
-                            <input matInput type="number" placeholder="$" [(ngModel)]="references.wage" [ngModelOptions]="{standalone: true}">
-                        </mat-form-field>
+                            <mat-form-field appearance="none" fxFlex="25">
+                                <input matInput type="number" placeholder="$" formControlName="wage">
+                            </mat-form-field>
+                        </div>
 
-                        <mat-form-field appearance="none" fxFlex="25">
-                            <input matInput type="number" placeholder="Tiempo laborado" [(ngModel)]="references.time" [ngModelOptions]="{standalone: true}">
-                        </mat-form-field>
+                        <div fxLayout="row" fxLayoutAlign="center center">
+                            <mat-form-field appearance="none" fxFlex="25">
+                                <input matInput [matDatepicker]="pickerStart" datePickerFormat="DD/MM/YYYY" placeholder="Fecha Inicio" formControlName="timeStart">
+                                <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+                                <mat-datepicker #pickerStart color="warn"></mat-datepicker>
+                            </mat-form-field>
 
-                    </div>
+                            <mat-form-field appearance="none" fxFlex="25">
+                                <input matInput [matDatepicker]="pickerEnd" placeholder="Fecha Fin" datePickerFormat="DD/MM/YYYY" formControlName="timeEnd">
+                                <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+                                <mat-datepicker #pickerEnd color="warn"></mat-datepicker>
+                            </mat-form-field>
 
-                    <div fxLayout="row">
-                        <button mat-raised-button color="warn" type="button" (click)="addJobReference()">Añadir referia
-                            <mat-icon>work</mat-icon>
-                        </button>
-                    </div>
-
-                    <table mat-table [dataSource]="jobReferencesArray.value" class="full-width center" *ngIf="jobReferencesArray.value.length != 0">
-                        <ng-container matColumnDef="company">
-                            <th mat-header-cell *matHeaderCellDef>Empresa</th>
-                            <td mat-cell *matCellDef="let element">{{element.company}}</td>
-                        </ng-container>
-                        <ng-container matColumnDef="charge">
-                            <th mat-header-cell *matHeaderCellDef>Cargo</th>
-                            <td mat-cell *matCellDef="let element">{{element.charge}}</td>
-                        </ng-container>
-                        <ng-container matColumnDef="wage">
-                            <th mat-header-cell *matHeaderCellDef>Salario</th>
-                            <td mat-cell *matCellDef="let element">{{element.wage}}</td>
-                        </ng-container>
-                        <ng-container matColumnDef="time">
-                            <th mat-header-cell *matHeaderCellDef>Tiempo</th>
-                            <td mat-cell *matCellDef="let element">{{element.time}}</td>
-                        </ng-container>
-                        <ng-container matColumnDef="actions">
-                            <th mat-header-cell *matHeaderCellDef>Eliminar</th>
-                            <td mat-cell *matCellDef="let element; let i = index">
-                                <button mat-raised-button  color="warn" focusable="false" (click)="deleteJobReference(i)">
-                                    <mat-icon>delete</mat-icon>
+                            <mat-form-filed appearance="none" fxFlex="25">
+                                <button mat-raised-button class="button__container" color="warn" type="button" (click)="addJobReference()">Añadir referia
+                                    <mat-icon>work</mat-icon>
                                 </button>
-                            </td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="displayedColumnsJob"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumnsJob;"></tr>
-                    </table>
+                            </mat-form-filed>
+                        </div>
 
+                        <table mat-table [dataSource]="workExperienceArray.value" class="full-width center" *ngIf="workExperienceArray.value.length != 0">
+                            <ng-container matColumnDef="company">
+                                <th mat-header-cell *matHeaderCellDef>Empresa</th>
+                                <td mat-cell *matCellDef="let element">{{element.company}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="charge">
+                                <th mat-header-cell *matHeaderCellDef>Cargo</th>
+                                <td mat-cell *matCellDef="let element">{{element.charge}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="wage">
+                                <th mat-header-cell *matHeaderCellDef>Salario</th>
+                                <td mat-cell *matCellDef="let element">{{element.wage}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="timeStart">
+                                <th mat-header-cell *matHeaderCellDef>Tiempo Inicio</th>
+                                <td mat-cell *matCellDef="let element">{{element.timeStart | date: 'dd/MM/yyyy'}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="timeEnd">
+                                <th mat-header-cell *matHeaderCellDef>Tiempo Final</th>
+                                <td mat-cell *matCellDef="let element">{{element.timeEnd | date: 'dd/MM/yyyy'}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+                                <td mat-cell *matCellDef="let element; let i = index">
+                                    <button mat-raised-button  color="warn" focusable="false" (click)="deleteJobReference(i)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsJob"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsJob;"></tr>
+                        </table>
+                    </form>
                 </mat-card-content>
 
-                <mat-card-title>Dominio</mat-card-title>
+                <mat-card-title>Dominio<span class="label--red">*</span></mat-card-title>
                 <mat-card-content>
                     <section class="flow-root">
-                        <mat-checkbox checkboxPosition="before" *ngFor="let dominio of domain; let w = index" [value]="dominio.name" (change)="addOrRemoveSkill($event.checked,dominio.name)">
+                        <mat-checkbox checkboxPosition="before" *ngFor="let dominio of domain; let w = index" [value]="dominio.name" (change)="addOrRemoveSkill($event.checked,dominio.name)" [checked]="registerSkills.includes(dominio.name)">
                             {{dominio.name}}
                         </mat-checkbox>
                     </section>
-                    <mat-error *ngIf="addResumeForm.get('skills')?.value.length == 0">Es requerido un dominio</mat-error>
                     <div formArrayName="skills">
                         <div fxLayout="row" fxLayoutAlign="center center" class="inline-flex" *ngFor="let domain of skillsArray.controls; let i = index" [formGroupName]="i">
-                            <!-- <div class="aaa" fxFlex="80"> -->
                                 <mat-form-field appearance="none" fxFlex="40">
                                     <input matInput formControlName="domain">
                                 </mat-form-field>
@@ -347,21 +384,9 @@
                                     </mat-select>
                                     <mat-error *ngIf="getValidationDomain(i)">Campo Requerido</mat-error>
                                 </mat-form-field>
-                            <!-- </div> -->
-
                         </div>
                     </div>
                 </mat-card-content>
-
-
-                <!-- <mat-card-title class="full-width">Equipo Base</mat-card-title>
-                <mat-card-content>
-                    <section>
-                        <mat-checkbox checkboxPosition="before" *ngFor="let perfilamiento of profiling">
-                            {{perfilamiento}}
-                        </mat-checkbox>
-                    </section>
-                </mat-card-content> -->
 
                 <mat-card-title>Observaciones generales</mat-card-title>
                 <mat-card-content>
@@ -376,11 +401,14 @@
 
                 <mat-card-content>
                     <div fxLayout="row" fxLayoutAlign="center center">
-                        <button mat-raised-button color="warn" class="newRegister">
+                        <button mat-raised-button color="warn" class="newRegister" *ngIf="!update">
                             Nuevo Registro
                         </button>
-                        <button type="submit" mat-raised-button color="warn">
+                        <button type="submit" mat-raised-button color="warn" *ngIf="!update">
                             Guardar
+                        </button>
+                        <button type="button" type="submit" mat-raised-button color="warn" *ngIf="update">
+                            Actualizar
                         </button>
                     </div>
                 </mat-card-content>
