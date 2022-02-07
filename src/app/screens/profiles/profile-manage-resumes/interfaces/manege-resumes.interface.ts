@@ -5,8 +5,6 @@
 
  export interface Search {
     name: string;
-    documentNumber: number;
-    tool: string;
-    processStatus: string;
-    wageAspiration: number;
+    numberIdentification:string;
+    processStatus:string;
   }
