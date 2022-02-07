@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Search } from './interfaces/manege-resumes.interface';
 import { AddResumeComponent } from './add-resume/add-resume.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ProfileManageResumesService } from './services/profile-manage-resumes.service';
 
 @Component({
   selector: 'app-profile-manage-resumes',
@@ -14,34 +15,37 @@ export class ProfileManageResumesComponent implements OnInit {
 
   public displayedColumns: string[] = [
     'name',
-    'documentNumber',
-    'tool',
+    'numberIdentification',
     'processStatus',
-    'wageAspiration',
+    'city',
+    'minAspiration',
+    'acciones'
   ];
 
-  ELEMENT_DATA: Search[] = [
-    {
-      name: 'Andres Duque Palacio',
-      documentNumber: 1193125683,
-      tool: 'Angular',
-      processStatus: 'Seleccionado',
-      wageAspiration: 3000000,
-    }
-  ];
 
-  dataSource = new MatTableDataSource<Search>(this.ELEMENT_DATA);
+  dataSource:Search[] = [];
 
-  constructor(
-    private dialog: MatDialog
-  ) {}
+  constructor(private dialog: MatDialog,private service:ProfileManageResumesService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getHvs();
+  }
 
   openDialogAdd(){
     const dialogRef = this.dialog.open(AddResumeComponent, {
       width: '60%',
       height: '80%'
     });
+  }
+
+  getHvs(){
+    this.service.getDataHvs()
+      .then(dataValue => {
+        if(dataValue.length > 0){
+          this.dataSource = dataValue;
+        }
+      }).catch(error => {
+        console.log('error',error);
+      })
   }
 }
