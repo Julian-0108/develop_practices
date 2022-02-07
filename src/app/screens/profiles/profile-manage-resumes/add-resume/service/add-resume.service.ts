@@ -50,4 +50,17 @@ getDataExist(id:number):Promise<any>{
   .toPromise();
 }
 
+getDataEducationArea():Promise<any>{
+  return this.http
+  .get(`${environment.API_MASTER_INFO}/education-area?status=true`)
+  .pipe(pluck('payload'))
+  .toPromise();
+}
+
+updateRegister(id:string,data:any):Promise<any>{
+  return this.http
+  .put(`http://localhost:80/life-story/${id}`,data)
+  .toPromise();
+}
+
 }
