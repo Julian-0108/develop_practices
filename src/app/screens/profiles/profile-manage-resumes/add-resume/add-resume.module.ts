@@ -4,11 +4,13 @@ import { AddResumeRoutingModule } from './add-resume-routing.module';
 import { AddResumeComponent } from './add-resume.component';
 import { SharedModule } from '@shared/shared.module';
 import { FormsModule, ReactiveFormsModule }  from '@angular/forms';
+import { DialogExistRegisterComponent } from './dialog-exist-register/dialog-exist-register.component';
 
 
 @NgModule({
   declarations: [
-    AddResumeComponent
+    AddResumeComponent,
+    DialogExistRegisterComponent
   ],
   imports: [
     CommonModule,
