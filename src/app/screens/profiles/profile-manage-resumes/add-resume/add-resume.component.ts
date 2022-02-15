@@ -7,7 +7,6 @@ import {Observable} from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogExistRegisterComponent } from './dialog-exist-register/dialog-exist-register.component';
-import { element } from 'protractor';
 
 @Component({
   selector: 'app-add-resume',
@@ -26,11 +25,12 @@ export class AddResumeComponent implements OnInit {
   phonePrefix: string[] = ['+57', '+51', '+56'];
   source: string[] = ['Correo','Linkedin','Computrabajo','Empleo.com','Ticjob'];
   cities: string[] = ['Bogota','Medellin','Cali','Leticia','Arauca','Barranquilla','Cartagena','Tunja','Manizalez','Florencia','Yopal','Popayan','Valledupar','Quibdo','Monteria'];
+  nivelesIdioma: string[] = ['Alto','Medio','Bajo'];
   // Propiedades listadas desde servicio
   domain: any = {};
   Study: any = {};
   referred:any = {};
-  descriptionStudy: any = {};
+  descriptionStudy: any[] = [];
 
   registerLanguague:string[] = [];
   registerSkills:string[] = [];
@@ -84,16 +84,16 @@ export class AddResumeComponent implements OnInit {
     timeEnd: ['',Validators.required]
   });
 
-  phones ={
-    type: '',
-    prefix: '',
-    number: ''
-  }
+  phones = this.fb.group({
+    type: ['',Validators.required],
+    prefix: ['',Validators.required],
+    number: ['',Validators.required]
+  });
 
-  nevelStudy = {
-    type: '',
-    name: ''
-  }
+  nevelStudy = this.fb.group({
+    type: ['',Validators.required],
+    name: ['',Validators.required]
+  });
 
   ngOnInit(): void {
     this.getDataStudies();
@@ -117,16 +117,17 @@ export class AddResumeComponent implements OnInit {
     })
   }
 
-  createItemSkills(value: {domain:string, knowledgeArea:string}) {
+  createItemSkills(value: {domain:string, knowledgeArea:string, description:string}) {
     return this.fb.group({
-      domain: [value.domain],
-      knowledgeArea: [value.knowledgeArea, Validators.required]
+      domain: [{value: value.domain, disabled : true}],
+      knowledgeArea: [value.knowledgeArea, Validators.required],
+      description: [value.description, Validators.required]
     })
   }
 
   createItemLanguages(value: {name:string, writing:string, reading:string, speaking:string}) {
     return this.fb.group({
-      name: [value.name],
+      name: [{value: value.name, disabled : true}],
       writing: [value.writing, Validators.required],
       reading: [value.reading, Validators.required],
       speaking: [value.speaking, Validators.required]
@@ -151,9 +152,16 @@ export class AddResumeComponent implements OnInit {
   // Añadir items a FormArray
   async addJobReference() {
     if(this.formExperience.valid){
-      console.log(this.workExperienceArray.value);
-      this.workExperienceArray.push(await this.returnForm(this.formExperience.value));
-      this.formExperience.reset();
+      if(this.dateIsValid(new Date(this.formExperience.value.timeStart), new Date(this.formExperience.value.timeEnd))){
+        this.workExperienceArray.push(await this.returnForm(this.formExperience.value));
+        this.formExperience.reset();
+      }else{
+        this.notificationService.openSimpleSnackBar(
+          {title: 'Fechas Invalidas', message: 'La fecha final debe ser mayor a la fecha de inicio', type: 'info'}
+        );
+        this.formExperience.get('timeStart')?.reset();
+        this.formExperience.get('timeEnd')?.reset();
+      }
     }else{
       this.notificationService.openSimpleSnackBar(
         {title: 'Experinecias laborales', message: 'los campos no se pueden añadir hasta encontrarse llenos', type: 'info'}
@@ -171,33 +179,33 @@ export class AddResumeComponent implements OnInit {
     })
   }
 
-  // domainChecked(domain:string){
-  //   this.addResumeForm.value.languages.forEach((element: { name: string; }) => {
-  //     if(element.name === domain){
-  //       return true;
-  //     }
-  //   });
-  //   return false;
-  // }
-
   addPhone() {
-    this.phoneArray.push(this.createItemPhone(this.phones));
-    this.phones.type = '';
-    this.phones.prefix = '';
-    this.phones.number = '';
+    if(this.phones.valid){
+      this.phoneArray.push(this.createItemPhone(this.phones.value));
+      this.phones.reset();
+    }else{
+      this.notificationService.openSimpleSnackBar(
+        {title: 'Telefono vacio', message: 'No se puede crear un telefono con campos vacios', type: 'info'}
+      );
+    }
   }
 
   addStudy() {
-    this.studyArray.push(this.createItemStudy(this.nevelStudy));
-    this.nevelStudy.type = '';
-    this.nevelStudy.name = '';
+    if(this.nevelStudy.valid){
+      this.studyArray.push(this.createItemStudy(this.nevelStudy.value));
+      this.nevelStudy.reset();
+    }else{
+      this.notificationService.openSimpleSnackBar(
+        {title: 'Nivel Estudio vacio', message: 'No se puede crear un estudio con campos vacios', type: 'info'}
+      );
+    }
   }
 
   addLanguages(value: {name:string, writing:string, reading:string, speaking:string}) {
     this.languagesArray.push(this.createItemLanguages(value));
   }
 
-  addSkills(value: {domain:string, knowledgeArea:string}) {
+  addSkills(value: {domain:string, knowledgeArea:string, description:string}) {
     this.skillsArray.push(this.createItemSkills(value));
   }
 
@@ -224,8 +232,6 @@ export class AddResumeComponent implements OnInit {
     this.skillsArray.removeAt(position);
 
     this.knowledge.splice(position,1);
-    console.log('select conocimientos',this.knowledge);
-
   }
 
   // obtener items de formArray
@@ -264,6 +270,10 @@ export class AddResumeComponent implements OnInit {
       this.skillsArray?.controls[index].get('knowledgeArea')?.touched;
   }
 
+  dateIsValid(startDate: Date, endDate: Date){
+    return startDate.getTime() <= endDate.getTime();
+  }
+
   addOrRemoveLanguage(status: boolean, value: string) {
     if (status === true) {
       const valor = {name: value,writing: '',reading: '',speaking: ''}
@@ -284,10 +294,10 @@ export class AddResumeComponent implements OnInit {
   addValidationReferred(status:boolean,tipe:string){
     if(status === true && tipe === 'S'){
       this.addResumeForm.get('nameReferred')?.setValidators(Validators.required);
+      this.addResumeForm.get('referred')?.setValue(true);
     }else if(status === false && tipe === 'N'){
       this.addResumeForm.get('referred')?.setValue(true);
-    }
-    else{
+    }else{
       this.addResumeForm.get('nameReferred')?.clearValidators();
       this.addResumeForm.get('nameReferred')?.reset();
       this.addResumeForm.get('referred')?.reset();
@@ -298,8 +308,7 @@ export class AddResumeComponent implements OnInit {
     this.addResumeService.getDataStudies()
       .then(dataValue => {
         if (dataValue.length > 0) {
-          this.Study = dataValue
-          console.log('Response del metodo getDataStudies', this.Study)
+          this.Study = dataValue;
         }
       }).catch(error => {
         console.log('error', error);
@@ -315,7 +324,7 @@ export class AddResumeComponent implements OnInit {
           if(domainName.length !== 0){
             this.knowledge.push(domainName);
             if(type === 'Nuevo'){
-              const valor = {domain: value, knowledgeArea: ''}
+              const valor = {domain: value, knowledgeArea: '', description: ''}
               this.addSkills(valor);
             }
           }
@@ -330,7 +339,6 @@ export class AddResumeComponent implements OnInit {
       .then((dataValue: string | any[]) => {
         if (dataValue.length > 0) {
           this.domain = dataValue;
-          console.log('Respuesta dominios:', this.knowledge);
         }
       }).catch(error => {
         console.log('error', error)
@@ -348,13 +356,13 @@ export class AddResumeComponent implements OnInit {
     })
   }
 
-  getEducationArea(){
-    this.addResumeService.getDataEducationArea()
-    .then(dataValue => {
-      if (dataValue.length > 0){
+  async getEducationArea(){
+  await this.addResumeService.getDataEducationArea()
+    .then((dataValue:any[]) => {
+     if (dataValue.length > 0){
         this.descriptionStudy = dataValue;
       }
-    }).catch(error =>{
+    }).catch((error:any) =>{
       console.log(error);
     })
   }
@@ -401,7 +409,7 @@ export class AddResumeComponent implements OnInit {
         });
         break;
       case 'skills':
-        data.forEach((element: { domain:string; knowledgeArea:string }) => {
+        data.forEach((element: { domain:string; knowledgeArea:string; description:string }) => {
           this.addSkills(element);
           this.getDataSyllabi(element.domain,'Existente');
           this.registerSkills.push(element.domain);
@@ -455,7 +463,7 @@ export class AddResumeComponent implements OnInit {
       }
     }else{
       this.notificationService.openSimpleSnackBar(
-        {title: 'Campos ivalidos', message: 'La hoja de vida posee campos vacios o invalidos', type: 'error'}
+        {title: 'Campos inválidos', message: 'La hoja de vida posee campos vacíos o inválidos', type: 'error'}
       );
     }
   }
