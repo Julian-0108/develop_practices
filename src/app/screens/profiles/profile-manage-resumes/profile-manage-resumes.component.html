@@ -8,7 +8,7 @@
         </div>
 
         <div fxLayoutAlign="end end">
-            <div class="layer2" (click)="openDialogAdd()">
+            <div class="layer2" (click)="openDialog('Agregar')">
               <div mat-button class="layer">
                 <mat-icon>add</mat-icon>
               </div>
@@ -111,19 +111,19 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <td mat-cell *matCellDef="let element">{{element.minAspiration | currency:'CAD':'symbol-narrow' }}</td>
+                <td mat-cell *matCellDef="let element">{{element.minAspiration | currency:'CAD':'symbol-narrow':'1.0-0' }}</td>
               </ng-container>
 
               <ng-container matColumnDef="acciones" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef>Opciones</th>
                 <td mat-cell *matCellDef="let element">
-                  <button mat-icon-button matTooltip="Ver Herramientas">
+                  <button mat-icon-button matTooltip="Ver Herramientas" (click)="openDialog('Herramientas',element.numberIdentification)">
                     <mat-icon class="table__buttons edit">description</mat-icon>
                   </button>
-                  <button mat-icon-button matTooltip="Ver Hv">
+                  <button mat-icon-button matTooltip="Ver Hv" (click)="openDialog('Ver',element.numberIdentification)">
                     <mat-icon class="table__buttons history">find_in_page</mat-icon>
                   </button>
-                  <button mat-icon-button matTooltip="Asociar GLPI">
+                  <button mat-icon-button matTooltip="Asociar GLPI" (click)="openDialog('Asociar',element.numberIdentification)">
                     <mat-icon class="table__buttons add_glpi">how_to_reg</mat-icon>
                   </button>
                 </td>
