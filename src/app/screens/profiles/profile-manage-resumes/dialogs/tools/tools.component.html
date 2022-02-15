@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Dominio y conocimiento</h2>
+<div>
+    <mat-list>
+        <mat-list-item *ngFor="let tool of tools">
+          <mat-icon mat-list-icon>build</mat-icon>
+          <div mat-line>{{tool.domain}}</div>
+          <div mat-line>{{tool.knowledgeArea}}</div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+    </mat-list>
+</div>

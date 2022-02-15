@@ -1,0 +1,57 @@
+<h2 mat-dialog-title>Información necesaria</h2>
+<div class="contenido">
+    <h4 class="message">Para asignar a esta persona a una requisición pendiente, seleccione el numero de GLPI.</h4>
+    <form [formGroup]="case" autocomplete="off">
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <div appearance="none" fxFlex="10">
+                <div mat-button class="layer" (click)="addCase()">
+                    <mat-icon>add</mat-icon>
+                </div>
+            </div>
+            <div fxFlex="50">
+                <mat-select placeholder="Seleccione un numero de requisición" (selectionChange)="getInfoCase()" formControlName="number">
+                  <mat-option *ngFor="let number of number_cases" [value]="number.id">{{number.id}}</mat-option>
+                </mat-select>
+            </div>
+            <div fxFlex="40" class="contenido">
+                <label *ngIf="info_case == ''">Sin solicitante seleccionado por numero de GLPI</label>
+                <label *ngIf="info_case != ''"><b>Solicitante:</b> {{info_case[0]?.firstName + " " + info_case[0]?.realName}}</label>
+                <!-- <label>{{info_case[0]?.firstName + "" + info_case[0]?.realName}}</label> -->
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="info_case != ''">
+            <mat-card class="mat-form-field-infix">
+                <div [innerHTML]="info_case[0]?.content"></div>
+            </mat-card>
+        </div>
+    </form>
+</div>
+<div *ngIf="associated_cases.length > 0">
+    <p>
+        <span color="warn">Casos añadidos</span>
+    </p>
+    <mat-list>
+        <div *ngFor="let item of associated_cases">
+            <div mat-subheader><b>GLPI:</b>{{item.id}}</div>
+            <mat-list-item>
+              <mat-icon mat-list-icon>
+                  <img class="glpi" src="../../../assets/images/glpi_color_rojo.svg">
+              </mat-icon>
+              <div mat-line>{{item.firstName + " " + item.realName}}</div>
+              <div mat-line>Fecha de creacion: {{item.createDate | date}}</div>
+              <div>
+                <button mat-mini-fab color="warn">
+                    <mat-icon>
+                        delete_outline
+                    </mat-icon>
+                </button>
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        </div>
+    </mat-list>
+</div>
+<div mat-dialog-actions align="end" class="contenido">
+    <button mat-button class="button--cancel" mat-dialog-close>Cancelar</button>
+    <button mat-button class="button--accept">Asignar</button>
+  </div>
