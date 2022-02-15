@@ -10,8 +10,8 @@ export class ProfileManageResumesService {
   constructor(private http: HttpClient) { }
 
 
-  getDataHvs():Promise<any>{
-    return this.http
+  async getDataHvs():Promise<any>{
+    return await this.http
     .get('http://localhost:80/life-story')
     .pipe(pluck('payload'))
     .toPromise();
