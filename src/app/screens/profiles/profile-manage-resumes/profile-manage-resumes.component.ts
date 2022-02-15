@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { Search } from './interfaces/manege-resumes.interface';
 import { AddResumeComponent } from './add-resume/add-resume.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileManageResumesService } from './services/profile-manage-resumes.service';
+import { ToolsComponent } from './dialogs/tools/tools.component';
+import { element } from 'protractor';
+import { NgSwitchCase } from '@angular/common';
+import { AssociateGLPIComponent } from './dialogs/associate-glpi/associate-glpi.component';
+import { SeeResumeComponent } from './dialogs/see-resume/see-resume.component';
 
 @Component({
   selector: 'app-profile-manage-resumes',
@@ -31,11 +35,36 @@ export class ProfileManageResumesComponent implements OnInit {
     this.getHvs();
   }
 
-  openDialogAdd(){
-    const dialogRef = this.dialog.open(AddResumeComponent, {
-      width: '60%',
-      height: '80%'
-    });
+
+  openDialog(type:string,value?:number){
+    switch(type){
+      case 'Agregar':
+        this.dialog.open(AddResumeComponent, {
+          width: '60%',
+          height: '80%'
+        });
+        break;
+      case 'Herramientas':
+        this.dialog.open(ToolsComponent, {
+          width: '40%',
+          height: '40%',
+          data: {datakey:value}
+        });
+        break;
+      case 'Ver':
+        this.dialog.open(SeeResumeComponent, {
+          width: '50%',
+          height: '50%',
+          data: {datakey:value}
+        });
+        break;
+      case  'Asociar':
+        this.dialog.open(AssociateGLPIComponent, {
+          width: '50%',
+          height: '80%'
+        });
+        break;
+    }
   }
 
   getHvs(){
