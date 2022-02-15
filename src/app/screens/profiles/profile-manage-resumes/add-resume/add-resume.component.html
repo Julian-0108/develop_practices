@@ -71,29 +71,31 @@
                         </div>
 
                         <div appearance="none" fxFlex="70">
-                            <mat-form-field appearance="none" fxFlex="25">
-                                <mat-select placeholder="Seleccione" [(ngModel)]="phones.type" [ngModelOptions]="{standalone: true}">
-                                    <mat-option *ngFor="let type of phoneType" [value]="type">{{type}}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
+                            <form [formGroup]="phones" autocomplete="off">
+                                <mat-form-field appearance="none" fxFlex="25">
+                                    <mat-select placeholder="Seleccione" formControlName="type">
+                                        <mat-option *ngFor="let type of phoneType" [value]="type">{{type}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
 
-                            <mat-form-field appearance="none" fxFlex="25">
-                                <mat-select matInput placeholder="+" [(ngModel)]="phones.prefix" [ngModelOptions]="{standalone: true}">
-                                    <mat-option *ngFor="let prefix of phonePrefix" [value]="prefix">{{prefix}}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
+                                <mat-form-field appearance="none" fxFlex="25">
+                                    <mat-select matInput placeholder="+" formControlName="prefix">
+                                        <mat-option *ngFor="let prefix of phonePrefix" [value]="prefix">{{prefix}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
 
-                            <mat-form-field appearance="none" fxFlex="25">
-                                <input matInput placeholder="Numero" type="number" [(ngModel)]="phones.number" [ngModelOptions]="{standalone: true}">
-                            </mat-form-field>
+                                <mat-form-field appearance="none" fxFlex="25">
+                                    <input matInput placeholder="Numero" type="number" formControlName="number">
+                                </mat-form-field>
 
-                            <div appearance="none" fxLayoutAlign="center center" fxFlex="25">
                                 <div appearance="none" fxLayoutAlign="center center" fxFlex="25">
-                                    <div mat-button class="layer" (click)="addPhone()">
-                                        <mat-icon>add</mat-icon>
+                                    <div appearance="none" fxLayoutAlign="center center" fxFlex="25">
+                                        <div mat-button class="layer" (click)="addPhone()">
+                                            <mat-icon>add</mat-icon>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
 
@@ -229,17 +231,24 @@
                             </mat-form-field>
 
                             <mat-form-field appearance="none" fxFlex="20">
-                                <input matInput placeholder="Escritura" formControlName="writing">
+                                <mat-select matInput placeholder="Escritura" formControlName="writing">
+                                    <mat-option *ngFor="let level of nivelesIdioma" [value]="level">{{level}}</mat-option>
+                                </mat-select>
                                 <mat-error *ngIf="getValidationLanguage(i,'writing')">Campo Requerido</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="none" fxFlex="20">
-                                <input matInput placeholder="Lectura" formControlName="reading">
+                                <mat-select matInput placeholder="Lectura" formControlName="reading">
+                                    <mat-option *ngFor="let level of nivelesIdioma" [value]="level">{{level}}</mat-option>
+                                </mat-select>
                                 <mat-error *ngIf="getValidationLanguage(i,'reading')">Campo Requerido</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="none" fxFlex="20">
-                                <input matInput placeholder="Habla" formControlName="speaking">
+                                <mat-select matInput placeholder="Habla" formControlName="speaking">
+                                    <mat-option *ngFor="let level of nivelesIdioma" [value]="level">{{level}}</mat-option>
+                                </mat-select>
+                                <!-- <input matInput placeholder="Habla" formControlName="speaking"> -->
                                 <mat-error *ngIf="getValidationLanguage(i,'speaking')">Campo Requerido</mat-error>
                             </mat-form-field>
                         </div>
@@ -248,48 +257,50 @@
 
                 <mat-card-title>Nivel de Estudio<span class="label--red">*</span></mat-card-title>
                 <mat-card-content>
-                    <div fxLayout="row" fxLayoutAlign="center center">
+                    <form [formGroup]="nevelStudy" autocomplete="off">
+                        <div fxLayout="row" fxLayoutAlign="center center">
 
-                        <div appearance="none" fxFlex="10">
-                            <div mat-button class="layer" (click)="addStudy()">
-                                <mat-icon>add</mat-icon>
+                            <div appearance="none" fxFlex="10">
+                                <div mat-button class="layer" (click)="addStudy()">
+                                    <mat-icon>add</mat-icon>
+                                </div>
                             </div>
+
+                            <mat-form-field appearance="none" fxFlex="90">
+                                <mat-select placeholder="Seleccione un estudio" formControlName="type">
+                                    <mat-option *ngFor="let estudio of Study" [value]="estudio.name">{{estudio.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="none">
+                                <mat-select placeholder="Seleccione tipo" formControlName="name">
+                                    <mat-option *ngFor="let descripcion of descriptionStudy" [value]="descripcion.name">{{descripcion.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
                         </div>
 
-                        <mat-form-field appearance="none" fxFlex="90">
-                            <mat-select placeholder="Seleccione un estudio" [(ngModel)]="nevelStudy.type" [ngModelOptions]="{standalone: true}">
-                                <mat-option *ngFor="let estudio of Study" [value]="estudio.name">{{estudio.name}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-
-                        <mat-form-field appearance="none">
-                            <mat-select placeholder="Seleccione un estudio" [(ngModel)]="nevelStudy.name" [ngModelOptions]="{standalone: true}">
-                                <mat-option *ngFor="let descripcion of descriptionStudy" [value]="descripcion.name">{{descripcion.name}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-
-                    </div>
-
-                    <table mat-table [dataSource]="studyArray.value" class="full-width center" *ngIf="studyArray.value.length != 0">
-                        <ng-container matColumnDef="type">
-                            <th mat-header-cell *matHeaderCellDef>Estudio</th>
-                            <td mat-cell *matCellDef="let element">{{element.type}}</td>
-                        </ng-container>
-                        <ng-container matColumnDef="name">
-                            <th mat-header-cell *matHeaderCellDef>Descripcion</th>
-                            <td mat-cell *matCellDef="let element">{{element.name}}</td>
-                        </ng-container>
-                        <ng-container matColumnDef="actions">
-                            <th mat-header-cell *matHeaderCellDef>Eliminar</th>
-                            <td mat-cell *matCellDef="let element; let i = index">
-                                <button mat-raised-button  color="warn" focusable="false" (click)="deleteStudy(i)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            </td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    </table>
+                        <table mat-table [dataSource]="studyArray.value" class="full-width center" *ngIf="studyArray.value.length != 0">
+                            <ng-container matColumnDef="type">
+                                <th mat-header-cell *matHeaderCellDef>Estudio</th>
+                                <td mat-cell *matCellDef="let element">{{element.type}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef>Descripcion</th>
+                                <td mat-cell *matCellDef="let element">{{element.name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+                                <td mat-cell *matCellDef="let element; let i = index">
+                                    <button mat-raised-button  color="warn" focusable="false" (click)="deleteStudy(i)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                    </form>
                 </mat-card-content>
 
                 <mat-card-title>Experiencias Laborales<span class="label--red">*</span></mat-card-title>
@@ -324,7 +335,7 @@
                             </mat-form-field>
 
                             <mat-form-filed appearance="none" fxFlex="25">
-                                <button mat-raised-button class="button__container" color="warn" type="button" (click)="addJobReference()">Añadir referia
+                                <button mat-raised-button class="button__container" color="warn" type="button" (click)="addJobReference()">Añadir referencia
                                     <mat-icon>work</mat-icon>
                                 </button>
                             </mat-form-filed>
@@ -365,7 +376,8 @@
                     </form>
                 </mat-card-content>
 
-                <mat-card-title>Dominio<span class="label--red">*</span></mat-card-title>
+                <!-- <mat-card-title>Dominio<span class="label--red">*</span></mat-card-title> -->
+                <mat-card-title>Conocimientos del cargo<span class="label--red">*</span></mat-card-title>
                 <mat-card-content>
                     <section class="flow-root">
                         <mat-checkbox checkboxPosition="before" *ngFor="let dominio of domain; let w = index" [value]="dominio.name" (change)="addOrRemoveSkill($event.checked,dominio.name)" [checked]="registerSkills.includes(dominio.name)">
@@ -373,14 +385,16 @@
                         </mat-checkbox>
                     </section>
                     <div formArrayName="skills">
-                        <div fxLayout="row" fxLayoutAlign="center center" class="inline-flex" *ngFor="let domain of skillsArray.controls; let i = index" [formGroupName]="i">
+                        <div fxLayout="row" fxLayoutAlign="center center" class="inline-flex" *ngFor="let domain of skillsArray?.controls; let i = index" [formGroupName]="i">
                                 <mat-form-field appearance="none" fxFlex="40">
                                     <input matInput formControlName="domain">
                                 </mat-form-field>
 
                                 <mat-form-field appearance="none" fxFlex="40">
                                     <mat-select matInput placeholder="Selecciona una herramienta" formControlName="knowledgeArea">
-                                        <mat-option *ngFor="let herramienta of knowledge[i]" [value]="herramienta.knowledgeArea">{{herramienta.knowledgeArea}}</mat-option>
+                                        <mat-option *ngFor="let herramienta of knowledge[i]" [value]="herramienta.knowledgeArea">{{herramienta.knowledgeArea}}
+                                            <mat-icon matTooltipClass="custom-tooltip" [matTooltip]="herramienta.specificKnowledge" formControlName="description" class="content__icon">help</mat-icon>
+                                        </mat-option>
                                     </mat-select>
                                     <mat-error *ngIf="getValidationDomain(i)">Campo Requerido</mat-error>
                                 </mat-form-field>
