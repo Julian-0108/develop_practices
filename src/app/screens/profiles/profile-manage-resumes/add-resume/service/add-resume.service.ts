@@ -9,56 +9,54 @@ import { pluck } from 'rxjs/operators';
 })
 export class AddResumeService {
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+constructor(private http: HttpClient, private authService: AuthService) {}
 
 addResume(url: string, register: any) {
   return this.http.post(url, register).toPromise();
 }
 
-getDataStudies(): Promise<any>{
-  return this.http
+async getDataStudies(): Promise<any>{
+  return await this.http
     .get(`${environment.API_MASTER_INFO}/studies?status=true`)
     .pipe( pluck('payload'))
     .toPromise();
 }
 
-getDataDomain():Promise<any>{
-  return this.http
+async getDataDomain():Promise<any>{
+  return await this.http
   .get(`${environment.API_MASTER_INFO}/domain?status=true`)
   .pipe(pluck('payload'))
   .toPromise();
 }
 
-getDataSyllabi():Promise<any>{
-  return this.http
+async getDataSyllabi():Promise<any>{
+  return await this.http
   .get(`${environment.API_MASTER_INFO}/syllabi?status=true`)
   .pipe(pluck('payload'))
   .toPromise();
 }
 
-getDataUsers():Promise<any>{
-  return this.http
+async getDataUsers():Promise<any>{
+  return await this.http
   .get('http://localhost:80/users')
   .pipe(pluck('payload'))
   .toPromise();
 }
 
-getDataExist(id:number):Promise<any>{
-  return this.http
+async getDataExist(id:number):Promise<any>{
+  return await this.http
   .get(`http://localhost:80/life-story?numberIdentification=${id}`)
   .pipe(pluck('payload'))
   .toPromise();
 }
 
-getDataEducationArea():Promise<any>{
-  return this.http
-  .get(`${environment.API_MASTER_INFO}/education-area?status=true`)
-  .pipe(pluck('payload'))
-  .toPromise();
+async getDataEducationArea():Promise<any>{
+   return await this.http
+  .get(`${environment.API_MASTER_INFO}/education-area?status=true`).pipe(pluck('payload')).toPromise();
 }
 
-updateRegister(id:string,data:any):Promise<any>{
-  return this.http
+async updateRegister(id:string,data:any):Promise<any>{
+  return await  this.http
   .put(`http://localhost:80/life-story/${id}`,data)
   .toPromise();
 }
