@@ -54,6 +54,7 @@ export class MasterInfoComponent implements OnInit {
   editCoursesAndCertification: boolean = false;
   types: {name:string}[] | Type[] = [];
   platforms: Type[] = [];
+  ListVersions: any[] = [];
   domains: GeneralMaster[] = [];
   technologies: GeneralMaster[] = [];
   skills: GeneralMaster[] = [];
@@ -90,6 +91,7 @@ export class MasterInfoComponent implements OnInit {
   updateTechnologies(){
     if(this.data?.title == "Editar" && this.data?.url =="courses-certifications"){
     this.filterTechnology(this.data?.element?.domain[0]?._id);
+    this.filterVersionTechnology(this.data?.element?.technology);
     }
   }
 
@@ -178,7 +180,7 @@ export class MasterInfoComponent implements OnInit {
               );
               this.specificKnowledgeList = allSpecificKnowledgeWithOutDuplicates;
             });
-          if (this.data.url !== 'courses-certifications') this.notNullData('specificKnowledge');
+          // if (this.data.url !== 'courses-certifications') this.notNullData('specificKnowledge');
         }
         break;
       case 'specificKnowledgeField':
@@ -255,8 +257,34 @@ export class MasterInfoComponent implements OnInit {
            }
           });
 
+          const allTechnologiesWithOutDuplicates = this.technologies.filter(
+            (obj: any, index: number, arraySource: any[]) =>
+              arraySource.findIndex(
+                (element: any) => element.technology === obj.technology
+              ) === index
+          );
+          this.technologies = allTechnologiesWithOutDuplicates;
+
       })
     this.statusTechnology = true;
+  }
+
+  async filterVersionTechnology(event: any){
+    this.ListVersions.length = 0
+      await this.masterInfoService.getAllTechnologies().then((resp: any) => {
+        resp.forEach((element:any) => {
+          if(event === element.technology){
+            this.ListVersions.push(element)
+          }
+         });
+         const allVersionsWithOutDuplicates = this.ListVersions.filter(
+          (obj: any, index: number, arraySource: any[]) =>
+            arraySource.findIndex(
+              (element: any) => element.version === obj.version
+            ) === index
+        );
+        this.ListVersions = allVersionsWithOutDuplicates;
+      })
   }
 
   createForm(): FormGroup {
@@ -278,7 +306,8 @@ export class MasterInfoComponent implements OnInit {
           this.data?.url === 'courses-certifications' ||
           this.data?.url == 'member-carousel' ||
           this.data?.url === 'technology' ||
-          this.data?.url == 'optional-tools'
+          this.data?.url == 'optional-tools' ||
+          this.data?.url == 'study-center'
 
       }),
       type: new FormControl({
@@ -289,7 +318,8 @@ export class MasterInfoComponent implements OnInit {
           this.data?.url === 'functions' ||
           this.data?.url === 'domain' ||
           this.data?.url === 'member-carousel' ||
-          this.data?.url === 'technology'
+          this.data?.url === 'technology'||
+          this.data?.url == 'study-center'
       }),
       idDomain: new FormControl(null),
       idTechnology: new FormControl(null),
@@ -364,11 +394,13 @@ export class MasterInfoComponent implements OnInit {
         this.form.controls.idDomain?.updateValueAndValidity();
         this.form.controls.knowledgeArea?.setValidators([Validators.required]);
         this.form.controls.knowledgeArea?.updateValueAndValidity();
-        this.form.controls.specificKnowledge?.clearValidators();
+        //this.form.controls.specificKnowledge?.clearValidators();
         // this.form.controls.specificKnowledge?.setValidators([Validators.required]);
         // this.form.controls.specificKnowledge?.updateValueAndValidity();
-        this.form.controls.platform?.setValidators([Validators.required]);
-        this.form.controls.platform?.updateValueAndValidity();
+        this.form.controls.platform?.clearValidators();
+        this.form.controls.knowledgeArea?.updateValueAndValidity();
+        this.form.controls.version?.setValidators([Validators.required]);
+        this.form.controls.version?.updateValueAndValidity();
         this.form.controls.idTechnology?.setValidators([Validators.required]);
         this.form.controls.idTechnology?.updateValueAndValidity();
         this.form.controls.formation?.setValidators([Validators.required]);
@@ -425,8 +457,8 @@ export class MasterInfoComponent implements OnInit {
 
   initForm(): void {
     this.formValidations();
-
     if (this.data?.element) {
+      console.log(this.data.element)
       /**
        * Si entra por este condicional, llena los campos del formulario, con la información
        * que venga de la fila que se va a editar.
@@ -453,7 +485,7 @@ export class MasterInfoComponent implements OnInit {
       }
 
       this.form.patchValue(this.data.element);
-      this.platformValidation(this.form.get('type')?.value === this.CERTIFICATION);
+      //this.platformValidation(this.form.get('type')?.value === this.CERTIFICATION);
       this.form
         .get('createdAt')
         ?.patchValue(this.datePipe.transform(this.data.element.createdAt, this.DATE_FORM_CONTROL));
@@ -476,6 +508,7 @@ export class MasterInfoComponent implements OnInit {
 
   platformValidation(validation: boolean) {
     if (this.data.url !== 'courses-certifications') return;
+
     if (validation) {
       this.form.get('platform')?.reset();
       this.form.get('platform')?.disable();
@@ -525,7 +558,7 @@ export class MasterInfoComponent implements OnInit {
     if(this.data.url !== 'technology'){
       this.form.value.name = this.removeWhiteSpaces(this.form.value.name);
     }
-
+    console.log(this.form.value)
     this.masterInfoService
       .addRegisterToMaster(this.data.url, this.form.value)
       .then((response: any) => this.showNotification(response))
@@ -750,6 +783,14 @@ export class MasterInfoComponent implements OnInit {
         message: 'Revisa la información del formulario',
         type: 'error',
       });
+      const invalid = [];
+      const controls = this.form.controls;
+      for (const name in controls) {
+          if (controls[name].invalid) {
+              invalid.push(name);
+          }
+      }
+      console.log(invalid)
       return;
     }
 
@@ -856,7 +897,7 @@ export class MasterInfoComponent implements OnInit {
       }
       return;
     }
-    this.platformValidation(ev.value === this.CERTIFICATION);
+    //this.platformValidation(ev.value === this.CERTIFICATION);
     this.form.get('submenu')?.disable();
     this.form.get('idParent')?.disable();
   }
@@ -865,9 +906,9 @@ export class MasterInfoComponent implements OnInit {
     const URL = this.data?.url;
     switch (field) {
       case 'name':
-        if (URL !== 'syllabi') return true;
+        if (URL !== 'syllabi' ) return true;
         break;
-      case 'platform':
+      case 'versionTech':
         if (URL === 'courses-certifications') return true;
         break;
       case 'technology':
@@ -884,7 +925,8 @@ export class MasterInfoComponent implements OnInit {
         if (
           URL !== 'security-responsabilities' &&
           URL !== 'courses-certifications' &&
-          URL !== 'syllabi'
+          URL !== 'syllabi' &&
+          URL !== 'study-center'
         )
           return true;
         break;
@@ -900,7 +942,7 @@ export class MasterInfoComponent implements OnInit {
         if (URL === 'types') return true;
         break;
       case 'type':
-        if (URL !== 'types' && URL !== 'functions' && URL !== 'syllabi') return true;
+        if (URL !== 'types' && URL !== 'functions' && URL !== 'syllabi' && URL !== 'study-center') return true;
         break;
       case 'knowledgeArea':
         if (URL === 'syllabi' || URL === 'courses-certifications') return true;
