@@ -155,6 +155,13 @@ export class AdminMasterInfoComponent implements OnInit {
         'Esta son las herramientas y opciones',
       haveTypeField: true,
     },
+    {
+      name: 'Centros de Estudios',
+      url: 'study-center',
+      sumary:
+        'Listado de los centros de estudio',
+      haveTypeField: true,
+    },
 
 
   ];
@@ -442,15 +449,32 @@ export class AdminMasterInfoComponent implements OnInit {
               el !== 'description'&&
               el !== 'name'
             );
+            case 'study-center':
+              return this.displayedColumns.filter(
+                (el) =>
+                el !== 'submenu' &&
+                el !== 'idTechnology' &&
+                el !== 'version' &&
+                el !== 'reference' &&
+                el !== 'type' &&
+                el !== 'idDomain' &&
+                el !== 'knowledgeArea' &&
+                el !== 'specificKnowledge' &&
+                el !== 'platform' &&
+                el !== 'technology' &&
+                el !== 'formation' &&
+                el !== 'description'
+              );
       case 'courses-certifications':
         return this.displayedColumns.filter(
           (el) =>
             el !== 'submenu' &&
             el !== 'technology' &&
-            el !== 'version' &&
             el !== 'reference' &&
             el !== 'specificKnowledge' &&
-            el !== 'description'
+            el !== 'description' &&
+            el !== 'platform'
+
         );
       case 'syllabi':
         return this.displayedColumns.filter(
