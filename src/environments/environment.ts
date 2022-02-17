@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   API_MASTER_INFO: 'http://mundoseti-dllo.setiad.com.co:31021',
+  API_LIFE_HISTORY: 'http://mundoseti-dllo.setiad.com.co:31029',
   API_BASE_PROFILES : 'http://mundoseti-dllo.setiad.com.co:31024',
   API_SECURITY: 'http://mundoseti-dllo.setiad.com.co:31022'
 };

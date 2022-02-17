@@ -35,7 +35,7 @@
               </ng-container>
 
               <ng-container matColumnDef="numberIdentification">
-                <th mat-header-cell *matHeaderCellDef> Numero de documento
+                <th mat-header-cell *matHeaderCellDef> Número de documento
                   <div class="filter-inputs">
                     <mat-form-field floatLabel="always" appearance="none">
                       <mat-select>
@@ -100,7 +100,7 @@
               </ng-container>
 
               <ng-container matColumnDef="minAspiration">
-                <th mat-header-cell *matHeaderCellDef> Aspiracion salarial
+                <th mat-header-cell *matHeaderCellDef> Aspiración salarial
                   <div class="filter-inputs">
                     <mat-form-field floatLabel="always" appearance="none">
                       <mat-select>
@@ -123,7 +123,7 @@
                   <button mat-icon-button matTooltip="Ver Hv" (click)="openDialog('Ver',element.numberIdentification)">
                     <mat-icon class="table__buttons history">find_in_page</mat-icon>
                   </button>
-                  <button mat-icon-button matTooltip="Asociar GLPI" (click)="openDialog('Asociar',element.numberIdentification)">
+                  <button mat-icon-button matTooltip="Asociar GLPI" (click)="openDialog('Asociar',element._id)">
                     <mat-icon class="table__buttons add_glpi">how_to_reg</mat-icon>
                   </button>
                 </td>

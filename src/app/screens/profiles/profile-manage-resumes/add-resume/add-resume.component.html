@@ -24,13 +24,13 @@
                         </mat-form-field>
 
                         <mat-form-field appearance="none">
-                            <input matInput placeholder="Numero de documento" formControlName="numberIdentification" (blur)="validateHvExist()">
-                            <mat-error *ngIf="!addResumeForm.controls['numberIdentification'].valid && addResumeForm.controls['numberIdentification'].touched">Numero de documento requerido</mat-error>
+                            <input matInput placeholder="Número de documento" formControlName="numberIdentification" (blur)="validateHvExist()">
+                            <mat-error *ngIf="!addResumeForm.controls['numberIdentification'].valid && addResumeForm.controls['numberIdentification'].touched">Número de documento requerido</mat-error>
                         </mat-form-field>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center center">
                         <div fxFlex="30">
-                            <p>Nombre Completo</p>
+                            <p>Nombre completo</p>
                         </div>
 
                         <mat-form-field appearance="none" fxFlex="70">
@@ -41,7 +41,7 @@
 
                     <div fxLayout="row" fxLayoutAlign="center center">
                         <div fxFlex="30">
-                            <p>Pais</p>
+                            <p>País</p>
                         </div>
 
                         <mat-form-field appearance="none" fxFlex="70">
@@ -67,7 +67,7 @@
 
                     <div fxLayout="row" fxLayoutAlign="center center">
                         <div fxFlex="30">
-                            <p>Añadir telefono</p>
+                            <p>Añadir teléfono</p>
                         </div>
 
                         <div appearance="none" fxFlex="70">
@@ -85,7 +85,7 @@
                                 </mat-form-field>
 
                                 <mat-form-field appearance="none" fxFlex="25">
-                                    <input matInput placeholder="Numero" type="number" formControlName="number">
+                                    <input matInput placeholder="Número" type="number" formControlName="number">
                                 </mat-form-field>
 
                                 <div appearance="none" fxLayoutAlign="center center" fxFlex="25">
@@ -121,7 +121,7 @@
                                 </mat-form-field>
 
                                 <mat-form-field appearance="none" fxFlex="25">
-                                    <input matInput placeholder="Numero" type="number" formControlName="number">
+                                    <input matInput placeholder="Número" type="number" formControlName="number">
                                     <mat-error *ngIf="getValidatorPhone(i,'number')">Campo requerido</mat-error>
                                 </mat-form-field>
 
@@ -199,16 +199,16 @@
                 </mat-card-content>
 
 
-                <mat-card-title>Aspiracion Salarial<span class="label--red">*</span></mat-card-title>
+                <mat-card-title>Aspiración Salarial<span class="label--red">*</span></mat-card-title>
                 <mat-card-content>
                     <div fxLayout="row" fxLayoutAlign="center center">
                         <mat-form-field appearance="none" fxFlex="50">
-                            <input matInput type="number" placeholder="Minima" formControlName="minAspiration">
+                            <input matInput type="number" placeholder="Mínima" formControlName="minAspiration">
                             <mat-error *ngIf="!addResumeForm.controls['minAspiration'].valid && addResumeForm.controls['minAspiration'].touched">Campo requerido</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="none" fxFlex="50">
-                            <input matInput type="number" placeholder="Maxima" formControlName="maxAspiration">
+                            <input matInput type="number" placeholder="Máxima" formControlName="maxAspiration">
                             <mat-error *ngIf="!addResumeForm.controls['maxAspiration'].valid && addResumeForm.controls['maxAspiration'].touched">Campo requerido</mat-error>
                         </mat-form-field>
                     </div>
@@ -393,7 +393,7 @@
                                 <mat-form-field appearance="none" fxFlex="40">
                                     <mat-select matInput placeholder="Selecciona una herramienta" formControlName="knowledgeArea">
                                         <mat-option *ngFor="let herramienta of knowledge[i]" [value]="herramienta.knowledgeArea">{{herramienta.knowledgeArea}}
-                                            <mat-icon matTooltipClass="custom-tooltip" [matTooltip]="herramienta.specificKnowledge" formControlName="description" class="content__icon">help</mat-icon>
+                                            <mat-icon matTooltipClass="custom-tooltip" [matTooltip]="herramienta.specificKnowledge" class="content__icon">help</mat-icon>
                                         </mat-option>
                                     </mat-select>
                                     <mat-error *ngIf="getValidationDomain(i)">Campo Requerido</mat-error>

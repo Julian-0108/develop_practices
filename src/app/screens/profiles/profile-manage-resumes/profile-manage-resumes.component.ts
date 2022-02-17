@@ -4,8 +4,6 @@ import { AddResumeComponent } from './add-resume/add-resume.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileManageResumesService } from './services/profile-manage-resumes.service';
 import { ToolsComponent } from './dialogs/tools/tools.component';
-import { element } from 'protractor';
-import { NgSwitchCase } from '@angular/common';
 import { AssociateGLPIComponent } from './dialogs/associate-glpi/associate-glpi.component';
 import { SeeResumeComponent } from './dialogs/see-resume/see-resume.component';
 
@@ -36,7 +34,7 @@ export class ProfileManageResumesComponent implements OnInit {
   }
 
 
-  openDialog(type:string,value?:number){
+  openDialog(type:string,value?:any){
     switch(type){
       case 'Agregar':
         this.dialog.open(AddResumeComponent, {
@@ -61,7 +59,8 @@ export class ProfileManageResumesComponent implements OnInit {
       case  'Asociar':
         this.dialog.open(AssociateGLPIComponent, {
           width: '50%',
-          height: '80%'
+          height: '80%',
+          data: {id:value}
         });
         break;
     }
