@@ -52,7 +52,7 @@ const materialComponents = [
   MatFormFieldModule,
   MatToolbarModule,
   MatSidenavModule,
-  MatRippleModule,
+  MatRippleModule, 
   MatSnackBarModule,
   FlexModule,
   FlexLayoutModule,

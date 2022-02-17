@@ -1,0 +1,112 @@
+body {
+    // padding: 0 20px ;
+    height: calc(100vh - 75px);
+    background-color: #fff !important;
+  }
+  mat-drawer-container {
+    background-color: #fff !important;
+  }
+  
+  .background {
+    // background-color: #fff !important;
+    background-image: url('../../../../assets/images/background_adminMasters.svg');
+    background-size: cover;
+  }
+  
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 100px;
+  }
+  .title {
+    color: var(--primary-color);
+    font-size: 39px;
+    line-height: 52px;
+    text-align: center;
+    margin-top: 15px;
+  }
+  
+  .main {
+    margin: 0px 19px;
+  }
+  
+  .table__container {
+    margin-top: 10px;
+    height: 25em;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: auto;
+  }
+  
+  table {
+    width: 100%;
+  }
+
+
+  .icon-search {
+    margin: 0 -30px !important;
+  }
+  .icon-description {
+    margin: 0 -49px !important;
+  }
+  .icon-search-security {
+    margin: 0 -65px !important;
+  }
+  .mat-input-element {
+    padding: 4px;
+  }
+  .mat-select {
+    height: 33px !important;
+  }
+
+.select__icon {
+  position: absolute;
+  right: 12px;
+  color: #c3c3c3;
+}
+
+.icon {
+  position: absolute;
+  top: -22px;
+  font-size: 21px;
+}
+
+.content__icon {
+  font-size: 15px;
+  color: #83afe2;
+  top: 5px;
+}
+
+.icon-search {
+  margin: 0 -30px;
+}
+
+.icon-search-carousel {
+  margin: 0 -37px;
+}
+
+
+.icon-description {
+  margin: 0 -35px;
+}
+
+.icon-search-security {
+  margin: 0 -30px;
+}
+
+.filter-inputs {
+    min-height: 55.8px;
+  }
+
+  .button-back {
+    top: 1em;
+  }
+
+  .button__container {
+    width: 100%;
+    right: 20px;
+    // position: absolute;
+    // top: 9em;
+  }
+  
