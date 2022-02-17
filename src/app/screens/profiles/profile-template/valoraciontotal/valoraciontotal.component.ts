@@ -15,7 +15,6 @@ export class ValoraciontotalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.data)
   }
 
 }

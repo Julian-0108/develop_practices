@@ -21,18 +21,12 @@
      */
     lenghtValidator(inputValue: Array<number | string>, maxNumber: number, event: Event) {
       if (inputValue.length == maxNumber) {
-        console.log("entra")
-        console.log(inputValue)
         event.returnValue = false;
       }
 
     }
     ValidatorMath(inputValue:any  , maxNumber: number, event: Event){
-      console.log("",event)
-      console.log(inputValue)
      /* if (inputValue > 50) {
-        console.log("entra")
-
         event.returnValue = false;
       }*/
     }

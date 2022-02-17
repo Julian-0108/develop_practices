@@ -16,7 +16,6 @@ export class ProfileOptionsService {
       .toPromise();
   }
   getSubBaseTeams(idParent: string) {
-    console.log(idParent);
     return this.httpClient
       .get(
         `${environment.API_MASTER_INFO}/base-teams-categories?status=true&type=Subgrupo&idParent=${idParent}`

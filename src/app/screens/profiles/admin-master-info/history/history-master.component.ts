@@ -20,7 +20,6 @@ export class HistoryMasterComponent implements OnInit {
   endDateFilter = (d: Date | null): boolean => {
     const day = (d || new Date()).getDay();
     // Prevent Saturday and Sunday from being selected.
-    console.log(dayjs.default(day).isBefore(day, 'date'));
     return day !== 0 && day !== 6;
   };
   historyFilter: any = [];
@@ -62,13 +61,11 @@ export class HistoryMasterComponent implements OnInit {
   idHistoryassigned!: any;
   ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
 
     this.existentDate = '';
     if (changes.idHistory) {
       if (changes.idHistory.currentValue !== undefined) {
         this.idHistoryassigned = changes.idHistory.currentValue._id;
-        console.log(this.idHistoryassigned);
         this.historyMastersService
           .hitoryActionsAdminMaster('get', this.idHistoryassigned)
           .then((res: any) => {
@@ -195,13 +192,11 @@ export class HistoryMasterComponent implements OnInit {
     this.historyMastersService
       .hitoryActionsAdminMaster('get', this.idHistoryassigned)
       .then((res: any) => {
-        console.log(res);
         this.historyFilter = this.setShowDate(this.historyFilter, res).filter(
           (item: any) =>
             dayjs.default(item.updatedAt).isSameOrAfter(startDate) &&
             dayjs.default(item.updatedAt).isSameOrBefore(endDate)
         );
-        console.log(this.historyFilter);
       });
   }
 
@@ -262,8 +257,6 @@ export class HistoryMasterComponent implements OnInit {
       return;
     }
     this.dataSource = this.historyFilter.filter((el: any) => el._id === id);
-    console.log(this.historyFilter);
-    console.log(this.dataSource);
   }
   customPreview() {
     this._dialog

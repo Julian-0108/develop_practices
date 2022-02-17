@@ -101,7 +101,6 @@ export class MasterInfoService {
   }
 
   addRegisterToMaster(url: string, register: any) {
-    console.log("dtaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",url,register)
     return this.http.post(`${environment.API_MASTER_INFO}/${url}`, register).toPromise();
   }
 
