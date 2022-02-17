@@ -69,6 +69,14 @@ const routes: Routes = [
       canActivate: [AuthGuard]
   },
   {
+    path: 'sites-seti',
+    loadChildren: () =>
+      import('./screens/sites/configTable/configTable.module').then(
+        (m) => m.ConfigTableModule
+      ),
+      canActivate: [AuthGuard]
+  },
+  {
     path: 'selection-profiles',
     loadChildren: () =>
     import('./screens/profiles/profile-selection/profile-selection.module').then(
