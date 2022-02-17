@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>Información necesaria</h2>
 <form [formGroup]="case" (ngSubmit)="saveRegister()" autocomplete="">
     <div class="contenido">
-        <h4 class="message">Para asignar a esta persona a una requisición pendiente, seleccione el numero de GLPI.</h4>
+        <h4 class="message">Para asignar a esta persona a una requisición pendiente, seleccione el número de GLPI.</h4>
         <!-- <form [formGroup]="case" autocomplete="off"> -->
             <div fxLayout="row" fxLayoutAlign="center center">
                 <div appearance="none" fxFlex="10">
@@ -10,13 +10,13 @@
                     </div>
                 </div>
                 <div fxFlex="50">
-                    <mat-select placeholder="Seleccione un numero de requisición" (selectionChange)="getInfoCase()" formControlName="number">
+                    <mat-select placeholder="Seleccione un número de requisición" (selectionChange)="getInfoCase()" formControlName="number">
                       <mat-option *ngFor="let number of number_cases" [value]="number.id">{{number.id}}</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="!case.controls['number'].valid && case.controls['number'].touched">requisicion requerida</mat-error>
+                    <mat-error *ngIf="!case.controls['number'].valid && case.controls['number'].touched">Requisición requerida</mat-error>
                 </div>
                 <div fxFlex="40" class="contenido">
-                    <label *ngIf="info_case == ''">Sin solicitante seleccionado por numero de GLPI</label>
+                    <label *ngIf="info_case == ''">Sin solicitante seleccionado por número de GLPI</label>
                     <label *ngIf="info_case != ''"><b>Solicitante:</b> {{info_case[0]?.firstName + " " + info_case[0]?.realName}}</label>
                 </div>
             </div>
