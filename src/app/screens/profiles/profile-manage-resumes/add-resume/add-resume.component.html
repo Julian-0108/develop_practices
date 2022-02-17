@@ -393,7 +393,7 @@
                                 <mat-form-field appearance="none" fxFlex="40">
                                     <mat-select matInput placeholder="Selecciona una herramienta" formControlName="knowledgeArea">
                                         <mat-option *ngFor="let herramienta of knowledge[i]" [value]="herramienta.knowledgeArea">{{herramienta.knowledgeArea}}
-                                            <mat-icon matTooltipClass="custom-tooltip" [matTooltip]="herramienta.specificKnowledge" formControlName="description" class="content__icon">help</mat-icon>
+                                            <mat-icon matTooltipClass="custom-tooltip" [matTooltip]="herramienta.specificKnowledge" class="content__icon">help</mat-icon>
                                         </mat-option>
                                     </mat-select>
                                     <mat-error *ngIf="getValidationDomain(i)">Campo Requerido</mat-error>
