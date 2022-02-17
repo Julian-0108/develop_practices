@@ -22,4 +22,9 @@ export class AssociateGlpiService {
       .pipe(pluck('payload'))
       .toPromise();
   }
+
+  async saveCase(data:any): Promise<any>{
+    return await this.http
+    .post('http://localhost:90/requisition-case',data).toPromise();
+  }
 }
