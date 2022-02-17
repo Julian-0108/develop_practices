@@ -18,13 +18,13 @@ export class AddResumeComponent implements OnInit {
   update=false;
   id_registro:any;
 
-  Languagesdata: string[] = ['Ingles', 'Frances', 'Chino', 'Mandarin', 'Portugues'];
+  Languagesdata: string[] = ['Inglés', 'Francés', 'Chino', 'MandarÍn', 'Portugués'];
   typeIdentificationdata: string[] = ['Cedula de Ciudadania', 'Cedula de extranjeria', 'tarjeta de identidad'];
   knowledge:string[] = [];
-  phoneType: string[] = ['Movil', 'Casa', 'Oficina'];
+  phoneType: string[] = ['Móvil', 'Casa', 'Oficina'];
   phonePrefix: string[] = ['+57', '+51', '+56'];
   source: string[] = ['Correo','Linkedin','Computrabajo','Empleo.com','Ticjob'];
-  cities: string[] = ['Bogota','Medellin','Cali','Leticia','Arauca','Barranquilla','Cartagena','Tunja','Manizalez','Florencia','Yopal','Popayan','Valledupar','Quibdo','Monteria'];
+  cities: string[] = ['Bogotá','Medellín','Cali','Leticia','Arauca','Barranquilla','Cartagena','Tunja','Manizales','Florencia','Yopal','Popayán','Valledupar','Quibdó','Montería'];
   nivelesIdioma: string[] = ['Alto','Medio','Bajo'];
   // Propiedades listadas desde servicio
   domain: any = {};
