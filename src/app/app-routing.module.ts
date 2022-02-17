@@ -77,6 +77,14 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'sites',
+    loadChildren: () =>
+    import('./screens/sites/site.module').then(
+      (m) => m.SiteModule
+    ),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'manage-resumes',
     loadChildren: () =>
     import('./screens/profiles/profile-manage-resumes/profile-manage-resumes.module').then(
