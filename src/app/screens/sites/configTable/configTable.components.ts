@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
-  selector: 'app-admin-master-info',
+  selector: 'app-config-table',
   templateUrl: './configTable.components.html',
   styleUrls: ['./configTable.components.scss'],
 })
@@ -16,7 +16,7 @@ export class ConfigTableComponents implements OnInit {
   help: string = 'help';
   idHistory!: string;
   subtitle: any = '';
-  dataSource =new MatTableDataSource(ELEMENT_DATA);;
+  dataSource =new MatTableDataSource(ELEMENT_DATA);
 
   public displayedColumns: string[] = [
     'name',
