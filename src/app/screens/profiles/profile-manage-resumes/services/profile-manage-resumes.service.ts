@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { pluck } from 'rxjs/operators';
+import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class ProfileManageResumesService {
 
   async getDataHvs():Promise<any>{
     return await this.http
-    .get('http://localhost:80/life-story')
+    .get(`${environment.API_LIFE_HISTORY}/life-story`)
     .pipe(pluck('payload'))
     .toPromise();
   }
