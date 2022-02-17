@@ -38,14 +38,14 @@ async getDataSyllabi():Promise<any>{
 
 async getDataUsers():Promise<any>{
   return await this.http
-  .get('http://localhost:80/users')
+  .get(`${environment.API_LIFE_HISTORY}/users`)
   .pipe(pluck('payload'))
   .toPromise();
 }
 
 async getDataExist(id:number):Promise<any>{
   return await this.http
-  .get(`http://localhost:80/life-story?numberIdentification=${id}`)
+  .get(`${environment.API_LIFE_HISTORY}/life-story?numberIdentification=${id}`)
   .pipe(pluck('payload'))
   .toPromise();
 }
@@ -57,7 +57,7 @@ async getDataEducationArea():Promise<any>{
 
 async updateRegister(id:string,data:any):Promise<any>{
   return await  this.http
-  .put(`http://localhost:80/life-story/${id}`,data)
+  .put(`${environment.API_LIFE_HISTORY}/life-story/${id}`,data)
   .toPromise();
 }
 
