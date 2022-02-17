@@ -26,7 +26,7 @@ export class SiteComponent implements OnInit {
     {
       name: 'Configuración de tablas',
       description: 'Configuración de tablas',
-      url: '/temperature',
+      url: '/sites-seti',
       imagePath: ''
     },
     {
