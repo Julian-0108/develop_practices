@@ -1,0 +1,28 @@
+.card {
+    height: 18em;
+    border-radius: 20px important !important;
+    box-shadow: 2px 5px 10px 2px #00000029 !important;
+}
+
+.card__container {
+    margin-top: 2em;
+    padding: 0 0 3em;
+}
+
+.main-container {
+    background-color: #fff !important;
+    background-image: url('../../../assets/images/BACKGROUND_MANAGEPROFILE.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: calc(100vh - (45px + 30px));
+}
+
+.card:hover {
+    background-color: #f9eeee;
+    transition: all 0.5s;
+}
+
+mat-card:hover {
+    cursor: pointer;
+}
