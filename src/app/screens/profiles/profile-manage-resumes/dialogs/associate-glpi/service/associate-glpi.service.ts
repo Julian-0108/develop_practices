@@ -1,6 +1,7 @@
 import { Injectable, Pipe } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { pluck } from 'rxjs/operators';
+import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,20 +12,20 @@ export class AssociateGlpiService {
 
   async getCasesGlpi():Promise<any>{
     return await this.http
-      .get('http://localhost:90/cases')
+      .get(`${environment.API_REQUISITIONS_GLPÏ}/cases`)
       .pipe(pluck('payload'))
       .toPromise();
   }
 
   async getInfoCasesGlpi(case_number:number):Promise<any>{
     return await this.http
-      .get(`http://localhost:90/cases/${case_number}`)
+      .get(`${environment.API_REQUISITIONS_GLPÏ}/cases/${case_number}`)
       .pipe(pluck('payload'))
       .toPromise();
   }
 
   async saveCase(data:any): Promise<any>{
     return await this.http
-    .post('http://localhost:90/requisition-case',data).toPromise();
+    .post(`${environment.API_REQUISITIONS_GLPÏ}/requisition-case`,data).toPromise();
   }
 }
