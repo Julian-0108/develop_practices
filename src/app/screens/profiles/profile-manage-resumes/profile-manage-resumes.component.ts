@@ -52,7 +52,7 @@ export class ProfileManageResumesComponent implements OnInit {
       case 'Ver':
         this.dialog.open(SeeResumeComponent, {
           width: '50%',
-          height: '50%',
+          height: '80%',
           data: {datakey:value}
         });
         break;
