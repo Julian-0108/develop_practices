@@ -69,6 +69,30 @@ const routes: Routes = [
       canActivate: [AuthGuard]
   },
   {
+    path: 'selection-profiles',
+    loadChildren: () =>
+    import('./screens/profiles/profile-selection/profile-selection.module').then(
+      (m) => m.ProfileSelectionModule
+    ),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'manage-resumes',
+    loadChildren: () =>
+    import('./screens/profiles/profile-manage-resumes/profile-manage-resumes.module').then(
+      (m) => m.ProfileManageResumesModule
+    ),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'add-resume',
+    loadChildren: () =>
+    import('./screens/profiles/profile-manage-resumes/add-resume/add-resume.module').then(
+      (m) => m.AddResumeModule
+    ),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'manage-base-teams/:id',
     loadChildren: () =>
       import('./screens/profiles/manage-base-teams/manage-base-teams.module').then(

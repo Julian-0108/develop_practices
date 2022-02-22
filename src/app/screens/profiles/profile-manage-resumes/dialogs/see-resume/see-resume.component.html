@@ -1,0 +1,223 @@
+<div class="header center">
+    <img class="logo_seti" src="../../../../../../assets/images/logo-seti-blanco.svg">
+</div>
+<h2 mat-dialog-title class="main-title center">Información Candidato</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="pading_container">
+        <mat-grid-list cols="5" rowHeight="60px">
+            <mat-grid-tile colspan="1" rowspan="1" style.background="lightpink">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Nombre del Candidato
+                    </mat-list-item>
+                    <mat-list-item role="listitem">{{info_Candidate?.fullName}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Tipo de Documento</mat-list-item>
+                    <mat-list-item role="listitem">{{info_Candidate?.typeIdentification}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Identificación</mat-list-item>
+                    <mat-list-item role="listitem">{{info_Candidate?.numberIdentification}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Fuente</mat-list-item>
+                    <mat-list-item role="listitem">{{info_Candidate?.source}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="1" rowspan="2">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Teléfono</mat-list-item>
+                    <mat-list-item role="listitem" *ngFor="let item of info_Candidate.phone">{{item.type + " " +
+                        item.prefix + " " + item.number}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">País</mat-list-item>
+                    <mat-list-item role="listitem">{{info_Candidate?.country}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Ciudad</mat-list-item>
+                    <mat-list-item role="listitem">{{info_Candidate?.city}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Correo electrónico</mat-list-item>
+                    <mat-list-item role="listitem">{{info_Candidate?.email}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Tarjeta Profesional
+                    </mat-list-item>
+                    <mat-list-item role="listitem">{{info_Candidate?.professionalCard}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list cols="2" rowHeight="60px">
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Aspiración mínima</mat-list-item>
+                    <mat-list-item role="listitem">{{info_Candidate?.minAspiration |
+                        currency:'CAD':'symbol-narrow':'1.0-0'}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Aspiración Aspiración máxima
+                    </mat-list-item>
+                    <mat-list-item role="listitem">{{info_Candidate?.maxAspiration |
+                        currency:'CAD':'symbol-narrow':'1.0-0'}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+
+        <h4 class="main-title" *ngIf="info_Candidate.workExperience.length > 0">Experiencia laboral</h4>
+
+
+        <mat-grid-list cols="5" rowHeight="60px" *ngFor="let item of info_Candidate.workExperience">
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Nombre empresa</mat-list-item>
+                    <mat-list-item role="listitem">{{item.company}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Cargo ejercido</mat-list-item>
+                    <mat-list-item role="listitem">{{item.charge}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Salario</mat-list-item>
+                    <mat-list-item role="listitem">{{item.wage | currency:'CAD':'symbol-narrow':'1.0-0'}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Fecha inicio</mat-list-item>
+                    <mat-list-item role="listitem">{{item.timeStart | date}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Fecha fin</mat-list-item>
+                    <mat-list-item role="listitem">{{item.timeEnd | date}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <h4 class="main-title" *ngIf="info_Candidate.languages.length > 0">Idiomas</h4>
+
+        <mat-grid-list cols="4" rowHeight="60px" *ngFor="let languaje of info_Candidate.languages">
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Idioma</mat-list-item>
+                    <mat-list-item role="listitem">{{languaje.name}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Escritura</mat-list-item>
+                    <mat-list-item role="listitem">{{languaje.writing}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Lectura</mat-list-item>
+                    <mat-list-item role="listitem">{{languaje.reading}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Habla</mat-list-item>
+                    <mat-list-item role="listitem">{{languaje.speaking}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+
+        </mat-grid-list>
+
+        <h4 class="main-title" *ngIf="info_Candidate.levelStudy > 0">Niveles de estudio</h4>
+
+        <mat-grid-list cols="2" rowHeight="60px" *ngFor="let study of info_Candidate.levelStudy">
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Estudio</mat-list-item>
+                    <mat-list-item role="listitem">{{study.type}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Tipo</mat-list-item>
+                    <mat-list-item role="listitem">{{study.name}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+
+        <h4 class="main-title" *ngIf="info_Candidate.knowledgeCharge.length > 0">Conocimientos</h4>
+
+        <mat-grid-list cols="2" rowHeight="60px" *ngFor="let skill of info_Candidate.knowledgeCharge">
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Dominio</mat-list-item>
+                    <mat-list-item role="listitem">{{skill.domain}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Area</mat-list-item>
+                    <mat-list-item role="listitem">{{skill.knowledgeArea}}
+                        <mat-icon matTooltipClass="custom-tooltip" [matTooltip]="skill.description" class="content__icon">help</mat-icon>
+                    </mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <h4 class="main-title">Observaciones</h4>
+
+        <mat-grid-list cols="1" rowHeight="60px">
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-list role="list">
+                    <mat-list-item role="listitem">{{info_Candidate.observations}}</mat-list-item>
+                </mat-list>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button type="button" class="button--cancel" mat-dialog-close>Cancelar</button>
+</mat-dialog-actions>

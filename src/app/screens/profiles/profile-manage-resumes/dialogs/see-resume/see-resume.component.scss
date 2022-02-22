@@ -1,0 +1,55 @@
+.mat-dialog-actions{
+    margin-top: 3%;
+    bottom: 91px;
+    left: 65%;
+}
+
+.header{
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.center{
+    text-align: center;
+}
+
+.logo_seti{
+    width: 8%;
+}
+
+.mat-table{
+    width: 100%;
+}
+
+.subrayado{
+    text-decoration: underline;
+    color: red;
+}
+
+h4{
+    margin: 2% 0% 1% 0% !important;
+}
+
+.mat-grid-tile{
+    background-color: #f3dede;
+    border: 1px solid red;
+    display: block !important;
+}
+
+.mat-figure{
+    display: block !important;
+}
+
+.mat-list-item{
+    display:block !important;
+    height: 12px !important;
+    margin-bottom: 5% !important;
+}
+
+.pading_container{
+    padding: 20px;
+}
+
+.mat-dialog-content{
+    display: contents !important;
+}
