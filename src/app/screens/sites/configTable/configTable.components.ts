@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatTableDataSource } from '@angular/material/table';
 import { Search } from '@app/screens/profiles/profile-manage-resumes/interfaces/manege-resumes.interface';
+import { Tables } from './interfaces/config-table-dialog';
 import { ConfigTableServices } from './services/configTable.services';
 
 
@@ -13,7 +14,9 @@ import { ConfigTableServices } from './services/configTable.services';
 export class ConfigTableComponents implements OnInit {
   ngOnInit(): void {
     this.getSites();
+
   }
+
   constructor(private service:ConfigTableServices) {}
   masterInfoService: any;
   otherIcon!: boolean;
@@ -21,7 +24,9 @@ export class ConfigTableComponents implements OnInit {
   help: string = 'help';
   idHistory!: string;
   subtitle: any = '';
-  dataSource: Search[] = [];
+  dataSource: Tables[] = [];
+
+ // public configSelected:string='';
 
   public displayedColumns: string[] = [
     'name',
@@ -33,9 +38,32 @@ export class ConfigTableComponents implements OnInit {
     'status',
     'actions'
   ];
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-  //   // this.dataSource.filter() = filterValue.trim().toLowerCase();
+
+  public readonly table = [
+    {
+      name: 'Configuracion de sedes',
+      url:'venues configuration',
+      sumary:
+        'aqui puedes configurar las sedes de la empresa',
+      haveTypeField: false,
+    },
+    {name:'oficinas'
+  },
+  ];
+
+
+  // applyFilter(event: Event) {
+  //   const filterValue = (event.target as HTMLInputElement).value;
+  // //   // this.dataSource.filter() = filterValue.trim().toLowerCase();
+  // }
+  applyFilter(filterValue: any) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+  applyDirectFilter(filterValue: any) {
+    this.dataSource.filter = filterValue;
+  }
+  isOpen() {
+    this.open = true;
   }
 
   getSites(){
@@ -48,4 +76,5 @@ export class ConfigTableComponents implements OnInit {
         console.log('error',error);
       })
   }
+
 }
