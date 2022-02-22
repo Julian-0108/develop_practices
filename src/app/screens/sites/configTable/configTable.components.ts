@@ -13,7 +13,7 @@ import { ConfigTableServices } from './services/configTable.services';
 })
 export class ConfigTableComponents implements OnInit {
   ngOnInit(): void {
-    this.getSites();
+    // this.getSites();
 
   }
 
@@ -24,7 +24,7 @@ export class ConfigTableComponents implements OnInit {
   help: string = 'help';
   idHistory!: string;
   subtitle: any = '';
-  dataSource: Tables[] = [];
+  dataSource:  MatTableDataSource<Tables> = new MatTableDataSource();;
 
  // public configSelected:string='';
 
@@ -42,12 +42,13 @@ export class ConfigTableComponents implements OnInit {
   public readonly table = [
     {
       name: 'Configuracion de sedes',
-      url:'venues configuration',
+      url:'venues',
       sumary:
         'aqui puedes configurar las sedes de la empresa',
       haveTypeField: false,
     },
-    {name:'oficinas'
+    {name:'oficinas',
+    url:'sedes'
   },
   ];
 
@@ -66,13 +67,14 @@ export class ConfigTableComponents implements OnInit {
     this.open = true;
   }
 
-  getSites(){
-    this.service.getDataSites()
+  getSites(url:string){
+    this.service.getDataSites(url)
       .then(dataValue => {
         if(dataValue.length > 0){
           this.dataSource = dataValue;
         }
       }).catch(error => {
+        // this.dataSource = [{}];
         console.log('error',error);
       })
   }
