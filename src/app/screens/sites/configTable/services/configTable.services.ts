@@ -11,9 +11,9 @@ export class ConfigTableServices {
   constructor(private http: HttpClient) { }
 
 
-  async getDataSites():Promise<any>{
+  async getDataSites(url:string):Promise<any>{
     return await this.http
-    .get('http://localhost:80/venues')
+    .get(`http://localhost:80/${url}`)
     .pipe(pluck('payload'))
     .toPromise()
   }
