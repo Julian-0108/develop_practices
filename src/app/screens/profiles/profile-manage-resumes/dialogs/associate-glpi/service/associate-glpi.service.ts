@@ -12,20 +12,20 @@ export class AssociateGlpiService {
 
   async getCasesGlpi():Promise<any>{
     return await this.http
-      .get(`${environment.API_REQUISITIONS_GLPÏ}/cases`)
+      .get(`${environment.API_REQUISITIONS}/cases`)
       .pipe(pluck('payload'))
       .toPromise();
   }
 
   async getInfoCasesGlpi(case_number:number):Promise<any>{
     return await this.http
-      .get(`${environment.API_REQUISITIONS_GLPÏ}/cases/${case_number}`)
+      .get(`${environment.API_REQUISITIONS}/cases/${case_number}`)
       .pipe(pluck('payload'))
       .toPromise();
   }
 
   async saveCase(data:any): Promise<any>{
     return await this.http
-    .post(`${environment.API_REQUISITIONS_GLPÏ}/requisition-case`,data).toPromise();
+    .post(`${environment.API_REQUISITIONS}/requisition-case`,data).toPromise();
   }
 }
