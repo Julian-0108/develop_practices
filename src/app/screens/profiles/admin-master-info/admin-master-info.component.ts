@@ -94,13 +94,7 @@ export class AdminMasterInfoComponent implements OnInit {
       sumary: 'Representa la estructura interna operativa y administrativa de la compañía. ',
       haveTypeField: true,
     },
-    {
-      name: 'Herramientas de trabajo',
-      url: 'work-tools',
-      sumary:
-        'Es cualquier software o hardware que ayuda a realizar una tarea. Ejemplo: Golden Gate: Software que permite la replicación de una base de datos a otra. ',
-      haveTypeField: true,
-    },
+
     {
       name: 'Módulos',
       url: 'modules',
@@ -161,6 +155,13 @@ export class AdminMasterInfoComponent implements OnInit {
         'Esta son las herramientas y opciones',
       haveTypeField: true,
     },
+    {
+      name: 'Centros de Estudios',
+      url: 'study-center',
+      sumary:
+        'Listado de los centros de estudio',
+      haveTypeField: true,
+    },
 
 
   ];
@@ -210,11 +211,8 @@ export class AdminMasterInfoComponent implements OnInit {
       this.fillTechnologyList();
       this.fillAreaList();
     }else{
-    this.masterInfoService.getData(this.masterSeleted).then((res: Master[] | any) => {
-      console.log('este es el res')
-      console.log(res);
+    this.masterInfoService.getData(this.masterSeleted).then((res: Master[] | any) => {;
       res.forEach((element: Master) => {
-        console.log(element)
         if (element.technology) {
           return (element.technology[0].technology);
         }
@@ -451,15 +449,32 @@ export class AdminMasterInfoComponent implements OnInit {
               el !== 'description'&&
               el !== 'name'
             );
+            case 'study-center':
+              return this.displayedColumns.filter(
+                (el) =>
+                el !== 'submenu' &&
+                el !== 'idTechnology' &&
+                el !== 'version' &&
+                el !== 'reference' &&
+                el !== 'type' &&
+                el !== 'idDomain' &&
+                el !== 'knowledgeArea' &&
+                el !== 'specificKnowledge' &&
+                el !== 'platform' &&
+                el !== 'technology' &&
+                el !== 'formation' &&
+                el !== 'description'
+              );
       case 'courses-certifications':
         return this.displayedColumns.filter(
           (el) =>
             el !== 'submenu' &&
             el !== 'technology' &&
-            el !== 'version' &&
             el !== 'reference' &&
             el !== 'specificKnowledge' &&
-            el !== 'description'
+            el !== 'description' &&
+            el !== 'platform'
+
         );
       case 'syllabi':
         return this.displayedColumns.filter(
@@ -575,7 +590,6 @@ export class AdminMasterInfoComponent implements OnInit {
   }
 
   applyDirectFilter(filterValue: any) {
-    console.log(filterValue);
     this.dataSource.filter = filterValue;
   }
   setId(el: any) {

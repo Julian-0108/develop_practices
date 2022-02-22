@@ -18,7 +18,6 @@ export class HistoryBaseTeamsComponent implements OnInit {
   endDateFilter = (d: Date | null): boolean => {
     const day = (d || new Date()).getDay();
     // Prevent Saturday and Sunday from being selected.
-    console.log(dayjs.default(day).isBefore(day, 'date'))
     return day !== 0 && day !== 6;
   }
   constructor(private historyBaseTeamsService: HistoryBaseTeamsService) {}
@@ -53,7 +52,6 @@ export class HistoryBaseTeamsComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     this.existentDate = '';
     if (changes.idHistory.currentValue !== undefined) {
-      console.log(changes.idHistory.currentValue._id);
       this.idHistoryassigned = changes.idHistory.currentValue._id;
       this.historyBaseTeamsService
         .hitoryActionsManageBaseProfiles('get', this.idHistoryassigned)
@@ -64,7 +62,6 @@ export class HistoryBaseTeamsComponent implements OnInit {
             item[`showDate`] = this.showDate(item.updatedAt);
             return item;
           });
-          console.log(this.historyFilter);
         });
     }
   }

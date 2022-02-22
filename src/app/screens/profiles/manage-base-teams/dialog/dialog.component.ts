@@ -155,7 +155,6 @@ export class DialogComponent implements OnInit {
      * Se abre el formulario donde se ingresa la descripción de los cambios,
      * que se guardarán en el historial.
      */
-    console.log(data);
     this._dialog
       .open(ProfileFormHistoryComponent, {
         data: {
@@ -185,7 +184,6 @@ export class DialogComponent implements OnInit {
             this.historyBaseTeamsService.hitoryActionsManageBaseProfiles('post', id, resp);
           })
           .then((response: any) => {
-            console.log(response)
             this.notificationService.openSimpleSnackBar({
               title: 'Operación Finalizada',
               message: 'La información se ha actualizado con éxito y su historial fue creado.',

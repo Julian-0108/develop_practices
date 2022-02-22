@@ -53,7 +53,6 @@ export class ProfileOptionsComponent implements OnInit {
   }
 
   async onCardClicked(item: any) {
-    console.log(item);
     this.cardClicked = item._id;
     if (item.submenu) {
       this.itemsOld = this.items;

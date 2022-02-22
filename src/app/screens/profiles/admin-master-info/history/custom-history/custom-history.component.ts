@@ -21,6 +21,6 @@ export class CustomHistoryComponent implements OnInit {
     'formation'
   ];
   ngOnInit(): void {
-    console.log(this.data);
+
   }
 }
