@@ -6,13 +6,13 @@ body {
   mat-drawer-container {
     background-color: #fff !important;
   }
-  
+
   .background {
     // background-color: #fff !important;
     background-image: url('../../../../assets/images/background_adminMasters.svg');
     background-size: cover;
   }
-  
+
   .header {
     display: flex;
     flex-direction: row;
@@ -26,11 +26,11 @@ body {
     text-align: center;
     margin-top: 15px;
   }
-  
+
   .main {
     margin: 0px 19px;
   }
-  
+
   .table__container {
     margin-top: 10px;
     height: 25em;
@@ -38,7 +38,7 @@ body {
     overflow-y: auto;
     overflow-x: auto;
   }
-  
+
   table {
     width: 100%;
   }
@@ -65,7 +65,7 @@ body {
   background-color: #D1EAD2 !important;
     color: #68BC6C !important;
     padding: 3px 14px !important;
-  box-shadow: 0px 0px 6px #81c784; 
+  box-shadow: 0px 0px 6px #81c784;
 
   border-radius: 9px;
 }
@@ -75,5 +75,8 @@ body {
     box-shadow: 0px 0px 6px #3392e42e;
   border-radius: 100%;
   padding: 3px;
+
 }
-  
+  .button-back {
+  top: 1em;
+}
