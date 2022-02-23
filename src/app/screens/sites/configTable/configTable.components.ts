@@ -20,7 +20,7 @@ export class ConfigTableComponents implements OnInit {
   help: string = 'help';
   idHistory!: string;
   subtitle: any = '';
-  dataSource: MatTableDataSource<Tables> = new MatTableDataSource();
+  dataSource: MatTableDataSource<Tables | any> = new MatTableDataSource();
 
   public displayedColumns: string[] = [
     'name',
@@ -57,7 +57,7 @@ export class ConfigTableComponents implements OnInit {
       .getListSites(url)
       .then((dataValue) => {
         if (dataValue.length > 0) {
-          this.dataSource = dataValue;
+          this.dataSource = new MatTableDataSource(dataValue);
         }
       })
       .catch((error) => {
