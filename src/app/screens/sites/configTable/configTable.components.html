@@ -17,8 +17,8 @@
         <div class="item" fxFlex="20">
           <mat-form-field floatLabel="always" appearance="none">
             <mat-label>Seleccionar tabla de configuracion</mat-label>
-            <mat-select #ej placeholder="Click para ver las tablas de configuracion "
-            (selectionChange)="getSites($event.value)">
+            <mat-select  #ej placeholder="Click para activar la configuracion de tablas"
+            (selectionChange)="getList($event.value)">
              <!-- <mat-select-trigger>{{subtitle.name}}</mat-select-trigger> -->
               <mat-option *ngFor="let tables of table | orderAlphabetically:'name'" [value]="tables.url">
                 {{tables.name}}
