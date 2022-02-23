@@ -26,6 +26,12 @@
       </div>
 
       <div class="table__container">
+        <!-- <div class="not_found">
+          <img _ngcontent-gku-c302="" src="../assets/images/notFoundData.svg" 
+          alt="Not found data" class="not-found-data__image">
+          <div _ngcontent-fdq-c302="" class="not-found-data__message"> 
+            Seleccione la tabla del listado </div>
+        </div> -->
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Nombre
@@ -108,7 +114,8 @@
             <td mat-cell *matCellDef="let element">
               <div class="centerTable">
                 <label mat-cell 
-                [ngClass]="{'activeButton': 'true', 'inactiveButton': 'false'}"> {{element.status}} </label>
+                [ngClass]="{'activeButton': element.status, 'inactiveButton': !element.status}">{{element.status
+                ? 'Habilitada': 'Deshabilitada'}}</label>
               </div>
             </td>
           </ng-container>
@@ -118,7 +125,7 @@
               <div class="filter-inputs filter-inputs__status"></div>
             </th>
             <td mat-cell *matCellDef="let element" class="actions">
-              <button mat-icon-button>
+              <button mat-icon-button (click)="openEdit(element)">
                 <mat-icon class="buttonAction_e">edit</mat-icon>
               </button>
             </td>

@@ -66,6 +66,13 @@ body {
     color: #68BC6C !important;
     padding: 3px 14px !important;
   box-shadow: 0px 0px 6px #81c784; 
+  border-radius: 9px;
+}
+.inactiveButton{
+  background-color: #ead1d1 !important;
+    color: #bc6868 !important;
+    padding: 3px 14px !important;
+  box-shadow: 0px 0px 6px #c78181; 
 
   border-radius: 9px;
 }
@@ -75,5 +82,20 @@ body {
     box-shadow: 0px 0px 6px #3392e42e;
   border-radius: 100%;
   padding: 3px;
+}
+.button-back{
+  top: 1em;
+}
+
+.not-found-data__message{
+color: #a9a9a9;
+font-style: italic;
+font-size: 15px;
+margin-top: 10px;
+text-align: center;
+}
+.not-found-data__image{
+  margin:auto;
+  display:block;
 }
   

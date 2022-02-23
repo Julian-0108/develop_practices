@@ -1,0 +1,17 @@
+<form [formGroup]=""  autocomplete="off">
+<h1 mat-dialog-title>EDITAR SEDE</h1>
+<div>
+    <mat-list>
+        <mat-list-item>
+          <mat-icon mat-list-icon>build</mat-icon>
+          <mat-input mat-line>{{sites?.name}}</mat-input>
+          <mat-input mat-line>{{sites?.address}}</mat-input>
+          <mat-input mat-line>{{sites?.phoneNumber}}</mat-input>
+          <mat-input mat-line>{{sites?.city}}</mat-input>
+          <mat-input [ngClass]="{'activeButton': sites.status, 'inactiveButton': !sites.status}" mat-line>{{sites?.status
+            ? 'Habilitada': 'Deshabilitada'}}</mat-input>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+    </mat-list>
+</div>
+</form>

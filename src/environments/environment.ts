@@ -8,7 +8,8 @@ export const environment = {
   API_LIFE_HISTORY: 'http://mundoseti-dllo.setiad.com.co:31029',
   API_REQUISITIONS_GLPÏ: 'http://mundoseti-dllo.setiad.com.co:31030',
   API_BASE_PROFILES : 'http://mundoseti-dllo.setiad.com.co:31024',
-  API_SECURITY: 'http://mundoseti-dllo.setiad.com.co:31022'
+  API_SECURITY: 'http://mundoseti-dllo.setiad.com.co:31022',
+  API_CONFIGTABLE: 'http://mundoseti-dllo.setiad.com.co:31031'
 };
 
 export const API_URL = 'https://sitios.setiaws.com';
