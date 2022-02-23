@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatButton } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Search } from '@app/screens/profiles/profile-manage-resumes/interfaces/manege-resumes.interface';
 import { url } from 'inspector';
 import { SitesComponent } from './dialogs/sites.component';
+import { Tables } from './interfaces/configTable.interface';
 import { ConfigTableServices } from './services/configTable.services';
-
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-config-table',
@@ -14,24 +14,19 @@ import { ConfigTableServices } from './services/configTable.services';
   styleUrls: ['./configTable.components.scss'],
 })
 export class ConfigTableComponents implements OnInit {
+  ngOnInit(): void {}
+  public informationSites: boolean;
 
-  update=false;
-  idUpdate:any;
-
-
-  ngOnInit(): void {
-    this.getSites();
+  constructor(private service: ConfigTableServices, private dialog: MatDialog) {
+    this.informationSites = false
   }
-  constructor(
-    private service:ConfigTableServices,
-    private dialog : MatDialog) {}
   masterInfoService: any;
   otherIcon!: boolean;
   open: boolean = false;
   help: string = 'help';
   idHistory!: string;
   subtitle: any = '';
-  dataSource: Search[] = [];
+  dataSource: MatTableDataSource<Tables> = new MatTableDataSource();
 
   public displayedColumns: string[] = [
     'name',
@@ -41,22 +36,42 @@ export class ConfigTableComponents implements OnInit {
     'creationDate',
     'actualizationDate',
     'status',
-    'actions'
+    'actions',
   ];
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-  //   // this.dataSource.filter() = filterValue.trim().toLowerCase();
+
+  public readonly table = [
+    {
+      name: 'Configuracion de sedes',
+      url: 'venues',
+      sumary: 'aqui puedes configurar las sedes de la empresa',
+      haveTypeField: false,
+    },
+    { name: 'oficinas', url: 'Oficinas' },
+  ];
+  applyFilter(filterValue: any) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+  applyDirectFilter(filterValue: any) {
+    this.dataSource.filter = filterValue;
+  }
+  isOpen() {
+    this.open = true;
   }
 
-  getSites(){
-    this.service.getDataSites()
-      .then(dataValue => {
-        if(dataValue.length > 0){
+  getList(url: string) {
+    this.service
+      .getListSites(url)
+      .then((dataValue) => {
+        if (dataValue.length > 0) {
           this.dataSource = dataValue;
+          this.informationSites=true;
+        }else if(dataValue.length =0){
+          this.informationSites=false;
         }
-      }).catch(error => {
-        console.log('error',error);
-      })
+      }).catch((error) => {
+        this.informationSites=false
+        console.log('error', error);
+      });
 
   }
   openEdit(value: any) {

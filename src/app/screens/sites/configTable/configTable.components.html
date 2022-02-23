@@ -4,10 +4,11 @@
     <div class="header background">
       <div class="title__container">
         <h1 class="main-title">SEDES SETI</h1>
+        <h2 calss ="main-subtitle"></h2>
       </div>
     </div>
     <mat-drawer #drawer class="example-sidenav" mode="over" position="end">
-      <!-- <app-history-master></app-history-master> -->
+
     </mat-drawer>
 
     <div class="main">
@@ -15,10 +16,13 @@
         <!-- apartado del listado -->
         <div class="item" fxFlex="20">
           <mat-form-field floatLabel="always" appearance="none">
-            <mat-label>Seleccionar sede</mat-label>
-            <mat-select #ej placeholder="Click para ver las sedes">
-                <mat-option>
-                  <mat-icon matTooltipClass="custom-tooltip" class="content__icon"  >help </mat-icon>
+            <mat-label>Seleccionar tabla de configuracion</mat-label>
+            <mat-select  #ej placeholder="Click para activar la configuracion de tablas"
+            (selectionChange)="getList($event.value)">
+             <!-- <mat-select-trigger>{{subtitle.name}}</mat-select-trigger> -->
+              <mat-option *ngFor="let tables of table | orderAlphabetically:'name'" [value]="tables.url">
+                {{tables.name}}
+                  <!-- <mat-icon matTooltipClass="custom-tooltip"[matTooltip]="tables.sumary" class="content__icon"  >help </mat-icon> -->
                 </mat-option>
               </mat-select>
           </mat-form-field>
@@ -26,18 +30,20 @@
       </div>
 
       <div class="table__container">
-        <!-- <div class="not_found">
+        <div class="not_found" *ngIf="informationSites===false; else sites">
           <img _ngcontent-gku-c302="" src="../assets/images/notFoundData.svg" 
           alt="Not found data" class="not-found-data__image">
           <div _ngcontent-fdq-c302="" class="not-found-data__message"> 
             Seleccione la tabla del listado </div>
-        </div> -->
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        </div>
+
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" #sites>
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Nombre
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter"type="text" (keyup)="applyFilter($event)">
+                  <input matInput class="filter"(keyup)="applyFilter($event.target.value)" type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -49,7 +55,7 @@
             <th mat-header-cell *matHeaderCellDef>Dirección
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" type="text" (keyup)="applyFilter($event)">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -61,7 +67,7 @@
             <th mat-header-cell *matHeaderCellDef>Telefono
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" type="text" (keyup)="applyFilter($event)">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)"type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -73,7 +79,7 @@
             <th mat-header-cell *matHeaderCellDef>Ciudad
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" type="text" (keyup)="applyFilter($event)">
+                  <input matInput class="filter"(keyup)="applyFilter($event.target.value)" type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -85,7 +91,7 @@
             <th mat-header-cell *matHeaderCellDef>Fecha de creación
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" type="date" (keyup)="applyFilter($event)">
+                  <input matInput class="filter"  (keyup)="applyFilter($event.target.value)"type="date">
                 </mat-form-field>
               </div>
             </th>
@@ -96,7 +102,7 @@
             <th mat-header-cell *matHeaderCellDef>Fecha de actualizacion
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" type="date" (keyup)="applyFilter($event)">
+                  <input matInput class="filter"  (keyup)="applyFilter($event.target.value)" type="date">
                 </mat-form-field>
               </div>
             </th>
@@ -107,7 +113,11 @@
             <th mat-header-cell *matHeaderCellDef>Estado
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" type="search" (keyup)="applyFilter($event)">
+                  <!-- <input matInput class="filter" type="search" (keyup)="applyFilter($event)"> -->
+                  <mat-select class="filter" (selectionChange)="applyDirectFilter($event.value)">
+                    <mat-option value="true"> true</mat-option>
+                    <mat-option value="false">false</mat-option>
+                  </mat-select>
                 </mat-form-field>
               </div>
             </th>
@@ -130,8 +140,8 @@
               </button>
             </td>
           </ng-container>
-          
-          
+
+
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
