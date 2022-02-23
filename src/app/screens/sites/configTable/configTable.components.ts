@@ -67,6 +67,7 @@ export class ConfigTableComponents implements OnInit {
           this.informationSites= true;
         }
       }).catch((error) => {
+        this.dataSource= new MatTableDataSource();
         this.informationSites=false
         console.log('error', error);
       });
