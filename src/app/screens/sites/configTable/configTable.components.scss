@@ -91,17 +91,20 @@ body {
 .not-found-data__message{
 color: #a9a9a9;
 font-style: italic;
-font-size: 15px;
+font-size: 30px;
 margin-top: 10px;
 text-align: center;
 }
 .not-found-data__image{
   margin:auto;
   display:block;
+  width: 40%;
 }
 .mat-column-status{
-
-  max-width: 10em;
-  width: 7em;
+  max-width: 15em;
+  width: 10em;
+}
+.list{
+  margin: 1em;
 }
   
