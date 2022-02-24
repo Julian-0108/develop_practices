@@ -4,41 +4,41 @@
     <div class="header background">
       <div class="title__container">
         <h1 class="main-title">SEDES SETI</h1>
-        <h2 calss ="main-subtitle"></h2>
+        <h2 calss ="main-subtitle">{{subtitle}}</h2>
       </div>
     </div>
     <mat-drawer #drawer class="example-sidenav" mode="over" position="end">
 
     </mat-drawer>
+    <div fxLayout="row" fxLayoutAlign="start end">
+      <!-- apartado del listado -->
+      <div class="list" fxFlex="25">
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label>Seleccionar tabla de configuracion</mat-label>
+          <mat-select  #ej placeholder="Click para activar la configuracion de tablas"
+          (selectionChange)="getList($event.value)">
+           <mat-select-trigger>{{subtitle}}</mat-select-trigger>
+            <mat-option *ngFor="let tables of table | orderAlphabetically:'name'" [value]="tables.url">
+              {{tables.name}}
+                <mat-icon matTooltipClass="custom-tooltip"[matTooltip]="tables.sumary" class="content__icon"  >help</mat-icon>
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
 
-    <div class="main">
-      <div fxLayout="row" fxLayoutAlign="start end">
-        <!-- apartado del listado -->
-        <div class="item" fxFlex="20">
-          <mat-form-field floatLabel="always" appearance="none">
-            <mat-label>Seleccionar tabla de configuracion</mat-label>
-            <mat-select  #ej placeholder="Click para activar la configuracion de tablas"
-            (selectionChange)="getList($event.value)">
-             <!-- <mat-select-trigger>{{subtitle.name}}</mat-select-trigger> -->
-              <mat-option *ngFor="let tables of table | orderAlphabetically:'name'" [value]="tables.url">
-                {{tables.name}}
-                  <!-- <mat-icon matTooltipClass="custom-tooltip"[matTooltip]="tables.sumary" class="content__icon"  >help </mat-icon> -->
-                </mat-option>
-              </mat-select>
-          </mat-form-field>
-        </div>
+    
+      <div class="not_found" *ngIf="!informationSites">
+        <img _ngcontent-gku-c302="" src="../assets/images/notFoundData.svg" 
+        alt="Not found data" class="not-found-data__image">
+        <div _ngcontent-fdq-c302="" class="not-found-data__message"> 
+          Seleccione la tabla del listado </div>
       </div>
 
-      <div class="table__container">
-        <div class="not_found" *ngIf="informationSites===false; else sites">
-          <img _ngcontent-gku-c302="" src="../assets/images/notFoundData.svg" 
-          alt="Not found data" class="not-found-data__image">
-          <div _ngcontent-fdq-c302="" class="not-found-data__message"> 
-            Seleccione la tabla del listado </div>
-        </div>
+    <div class="table__container" *ngIf="informationSites">
+      <div class="main">
 
-
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" #sites>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Nombre
               <div class="filter-inputs">
@@ -115,8 +115,8 @@
                 <mat-form-field floatLabel="always" appearance="none">
                   <!-- <input matInput class="filter" type="search" (keyup)="applyFilter($event)"> -->
                   <mat-select class="filter" (selectionChange)="applyDirectFilter($event.value)">
-                    <mat-option value="Habilidata"> true</mat-option>
-                    <mat-option value="Deshabilitada">false</mat-option>
+                    <mat-option value="true"> Activo</mat-option>
+                    <mat-option value="false">Inactivo</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -125,7 +125,7 @@
               <div class="centerTable">
                 <label mat-cell 
                 [ngClass]="{'activeButton': element.status, 'inactiveButton': !element.status}">{{element.status
-                ? 'Habilitada': 'Deshabilitada'}}</label>
+                ? 'Activo': 'Inactivo'}}</label>
               </div>
             </td>
           </ng-container>
