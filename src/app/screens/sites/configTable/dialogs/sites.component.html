@@ -1,17 +1,40 @@
-<form [formGroup]=""  autocomplete="off">
-<h1 mat-dialog-title>EDITAR SEDE</h1>
-<div>
-    <mat-list>
-        <mat-list-item>
-          <mat-icon mat-list-icon>build</mat-icon>
-          <mat-input mat-line>{{sites?.name}}</mat-input>
-          <mat-input mat-line>{{sites?.address}}</mat-input>
-          <mat-input mat-line>{{sites?.phoneNumber}}</mat-input>
-          <mat-input mat-line>{{sites?.city}}</mat-input>
-          <mat-input [ngClass]="{'activeButton': sites.status, 'inactiveButton': !sites.status}" mat-line>{{sites?.status
-            ? 'Habilitada': 'Deshabilitada'}}</mat-input>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-    </mat-list>
-</div>
-</form>
+<form [formGroup]="formUp" novalidate autocomplete="off">
+    <div fxLayout="row">
+        <div  class="item">
+            <mat-form-field floatLabel="always" appearance="none">
+                <mat-label class="label">Nombre</mat-label>
+                <input matInput type="text" formControlName="name" value="{{sites?.name}}">
+                <app-validator [form]="formUp" name="name"></app-validator>
+            </mat-form-field>
+        </div>
+        <div  class="item">
+            <mat-form-field floatLabel="always" appearance="none">
+                <mat-label class="label">Dirección</mat-label>
+                <input matInput type="text" formControlName="address" value="{{sites?.address}}">
+                <app-validator [form]="formUp" name="address"></app-validator>
+            </mat-form-field>
+        </div>
+        <div  class="item">
+            <mat-form-field floatLabel="always" appearance="none">
+                <mat-label class="label">Telefono</mat-label>
+                <input matInput type="text" formControlName="phoneNumber" value="{{sites?.phoneNumber}}">
+                <app-validator [form]="formUp" name="phoneNumber"></app-validator>
+            </mat-form-field>
+        </div>
+        <div  class="item">
+            <mat-form-field floatLabel="always" appearance="none">
+                <mat-label class="label">Ciudad</mat-label>
+                <input matInput type="text" formControlName="city" value="{{sites?.city}}">
+                <app-validator [form]="formUp" name="city"></app-validator>
+            </mat-form-field>
+        </div>
+        <div  class="item">
+            <mat-form-field floatLabel="always" appearance="none">
+                <mat-label class="label">Estado</mat-label>
+                <input matInput type="text" formControlName="status"
+                [ngClass]="{'activeButton': sites.status, 'inactiveButton': !sites.status}" value="{{sites?.status
+                    ? 'Habilitada': 'Deshabilitada'}}">
+                <app-validator [form]="formUp" name="status"></app-validator>
+            </mat-form-field>
+        </div>
+

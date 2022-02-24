@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { ConfigTableServices } from "../services/configTable.services";
+import { FormControl, FormGroup } from "@angular/forms";
 
 
 @Component({
@@ -13,6 +13,7 @@ export class SitesComponent{
 
     constructor(@Inject(MAT_DIALOG_DATA) public data:{dataSite:any}) { }
     sites = this.data.dataSite
+    formUp!: FormGroup;
 
     updateSites(){
         // if(this.update === true){
