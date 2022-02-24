@@ -16,16 +16,15 @@ import { MatDialog } from '@angular/material/dialog';
 export class ConfigTableComponents implements OnInit {
   ngOnInit(): void {}
   public informationSites: boolean;
+  public subtitle: any;
 
   constructor(private service: ConfigTableServices, private dialog: MatDialog) {
     this.informationSites = false
   }
-  masterInfoService: any;
   otherIcon!: boolean;
   open: boolean = false;
   help: string = 'help';
   idHistory!: string;
-  subtitle: any = '';
   dataSource: MatTableDataSource<Tables | any> = new MatTableDataSource();
 
   public displayedColumns: string[] = [
@@ -41,12 +40,12 @@ export class ConfigTableComponents implements OnInit {
 
   public readonly table = [
     {
-      name: 'Configuracion de sedes',
+      name: 'Configuración de sedes',
       url: 'venues',
-      sumary: 'aqui puedes configurar las sedes de la empresa',
+      sumary: 'aquí puedes configurar las sedes de la empresa',
       haveTypeField: false,
     },
-    { name: 'oficinas', url: 'Oficinas' },
+    { name: 'Oficinas', url: 'Oficinas' },
   ];
   applyFilter(filterValue: any) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -65,6 +64,7 @@ export class ConfigTableComponents implements OnInit {
         if (dataValue.length > 0) {
           this.dataSource = new MatTableDataSource(dataValue);
           this.informationSites= true;
+          this.subtitle = this.table.map((tb: any) =>tb.name)
         }
       }).catch((error) => {
         this.dataSource= new MatTableDataSource();
