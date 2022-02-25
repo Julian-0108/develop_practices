@@ -18,6 +18,7 @@ import { LoaderService } from './components/loader/loader.service';
 import { LoaderInterceptor } from './components/loader/loader.interceptor';
 import { CardsPipe } from './pipes/cards.pipe';
 import { OrderAlphabeticallyPipe } from './pipes/order-alphabetically.pipe';
+import { SearchFilterPipe } from './pipes/Search-Filter.pipe';
 import { ProfileFormHistoryComponent } from '@app/screens/profiles/profile-template/profile-form-history/profile-form-history.component';
 import { NotFoundMessageComponent } from './components/notFoundMessage/not-found-message.component';
 
@@ -34,9 +35,8 @@ import { NotFoundMessageComponent } from './components/notFoundMessage/not-found
     LoaderComponent,
     CardsPipe,
     OrderAlphabeticallyPipe,
-
     ProfileFormHistoryComponent,
-
+    SearchFilterPipe,
     NotFoundMessageComponent
   ],
   imports: [
@@ -58,6 +58,7 @@ import { NotFoundMessageComponent } from './components/notFoundMessage/not-found
     NotImageDirective,
     CardsPipe,
     OrderAlphabeticallyPipe,
+    SearchFilterPipe,
     NotFoundMessageComponent,
     ProfileFormHistoryComponent,
   ],
@@ -65,6 +66,7 @@ import { NotFoundMessageComponent } from './components/notFoundMessage/not-found
     LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
     DatePipe,
+    SearchFilterPipe
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 })
