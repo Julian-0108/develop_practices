@@ -89,7 +89,7 @@ export class MasterInfoComponent implements OnInit {
   }
 
   updateTechnologies(){
-    if(this.data?.title == "Editar" && this.data?.url =="courses-certifications"){
+    if((this.data?.title == "Editar" && this.data?.url =="courses-certifications") || (this.data?.title == "Editar" && this.data?.url =="optional-tools")){
     this.filterTechnology(this.data?.element?.domain[0]?._id);
     this.filterVersionTechnology(this.data?.element?.technology);
     }
