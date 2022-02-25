@@ -19,8 +19,8 @@ export class ToolsComponent implements OnInit {
 
   consultCandidate(){
     this.service.getDataExist(this.data.datakey)
-      .then((dataValue: { skills: string; }[]) => {
-        this.tools = dataValue[0].skills;
+      .then((dataValue: { knowledgeCharge: string; }[]) => {
+        this.tools = dataValue[0].knowledgeCharge;
       }).catch((error: any) => {
         console.log('error',error);
       })
