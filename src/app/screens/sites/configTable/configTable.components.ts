@@ -1,8 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatButton } from '@angular/material/button';
 import { MatTableDataSource } from '@angular/material/table';
-import { Search } from '@app/screens/profiles/profile-manage-resumes/interfaces/manege-resumes.interface';
-import { url } from 'inspector';
 import { SitesComponent } from './dialogs/sites.component';
 import { Tables } from './interfaces/configTable.interface';
 import { ConfigTableServices } from './services/configTable.services';
@@ -26,6 +23,7 @@ export class ConfigTableComponents implements OnInit {
   open: boolean = false;
   help: string = 'help';
   idHistory!: string;
+  subtitle: any = '';
   dataSource: MatTableDataSource<Tables | any> = new MatTableDataSource();
 
   public displayedColumns: string[] = [
@@ -39,14 +37,19 @@ export class ConfigTableComponents implements OnInit {
     'actions',
   ];
 
-  public readonly table = [
+  public table = [
     {
-      name: 'Configuración de sedes',
+      name: 'Sedes',
       url: 'venues',
       sumary: 'aquí puedes configurar las sedes de la empresa',
       haveTypeField: false,
     },
-    { name: 'Oficinas', url: 'Oficinas' },
+    {
+      name: 'Oficinas',
+      url: 'Offices',
+      sumary: 'aquí puedes configurar las oficinas',
+      haveTypeField: false,
+    },
   ];
   applyFilter(filterValue: any) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -59,6 +62,11 @@ export class ConfigTableComponents implements OnInit {
   }
 
   getList(url: string) {
+    this.table.forEach((tb: any) => {
+      if (tb.url == url) {
+        this.subtitle = tb.name;
+      }
+    });
     this.service
       .getListSites(url)
       .then((dataValue) => {
@@ -73,14 +81,14 @@ export class ConfigTableComponents implements OnInit {
         this.informationTables = false
         console.log('error', error);
       });
-
   }
+
   openEdit(value: any) {
-    console.log(value)
+    console.log(value);
     this.dialog.open(SitesComponent, {
       width: '60%',
       height: '80%',
-      data: {dataSite:value}
-  });
+      data: { dataSite: value },
+    });
   }
 }
