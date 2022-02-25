@@ -152,7 +152,8 @@ table {
 .mat-column-idDomain,
 .mat-column-updatedAt,
 .mat-column-knowledgeArea,
-.mat-column-platform
+.mat-column-platform,
+.mat-column-version
 {
   padding-left: 0px !important;
   min-width: 10em;
@@ -162,7 +163,7 @@ table {
   min-width: 15em;
   max-width: 15em;
 }
-.mat-column-type, .mat-column-technology, .mat-column-formation {
+.mat-column-type, .mat-column-technology, .mat-column-formation, .mat-column-idTechnology {
   min-width: 10em;
 }
 

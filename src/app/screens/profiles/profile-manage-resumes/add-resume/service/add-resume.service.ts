@@ -11,8 +11,8 @@ export class AddResumeService {
 
 constructor(private http: HttpClient, private authService: AuthService) {}
 
-addResume(url: string, register: any) {
-  return this.http.post(url, register).toPromise();
+addResume(register: any) {
+  return this.http.post(`${environment.API_LIFE_HISTORY}/life-story`, register).toPromise();
 }
 
 async getDataStudies(): Promise<any>{

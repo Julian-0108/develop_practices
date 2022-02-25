@@ -59,7 +59,7 @@
 
                         <mat-form-field appearance="none" fxFlex="70">
                             <mat-select placeholder="Seleccione una ciudad" formControlName="city">
-                                <mat-option *ngFor="let city of cities" value="city">{{city}}</mat-option>
+                                <mat-option *ngFor="let city of cities" [value]="city">{{city}}</mat-option>
                             </mat-select>
                             <mat-error *ngIf="!addResumeForm.controls['country'].valid && addResumeForm.controls['country'].touched">Cuidad requerida</mat-error>
                         </mat-form-field>
@@ -227,7 +227,7 @@
                         </div>
                         <div fxLayout="row" fxLayoutAlign="center center" class="block" *ngFor="let language of languagesArray.controls; let i = index" [formGroupName]="i">
                             <mat-form-field appearance="none" fxFlex="20">
-                                <input matInput formControlName="name">
+                                <input class="disabled" matInput formControlName="name" readonly>
                             </mat-form-field>
 
                             <mat-form-field appearance="none" fxFlex="20">
@@ -384,15 +384,16 @@
                             {{dominio.name}}
                         </mat-checkbox>
                     </section>
-                    <div formArrayName="skills">
+                    <div formArrayName="knowledgeCharge">
                         <div fxLayout="row" fxLayoutAlign="center center" class="inline-flex" *ngFor="let domain of skillsArray?.controls; let i = index" [formGroupName]="i">
                                 <mat-form-field appearance="none" fxFlex="40">
-                                    <input matInput formControlName="domain">
+                                    <input class="disabled" matInput formControlName="domain" readonly>
                                 </mat-form-field>
 
                                 <mat-form-field appearance="none" fxFlex="40">
-                                    <mat-select matInput placeholder="Selecciona una herramienta" formControlName="knowledgeArea">
-                                        <mat-option *ngFor="let herramienta of knowledge[i]" [value]="herramienta.knowledgeArea">{{herramienta.knowledgeArea}}
+                                    <mat-select matInput placeholder="Selecciona una herramienta" (selectionChange)="addDescription($event.value,i)">
+                                        <mat-select-trigger>{{getknowledgeArea(i)}}</mat-select-trigger>
+                                        <mat-option *ngFor="let herramienta of knowledge[i]" [value]="herramienta">{{herramienta.knowledgeArea}}
                                             <mat-icon matTooltipClass="custom-tooltip" [matTooltip]="herramienta.specificKnowledge" class="content__icon">help</mat-icon>
                                         </mat-option>
                                     </mat-select>

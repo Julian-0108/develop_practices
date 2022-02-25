@@ -70,7 +70,7 @@ export class AddResumeComponent implements OnInit {
     typeIdentification: ['', Validators.required],
     fullName: ['',Validators.required],
     phone: new FormArray([]),
-    skills: new FormArray([]),
+    knowledgeCharge: new FormArray([]),
     levelStudy: new FormArray([]),
     languages: new FormArray([]),
     workExperience: new FormArray([])
@@ -119,7 +119,7 @@ export class AddResumeComponent implements OnInit {
 
   createItemSkills(value: {domain:string, knowledgeArea:string, description:string}) {
     return this.fb.group({
-      domain: [{value: value.domain, disabled : true}],
+      domain: [value.domain,Validators.required],
       knowledgeArea: [value.knowledgeArea, Validators.required],
       description: [value.description, Validators.required]
     })
@@ -127,7 +127,7 @@ export class AddResumeComponent implements OnInit {
 
   createItemLanguages(value: {name:string, writing:string, reading:string, speaking:string}) {
     return this.fb.group({
-      name: [{value: value.name, disabled : true}],
+      name: [value.name,Validators.required],
       writing: [value.writing, Validators.required],
       reading: [value.reading, Validators.required],
       speaking: [value.speaking, Validators.required]
@@ -252,7 +252,7 @@ export class AddResumeComponent implements OnInit {
   }
 
   get skillsArray(): FormArray {
-    return this.addResumeForm.get('skills') as FormArray;
+    return this.addResumeForm.get('knowledgeCharge') as FormArray;
   }
 
 
@@ -386,7 +386,7 @@ export class AddResumeComponent implements OnInit {
                 this.addResumeForm.patchValue(dataValue[0]);
                 this.id_registro = dataValue[0]._id;
                 this.addData(dataValue[0].phone,'phone');
-                this.addData(dataValue[0].skills,'skills');
+                this.addData(dataValue[0].knowledgeCharge,'skills');
                 this.addData(dataValue[0].levelStudy, 'levelStudy');
                 this.addData(dataValue[0].languages,'languages');
                 this.addData(dataValue[0].workExperience, 'workExperience');
@@ -409,10 +409,13 @@ export class AddResumeComponent implements OnInit {
         });
         break;
       case 'skills':
+        let index = 0;
         data.forEach((element: { domain:string; knowledgeArea:string; description:string }) => {
           this.addSkills(element);
           this.getDataSyllabi(element.domain,'Existente');
+          this.getknowledgeArea(index);
           this.registerSkills.push(element.domain);
+          index++;
 
         });
         break;
@@ -435,12 +438,21 @@ export class AddResumeComponent implements OnInit {
     }
   }
 
+  addDescription(value:any,index: number){
+    this.skillsArray.controls[index]?.get('knowledgeArea')?.setValue(value.knowledgeArea);
+    this.skillsArray.controls[index]?.get('description')?.setValue(value.specificKnowledge);
+  }
+
+  getknowledgeArea(index:number){
+    return this.skillsArray.controls[index]?.get('knowledgeArea')?.value;
+  }
+
   // Post (añadir Hojja de vida)
   saveForm() {
     console.log('data de addResumeForm', this.addResumeForm.value);
     if(this.addResumeForm.valid){
       if(this.update === false){
-        this.addResumeService.addResume('http://localhost:80/life-story', this.addResumeForm.value)
+        this.addResumeService.addResume(this.addResumeForm.value)
         .then(value => {
           console.log('servicio enviado sin error',value);
           this.notificationService.openSimpleSnackBar(

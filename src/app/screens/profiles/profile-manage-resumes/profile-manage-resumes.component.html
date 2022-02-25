@@ -1,137 +1,140 @@
 <body class="background">
-    <button routerLink="/selection-profiles" class="button-back" mat-mini-fab
-        aria-label="back button">
-    </button>
-    <div fxLayout="column">
-        <div class="title__container">
-            <h1 class="title">{{title}}</h1>
-        </div>
-
-        <div fxLayoutAlign="end end">
-            <div class="layer2" (click)="openDialog('Agregar')">
-              <div mat-button class="layer">
-                <mat-icon>add</mat-icon>
-              </div>
-              Añadir
-            </div>
-          </div>
-
-          <div class="table__container">
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-              <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Nombre
-                  <div class="filter-inputs">
-                    <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select>
-                        <mat-option>
-                          ver Todos
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </th>
-                <td mat-cell *matCellDef="let element">{{element.fullName}}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="numberIdentification">
-                <th mat-header-cell *matHeaderCellDef> Número de documento
-                  <div class="filter-inputs">
-                    <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select>
-                        <mat-option>
-                          ver Todos
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </th>
-                <td mat-cell *matCellDef="let element">{{element.numberIdentification}}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="tool">
-                <th mat-header-cell *matHeaderCellDef> Herramienta
-                  <div class="filter-inputs">
-                    <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select>
-                        <mat-option>
-                          ver Todos
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </th>
-              </ng-container>
-
-              <ng-container matColumnDef="processStatus">
-                <th mat-header-cell *matHeaderCellDef> Estado del proceso
-                  <div class="filter-inputs">
-                    <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select>
-                        <mat-option>
-                          ver Todos
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </th>
-                <td mat-cell *matCellDef="let element">
-                  <div>
-                    <label class="chip__status" [ngClass]="{'chip__status--seleccionado': element.processStatus === 'seleccionado', 'chip__status--descartado': element.processStatus === 'descartado', 'chip__status--proceso': element.processStatus === 'En proceso'}">
-                      {{element.processStatus}}
-                    </label>
-                  </div>
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="city">
-                <th mat-header-cell *matHeaderCellDef>Ciudad
-                  <div class="filter-inputs">
-                    <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select>
-                        <mat-option>
-                          ver Todos
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </th>
-                <td mat-cell *matCellDef="let element">{{element.city}}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="minAspiration">
-                <th mat-header-cell *matHeaderCellDef> Aspiración salarial
-                  <div class="filter-inputs">
-                    <mat-form-field floatLabel="always" appearance="none">
-                      <mat-select>
-                        <mat-option>
-                          ver Todos
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </th>
-                <td mat-cell *matCellDef="let element">{{element.minAspiration | currency:'CAD':'symbol-narrow':'1.0-0' }}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="acciones" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef>Opciones</th>
-                <td mat-cell *matCellDef="let element">
-                  <button mat-icon-button matTooltip="Ver Herramientas" (click)="openDialog('Herramientas',element.numberIdentification)">
-                    <mat-icon class="table__buttons edit">description</mat-icon>
-                  </button>
-                  <button mat-icon-button matTooltip="Ver Hv" (click)="openDialog('Ver',element.numberIdentification)">
-                    <mat-icon class="table__buttons history">find_in_page</mat-icon>
-                  </button>
-                  <button mat-icon-button matTooltip="Asociar GLPI" (click)="openDialog('Asociar',element._id)">
-                    <mat-icon class="table__buttons add_glpi">how_to_reg</mat-icon>
-                  </button>
-                </td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-          </div>
+  <button routerLink="/selection-profiles" class="button-back" mat-mini-fab aria-label="back button">
+  </button>
+  <div fxLayout="column">
+    <div class="title__container">
+      <h1 class="title">{{title}}</h1>
     </div>
+
+    <div fxLayout="row" fxLayoutAlign="start end" class="main">
+      <div class="item" fxFlex="10">
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label>Selecciona un dominio</mat-label>
+          <mat-select placeholder="Click para selecionar domain" (selectionChange)="getArea($event.value)">
+            <mat-select-trigger></mat-select-trigger>
+            <mat-option *ngFor="let domain of dataDomain" [value]="domain.name">{{domain.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="item" fxFlex="10">
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label>Selecciona una área</mat-label>
+          <mat-select placeholder="Click para activar la lista">
+            <mat-select-trigger></mat-select-trigger>
+            <mat-option *ngFor="let area of knowledge" [value]="area.knowledgeArea">{{area.knowledgeArea}}
+              <mat-icon matTooltipClass="custom-tooltip" class="content__icon"  >help </mat-icon>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="button__container" fxLayoutAlign="end end">
+        <div class="layer2" (click)="openDialog('Agregar')">
+          <div mat-button class="layer">
+            <mat-icon>add</mat-icon>
+          </div>
+          Añadir
+        </div>
+      </div>
+    </div>
+
+    <div class="table__container">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Nombre
+            <div class="filter-inputs">
+              <mat-form-field floatLabel="always" appearance="none">
+                <input matInput class="filter" (change)="filterRegister()" [(ngModel)]="filterKeys.fullName" type="text"
+                autocomplete="off">
+              </mat-form-field>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let element">{{element.fullName}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="numberIdentification">
+          <th mat-header-cell *matHeaderCellDef> Número de documento
+            <div class="filter-inputs">
+              <mat-form-field floatLabel="always" appearance="none">
+                <input matInput class="filter" (change)="filterRegister()" [(ngModel)]="filterKeys.numberIdentification" type="text"
+                autocomplete="off">
+              </mat-form-field>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let element">{{element.numberIdentification}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="processStatus">
+          <th mat-header-cell *matHeaderCellDef> Estado del proceso
+            <div class="filter-inputs">
+              <mat-form-field floatLabel="always" appearance="none">
+                <mat-select [(ngModel)]="filterKeys.processStatus" (selectionChange)="filterRegister()">
+                  <mat-option value="">Ver Todos</mat-option>
+                  <mat-option value="En proceso">En proceso</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <div>
+              <label class="chip__status"
+                [ngClass]="{'chip__status--seleccionado': element.processStatus === 'seleccionado', 'chip__status--descartado': element.processStatus === 'descartado', 'chip__status--proceso': element.processStatus === 'En proceso'}">
+                {{element.processStatus}}
+              </label>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="city">
+          <th mat-header-cell *matHeaderCellDef>Ciudad
+            <div class="filter-inputs">
+              <mat-form-field floatLabel="always" appearance="none">
+                <mat-select [(ngModel)]="filterKeys.city" (selectionChange)="filterRegister()">
+                  <mat-option value="">Ver Todos</mat-option>
+                  <mat-option *ngFor="let city of cities" [value]="city">{{city}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let element">{{element.city}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="minAspiration">
+          <th mat-header-cell *matHeaderCellDef> Aspiración salarial
+            <div class="filter-inputs">
+              <mat-form-field floatLabel="always" appearance="none">
+                <mat-select [(ngModel)]="idSalario" (selectionChange)="filterRegister()">
+                  <mat-option value="">Ver Todos</mat-option>
+                  <mat-option *ngFor="let rango of rangosSalarial" [value]="rango.id">{{rango.view}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let element">{{element.minAspiration | currency:'CAD':'symbol-narrow':'1.0-0' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones" stickyEnd>
+          <th mat-header-cell *matHeaderCellDef>Opciones</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button matTooltip="Ver Herramientas"
+              (click)="openDialog('Herramientas',element.numberIdentification)">
+              <mat-icon class="table__buttons edit">description</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Ver Hv" (click)="openDialog('Ver',element.numberIdentification)">
+              <mat-icon class="table__buttons history">find_in_page</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Asociar GLPI" (click)="openDialog('Asociar',element._id)">
+              <mat-icon class="table__buttons add_glpi">how_to_reg</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
 </body>
