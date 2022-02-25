@@ -3,8 +3,8 @@
     <button routerLink="/sites" class="button-back" mat-mini-fab aria-label="back button"></button>
     <div class="header background">
       <div class="title__container">
-        <h1 class="main-title">SEDES SETI</h1>
-        <h2 calss ="main-subtitle">{{subtitle}}</h2>
+        <h1 class="main-title">CONFIGURACIÓN DE TABLAS</h1>
+        <!-- <h2 calss ="main-subtitle">{{subtitle}}</h2> -->
       </div>
     </div>
     <mat-drawer #drawer class="example-sidenav" mode="over" position="end">
@@ -17,7 +17,7 @@
           <mat-label>Seleccionar tabla de configuracion</mat-label>
           <mat-select  #ej placeholder="Click para activar la configuracion de tablas"
           (selectionChange)="getList($event.value)">
-           <mat-select-trigger>{{subtitle}}</mat-select-trigger>
+           <!-- <mat-select-trigger>{{subtitle}}</mat-select-trigger> -->
             <mat-option *ngFor="let tables of table | orderAlphabetically:'name'" [value]="tables.url">
               {{tables.name}}
                 <mat-icon matTooltipClass="custom-tooltip"[matTooltip]="tables.sumary" class="content__icon"  >help</mat-icon>
@@ -32,10 +32,11 @@
         <img _ngcontent-gku-c302="" src="../assets/images/notFoundData.svg" 
         alt="Not found data" class="not-found-data__image">
         <div _ngcontent-fdq-c302="" class="not-found-data__message"> 
-          Seleccione la tabla del listado </div>
+          Seleccione la tabla del listado 
+        </div>
       </div>
 
-    <div class="table__container" *ngIf="informationSites">
+    <div class="table__container" *ngIf="informationSites informationTables">
       <div class="main">
 
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -146,6 +147,14 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
       </div>
+      <div class="not_data" *ngIf="!informationTables">
+        <img _ngcontent-gku-c302="" src="../assets/images/notFoundData.svg" 
+        alt="Not data" class="not-data__image">
+        <div _ngcontent-fdq-c302=""  class="not-data__message"> 
+          No se encontraron registros 
+        </div>
+      </div>
     </div>
+    
   </mat-drawer-container>
 </body>

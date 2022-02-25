@@ -16,10 +16,11 @@ import { MatDialog } from '@angular/material/dialog';
 export class ConfigTableComponents implements OnInit {
   ngOnInit(): void {}
   public informationSites: boolean;
-  public subtitle: any;
+  public informationTables: boolean;
 
   constructor(private service: ConfigTableServices, private dialog: MatDialog) {
-    this.informationSites = false
+    this.informationSites = false;
+    this.informationTables = true
   }
   otherIcon!: boolean;
   open: boolean = false;
@@ -64,11 +65,12 @@ export class ConfigTableComponents implements OnInit {
         if (dataValue.length > 0) {
           this.dataSource = new MatTableDataSource(dataValue);
           this.informationSites= true;
-          this.subtitle = this.table.map((tb: any) =>tb.name)
+          this.informationTables= true;
         }
       }).catch((error) => {
         this.dataSource= new MatTableDataSource();
-        this.informationSites=false
+        this.informationSites= true;
+        this.informationTables = false
         console.log('error', error);
       });
 

@@ -100,6 +100,17 @@ text-align: center;
   display:block;
   width: 40%;
 }
+.not-data__message{
+  color: #a9a9a9;
+  font-style: italic;
+  font-size: 25px;
+  text-align: center;
+  }
+  .not-data__image{
+    margin:auto;
+    display:flex;
+    width: 20%;
+  }
 .mat-column-status{
   max-width: 15em;
   width: 10em;

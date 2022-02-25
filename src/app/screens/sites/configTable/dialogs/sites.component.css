@@ -1,0 +1,36 @@
+*{
+    width: 100%;
+}
+h1{
+    font: 500 20px/32px Roboto, "Helvetica Neue", sans-serif;
+    font-weight: 500;
+    letter-spacing: normal;
+    margin-top: 10px
+}
+.dialog-title{
+    text-align: center;
+    color: var(--primary-color);
+}
+.formUp{
+    width: 100%;
+}
+
+.item{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    padding: 5px 5px;
+    position: relative;
+    margin: 2em
+}
+input{
+    background-color: #efefef;
+    border-color: #efefef;
+    color: #707070 !important;
+    padding-left: 2px;
+    border-style: solid;
+    height: 25px;
+    border-width: 2px;
+    border-radius: 6px;
+    font-size: 12px;
+}

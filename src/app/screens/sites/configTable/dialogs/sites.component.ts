@@ -9,11 +9,17 @@ import { FormControl, FormGroup } from "@angular/forms";
     styleUrls:['./sites.component.css']
 })
 
-export class SitesComponent{
-
-    constructor(@Inject(MAT_DIALOG_DATA) public data:{dataSite:any}) { }
+export class SitesComponent implements OnInit{
+    constructor(@Inject(MAT_DIALOG_DATA) public data:{dataSite:any}) {}
+    
     sites = this.data.dataSite
     formUp!: FormGroup;
+
+    
+    ngOnInit(): void {
+        throw new Error("Method not implemented.");
+    }
+
 
     updateSites(){
         // if(this.update === true){
