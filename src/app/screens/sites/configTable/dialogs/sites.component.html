@@ -1,39 +1,28 @@
 <form [formGroup]="formUp" novalidate autocomplete="off">
     <h1 class="dialog-title">Editar Sede</h1>
-    <div fxLayout="column" class="formUp">
+    <div class="formUp">
         <div  class="item">
-                <label class="label">Nombre</label>
-                <input type="text" formControlName="name" value="{{sites.name}}">
+            <mat-label class="label">Nombre</mat-label>
+            <input matInput type="text" value="{{sites.name}}" formControlName="name">
+            <mat-label class="label">Dirección</mat-label>
+            <input matInput type="text" value="{{sites.address}}" formControlName="name">
+            <mat-label class="label">Teléfono</mat-label>
+            <input matInput type="text" value="{{sites.phoneNumber}}" formControlName="name">
+            <mat-label class="label">Ciudad</mat-label>
+            <input matInput type="text" value="{{sites.city}}" formControlName="name">
+            <mat-label class="label">Estado</mat-label>
+            <input matInput type="text" value="{{sites.status}}" formControlName="name">
+            
+            <button _ngcontent-lux-c311="" mat-button="" 
+                class="mat-focus-indicator button button--accept mat-button mat-button-base">
+                <span class="mat-button-wrapper">Guardar</span>
+            </button>
+            <button _ngcontent-lux-c311="" mat-button="" 
+                class="mat-focus-indicator button button--cancel mat-button mat-button-base" 
+                ng-reflect-dialog-result="true" type="button">
+                <span class="mat-button-wrapper">Cancelar</span>
+            </button>
         </div>
-        <div  class="item">
-                <label class="label">Dirección</label>
-                <input type="text" formControlName="address" value="{{sites.address}}">
-        </div>
-        <div  class="item">
-                <label class="label">Telefono</label>
-                <input type="text" formControlName="phoneNumber" value="{{sites.phoneNumber}}">
-        </div>
-        <div  class="item">
-                <label class="label">Ciudad</label>
-                <input type="text" formControlName="city" value="{{sites.city}}">
-        </div>
-        <div  class="item">
-                <label class="label">Estado</label>
-                    <input type="radio" id="activa" name="drone" value="activa">
-                    <label for="huey">Activa</label>
-
-                    <input type="radio" id="inactiva" name="drone" value="inactiva">
-                    <label for="dewey">Inactiva</label>
-                </div>
-        </div>
-        <button _ngcontent-lux-c311="" mat-button="" 
-            class="mat-focus-indicator button button--accept mat-button mat-button-base">
-            <span class="mat-button-wrapper">Guardar</span>
-        </button>
-        <button _ngcontent-lux-c311="" mat-button="" 
-            class="mat-focus-indicator button button--cancel mat-button mat-button-base" 
-            ng-reflect-dialog-result="true" type="button">
-            <span class="mat-button-wrapper">Cancelar</span>
-        </button>
+    </div>
 </form>      
 

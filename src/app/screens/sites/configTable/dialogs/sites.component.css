@@ -13,22 +13,26 @@ h1{
 }
 .formUp{
     width: 100%;
+    flex-wrap: wrap;
+    flex-direction: column;
 }
 
 .item{
-    display: flex;
-    flex-direction: column;
-    width: 30%;
+    margin-top: 20px;
+    width: 80%;
     padding: 5px 5px;
-    position: relative;
-    margin: 2em
+    margin: 2em;
+    flex-wrap: wrap;
 }
 input{
+    margin-top: 20px;
     background-color: #efefef;
+    flex-wrap: wrap;
     border-color: #efefef;
     color: #707070 !important;
     padding-left: 2px;
     border-style: solid;
+    width: 35%;
     height: 25px;
     border-width: 2px;
     border-radius: 6px;
