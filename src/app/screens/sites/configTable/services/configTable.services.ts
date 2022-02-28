@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { pluck } from 'rxjs/operators';
 import { environment } from '@environments/environment';
-import { element } from 'protractor';
-import { Tables } from '../interfas/configTable.interface';
 
 @Injectable({
   providedIn: 'root'

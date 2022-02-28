@@ -38,3 +38,22 @@ input{
     border-radius: 6px;
     font-size: 12px;
 }
+.mat-button-toggle {
+  height: 25px !important;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: #707070;
+  width: 5em !important;
+}
+
+.mat-button-toggle-disabled {
+  background-color: #efefef;
+  color: #cccccc;
+}
+
+.mat-button-toggle-checked {
+  color: #ffffff !important;
+  background-color: #de1920;
+}

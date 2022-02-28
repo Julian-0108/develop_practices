@@ -4,6 +4,7 @@ import { SitesComponent } from './dialogs/sites.component';
 import { Tables } from './interfaces/configTable.interface';
 import { ConfigTableServices } from './services/configTable.services';
 import { MatDialog } from '@angular/material/dialog';
+import{SearchFilterPipe}from '@app/shared/pipes/Search-Filter.pipe'
 
 @Component({
   selector: 'app-config-table',
@@ -15,7 +16,7 @@ export class ConfigTableComponents implements OnInit {
   public informationSites: boolean;
   public informationTables: boolean;
 
-  constructor(private service: ConfigTableServices, private dialog: MatDialog) {
+  constructor(private service: ConfigTableServices, private dialog: MatDialog,private filter:SearchFilterPipe) {
     this.informationSites = false;
     this.informationTables = true
   }
@@ -24,6 +25,16 @@ export class ConfigTableComponents implements OnInit {
   help: string = 'help';
   idHistory!: string;
   subtitle: any = '';
+  filterListSities:Array<any>=[]
+  filterSities={
+    name:'',
+    address:'',
+    phoneNumber:'',
+    city:'',
+    status:'',
+    createdAt:'',
+    updatedAt:'',
+  }
   dataSource: MatTableDataSource<Tables | any> = new MatTableDataSource();
 
   public displayedColumns: string[] = [
@@ -41,24 +52,24 @@ export class ConfigTableComponents implements OnInit {
     {
       name: 'Sedes',
       url: 'venues',
-      sumary: 'aquí puedes configurar las sedes de la empresa',
+      sumary: 'Aquí puedes configurar las sedes de la empresa',
       haveTypeField: false,
     },
     {
       name: 'Oficinas',
       url: 'Offices',
-      sumary: 'aquí puedes configurar las oficinas',
+      sumary: 'Aquí puedes configurar las oficinas',
       haveTypeField: false,
     },
   ];
-  applyFilter(filterValue: any) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-  applyDirectFilter(filterValue: any) {
-    this.dataSource.filter = filterValue;
-  }
+
   isOpen() {
     this.open = true;
+  }
+
+  applyFilter(){
+    this.dataSource=this.filter.transform(this.filterListSities,this.filterSities);
+    console.log(this.filterSities)
   }
 
   getList(url: string) {
@@ -71,6 +82,7 @@ export class ConfigTableComponents implements OnInit {
       .getListSites(url)
       .then((dataValue) => {
         if (dataValue.length > 0) {
+          this.filterListSities=dataValue
           this.dataSource = new MatTableDataSource(dataValue);
           this.informationSites= true;
           this.informationTables= true;

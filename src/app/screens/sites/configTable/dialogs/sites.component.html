@@ -1,28 +1,37 @@
-<form [formGroup]="formUp" novalidate autocomplete="off">
-    <h1 class="dialog-title">Editar Sede</h1>
-    <div class="formUp">
-        <div  class="item">
-            <mat-label class="label">Nombre</mat-label>
-            <input matInput type="text" value="{{sites.name}}" formControlName="name">
-            <mat-label class="label">Dirección</mat-label>
-            <input matInput type="text" value="{{sites.address}}" formControlName="name">
-            <mat-label class="label">Teléfono</mat-label>
-            <input matInput type="text" value="{{sites.phoneNumber}}" formControlName="name">
-            <mat-label class="label">Ciudad</mat-label>
-            <input matInput type="text" value="{{sites.city}}" formControlName="name">
-            <mat-label class="label">Estado</mat-label>
-            <input matInput type="text" value="{{sites.status}}" formControlName="name">
-            
-            <button _ngcontent-lux-c311="" mat-button="" 
-                class="mat-focus-indicator button button--accept mat-button mat-button-base">
-                <span class="mat-button-wrapper">Guardar</span>
-            </button>
-            <button _ngcontent-lux-c311="" mat-button="" 
-                class="mat-focus-indicator button button--cancel mat-button mat-button-base" 
-                ng-reflect-dialog-result="true" type="button">
-                <span class="mat-button-wrapper">Cancelar</span>
-            </button>
-        </div>
-    </div>
-</form>      
+<form [formGroup]="formSities" (ngSubmit)="updateSites()" novalidate autocomplete="off">
+  <h1 class="dialog-title">Editar Sede</h1>
+  <div class="formUp">
+    <div class="item">
+      <mat-label class="label">Nombre</mat-label>
+      <input matInput type="text" formControlName="name" />
+      <mat-label class="label">Dirección</mat-label>
+      <input matInput type="text" formControlName="address" />
+      <mat-label class="label">Teléfono</mat-label>
+      <input matInput type="text" formControlName="phoneNumber" />
+      <mat-label class="label">Ciudad</mat-label>
+      <input matInput type="text" formControlName="city" />
 
+      <mat-label class="label">Estado</mat-label>
+      <mat-button-toggle-group
+        #statusToggleButton
+        mat
+        Tooltip="Indica si el registro esta activo o inactivo"
+        formControlName="status"
+      >
+        <mat-button-toggle value="true" checked="{{sites.status}}">activo</mat-button-toggle>
+        <mat-button-toggle value="false" checked="{{!sites.status}}">inactivo</mat-button-toggle>
+
+      </mat-button-toggle-group>
+
+      <button
+        type="submit"
+        _ngcontent-lux-c311=""
+        mat-button=""
+        class="mat-focus-indicator button button--accept mat-button mat-button-base"
+      >
+        <span class="mat-button-wrapper">Guardar</span>
+      </button>
+      <button mat-button class="button button--cancel" type="button" [mat-dialog-close]="true">Cancelar</button>
+    </div>
+  </div>
+</form>
