@@ -9,6 +9,7 @@ import { AssociateGLPIComponent } from './dialogs/associate-glpi/associate-glpi.
 import { SeeResumeComponent } from './dialogs/see-resume/see-resume.component';
 import { SearchFilterPipe } from '@app/shared/pipes/Search-Filter.pipe';
 import { NotificationService } from '@app/shared/components/notification/services/notification.service';
+import { FormBuilder, Validators } from '@angular/forms';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -35,8 +36,17 @@ export class ProfileManageResumesComponent implements OnInit {
     { id: 1, apiracion_SMIN: '2000000', apiracion_SMAX: '2500000', view: '$ 2.000.000 - $ 2.500.000' },
     { id: 2, apiracion_SMIN: '3000000', apiracion_SMAX: '3500000', view: '$ 3.000.000 - $ 3.500.000' },
     { id: 3, apiracion_SMIN: '4000000', apiracion_SMAX: '4500000', view: '$ 4.000.000 - $ 4.500.000' },
-    { id: 4, apiracion_SMIN: '5000000', apiracion_SMAX: '5500000', view: '$ 5.000.000 - $ 5.500.000' }
+    { id: 4, apiracion_SMIN: '5000000', apiracion_SMAX: '5500000', view: '$ 5.000.000 - $ 5.500.000' },
+    { id: 5, apiracion_SMIN: '6000000', apiracion_SMAX: '6500000', view: '$ 6.000.000 - $ 6.500.000' },
+    { id: 6, apiracion_SMIN: '7000000', apiracion_SMAX: '7500000', view: '$ 7.000.000 - $ 7.500.000' },
+    { id: 7, apiracion_SMIN: '8000000', apiracion_SMAX: '8500000', view: '$ 8.000.000 - $ 8.500.000' },
+    { id: 8, apiracion_SMIN: '9000000', apiracion_SMAX: '9500000', view: '$ 9.000.000 - $ 9.500.000' }
   ]
+
+  filterDomainArea = this.fb.group({
+    domain: ['',Validators.required],
+    area: ['',Validators.required]
+  })
 
   idSalario = '';
   knowledge:string[] = [];
@@ -50,6 +60,7 @@ export class ProfileManageResumesComponent implements OnInit {
     private service: ProfileManageResumesService,
     private serviceAddResume: AddResumeService,
     private searchFilter: SearchFilterPipe,
+    private fb: FormBuilder,
     private notificationService: NotificationService) { }
 
   ngOnInit(): void {
@@ -128,8 +139,34 @@ export class ProfileManageResumesComponent implements OnInit {
       })
   }
 
+  addArea(area:string){
+    this.filterDomainArea.get('area')?.setValue(area);
+  }
 
-  filterRegister() {
+  getInfoArea(){
+    return this.filterDomainArea.get('area')?.value;
+  }
+
+
+  filterRegister(value:any, type:string) {
+    switch (type) {
+      case 'fullName':
+        this.filterKeys.fullName = value;
+        break;
+      case 'numberIdentification':
+        this.filterKeys.numberIdentification = value;
+        break;
+      case 'processStatus':
+        this.filterKeys.processStatus = value;
+        break;
+      case 'city':
+        this.filterKeys.city = value;
+        break;
+      case 'salario':
+        this.idSalario = value;
+        break;
+    }
+
     this.dataSource = this.searchFilter.transform(this.filteredList, this.filterKeys);
 
     if (this.idSalario !== '') {
