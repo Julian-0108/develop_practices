@@ -4,7 +4,7 @@
     <div class="header background">
       <div class="title__container">
         <h1 class="main-title">CONFIGURACIÓN DE TABLAS</h1>
-        <h2 calss ="main-subtitle">{{subtitle}}</h2>
+        <h2 class ="main-subtitle">{{subtitle}}</h2>
       </div>
     </div>
     <mat-drawer #drawer class="example-sidenav" mode="over" position="end">
@@ -17,7 +17,7 @@
           <mat-label>Seleccionar tabla de configuración</mat-label>
           <mat-select  #ej placeholder="Click para activar la configuración de tablas"
           (selectionChange)="getList($event.value)">
-           <mat-select-trigger>{{subtitle}}</mat-select-trigger>
+           <mat-select-trigger class="main-subtitle">{{subtitle}}</mat-select-trigger>
             <mat-option *ngFor="let tables of table | orderAlphabetically:'name'" [value]="tables.url">
               {{tables.name}}
                 <mat-icon matTooltipClass="custom-tooltip"[matTooltip]="tables.sumary" class="content__icon"  >help</mat-icon>

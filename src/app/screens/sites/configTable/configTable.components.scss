@@ -6,13 +6,11 @@ body {
 mat-drawer-container {
   background-color: #fff !important;
 }
-
 .background {
   // background-color: #fff !important;
   background-image: url('../../../../assets/images/background_adminMasters.svg');
   background-size: cover;
 }
-
 .header {
   display: flex;
   flex-direction: row;
@@ -26,11 +24,9 @@ mat-drawer-container {
   text-align: center;
   margin-top: 15px;
 }
-
 .main {
   margin: 0px 19px;
 }
-
 .table__container {
   margin-top: 10px;
   height: 25em;
@@ -38,7 +34,6 @@ mat-drawer-container {
   overflow-y: auto;
   overflow-x: auto;
 }
-
 table {
   width: 100%;
 }
@@ -59,28 +54,21 @@ table {
 .centerTable {
   text-align: center;
 }
-
 .chip__status {
   margin-left: 6px;
   font-size: 11px;
   padding: 3px 10px;
   border-radius: 9px;
 }
-
 .chip__status--active {
   background-color: #d1ead2;
   color: #68bc6c;
   padding: 3px 14px;
 }
-
 .chip__status--inactive {
   background-color: #f5cfcc;
   color: #e06055;
 }
-
-
-
-
 .buttonAction_e {
   color: #3392e4;
   background-color: #3392e42e;
@@ -91,7 +79,6 @@ table {
 .button-back {
   top: 1em;
 }
-
 .not-found-data__message {
   color: #a9a9a9;
   font-style: italic;
@@ -102,20 +89,23 @@ table {
 .not-found-data__image {
   margin: auto;
   display: block;
-  width: 40%;
+  width: 30%;
 }
-.not-data__message{
+.not-data__message {
   color: #a9a9a9;
   font-style: italic;
   font-size: 25px;
   text-align: center;
 }
-.not-data__image{
-    margin:auto;
-    display:flex;
-    width: 20%;
+.not_data {
+  margin-top: 3em;
 }
-.mat-column-status{
+.not-data__image {
+  margin: auto;
+  display: flex;
+  width: 20%;
+}
+.mat-column-status {
   max-width: 15em;
   width: 10em;
 }
@@ -126,4 +116,7 @@ table {
   font-size: 15px;
   color: #83afe2;
   top: 5px;
+}
+.filter {
+  text-align: center;
 }

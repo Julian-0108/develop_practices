@@ -99,8 +99,9 @@ export class ConfigTableComponents implements OnInit {
     console.log(value);
     this.dialog.open(SitesComponent, {
       width: '60%',
-      height: '80%',
-      data: { dataSite: value },
+      height: '60%',
+      data: { dataSite: value,
+      subtitle : this.subtitle},
     });
   }
 }
