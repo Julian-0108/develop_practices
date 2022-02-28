@@ -31,8 +31,8 @@
       <div class="not_found" *ngIf="!informationSites">
         <img _ngcontent-gku-c302="" src="../assets/images/notFoundData.svg"
         alt="Not found data" class="not-found-data__image">
-        <div _ngcontent-fdq-c302="" class="not-found-data__message"> 
-          Seleccione la tabla del listado 
+        <div _ngcontent-fdq-c302="" class="not-found-data__message">
+          Seleccione la tabla del listado
         </div>
       </div>
 
@@ -44,7 +44,7 @@
             <th mat-header-cell *matHeaderCellDef>Nombre
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter"(keyup)="applyFilter($event.target.value)" type="text">
+                  <input matInput class="filter"(keyup)="applyFilter()" [(ngModel)]="filterSities.name" type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -56,7 +56,7 @@
             <th mat-header-cell *matHeaderCellDef>Dirección
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text">
+                  <input matInput class="filter" (keyup)="applyFilter()"  [(ngModel)]="filterSities.address" type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -68,7 +68,7 @@
             <th mat-header-cell *matHeaderCellDef>Teléfono
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)"type="text">
+                  <input matInput class="filter" (keyup)="applyFilter()"  [(ngModel)]="filterSities.phoneNumber" type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -80,7 +80,7 @@
             <th mat-header-cell *matHeaderCellDef>Ciudad
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter"(keyup)="applyFilter($event.target.value)" type="text">
+                  <input matInput class="filter"(keyup)="applyFilter()"  [(ngModel)]="filterSities.city" type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -92,7 +92,7 @@
             <th mat-header-cell *matHeaderCellDef>Fecha de creación
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter"  (keyup)="applyFilter($event.target.value)"type="date">
+                  <input matInput class="filter" (change)="applyFilter()" [(ngModel)]="filterSities.createdAt" type="date">
                 </mat-form-field>
               </div>
             </th>
@@ -103,7 +103,7 @@
             <th mat-header-cell *matHeaderCellDef>Fecha de actualización
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter"  (keyup)="applyFilter($event.target.value)" type="date">
+                  <input matInput class="filter"  (change)="applyFilter()" [(ngModel)]="filterSities.updatedAt" type="date">
                 </mat-form-field>
               </div>
             </th>
@@ -114,7 +114,8 @@
             <th mat-header-cell *matHeaderCellDef>Estado
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <mat-select class="filter" (selectionChange)="applyDirectFilter($event.value)">
+                  <mat-select class="filter" (selectionChange)="applyFilter()"[(ngModel)]="filterSities.status">
+                    <mat-option value="">Ver todos</mat-option>
                     <mat-option value="true"> Activo</mat-option>
                     <mat-option value="false">Inactivo</mat-option>
                   </mat-select>
@@ -123,9 +124,9 @@
             </th>
             <td mat-cell *matCellDef="let element">
               <div class="centerTable">
-                <label mat-cell
-                [ngClass]="{'activeButton': element.status, 'inactiveButton': !element.status}">{{element.status
-                ? 'Activo': 'Inactivo'}}</label>
+                <label class="chip__status"
+                [ngClass]="{'chip__status--active':element.status,'chip__status--inactive':!element.status}">{{element.status
+                ? 'Activo' : 'Inactivo'}}</label>
               </div>
             </td>
           </ng-container>
@@ -147,13 +148,13 @@
         </table>
       </div>
       <div class="not_data" *ngIf="!informationTables">
-        <img _ngcontent-gku-c302="" src="../assets/images/notFoundData.svg" 
+        <img _ngcontent-gku-c302="" src="../assets/images/notFoundData.svg"
         alt="Not data" class="not-data__image">
-        <div _ngcontent-fdq-c302=""  class="not-data__message"> 
-          No se encontraron registros 
+        <div _ngcontent-fdq-c302=""  class="not-data__message">
+          No se encontraron registros
         </div>
       </div>
     </div>
-    
+
   </mat-drawer-container>
 </body>
