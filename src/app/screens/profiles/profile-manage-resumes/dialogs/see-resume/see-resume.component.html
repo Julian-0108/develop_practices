@@ -37,8 +37,8 @@
             <mat-grid-tile colspan="1" rowspan="2">
                 <mat-list role="list">
                     <mat-list-item role="listitem" class="mat-dialog-title subrayado">Teléfono</mat-list-item>
-                    <mat-list-item role="listitem" *ngFor="let item of info_Candidate.phone">{{item.type + " " +
-                        item.prefix + " " + item.number}}</mat-list-item>
+                    <mat-list-item role="listitem" *ngFor="let item of info_Candidate?.phone">{{item?.type + " " +
+                        item?.prefix + " " + item?.number}}</mat-list-item>
                 </mat-list>
             </mat-grid-tile>
 
@@ -58,7 +58,7 @@
 
             <mat-grid-tile colspan="1" rowspan="1">
                 <mat-list role="list">
-                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Correo electrónico</mat-list-item>
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Correo Electrónico</mat-list-item>
                     <mat-list-item role="listitem">{{info_Candidate?.email}}</mat-list-item>
                 </mat-list>
             </mat-grid-tile>
@@ -75,7 +75,7 @@
         <mat-grid-list cols="2" rowHeight="60px">
             <mat-grid-tile colspan="1" rowspan="1">
                 <mat-list role="list">
-                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Aspiración mínima</mat-list-item>
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Aspiración Mínima</mat-list-item>
                     <mat-list-item role="listitem">{{info_Candidate?.minAspiration |
                         currency:'CAD':'symbol-narrow':'1.0-0'}}</mat-list-item>
                 </mat-list>
@@ -83,7 +83,7 @@
 
             <mat-grid-tile colspan="1" rowspan="1">
                 <mat-list role="list">
-                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Aspiración Aspiración máxima
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Aspiración Máxima
                     </mat-list-item>
                     <mat-list-item role="listitem">{{info_Candidate?.maxAspiration |
                         currency:'CAD':'symbol-narrow':'1.0-0'}}</mat-list-item>
@@ -92,20 +92,20 @@
         </mat-grid-list>
 
 
-        <h4 class="main-title" *ngIf="info_Candidate.workExperience.length > 0">Experiencia laboral</h4>
+        <h4 class="main-title" *ngIf="info_Candidate?.workExperience.length > 0">Experiencia laboral</h4>
 
 
-        <mat-grid-list cols="5" rowHeight="60px" *ngFor="let item of info_Candidate.workExperience">
+        <mat-grid-list cols="5" rowHeight="60px" *ngFor="let item of info_Candidate?.workExperience">
             <mat-grid-tile colspan="1" rowspan="1">
                 <mat-list role="list">
-                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Nombre empresa</mat-list-item>
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Nombre Empresa</mat-list-item>
                     <mat-list-item role="listitem">{{item.company}}</mat-list-item>
                 </mat-list>
             </mat-grid-tile>
 
             <mat-grid-tile colspan="1" rowspan="1">
                 <mat-list role="list">
-                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Cargo ejercido</mat-list-item>
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Cargo Ejercido</mat-list-item>
                     <mat-list-item role="listitem">{{item.charge}}</mat-list-item>
                 </mat-list>
             </mat-grid-tile>
@@ -119,22 +119,22 @@
 
             <mat-grid-tile colspan="1" rowspan="1">
                 <mat-list role="list">
-                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Fecha inicio</mat-list-item>
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Fecha Inicio</mat-list-item>
                     <mat-list-item role="listitem">{{item.timeStart | date}}</mat-list-item>
                 </mat-list>
             </mat-grid-tile>
 
             <mat-grid-tile colspan="1" rowspan="1">
                 <mat-list role="list">
-                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Fecha fin</mat-list-item>
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Fecha Fin</mat-list-item>
                     <mat-list-item role="listitem">{{item.timeEnd | date}}</mat-list-item>
                 </mat-list>
             </mat-grid-tile>
         </mat-grid-list>
 
-        <h4 class="main-title" *ngIf="info_Candidate.languages.length > 0">Idiomas</h4>
+        <h4 class="main-title" *ngIf="info_Candidate?.languages.length > 0">Idiomas</h4>
 
-        <mat-grid-list cols="4" rowHeight="60px" *ngFor="let languaje of info_Candidate.languages">
+        <mat-grid-list cols="4" rowHeight="60px" *ngFor="let languaje of info_Candidate?.languages">
 
             <mat-grid-tile colspan="1" rowspan="1">
                 <mat-list role="list">
@@ -166,9 +166,9 @@
 
         </mat-grid-list>
 
-        <h4 class="main-title" *ngIf="info_Candidate.levelStudy > 0">Niveles de estudio</h4>
+        <h4 class="main-title" *ngIf="info_Candidate?.levelStudy > 0">Niveles de estudio</h4>
 
-        <mat-grid-list cols="2" rowHeight="60px" *ngFor="let study of info_Candidate.levelStudy">
+        <mat-grid-list cols="2" rowHeight="60px" *ngFor="let study of info_Candidate?.levelStudy">
 
             <mat-grid-tile colspan="1" rowspan="1">
                 <mat-list role="list">
@@ -186,9 +186,9 @@
         </mat-grid-list>
 
 
-        <h4 class="main-title" *ngIf="info_Candidate.knowledgeCharge.length > 0">Conocimientos</h4>
+        <h4 class="main-title" *ngIf="info_Candidate?.knowledgeCharge.length > 0">Conocimientos</h4>
 
-        <mat-grid-list cols="2" rowHeight="60px" *ngFor="let skill of info_Candidate.knowledgeCharge">
+        <mat-grid-list cols="2" rowHeight="60px" *ngFor="let skill of info_Candidate?.knowledgeCharge">
             <mat-grid-tile colspan="1" rowspan="1">
                 <mat-list role="list">
                     <mat-list-item role="listitem" class="mat-dialog-title subrayado">Dominio</mat-list-item>
@@ -198,7 +198,7 @@
 
             <mat-grid-tile colspan="1" rowspan="1">
                 <mat-list role="list">
-                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Area</mat-list-item>
+                    <mat-list-item role="listitem" class="mat-dialog-title subrayado">Área</mat-list-item>
                     <mat-list-item role="listitem">{{skill.knowledgeArea}}
                         <mat-icon matTooltipClass="custom-tooltip" [matTooltip]="skill.description" class="content__icon">help</mat-icon>
                     </mat-list-item>
@@ -211,7 +211,7 @@
         <mat-grid-list cols="1" rowHeight="60px">
             <mat-grid-tile colspan="1" rowspan="1">
                 <mat-list role="list">
-                    <mat-list-item role="listitem">{{info_Candidate.observations}}</mat-list-item>
+                    <mat-list-item role="listitem">{{info_Candidate?.observations}}</mat-list-item>
                 </mat-list>
             </mat-grid-tile>
         </mat-grid-list>
