@@ -29,6 +29,7 @@ mat-drawer-container {
 
 .main {
   margin: 0px 19px;
+
 }
 
 .table__container {
@@ -60,21 +61,28 @@ table {
   text-align: center;
 }
 
-.activeButton {
-  background-color: #d1ead2 !important;
-  color: #68bc6c !important;
-  padding: 3px 14px !important;
-  box-shadow: 0px 0px 6px #81c784;
+.chip__status {
+  margin-left: 6px;
+  font-size: 11px;
+  padding: 3px 10px;
   border-radius: 9px;
 }
-.inactiveButton {
-  background-color: #ead1d1 !important;
-  color: #bc6868 !important;
-  padding: 3px 14px !important;
-  box-shadow: 0px 0px 6px #c78181;
 
-  border-radius: 9px;
+.chip__status--active {
+  background-color: #d1ead2;
+  color: #68bc6c;
+  padding: 3px 14px;
 }
+
+.chip__status--inactive {
+  background-color: #f5cfcc;
+  color: #e06055;
+}
+
+
+
+
+
 .buttonAction_e {
   color: #3392e4;
   background-color: #3392e42e;
