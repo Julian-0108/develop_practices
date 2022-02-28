@@ -1,16 +1,25 @@
 <form [formGroup]="formSities" (ngSubmit)="updateSites()" novalidate autocomplete="off">
-  <h1 class="dialog-title">Editar Sede</h1>
+  <h1 class="dialog-title">Editar  {{subtitle}}</h1>
   <div class="formUp">
     <div class="item">
-      <mat-label class="label">Nombre</mat-label>
-      <input matInput type="text" formControlName="name" />
-      <mat-label class="label">Dirección</mat-label>
-      <input matInput type="text" formControlName="address" />
-      <mat-label class="label">Teléfono</mat-label>
-      <input matInput type="text" formControlName="phoneNumber" />
-      <mat-label class="label">Ciudad</mat-label>
-      <input matInput type="text" formControlName="city" />
-
+      <div class="content">
+        <mat-label class="label">Nombre</mat-label>
+        <input matInput type="text" formControlName="name" />
+      </div>
+      <div class="content">
+        <mat-label class="label">Dirección</mat-label>
+        <input matInput type="text" formControlName="address" />
+      </div>
+      <div class="content">
+        <mat-label class="label">Teléfono</mat-label>
+        <input matInput type="text" formControlName="phoneNumber" />
+      </div>
+      <div class="content">
+        <mat-label class="label">Ciudad</mat-label>
+        <input matInput type="text" formControlName="city" />
+      </div>
+    </div>
+    <div class="contentStatus">
       <mat-label class="label">Estado</mat-label>
       <mat-button-toggle-group
         #statusToggleButton
@@ -18,20 +27,20 @@
         Tooltip="Indica si el registro esta activo o inactivo"
         formControlName="status"
       >
-        <mat-button-toggle value="true" checked="{{sites.status}}">activo</mat-button-toggle>
-        <mat-button-toggle value="false" checked="{{!sites.status}}">inactivo</mat-button-toggle>
-
+      <mat-button-toggle value="true" checked="{{sites.status}}">Activo</mat-button-toggle>
+      <mat-button-toggle value="false" checked="{{!sites.status}}">Inactivo</mat-button-toggle>
       </mat-button-toggle-group>
-
-      <button
-        type="submit"
-        _ngcontent-lux-c311=""
-        mat-button=""
-        class="mat-focus-indicator button button--accept mat-button mat-button-base"
-      >
-        <span class="mat-button-wrapper">Guardar</span>
-      </button>
-      <button mat-button class="button button--cancel" type="button" [mat-dialog-close]="true">Cancelar</button>
     </div>
+  </div>
+  <div class="buttonAction">
+    <button
+      type="submit"
+      _ngcontent-lux-c311=""
+      mat-button=""
+      class="buttonAcept button--accept"
+    >
+    <span class="mat-button-wrapper">Guardar</span>
+    </button>
+    <button mat-button class="button button--cancel" type="button" [mat-dialog-close]="true">Cancelar</button>
   </div>
 </form>

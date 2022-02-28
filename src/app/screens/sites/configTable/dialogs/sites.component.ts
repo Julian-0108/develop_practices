@@ -8,9 +8,10 @@ import { FormControl, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./sites.component.css'],
 })
 export class SitesComponent implements OnInit {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { dataSite: any }, private fg: FormBuilder) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { dataSite: any, subtitle:any }, private fg: FormBuilder) {}
 
   sites = this.data.dataSite;
+  subtitle = this.data.subtitle
   // formUp!: FormGroup;
   formSities = this.fg.group({
     name: ['', Validators.required],
