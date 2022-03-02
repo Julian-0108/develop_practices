@@ -4,7 +4,8 @@ import { SitesComponent } from './dialogs/sites.component';
 import { Tables } from './interfaces/configTable.interface';
 import { ConfigTableServices } from './services/configTable.services';
 import { MatDialog } from '@angular/material/dialog';
-import{SearchFilterPipe}from '@app/shared/pipes/Search-Filter.pipe'
+import { url } from 'inspector';
+import { SearchFilterPipe } from '@app/shared/pipes/Search-Filter.pipe';
 
 @Component({
   selector: 'app-config-table',
@@ -16,25 +17,30 @@ export class ConfigTableComponents implements OnInit {
   public informationSites: boolean;
   public informationTables: boolean;
 
-  constructor(private service: ConfigTableServices, private dialog: MatDialog,private filter:SearchFilterPipe) {
+  constructor(
+    private service: ConfigTableServices,
+    private dialog: MatDialog,
+    private filter: SearchFilterPipe
+  ) {
     this.informationSites = false;
-    this.informationTables = true
+    this.informationTables = true;
   }
   otherIcon!: boolean;
   open: boolean = false;
   help: string = 'help';
   idHistory!: string;
   subtitle: any = '';
-  filterListSities:Array<any>=[]
-  filterSities={
-    name:'',
-    address:'',
-    phoneNumber:'',
-    city:'',
-    status:'',
-    createdAt:'',
-    updatedAt:'',
-  }
+  urlUpdate: string = '';
+  filterListSities: Array<any> = [];
+  filterSities = {
+    name: '',
+    address: '',
+    phoneNumber: '',
+    city: '',
+    status: '',
+    createdAt: '',
+    updatedAt: '',
+  };
   dataSource: MatTableDataSource<Tables | any> = new MatTableDataSource();
 
   public displayedColumns: string[] = [
@@ -67,9 +73,32 @@ export class ConfigTableComponents implements OnInit {
     this.open = true;
   }
 
-  applyFilter(){
-    this.dataSource=this.filter.transform(this.filterListSities,this.filterSities);
-    console.log(this.filterSities)
+  applyFilter(value: any, type: any) {
+    switch (type) {
+      case 'name':
+        this.filterSities.name = value;
+        break;
+      case 'address':
+        this.filterSities.address = value;
+        break;
+      case 'phoneNumber':
+        this.filterSities.phoneNumber = value;
+        break;
+      case 'city':
+        this.filterSities.city = value;
+        break;
+      case 'updatedAt':
+        this.filterSities.updatedAt = value;
+        break;
+      case 'createdAt':
+        this.filterSities.createdAt = value;
+        break;
+      case 'status':
+        this.filterSities.status = value;
+        break;
+    }
+    this.dataSource = this.filter.transform(this.filterListSities, this.filterSities);
+    console.log(this.filterSities);
   }
 
   getList(url: string) {
@@ -78,30 +107,38 @@ export class ConfigTableComponents implements OnInit {
         this.subtitle = tb.name;
       }
     });
+    this.urlUpdate = url;
     this.service
       .getListSites(url)
       .then((dataValue) => {
         if (dataValue.length > 0) {
-          this.filterListSities=dataValue
+          this.filterListSities = dataValue;
           this.dataSource = new MatTableDataSource(dataValue);
-          this.informationSites= true;
-          this.informationTables= true;
+          this.informationSites = true;
+          this.informationTables = true;
         }
-      }).catch((error) => {
-        this.dataSource= new MatTableDataSource();
-        this.informationSites= true;
-        this.informationTables = false
+      })
+      .catch((error) => {
+        this.dataSource = new MatTableDataSource();
+        this.informationSites = true;
+        this.informationTables = false;
         console.log('error', error);
       });
   }
 
   openEdit(value: any) {
-    console.log(value);
-    this.dialog.open(SitesComponent, {
-      width: '60%',
-      height: '60%',
-      data: { dataSite: value,
-      subtitle : this.subtitle},
-    });
+    this.dialog
+      .open(SitesComponent, {
+        width: '60%',
+        height: '60%',
+        data: { dataSite: value, subtitle: this.subtitle },
+      })
+      .afterClosed()
+      .toPromise()
+      .then((response: boolean) => {
+        if (response) {
+          this.getList(this.urlUpdate);
+        }
+      });
   }
 }

@@ -25,7 +25,16 @@
             </mat-select>
         </mat-form-field>
       </div>
+      <div  class="button__container" fxLayoutAlign="end end">
+        <div class="layer2" (click)="openEdit">
+          <div mat-button class="layer">
+            <mat-icon>add</mat-icon>
+          </div>
+          Añadir
+        </div>
+      </div>
     </div>
+
 
 
       <div class="not_found" *ngIf="!informationSites">
@@ -44,7 +53,7 @@
             <th mat-header-cell *matHeaderCellDef>Nombre
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter"(keyup)="applyFilter()" [(ngModel)]="filterSities.name" type="text">
+                  <input matInput class="filter"(keyup)="applyFilter($event.target.value,'name')" type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -56,7 +65,7 @@
             <th mat-header-cell *matHeaderCellDef>Dirección
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter()"  [(ngModel)]="filterSities.address" type="text">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value,'address')"  type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -68,7 +77,7 @@
             <th mat-header-cell *matHeaderCellDef>Teléfono
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter()"  [(ngModel)]="filterSities.phoneNumber" type="text">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value,'phoneNumber')"  type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -80,7 +89,7 @@
             <th mat-header-cell *matHeaderCellDef>Ciudad
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter"(keyup)="applyFilter()"  [(ngModel)]="filterSities.city" type="text">
+                  <input matInput class="filter"(keyup)="applyFilter($event.target.value,'city')"  type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -92,7 +101,7 @@
             <th mat-header-cell *matHeaderCellDef>Fecha de creación
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (change)="applyFilter()" [(ngModel)]="filterSities.createdAt" type="date">
+                  <input matInput class="filter" (change)="applyFilter($event.target.value,'createdAt')" type="date">
                 </mat-form-field>
               </div>
             </th>
@@ -103,7 +112,7 @@
             <th mat-header-cell *matHeaderCellDef>Fecha de actualización
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter"  (change)="applyFilter()" [(ngModel)]="filterSities.updatedAt" type="date">
+                  <input matInput class="filter"  (change)="applyFilter($event.target.value,'updatedAt')" type="date">
                 </mat-form-field>
               </div>
             </th>
@@ -114,7 +123,7 @@
             <th mat-header-cell *matHeaderCellDef>Estado
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <mat-select class="filter" (selectionChange)="applyFilter()"[(ngModel)]="filterSities.status">
+                  <mat-select class="filter" (selectionChange)="applyFilter($event.value,'status')">
                     <mat-option value="">Ver todos</mat-option>
                     <mat-option value="true"> Activo</mat-option>
                     <mat-option value="false">Inactivo</mat-option>
