@@ -1,5 +1,5 @@
 <form [formGroup]="formSities" (ngSubmit)="updateSites()" novalidate autocomplete="off">
-  <h1 class="dialog-title">Editar  {{subtitle}}</h1>
+  <h1 class="dialog-title">Editar {{ subtitle }}</h1>
   <div class="formUp">
     <div class="item">
       <div class="content">
@@ -27,20 +27,17 @@
         Tooltip="Indica si el registro esta activo o inactivo"
         formControlName="status"
       >
-      <mat-button-toggle value="true" checked="{{sites.status}}">Activo</mat-button-toggle>
-      <mat-button-toggle value="false" checked="{{!sites.status}}">Inactivo</mat-button-toggle>
+        <mat-button-toggle [value]="true" checked="{{ sites.status }}">Activo</mat-button-toggle>
+        <mat-button-toggle [value]="false" checked="{{ !sites.status }}">Inactivo</mat-button-toggle>
       </mat-button-toggle-group>
     </div>
   </div>
   <div class="buttonAction">
-    <button
-      type="submit"
-      _ngcontent-lux-c311=""
-      mat-button=""
-      class="buttonAcept button--accept"
-    >
-    <span class="mat-button-wrapper">Guardar</span>
+    <button  class="buttonAcept button--accept" (click)="updateSites()">
+      <span class="mat-button-wrapper">Guardar</span>
     </button>
-    <button mat-button class="button button--cancel" type="button" [mat-dialog-close]="true">Cancelar</button>
+    <button mat-button class="button button--cancel" type="button" [mat-dialog-close]="true">
+      Cancelar
+    </button>
   </div>
 </form>
