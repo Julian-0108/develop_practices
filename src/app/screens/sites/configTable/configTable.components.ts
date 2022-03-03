@@ -133,10 +133,10 @@ export class ConfigTableComponents implements OnInit {
       .open(SitesComponent, {
         width: '60%',
         height: '60%',
-        data: { 
+        data: {
           dataSite: value,
-          subtitle: this.subtitle ,
-          add: false
+          subtitle: this.subtitle,
+          add: false,
         },
       })
       .afterClosed()
@@ -152,10 +152,10 @@ export class ConfigTableComponents implements OnInit {
       .open(SitesComponent, {
         width: '60%',
         height: '60%',
-        data: { 
+        data: {
           subtitle: this.subtitle,
-          add:true,
-          url: this.url
+          add: true,
+          url: this.urlUpdate,
         },
       })
       .afterClosed()
