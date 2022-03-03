@@ -20,14 +20,12 @@ export class ConfigTableServices {
   async updateDataSites(_id: any, dataUp: any): Promise<any> {
     return await this.http
       .put(`${environment.API_CONFIGTABLE}/venues/${_id}`, dataUp)
-      .pipe(pluck('payload'))
-      .toPromise();
+       .toPromise();
   }
 
   async addDataSites(url:string, register:any): Promise<any> {
     return await this.http
       .post(`${environment.API_CONFIGTABLE}/${url}`, register)
-      // .pipe(pluck('payload'))
       .toPromise();
   }
 }
