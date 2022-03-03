@@ -53,7 +53,7 @@ export class AssociateGLPIComponent implements OnInit {
     .then((info: {firstName:string; realName:string; createDate:string; endDate:string; content:string; charge:string}) => {
       this.info_case = info;
       this.notificationService.openSimpleSnackBar(
-        {title: 'Caso encontrado', message: 'Numero de caso Glpi encontrado', type: 'success'}
+        {title: 'Caso encontrado', message: 'Número de caso Glpi encontrado', type: 'success'}
       );
     }).catch((error:any) => {
       console.log('error',error);
@@ -72,7 +72,7 @@ export class AssociateGLPIComponent implements OnInit {
       console.log(this.send.value);
     }else{
       this.notificationService.openSimpleSnackBar(
-        {title: 'Caso no seleccionado', message: 'por favor selecionar un numero de caso para añadirlo', type: 'info'}
+        {title: 'Caso no seleccionado', message: 'Por favor seleccionar un número de caso para añadirlo', type: 'info'}
       );
     }
   }
@@ -97,11 +97,11 @@ export class AssociateGLPIComponent implements OnInit {
     }else{
       if(this.getCaseArray.value.length === 0){
         this.notificationService.openSimpleSnackBar(
-          {title: 'Caso glpi no encontrado', message: 'Por favor sseleccionar un caso para asociar', type: 'info'}
+          {title: 'Caso glpi no encontrado', message: 'Por favor seleccionar un caso para asociar', type: 'info'}
         );
       }else{
         this.notificationService.openSimpleSnackBar(
-          {title: 'Usuario no asociado', message: 'Ocurrio un problema al asociar el usuario', type: 'info'}
+          {title: 'Usuario no asociado', message: 'Ocurrió un problema al asociar el usuario', type: 'info'}
         );
       }
     }

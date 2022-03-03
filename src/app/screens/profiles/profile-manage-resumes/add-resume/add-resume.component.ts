@@ -19,7 +19,7 @@ export class AddResumeComponent implements OnInit {
   id_registro:any;
 
   Languagesdata: string[] = ['Inglés', 'Francés', 'Chino', 'MandarÍn', 'Portugués'];
-  typeIdentificationdata: string[] = ['Cedula de Ciudadania', 'Cedula de extranjeria', 'tarjeta de identidad'];
+  typeIdentificationdata: string[] = ['Cédula de Ciudadanía', 'Cédula de extranjería', 'Tarjeta de identidad'];
   knowledge:string[] = [];
   phoneType: string[] = ['Móvil', 'Casa', 'Oficina'];
   phonePrefix: string[] = ['+57', '+51', '+56'];
@@ -157,14 +157,14 @@ export class AddResumeComponent implements OnInit {
         this.formExperience.reset();
       }else{
         this.notificationService.openSimpleSnackBar(
-          {title: 'Fechas Invalidas', message: 'La fecha final debe ser mayor a la fecha de inicio', type: 'info'}
+          {title: 'Fechas Inválidas', message: 'La fecha final debe ser mayor a la fecha de inicio', type: 'info'}
         );
         this.formExperience.get('timeStart')?.reset();
         this.formExperience.get('timeEnd')?.reset();
       }
     }else{
       this.notificationService.openSimpleSnackBar(
-        {title: 'Experinecias laborales', message: 'los campos no se pueden añadir hasta encontrarse llenos', type: 'info'}
+        {title: 'Experiencias laborales', message: 'Los campos no se pueden añadir hasta encontrarse llenos', type: 'info'}
       );
     }
   }
@@ -185,7 +185,7 @@ export class AddResumeComponent implements OnInit {
       this.phones.reset();
     }else{
       this.notificationService.openSimpleSnackBar(
-        {title: 'Telefono vacio', message: 'No se puede crear un telefono con campos vacios', type: 'info'}
+        {title: 'Teléfono vacío', message: 'No se puede crear un teléfono con campos vacíos', type: 'info'}
       );
     }
   }
@@ -196,7 +196,7 @@ export class AddResumeComponent implements OnInit {
       this.nevelStudy.reset();
     }else{
       this.notificationService.openSimpleSnackBar(
-        {title: 'Nivel Estudio vacio', message: 'No se puede crear un estudio con campos vacios', type: 'info'}
+        {title: 'Nivel Estudio vacío', message: 'No se puede crear un estudio con campos vacíos', type: 'info'}
       );
     }
   }
