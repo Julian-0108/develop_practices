@@ -11,7 +11,7 @@
         <div class="item" fxFlex="15">
           <mat-form-field floatLabel="always" appearance="none">
             <mat-label>Selecciona un Dominio</mat-label>
-            <mat-select placeholder="Click para selecionar" formControlName="domain" (selectionChange)="getArea('New')">
+            <mat-select placeholder="Clic para seleccionar" formControlName="domain" (selectionChange)="getArea('New')">
               <mat-option value="">Ver Todo</mat-option>
               <mat-option *ngFor="let domain of dataDomain" [value]="domain.name">{{domain.name}}</mat-option>
             </mat-select>
@@ -21,7 +21,7 @@
         <div class="item" fxFlex="15">
           <mat-form-field floatLabel="always" appearance="none">
             <mat-label>Selecciona una Área</mat-label>
-            <mat-select placeholder="Click para selecionar" (selectionChange)="addArea($event.value)">
+            <mat-select placeholder="Clic para seleccionar" (selectionChange)="addArea($event.value)">
               <mat-select-trigger>{{getInfoArea()}}</mat-select-trigger>
               <mat-option value="Ver Todo">Ver Todo</mat-option>
               <mat-option *ngFor="let area of knowledge" [value]="area">{{area.knowledgeArea}}
