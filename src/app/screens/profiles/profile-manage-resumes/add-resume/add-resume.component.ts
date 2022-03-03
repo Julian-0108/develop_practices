@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { AddResumeService } from './service/add-resume.service';
 import { NotificationService } from '@shared/components/notification/services/notification.service';
-// import { Type } from '../../admin-master-info/master-info/interfaces.interface';
 import {Observable} from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog,MatDialogRef} from '@angular/material/dialog';
 import { DialogExistRegisterComponent } from './dialog-exist-register/dialog-exist-register.component';
 
 @Component({
@@ -46,7 +45,8 @@ export class AddResumeComponent implements OnInit {
     private fb: FormBuilder,
     private addResumeService: AddResumeService,
     private notificationService: NotificationService,
-    public dialogo: MatDialog) {
+    private dialogo: MatDialog,
+    private dialogref: MatDialogRef<AddResumeComponent>) {
       this.filteredOptions = this.addResumeForm.controls.nameReferred.valueChanges
       .pipe(
         startWith(''),
@@ -460,7 +460,7 @@ export class AddResumeComponent implements OnInit {
           );
         })
         .catch(value => console.log(value));
-        this.dialogo.closeAll();
+        this.dialogref.close(true);
       }else if(this.update === true){
         console.log(this.addResumeForm.value);
         this.addResumeService.updateRegister(this.id_registro,this.addResumeForm.value)
@@ -471,7 +471,7 @@ export class AddResumeComponent implements OnInit {
             );
           })
           .catch(value => console.log(value));
-        this.dialogo.closeAll();
+        this.dialogref.close(true);
       }
     }else{
       this.notificationService.openSimpleSnackBar(
