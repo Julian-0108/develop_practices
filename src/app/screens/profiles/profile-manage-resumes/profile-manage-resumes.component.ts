@@ -30,6 +30,7 @@ export class ProfileManageResumesComponent implements OnInit {
   ];
 
   cities: string[] = ['Bogotá', 'Medellín', 'Cali', 'Leticia', 'Arauca', 'Barranquilla', 'Cartagena', 'Tunja', 'Manizales', 'Florencia', 'Yopal', 'Popayán', 'Valledupar', 'Quibdó', 'Montería'];
+  processStatus: string[] = ['En Proceso','Seleccionado','Descartado'];
 
   rangosSalarial = [
     { id: 0, apiracion_SMIN: '1000000', apiracion_SMAX: '1500000', view: '$ 1.000.000 - $ 1.500.000' },
@@ -45,7 +46,7 @@ export class ProfileManageResumesComponent implements OnInit {
 
   filterDomainArea = this.fb.group({
     domain: ['',Validators.required],
-    area: ['',Validators.required]
+    area: [{value: '', disabled: true}, Validators.required]
   })
 
   idSalario = '';
@@ -76,6 +77,11 @@ export class ProfileManageResumesComponent implements OnInit {
         this.dialog.open(AddResumeComponent, {
           width: '60%',
           height: '80%'
+        })
+        .afterClosed().toPromise().then((response: boolean) => {
+          if (response) {
+            this.getHvs();
+          }
         });
         break;
       case 'Herramientas':
@@ -102,8 +108,8 @@ export class ProfileManageResumesComponent implements OnInit {
     }
   }
 
-  getHvs() {
-    this.service.getDataHvs()
+  async getHvs() {
+    await this.service.getDataHvs()
       .then(dataValue => {
         if (dataValue.length > 0) {
           this.filteredList = dataValue;
@@ -125,28 +131,61 @@ export class ProfileManageResumesComponent implements OnInit {
       })
   }
 
-  getArea(value:string){
-    this.serviceAddResume.getDataSyllabi()
-      .then(area => {
-        if(area.length > 0){
-          const domainName = area.filter((domain:{ domain: { name: string; }[]; }) => domain.domain[0].name === value);
-          if(domainName.length !== 0){
-            this.knowledge = domainName;
-          }
-        }
-      }).catch(error =>{
-        console.log('error',error);
-      })
+  async getArea(type?:string){
+    if(this.filterDomainArea.get('domain')?.valid){
+
+      const value = this.filterDomainArea.get('domain')?.value;
+      if(type === 'New'){
+        this.serviceAddResume.getDataSyllabi()
+          .then(area => {
+            if(area.length > 0){
+              this.filterDomainArea.get('area')?.enable();
+              const domainName = area.filter((domain:{ domain: { name: string; }[]; }) => domain.domain[0].name === value);
+              if(domainName.length !== 0){
+                this.knowledge = domainName;
+              }else{
+                this.knowledge = [];
+              }
+            }
+          }).catch(error =>{
+            console.log('error',error);
+          })
+      }
+
+      await this.getHvs();
+
+      const fill =  this.dataSource.filter((val: any) =>
+          val.knowledgeCharge.some((domain: { domain: string | string[]; }) =>
+            domain.domain.includes(value)) === true)
+      this.dataSource=fill;
+    }else{
+      this.filterDomainArea.get('area')?.reset();
+      this.filterDomainArea.get('area')?.disable();
+      this.knowledge = [];
+      this.dataSource = this.filteredList;
+    }
   }
 
-  addArea(area:string){
-    this.filterDomainArea.get('area')?.setValue(area);
+  async addArea(areaDescription:any){
+    if(this.filterDomainArea.get('area')?.valid){
+      await this.getArea();
+    }
+
+    if(areaDescription === 'Ver Todo'){
+      this.filterDomainArea.get('area')?.setValue(areaDescription);
+    }else{
+      this.filterDomainArea.get('area')?.setValue(areaDescription.knowledgeArea);
+      const fill =  this.dataSource.filter((val: any) =>
+      val.knowledgeCharge.some((domain: { knowledgeArea: string | string[]; description:string | string[] }) =>
+        domain.knowledgeArea.includes(areaDescription.knowledgeArea) &&
+        domain.description.includes(areaDescription.specificKnowledge)) === true)
+      this.dataSource=fill;
+    }
   }
 
   getInfoArea(){
     return this.filterDomainArea.get('area')?.value;
   }
-
 
   filterRegister(value:any, type:string) {
     switch (type) {

@@ -8,26 +8,29 @@
 
     <form [formGroup]="filterDomainArea">
       <div fxLayout="row" fxLayoutAlign="start end" class="main">
-        <!-- <div class="item" fxFlex="10">
+        <div class="item" fxFlex="15">
           <mat-form-field floatLabel="always" appearance="none">
-            <mat-label>Selecciona un dominio</mat-label>
-            <mat-select placeholder="Click para selecionar domain" formControlName="domain" (selectionChange)="getArea($event.value)">
+            <mat-label>Selecciona un Dominio</mat-label>
+            <mat-select placeholder="Clic para seleccionar" formControlName="domain" (selectionChange)="getArea('New')">
+              <mat-option value="">Ver Todo</mat-option>
               <mat-option *ngFor="let domain of dataDomain" [value]="domain.name">{{domain.name}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
 
-        <div class="item" fxFlex="10">
+        <div class="item" fxFlex="15">
           <mat-form-field floatLabel="always" appearance="none">
-            <mat-label>Selecciona una área</mat-label>
-            <mat-select placeholder="Click para activar la lista" (selectionChange)="addArea($event.value)">
+            <mat-label>Selecciona una Área</mat-label>
+            <mat-select placeholder="Clic para seleccionar" (selectionChange)="addArea($event.value)">
               <mat-select-trigger>{{getInfoArea()}}</mat-select-trigger>
-              <mat-option *ngFor="let area of knowledge" [value]="area.knowledgeArea">{{area.knowledgeArea}}
+              <mat-option value="Ver Todo">Ver Todo</mat-option>
+              <mat-option *ngFor="let area of knowledge" [value]="area">{{area.knowledgeArea}}
                 <mat-icon matTooltipClass="custom-tooltip" [matTooltip]="area.specificKnowledge" class="content__icon"  >help </mat-icon>
               </mat-option>
             </mat-select>
+            <!-- <mat-error *ngIf="!filterDomainArea.controls['domain'].valid && filterDomainArea.controls['area'].touched">Selecciona primero un dominio</mat-error> -->
           </mat-form-field>
-        </div> -->
+        </div>
 
         <div class="button__container" fxLayoutAlign="end end">
           <div class="layer2" (click)="openDialog('Agregar')">
@@ -57,7 +60,7 @@
         </ng-container>
 
         <ng-container matColumnDef="numberIdentification">
-          <th mat-header-cell *matHeaderCellDef> Número de documento
+          <th mat-header-cell *matHeaderCellDef> Número de Documento
             <div class="filter-inputs">
               <mat-form-field floatLabel="always" appearance="none">
                 <input matInput class="filter" (keyup)="filterRegister($event.target.value,'numberIdentification')" type="text"
@@ -69,12 +72,12 @@
         </ng-container>
 
         <ng-container matColumnDef="processStatus">
-          <th mat-header-cell *matHeaderCellDef> Estado del proceso
+          <th mat-header-cell *matHeaderCellDef> Estado del Proceso
             <div class="filter-inputs">
               <mat-form-field floatLabel="always" appearance="none">
                 <mat-select (selectionChange)="filterRegister($event.value,'processStatus')">
                   <mat-option value="">Ver Todos</mat-option>
-                  <mat-option value="En proceso">En proceso</mat-option>
+                  <mat-option *ngFor="let status of processStatus" [value]="status">{{status}}</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -82,7 +85,7 @@
           <td mat-cell *matCellDef="let element">
             <div>
               <label class="chip__status"
-                [ngClass]="{'chip__status--seleccionado': element.processStatus === 'seleccionado', 'chip__status--descartado': element.processStatus === 'descartado', 'chip__status--proceso': element.processStatus === 'En proceso'}">
+                [ngClass]="{'chip__status--seleccionado': element.processStatus === 'Seleccionado', 'chip__status--descartado': element.processStatus === 'Descartado', 'chip__status--proceso': element.processStatus === 'En Proceso'}">
                 {{element.processStatus}}
               </label>
             </div>
@@ -104,7 +107,7 @@
         </ng-container>
 
         <ng-container matColumnDef="minAspiration">
-          <th mat-header-cell *matHeaderCellDef> Aspiración salarial
+          <th mat-header-cell *matHeaderCellDef> Aspiración Salarial
             <div class="filter-inputs">
               <mat-form-field floatLabel="always" appearance="none">
                 <mat-select (selectionChange)="filterRegister($event.value,'salario')">

@@ -2,21 +2,21 @@
     <button routerLink="/manage-resumes" class="button-back " mat-mini-fab aria-label="back button"></button>
     <div fxLayout="column">
         <div class="title__container">
-            <h1 class="main-title" *ngIf="!update">Agregar hoja de vida</h1>
-            <h1 class="main-title" *ngIf="update">Actualizar hoja de vida</h1>
+            <h1 class="main-title" *ngIf="!update">Agregar hoja de Vida</h1>
+            <h1 class="main-title" *ngIf="update">Actualizar hoja de Vida</h1>
         </div>
     </div>
     <div>
         <form [formGroup]="addResumeForm" (ngSubmit)="saveForm()" autocomplete="off">
             <mat-card>
-                <mat-card-title>Datos personales<span class="label--red">*</span></mat-card-title>
+                <mat-card-title>Datos Personales<span class="label--red">*</span></mat-card-title>
                 <mat-card-content>
                     <div fxLayout="row" fxLayoutAlign="center center">
                         <div fxFlex="30">
                             <p>Tipo de documento</p>
                         </div>
                         <mat-form-field appearance="none" fxFlex="70">
-                            <mat-select placeholder="Seleccione un tipo de documento"
+                            <mat-select placeholder="Seleccione un tipo de Documento"
                                 formControlName="typeIdentification">
                                 <mat-option *ngFor="let td of typeIdentificationdata" [value]="td">{{td}}</mat-option>
                             </mat-select>
@@ -24,7 +24,7 @@
                         </mat-form-field>
 
                         <mat-form-field appearance="none">
-                            <input matInput placeholder="Número de documento" formControlName="numberIdentification" (blur)="validateHvExist()">
+                            <input matInput placeholder="Número de Documento" formControlName="numberIdentification" (blur)="validateHvExist()">
                             <mat-error *ngIf="!addResumeForm.controls['numberIdentification'].valid && addResumeForm.controls['numberIdentification'].touched">Número de documento requerido</mat-error>
                         </mat-form-field>
                     </div>
@@ -45,7 +45,7 @@
                         </div>
 
                         <mat-form-field appearance="none" fxFlex="70">
-                            <mat-select placeholder="Seleccione un pais" formControlName="country">
+                            <mat-select placeholder="Seleccione un Pais" formControlName="country">
                                 <mat-option value="Colombia">Colombia</mat-option>
                             </mat-select>
                             <mat-error *ngIf="!addResumeForm.controls['city'].valid && addResumeForm.controls['city'].touched">Pais requerido</mat-error>
@@ -58,7 +58,7 @@
                         </div>
 
                         <mat-form-field appearance="none" fxFlex="70">
-                            <mat-select placeholder="Seleccione una ciudad" formControlName="city">
+                            <mat-select placeholder="Seleccione una Ciudad" formControlName="city">
                                 <mat-option *ngFor="let city of cities" [value]="city">{{city}}</mat-option>
                             </mat-select>
                             <mat-error *ngIf="!addResumeForm.controls['country'].valid && addResumeForm.controls['country'].touched">Cuidad requerida</mat-error>
@@ -67,7 +67,7 @@
 
                     <div fxLayout="row" fxLayoutAlign="center center">
                         <div fxFlex="30">
-                            <p>Añadir teléfono</p>
+                            <p>Añadir Teléfono</p>
                         </div>
 
                         <div appearance="none" fxFlex="70">
@@ -102,7 +102,7 @@
                     <div formArrayName="phone">
                         <div fxLayout="row" fxLayoutAlign="center center" *ngFor="let phone of phoneArray.controls; let i = index" [formGroupName]="i">
                             <div fxFlex="30">
-                                Telefono {{i+1}}
+                                Teléfono {{i+1}}
                             </div>
 
                             <div fxFlex="70">
@@ -147,7 +147,7 @@
 
                     <div fxLayout="row" fxLayoutAlign="center center">
                         <div fxFlex="30">
-                            <p>Tarjeta profesional</p>
+                            <p>Tarjeta Profesional</p>
                         </div>
 
                         <div fxFlex="70">
@@ -162,7 +162,7 @@
 
                     <div fxLayout="row" fxLayoutAlign="center center">
                         <div fxFlex="30">
-                            <p>Hoja de vida</p>
+                            <p>Hoja de Vida</p>
                         </div>
 
                         <mat-form-field appearance="none" fxFlex="70">
@@ -267,13 +267,13 @@
                             </div>
 
                             <mat-form-field appearance="none" fxFlex="90">
-                                <mat-select placeholder="Seleccione un estudio" formControlName="type">
+                                <mat-select placeholder="Seleccione un Estudio" formControlName="type">
                                     <mat-option *ngFor="let estudio of Study" [value]="estudio.name">{{estudio.name}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
 
                             <mat-form-field appearance="none">
-                                <mat-select placeholder="Seleccione tipo" formControlName="name">
+                                <mat-select placeholder="Seleccione Tipo" formControlName="name">
                                     <mat-option *ngFor="let descripcion of descriptionStudy" [value]="descripcion.name">{{descripcion.name}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -313,7 +313,7 @@
                             </mat-form-field>
 
                             <mat-form-field appearance="none" fxFlex="25">
-                                <input matInput placeholder="Cargo ejercido" formControlName="charge">
+                                <input matInput placeholder="Cargo Ejercido" formControlName="charge">
                             </mat-form-field>
 
                             <mat-form-field appearance="none" fxFlex="25">
@@ -335,7 +335,7 @@
                             </mat-form-field>
 
                             <mat-form-filed appearance="none" fxFlex="25">
-                                <button mat-raised-button class="button__container" color="warn" type="button" (click)="addJobReference()">Añadir referencia
+                                <button mat-raised-button class="button__container" color="warn" type="button" (click)="addJobReference()">Añadir Referencia
                                     <mat-icon>work</mat-icon>
                                 </button>
                             </mat-form-filed>
@@ -377,7 +377,7 @@
                 </mat-card-content>
 
                 <!-- <mat-card-title>Dominio<span class="label--red">*</span></mat-card-title> -->
-                <mat-card-title>Conocimientos del cargo<span class="label--red">*</span></mat-card-title>
+                <mat-card-title>Conocimientos del Cargo<span class="label--red">*</span></mat-card-title>
                 <mat-card-content>
                     <section class="flow-root">
                         <mat-checkbox checkboxPosition="before" *ngFor="let dominio of domain; let w = index" [value]="dominio.name" (change)="addOrRemoveSkill($event.checked,dominio.name)" [checked]="registerSkills.includes(dominio.name)">
@@ -403,7 +403,7 @@
                     </div>
                 </mat-card-content>
 
-                <mat-card-title>Observaciones generales</mat-card-title>
+                <mat-card-title>Observaciones Generales</mat-card-title>
                 <mat-card-content>
                     <div fxLayoutAlign="center center">
                         <p>Puede escribir aquí datos importantes sobre el perfil o aspectos más relevantes del candidato</p>
