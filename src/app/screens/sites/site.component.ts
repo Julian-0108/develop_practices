@@ -15,25 +15,25 @@ export class SiteComponent implements OnInit {
       name: 'Generar QR',
       description: 'Generar QR',
       url: '/generateqr',
-      imagePath: ''
+      imagePath: 'assets/images/dibujo mundo seti (generar qr).svg'
     },
     {
       name: 'Kit de salud',
       description: 'Kit de salud',
       url: '/kits',
-      imagePath: ''
+      imagePath: 'assets/images/Kit de salud.svg'
     },
     {
       name: 'Configuración de tablas',
       description: 'Configuración de tablas',
-      url: '/sites-seti',
-      imagePath: ''
+      url: '/configTable',
+      imagePath: 'assets/images/Confugiracion de tablas.svg'
     },
     {
       name: 'Movimientos',
       description: 'Movimientos',
       url: '/movements',
-      imagePath: ''
+      imagePath: 'assets/images/Movimientos.svg'
     }
   ];
   public API_MASTER_INFO: string = environment.API_MASTER_INFO;
