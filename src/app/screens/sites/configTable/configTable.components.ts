@@ -16,6 +16,7 @@ export class ConfigTableComponents implements OnInit {
   ngOnInit(): void {}
   public informationSites: boolean;
   public informationTables: boolean;
+  public add: boolean = false;
 
   constructor(
     private service: ConfigTableServices,
@@ -30,6 +31,7 @@ export class ConfigTableComponents implements OnInit {
   help: string = 'help';
   idHistory!: string;
   subtitle: any = '';
+  url: any = '';
   urlUpdate: string = '';
   filterListSities: Array<any> = [];
   filterSities = {
@@ -131,7 +133,30 @@ export class ConfigTableComponents implements OnInit {
       .open(SitesComponent, {
         width: '60%',
         height: '60%',
-        data: { dataSite: value, subtitle: this.subtitle },
+        data: { 
+          dataSite: value,
+          subtitle: this.subtitle ,
+          add: false
+        },
+      })
+      .afterClosed()
+      .toPromise()
+      .then((response: boolean) => {
+        if (response) {
+          this.getList(this.urlUpdate);
+        }
+      });
+  }
+  openCreate() {
+    this.dialog
+      .open(SitesComponent, {
+        width: '60%',
+        height: '60%',
+        data: { 
+          subtitle: this.subtitle,
+          add:true,
+          url: this.url
+        },
       })
       .afterClosed()
       .toPromise()

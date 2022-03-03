@@ -23,4 +23,11 @@ export class ConfigTableServices {
       .pipe(pluck('payload'))
       .toPromise();
   }
+
+  async addDataSites(url:string, register:any): Promise<any> {
+    return await this.http
+      .post(`${environment.API_CONFIGTABLE}/${url}`, register)
+      // .pipe(pluck('payload'))
+      .toPromise();
+  }
 }
