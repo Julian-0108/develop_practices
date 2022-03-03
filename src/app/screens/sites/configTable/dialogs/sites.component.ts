@@ -14,7 +14,7 @@ export class SitesComponent implements OnInit {
   id_Site: any;
   url_Site: any;
   // dataRegister:any ;
-  sites:boolean= false;
+  sites: boolean = false;
   subtitle = this.data.subtitle;
 
   add: any;
@@ -25,19 +25,18 @@ export class SitesComponent implements OnInit {
     address: ['', Validators.required],
     phoneNumber: ['', Validators.required],
     city: ['', Validators.required],
-    status: ['', Validators.required],
+    status: [false, Validators.required],
   });
   dataRegister: any;
-  
-  
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { 
-      title:any, 
-      dataSite: any; 
-      subtitle: any, 
-      add:boolean,
-      url:any
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      title: any;
+      dataSite: any;
+      subtitle: any;
+      add: boolean;
+      url: any;
     },
     private fg: FormBuilder,
     private service: ConfigTableServices,
@@ -46,8 +45,7 @@ export class SitesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log("valor del add:",this.data.add);
-    if(this.data.add == false){
+    if (this.data.add == false) {
       this.formSities.patchValue(this.data.dataSite);
       this.sites = this.data.dataSite.status;
     }
@@ -68,27 +66,32 @@ export class SitesComponent implements OnInit {
     this.dialog.close(true);
   }
 
-  addRegister(){
-    console.log("entre pai    ")
+  addRegister() {
     this.service
-    .addDataSites(this.data.url, this.formSities.value)
-    .then(()=>{
-      console.log('Se ha creado con exito', this.dataRegister)
-    })
-    .catch(()=>{
-      console.log('no se a creado', this.dataRegister)
-    })
+      .addDataSites(this.data.url, this.formSities.value)
+      .then(() => {
+        this.notificationService.openSimpleSnackBar({
+          title: 'Sedes',
+          message: 'Sede Agregada Correctamente',
+          type: 'success',
+        });
+      })
+      .catch(() => {
+        this.notificationService.openSimpleSnackBar({
+          title: 'Sedes',
+          message: 'No se pudo agregar la sede',
+          type: 'success',
+        });
+      });
     this.dialog.close(true);
   }
 
-  onSubmit(){
-    console.log('se esta ejecutanddooooo',(this.data?.add))
-    if(this.data?.add){
-      console.log('adddddddddddddd')
+  onSubmit() {
+    if (this.data?.add) {
       this.addRegister();
-    }else {
-      console.log('uppppppp')
-      this.updateSites();
+      return;
     }
+
+    this.updateSites();
   }
 }
