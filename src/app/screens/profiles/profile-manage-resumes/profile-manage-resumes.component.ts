@@ -81,6 +81,8 @@ export class ProfileManageResumesComponent implements OnInit {
         .afterClosed().toPromise().then((response: boolean) => {
           if (response) {
             this.getHvs();
+            this.filterDomainArea.reset();
+            this.filterDomainArea.get('area')?.disable();
           }
         });
         break;
