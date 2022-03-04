@@ -167,7 +167,7 @@
 
         </mat-grid-list>
 
-        <h4 class="main-title center" *ngIf="info_Candidate?.levelStudy > 0">Niveles de Estudio</h4>
+        <h4 class="main-title center" *ngIf="info_Candidate?.levelStudy.length > 0">Niveles de Estudio</h4>
 
         <mat-grid-list cols="2" rowHeight="60px" *ngFor="let study of info_Candidate?.levelStudy">
 
