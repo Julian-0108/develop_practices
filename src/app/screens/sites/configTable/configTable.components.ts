@@ -44,6 +44,7 @@ export class ConfigTableComponents implements OnInit {
     updatedAt: '',
   };
   dataSource: MatTableDataSource<Tables | any> = new MatTableDataSource();
+  btnAdd = false
 
   public displayedColumns: string[] = [
     'name',
@@ -103,14 +104,15 @@ export class ConfigTableComponents implements OnInit {
     console.log(this.filterSities);
   }
 
-  getList(url: string) {
+  async getList(url: string) {
     this.table.forEach((tb: any) => {
       if (tb.url == url) {
         this.subtitle = tb.name;
       }
     });
     this.urlUpdate = url;
-    this.service
+    this.btnAdd = true
+   await this.service
       .getListSites(url)
       .then((dataValue) => {
         if (dataValue.length > 0) {

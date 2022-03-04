@@ -23,7 +23,12 @@ export class SitesComponent implements OnInit {
   formSities = this.fg.group({
     name: ['', Validators.required],
     address: ['', Validators.required],
-    phoneNumber: ['', Validators.required],
+    phoneNumber: ['', 
+      [ Validators.required,
+        Validators.min(1000000000),
+        Validators.max(9999999999)
+      ]
+    ],
     city: ['', Validators.required],
     status: [false, Validators.required],
   });
@@ -68,7 +73,7 @@ export class SitesComponent implements OnInit {
 
   addRegister() {
     this.service
-      .addDataSites(this.data.url, this.formSities.value)
+      .addDataSites(this.data?.url, this.formSities.value)
       .then(() => {
         this.notificationService.openSimpleSnackBar({
           title: 'Sedes',
@@ -80,13 +85,14 @@ export class SitesComponent implements OnInit {
         this.notificationService.openSimpleSnackBar({
           title: 'Sedes',
           message: 'No se pudo agregar la sede',
-          type: 'success',
+          type: 'error',
         });
       });
     this.dialog.close(true);
   }
 
   onSubmit() {
+    this.formSities.controls['phoneNumber']?.patchValue(this.formSities.controls['phoneNumber']?.value.toString())
     if (this.data?.add) {
       this.addRegister();
       return;
