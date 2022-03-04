@@ -15,7 +15,7 @@
       <div class="list" fxFlex="25">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label>Seleccionar tabla de configuración</mat-label>
-          <mat-select  #ej placeholder="Click para activar la configuración de tablas"
+          <mat-select placeholder="Click para activar la configuración de tablas"
           (selectionChange)="getList($event.value)">
            <mat-select-trigger class="main-subtitle">{{subtitle}}</mat-select-trigger>
             <mat-option *ngFor="let tables of table | orderAlphabetically:'name'" [value]="tables.url">
@@ -25,8 +25,8 @@
             </mat-select>
         </mat-form-field>
       </div>
-      <div  class="button__container" fxLayoutAlign="end end">
-        <div class="layer2" (click)="openCreate()">
+      <div  class="button__container" fxLayoutAlign="end end" *ngIf="btnAdd">
+        <div class="buttonAdd layer2" (click)="openCreate()">
           <div mat-button class="layer">
             <mat-icon>add</mat-icon>
           </div>

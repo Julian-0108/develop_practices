@@ -5,18 +5,22 @@
       <div class="content">
         <mat-label class="label">Nombre</mat-label>
         <input matInput type="text" formControlName="name" />
+        <app-validator [form]="formSities" name="name"></app-validator>
       </div>
       <div class="content">
         <mat-label class="label">Dirección</mat-label>
         <input matInput type="text" formControlName="address" />
+        <app-validator [form]="formSities" name="address"></app-validator>
       </div>
       <div class="content">
         <mat-label class="label">Teléfono</mat-label>
-        <input matInput type="text" formControlName="phoneNumber" />
+        <input matInput type="number" step="1" formControlName="phoneNumber" />
+        <app-validator [form]="formSities" name="phoneNumber"></app-validator>
       </div>
       <div class="content">
         <mat-label class="label">Ciudad</mat-label>
         <input matInput type="text" formControlName="city" />
+        <app-validator [form]="formSities" name="city"></app-validator>
       </div>
     </div>
     <div class="contentStatus">
@@ -33,7 +37,7 @@
     </div>
   </div>
   <div class="buttonAction">
-    <button  class="buttonAcept button--accept" (click)="onSubmit()">
+    <button  class="buttonAcept button--accept" (click)="onSubmit()" [disabled]="formSities.invalid">
       <span class="mat-button-wrapper">Guardar</span>
     </button>
     <button mat-button class="button button--cancel" type="button" [mat-dialog-close]="true">
