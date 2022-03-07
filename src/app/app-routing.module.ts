@@ -69,7 +69,7 @@ const routes: Routes = [
       canActivate: [AuthGuard]
   },
   {
-    path: 'sites-seti',
+    path: 'config-table',
     loadChildren: () =>
       import('./screens/sites/configTable/configTable.module').then(
         (m) => m.ConfigTableModule

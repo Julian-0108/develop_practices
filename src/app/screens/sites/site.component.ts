@@ -26,7 +26,7 @@ export class SiteComponent implements OnInit {
     {
       name: 'Configuración de tablas',
       description: 'Configuración de tablas',
-      url: '/sites-seti',
+      url: '/config-table',
       imagePath: 'assets/images/Confugiracion de tablas.svg'
     },
     {
