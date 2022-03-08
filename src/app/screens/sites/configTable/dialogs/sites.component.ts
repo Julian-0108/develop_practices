@@ -13,7 +13,6 @@ import { AnyRecord } from 'dns';
 export class SitesComponent implements OnInit {
   id_Site: any;
   url_Site: any;
-  // dataRegister:any ;
   sites: boolean = false;
   subtitle = this.data.subtitle;
 
@@ -23,11 +22,10 @@ export class SitesComponent implements OnInit {
   formSities = this.fg.group({
     name: ['', Validators.required],
     address: ['', Validators.required],
-    phoneNumber: ['', 
-      [ Validators.required,
-        Validators.min(1000000000),
-        Validators.max(9999999999)
-      ]
+    phoneNumber: [
+      '',
+      [Validators.required,Validators.min(1000000000), Validators.max(9999999999)],
+
     ],
     city: ['', Validators.required],
     status: [false, Validators.required],
@@ -66,9 +64,16 @@ export class SitesComponent implements OnInit {
           message: 'Sede Actualizada Correctamente',
           type: 'success',
         });
+        this.dialog.close(true);
       })
-      .catch();
-    this.dialog.close(true);
+      .catch(() => {
+        this.formSities.markAllAsTouched();
+        this.notificationService.openSimpleSnackBar({
+          title: 'Campos obligatorios',
+          message: 'Revisa la información del formulario',
+          type: 'error',
+        });
+      });
   }
 
   addRegister() {
@@ -80,24 +85,26 @@ export class SitesComponent implements OnInit {
           message: 'Sede Agregada Correctamente',
           type: 'success',
         });
+        this.dialog.close(true);
       })
       .catch(() => {
+        this.formSities.markAllAsTouched();
         this.notificationService.openSimpleSnackBar({
-          title: 'Sedes',
-          message: 'No se pudo agregar la sede',
+          title: 'Campos obligatorios',
+          message: 'Revisa la información del formulario',
           type: 'error',
         });
       });
-    this.dialog.close(true);
   }
 
   onSubmit() {
-    this.formSities.controls['phoneNumber']?.patchValue(this.formSities.controls['phoneNumber']?.value.toString())
+    this.formSities.controls['phoneNumber']?.patchValue(
+      this.formSities.controls['phoneNumber']?.value.toString()
+    );
     if (this.data?.add) {
       this.addRegister();
       return;
     }
-
     this.updateSites();
   }
 }
