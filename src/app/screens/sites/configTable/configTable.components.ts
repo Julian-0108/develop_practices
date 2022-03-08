@@ -4,7 +4,6 @@ import { SitesComponent } from './dialogs/sites.component';
 import { Tables } from './interfaces/configTable.interface';
 import { ConfigTableServices } from './services/configTable.services';
 import { MatDialog } from '@angular/material/dialog';
-import { url } from 'inspector';
 import { SearchFilterPipe } from '@app/shared/pipes/Search-Filter.pipe';
 
 @Component({
@@ -44,7 +43,7 @@ export class ConfigTableComponents implements OnInit {
     updatedAt: '',
   };
   dataSource: MatTableDataSource<Tables | any> = new MatTableDataSource();
-  btnAdd = false
+  btnAdd = false;
 
   public displayedColumns: string[] = [
     'name',
@@ -111,8 +110,8 @@ export class ConfigTableComponents implements OnInit {
       }
     });
     this.urlUpdate = url;
-    this.btnAdd = true
-   await this.service
+    this.btnAdd = true;
+    await this.service
       .getListSites(url)
       .then((dataValue) => {
         if (dataValue.length > 0) {
