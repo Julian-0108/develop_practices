@@ -8,7 +8,7 @@ import { AnyRecord } from 'dns';
 @Component({
   selector: 'sites-app',
   templateUrl: './sites.component.html',
-  styleUrls: ['./sites.component.css'],
+  styleUrls: ['./sites.component.scss'],
 })
 export class SitesComponent implements OnInit {
   id_Site: any;
