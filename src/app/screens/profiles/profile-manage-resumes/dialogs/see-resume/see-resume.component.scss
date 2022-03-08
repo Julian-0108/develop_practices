@@ -1,49 +1,57 @@
-.mat-dialog-actions{
-    margin-top: 3%;
-    bottom: 91px;
-    left: 65%;
+.mat-dialog-actions {
+  margin-top: 3%;
+  bottom: 91px;
+  left: 65%;
 }
 
-.header{
-    background-color: var(--primary-color);
-    color: #fff;
+.header {
+  background-color: var(--primary-color);
+  color: #fff;
 }
 
-.center{
-    text-align: center;
+.center {
+  text-align: center;
 }
 
-.logo_seti{
-    width: 8%;
+.logo_seti {
+  width: 8%;
 }
 
-.mat-table{
-    width: 100%;
+.mat-table {
+  width: 100%;
 }
 
-h4{
-    margin: 2% 0% 1% 0% !important;
+h4 {
+  margin: 2% 0% 1% 0% !important;
 }
 
-.mat-grid-tile{
-    border: 1px solid #b2b2b2;
+.mat-grid-tile {
+  border: 1px solid #b2b2b2;
 }
 
-.mat-figure{
+.mat-figure {
+  display: block !important;
+}
+
+.mat-list-item {
+//   display: block !important;
+  height: 5px !important;
+  bottom: 5px;
+  text-align: center !important;
+}
+
+.mat-list-item-content{
     display: block !important;
 }
 
-.mat-list-item{
-    display:block !important;
-    height: 5px !important;
-    bottom: 5px;
+.pading_container {
+  padding: 20px;
 }
 
-.pading_container{
-    padding: 20px;
+.mat-dialog-content {
+  display: contents !important;
 }
 
-.mat-dialog-content{
-    display: contents !important;
+.mat-list-item-content{
+    display: block !important;
 }
-
