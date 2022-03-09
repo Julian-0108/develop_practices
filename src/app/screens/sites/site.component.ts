@@ -14,13 +14,13 @@ export class SiteComponent implements OnInit {
     {
       name: 'Generar QR',
       description: 'Generar QR',
-      url: '/generateqr',
+      url: '/underConstruction',
       imagePath: 'assets/images/dibujo mundo seti (generar qr).svg'
     },
     {
       name: 'Kit de salud',
       description: 'Kit de salud',
-      url: '/kits',
+      url: '/underConstruction',
       imagePath: 'assets/images/Kit de salud.svg'
     },
     {
@@ -32,7 +32,7 @@ export class SiteComponent implements OnInit {
     {
       name: 'Movimientos',
       description: 'Movimientos',
-      url: '/movements',
+      url: '/underConstruction',
       imagePath: 'assets/images/Movimientos.svg'
     }
   ];
