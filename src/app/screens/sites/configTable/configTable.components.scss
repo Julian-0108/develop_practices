@@ -1,0 +1,125 @@
+body {
+  // padding: 0 20px ;
+  height: calc(100vh - 75px);
+  background-color: #fff !important;
+}
+mat-drawer-container {
+  background-color: #fff !important;
+}
+.background {
+  // background-color: #fff !important;
+  background-image: url('../../../../assets/images/background_adminMasters.svg');
+  background-size: cover;
+}
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 100px;
+}
+.title {
+  color: var(--primary-color);
+  font-size: 39px;
+  line-height: 52px;
+  text-align: center;
+  margin-top: 15px;
+}
+.main {
+  margin: 0px 19px;
+}
+.table__container {
+  margin-top: 10px;
+  height: 25em;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+}
+
+.icon-search {
+  margin: 0 -30px !important;
+}
+.mat-input-element {
+  padding: 4px;
+}
+.mat-select {
+  height: 33px !important;
+}
+
+.filter-inputs {
+  min-height: 55.8px;
+}
+.centerTable {
+  text-align: center;
+}
+.chip__status {
+  margin-left: 6px;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 9px;
+}
+.chip__status--active {
+  background-color: #d1ead2;
+  color: #68bc6c;
+  padding: 3px 14px;
+}
+.chip__status--inactive {
+  background-color: #f5cfcc;
+  color: #e06055;
+}
+.buttonAction_e {
+  color: #3392e4;
+  background-color: #3392e42e;
+  box-shadow: 0px 0px 6px #3392e42e;
+  border-radius: 100%;
+  padding: 3px;
+}
+.button-back {
+  top: 1em;
+}
+.not-found-data__message {
+  color: #a9a9a9;
+  font-style: italic;
+  font-size: 30px;
+  margin-top: 10px;
+  text-align: center;
+}
+.not-found-data__image {
+  margin: auto;
+  display: block;
+  width: 30%;
+}
+.not-data__message {
+  color: #a9a9a9;
+  font-style: italic;
+  font-size: 25px;
+  text-align: center;
+}
+.not_data {
+  margin-top: 3em;
+}
+.not-data__image {
+  margin: auto;
+  display: flex;
+  width: 20%;
+}
+.mat-column-status {
+  max-width: 15em;
+  width: 10em;
+}
+.list {
+  margin: 1em;
+}
+.content__icon {
+  font-size: 15px;
+  color: #83afe2;
+  top: 5px;
+}
+.filter {
+  text-align: center;
+}
+.buttonAdd{
+  margin-right: 43px !important;
+}
