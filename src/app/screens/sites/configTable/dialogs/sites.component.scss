@@ -1,0 +1,83 @@
+h1 {
+  font: 500 20px/32px Roboto, 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  letter-spacing: normal;
+  margin-top: 10px;
+}
+.dialog-title {
+  text-align: center;
+  color: var(--primary-color);
+}
+.formUp {
+  width: 100%;
+}
+
+.item {
+  margin-top: 20px;
+  padding: 5px 5px;
+  margin: 2em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.content {
+  margin: 5px;
+  width: 40%;
+}
+.contentStatus {
+  margin-left: 13%;
+  display: flex;
+  flex-direction: column;
+  width: 37%;
+}
+input {
+  /* margin-top: 10px; */
+  background-color: #ffffff !important;
+  color: #707070 !important;
+  padding: 3px;
+  width: 100%;
+  border-radius: 6px;
+  font-size: 12px;
+}
+.mat-button-toggle {
+  height: 25px !important;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: #707070;
+  width: 100% !important;
+}
+
+.mat-button-toggle-disabled {
+  background-color: #efefef;
+  color: #cccccc;
+}
+
+.mat-button-toggle-checked {
+  color: #ffffff !important;
+  background-color: #de1920;
+}
+
+.buttonAction {
+  width: 88%;
+  display: flex;
+  justify-content: flex-end;
+}
+.buttonAcept {
+  margin: 0px 5px;
+}
+.error__icon__side {
+  position: absolute;
+  top: 8px;
+  left: 100%;
+  color: #f44336ad;
+  font-size: 20px;
+  margin: 0 -11px;
+  margin: 0 -20px;
+}
+.button--disabled{
+  background-color:  #aeb6bf ;
+  color: #ffffff !important;
+}

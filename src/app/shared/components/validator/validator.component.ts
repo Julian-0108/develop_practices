@@ -35,6 +35,8 @@ export class ValidatorComponent implements OnInit {
       case 'maxlength': return `Este campo debe tener máximo de ${error[1].requiredLength} caracteres`;
       case 'pattern': return `No cumple el patrón ${error[1].requiredPattern}`;
       case 'email': return 'El correo no es válido';
+      case 'max': return `Este campo debe tener máximo de ${error[1].max.toString().length} caracteres`;
+      case 'min': return `Este campo debe tener mínimo ${error[1].min.toString().length} caracteres`;
       case 'whitespace': return 'Espacios en blanco';
       default:
         break;

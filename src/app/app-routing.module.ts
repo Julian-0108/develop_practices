@@ -69,10 +69,26 @@ const routes: Routes = [
       canActivate: [AuthGuard]
   },
   {
+    path: 'config-table',
+    loadChildren: () =>
+      import('./screens/sites/configTable/configTable.module').then(
+        (m) => m.ConfigTableModule
+      ),
+      canActivate: [AuthGuard]
+  },
+  {
     path: 'selection-profiles',
     loadChildren: () =>
     import('./screens/profiles/profile-selection/profile-selection.module').then(
       (m) => m.ProfileSelectionModule
+    ),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'sites',
+    loadChildren: () =>
+    import('./screens/sites/site.module').then(
+      (m) => m.SiteModule
     ),
     canActivate: [AuthGuard]
   },
