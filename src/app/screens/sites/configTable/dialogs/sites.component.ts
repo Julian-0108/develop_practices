@@ -66,14 +66,7 @@ export class SitesComponent implements OnInit {
         });
         this.dialog.close(true);
       })
-      .catch(() => {
-        this.formSities.markAllAsTouched();
-        this.notificationService.openSimpleSnackBar({
-          title: 'Campos obligatorios',
-          message: 'Revisa la información del formulario',
-          type: 'error',
-        });
-      });
+      .catch();
   }
 
   addRegister() {
@@ -87,14 +80,7 @@ export class SitesComponent implements OnInit {
         });
         this.dialog.close(true);
       })
-      .catch(() => {
-        this.formSities.markAllAsTouched();
-        this.notificationService.openSimpleSnackBar({
-          title: 'Campos obligatorios',
-          message: 'Revisa la información del formulario',
-          type: 'error',
-        });
-      });
+      .catch();
   }
 
   onSubmit() {

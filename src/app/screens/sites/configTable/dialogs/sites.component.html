@@ -45,7 +45,9 @@
     </div>
   </div>
   <div class="buttonAction">
-    <button class="button button--accept" (click)="onSubmit()">Guardar</button>
+    <button mat-button class="button button--accept" (click)="onSubmit()" 
+    [ngClass]="{'button--accept': this.formSities.valid, 'button--disabled': this.formSities.invalid}"  
+    [disabled]="formSities.invalid">Guardar</button>
     <button mat-button class="button button--cancel" type="button" [mat-dialog-close]="true">
       Cancelar
     </button>
