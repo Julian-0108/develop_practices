@@ -12,20 +12,20 @@ export class ConfigTableServices {
 
   async getListSites(url: string): Promise<any> {
     return await this.http
-      .get(`${environment.API_CONFIGTABLE}/${url}`)
+      .get(`${environment.API_SITESAPP}/${url}`)
       .pipe(pluck('payload'))
       .toPromise();
   }
 
   async updateDataSites(_id: any, dataUp: any): Promise<any> {
     return await this.http
-      .put(`${environment.API_CONFIGTABLE}/venues/${_id}`, dataUp)
+      .put(`${environment.API_SITESAPP}/venues/${_id}`, dataUp)
        .toPromise();
   }
 
   async addDataSites(url:string, register:any): Promise<any> {
     return await this.http
-      .post(`${environment.API_CONFIGTABLE}/${url}`, register)
+      .post(`${environment.API_SITESAPP}/${url}`, register)
       .toPromise();
   }
 }
