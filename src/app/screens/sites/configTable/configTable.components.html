@@ -61,6 +61,18 @@
             <td mat-cell class="centerTable" *matCellDef="let element"> {{element.name}} </td>
           </ng-container>
 
+            <ng-container matColumnDef="nameSedes">
+            <th mat-header-cell *matHeaderCellDef>Nombre Sedes
+              <div class="filter-inputs">
+                <mat-form-field floatLabel="always" appearance="none">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value,'address')"  type="text">
+                  <mat-icon class="icon-search" matSuffix>search</mat-icon>
+                </mat-form-field>
+              </div>
+            </th>
+            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.name} </td>
+          </ng-container>
+
           <ng-container matColumnDef="direction">
             <th mat-header-cell *matHeaderCellDef>Dirección
               <div class="filter-inputs">
@@ -71,6 +83,42 @@
               </div>
             </th>
             <td mat-cell class="centerTable" *matCellDef="let element"> {{element.address}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="office">
+            <th mat-header-cell *matHeaderCellDef>Oficina
+              <div class="filter-inputs">
+                <mat-form-field floatLabel="always" appearance="none">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value,'address')"  type="text">
+                  <mat-icon class="icon-search" matSuffix>search</mat-icon>
+                </mat-form-field>
+              </div>
+            </th>
+            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.office}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="floor">
+            <th mat-header-cell *matHeaderCellDef>Piso
+              <div class="filter-inputs">
+                <mat-form-field floatLabel="always" appearance="none">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value,'address')"  type="text">
+                  <mat-icon class="icon-search" matSuffix>search</mat-icon>
+                </mat-form-field>
+              </div>
+            </th>
+            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.floor}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="capacity">
+            <th mat-header-cell *matHeaderCellDef>Capacidad
+              <div class="filter-inputs">
+                <mat-form-field floatLabel="always" appearance="none">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value,'address')"  type="text">
+                  <mat-icon class="icon-search" matSuffix>search</mat-icon>
+                </mat-form-field>
+              </div>
+            </th>
+            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.capacity}} </td>
           </ng-container>
 
           <ng-container matColumnDef="phone">
@@ -152,8 +200,8 @@
           </ng-container>
 
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-header-row *matHeaderRowDef="getDisplayedColumns(); sticky: true" ></tr>
+          <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();"></tr>
         </table>
       </div>
       <div class="not_data" *ngIf="!informationTables">

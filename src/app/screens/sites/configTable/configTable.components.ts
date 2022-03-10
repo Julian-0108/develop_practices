@@ -47,13 +47,18 @@ export class ConfigTableComponents implements OnInit {
 
   public displayedColumns: string[] = [
     'name',
+    'nameSedes',
     'direction',
     'phone',
     'city',
+    'office',
+    'floor',
+    'capacity',
     'creationDate',
     'actualizationDate',
     'status',
     'actions',
+
   ];
 
   public table = [
@@ -61,13 +66,13 @@ export class ConfigTableComponents implements OnInit {
       name: 'Sedes',
       url: 'venues',
       sumary: 'Aquí puedes configurar las sedes de la empresa',
-      haveTypeField: false,
+      haveTypeField: true,
     },
     {
       name: 'Oficinas',
-      url: 'Offices',
+      url: 'offices',
       sumary: 'Aquí puedes configurar las oficinas',
-      haveTypeField: false,
+      haveTypeField: true,
     },
   ];
 
@@ -128,6 +133,33 @@ export class ConfigTableComponents implements OnInit {
         console.log('error', error);
       });
   }
+  getDisplayedColumns() {
+    switch (this.urlUpdate) {
+      case 'venues':
+        return this.displayedColumns.filter(
+          (el) =>
+          el !== 'nameSedes' &&
+          el !== 'office' &&
+          el !== 'floor' &&
+          el !== 'capacity'
+            // el !=='creationDate'&&
+            // el !=='updatedAt'
+            // el !=='status'&&
+            // el!== 'actions'
+        );
+        case 'offices':
+          return this.displayedColumns.filter(
+            (el) =>
+            // el !== 'name' &&
+            el !== 'direction' &&
+            el !== 'phone'&&
+            el !== 'city'
+              // el !=='creationDate'
+              // el !=='updatedAt'
+              // el !=='status'&&
+              // el!== 'actions'
+          )
+        }}
 
   openEdit(value: any) {
     this.dialog
