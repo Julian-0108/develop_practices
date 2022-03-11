@@ -49,8 +49,78 @@
       <div class="main">
 
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <!-- Sites -->
+          <ng-container matColumnDef="office">
+            <th mat-header-cell *matHeaderCellDef>Nombre oficina
+              <div class="filter-inputs">
+                <mat-form-field floatLabel="always" appearance="none">
+                  <input matInput class="filter"(keyup)="applyFilter($event.target.value,'office')" type="text">
+                  <mat-icon class="icon-search" matSuffix>search</mat-icon>
+                </mat-form-field>
+              </div>
+            </th>
+            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.idOffices.office}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="capacity">
+            <th mat-header-cell *matHeaderCellDef>Capacidad
+              <div class="filter-inputs">
+                <mat-form-field floatLabel="always" appearance="none">
+                  <input matInput class="filter"(keyup)="applyFilter($event.value,'capacity')" type="text">
+                  <mat-icon class="icon-search" matSuffix>search</mat-icon>
+                </mat-form-field>
+              </div>
+            </th>
+            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.capacity}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef>Fecha de creación
+              <div class="filter-inputs">
+                <mat-form-field floatLabel="always" appearance="none">
+                  <input matInput class="filter" (change)="applyFilter($event.target.value,'createdAt')" type="date">
+                </mat-form-field>
+              </div>
+            </th>
+            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.createdAt | date: 'dd/MM/yyyy'}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="updatedAt">
+            <th mat-header-cell *matHeaderCellDef>Fecha de actualización
+              <div class="filter-inputs">
+                <mat-form-field floatLabel="always" appearance="none">
+                  <input matInput class="filter"  (change)="applyFilter($event.target.value,'updatedAt')" type="date">
+                </mat-form-field>
+              </div>
+            </th>
+            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.updatedAt | date: 'dd/MM/yyyy'}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status2">
+            <th mat-header-cell *matHeaderCellDef>Estado
+              <div class="filter-inputs">
+                <mat-form-field floatLabel="always" appearance="none">
+                  <mat-select class="filter" (selectionChange)="applyFilter($event.value,'status2')">
+                    <mat-option value="">Ver todos</mat-option>
+                    <mat-option value="true"> Activo</mat-option>
+                    <mat-option value="false">Inactivo</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="centerTable">
+                <label class="chip__status"
+                [ngClass]="{'chip__status--active':element.status,'chip__status--inactive':!element.status}">{{element.status
+                ? 'Activo' : 'Inactivo'}}</label>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- fin de sites -->
+
           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Nombre
+            <th mat-header-cell *matHeaderCellDef>Nombre {{subtitle}}
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
                   <input matInput class="filter"(keyup)="applyFilter($event.target.value,'name')" type="text">
@@ -152,8 +222,8 @@
           </ng-container>
 
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-header-row *matHeaderRowDef="getDisplayColumns(); sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: getDisplayColumns();"></tr>
         </table>
       </div>
       <div class="not_data" *ngIf="!informationTables">
