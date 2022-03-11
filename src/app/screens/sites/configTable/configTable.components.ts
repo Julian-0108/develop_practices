@@ -30,10 +30,12 @@ export class ConfigTableComponents implements OnInit {
   help: string = 'help';
   idHistory!: string;
   subtitle: any = '';
-  url: any = '';
   urlUpdate: string = '';
   filterListSities: Array<any> = [];
   filterSities = {
+    office: '',
+    capacity: '',
+    status2: '',
     name: '',
     address: '',
     phoneNumber: '',
@@ -47,6 +49,11 @@ export class ConfigTableComponents implements OnInit {
 
   public displayedColumns: string[] = [
     'name',
+    'office',
+    'capacity',
+    'createdAt',
+    'updatedAt',
+    'status2',
     'direction',
     'phone',
     'city',
@@ -56,18 +63,54 @@ export class ConfigTableComponents implements OnInit {
     'actions',
   ];
 
+  getDisplayColumns() {
+    console.log(this.urlUpdate);
+    switch(this.urlUpdate){
+      case 'venues':
+
+        return this.displayedColumns.filter(
+          (col)=>
+            col !== 'office' &&
+            col !== 'capacity' &&
+            col !== 'createdAt' &&
+            col !== 'updatedAt' &&
+            col !== 'status2'  
+        );
+      case 'sites':
+        return this.displayedColumns.filter(
+          (col)=>
+            col !== 'direction' &&
+            col !== 'phone' &&
+            col !== 'city' &&
+            col !== 'creationDate' &&
+            col !== 'actualizationDate' &&
+            col !== 'status' 
+        );
+    }
+  }
+
+  hola(){
+    console.log(this.getDisplayColumns());
+  }
+
   public table = [
     {
       name: 'Sedes',
       url: 'venues',
       sumary: 'Aquí puedes configurar las sedes de la empresa',
-      haveTypeField: false,
+      haveTypeField: true,
     },
     {
       name: 'Oficinas',
-      url: 'Offices',
+      url: 'offices',
       sumary: 'Aquí puedes configurar las oficinas',
       haveTypeField: false,
+    },
+    {
+      name: 'Sitios',
+      url: 'sites',
+      sumary: 'Aquí puedes configurar los sitios',
+      haveTypeField: true,
     },
   ];
 
