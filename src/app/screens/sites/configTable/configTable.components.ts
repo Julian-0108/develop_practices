@@ -142,22 +142,14 @@ export class ConfigTableComponents implements OnInit {
           el !== 'office' &&
           el !== 'floor' &&
           el !== 'capacity'
-            // el !=='creationDate'&&
-            // el !=='updatedAt'
-            // el !=='status'&&
-            // el!== 'actions'
         );
         case 'offices':
           return this.displayedColumns.filter(
             (el) =>
-            // el !== 'name' &&
+            el !== 'name' &&
             el !== 'direction' &&
             el !== 'phone'&&
             el !== 'city'
-              // el !=='creationDate'
-              // el !=='updatedAt'
-              // el !=='status'&&
-              // el!== 'actions'
           )
         }}
 

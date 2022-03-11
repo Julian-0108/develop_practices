@@ -62,7 +62,7 @@
           </ng-container>
 
             <ng-container matColumnDef="nameSedes">
-            <th mat-header-cell *matHeaderCellDef>Nombre Sedes
+            <th mat-header-cell *matHeaderCellDef>Nombre Sede
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
                   <input matInput class="filter" (keyup)="applyFilter($event.target.value,'address')"  type="text">
@@ -70,7 +70,7 @@
                 </mat-form-field>
               </div>
             </th>
-            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.name} </td>
+            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.idVenues.name}} </td>
           </ng-container>
 
           <ng-container matColumnDef="direction">
