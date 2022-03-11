@@ -66,7 +66,7 @@
             <th mat-header-cell *matHeaderCellDef>Capacidad
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter"(keyup)="applyFilter($event.value,'capacity')" type="text">
+                  <input matInput class="filter"(keyup)="applyFilter($event.target.value,'capacity')" type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>

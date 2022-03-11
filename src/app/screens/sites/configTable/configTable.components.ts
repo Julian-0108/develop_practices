@@ -123,6 +123,9 @@ export class ConfigTableComponents implements OnInit {
       case 'name':
         this.filterSities.name = value;
         break;
+      case 'office':
+        this.filterSities.office = value;
+        break
       case 'address':
         this.filterSities.address = value;
         break;
@@ -141,6 +144,9 @@ export class ConfigTableComponents implements OnInit {
       case 'status':
         this.filterSities.status = value;
         break;
+        case 'capacity':
+          this.filterSities.capacity = value;
+          break;
     }
     this.dataSource = this.filter.transform(this.filterListSities, this.filterSities);
     console.log(this.filterSities);
