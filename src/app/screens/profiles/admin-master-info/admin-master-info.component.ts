@@ -1,5 +1,4 @@
 import { NotificationService } from '@app/shared/components/notification/services/notification.service';
-import { GeneralMaster } from './master-info/interfaces.interface';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MasterInfoService } from './services/master-info.service';
@@ -10,7 +9,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Masters } from './interfaces/master-info-dialog';
-import { element } from 'protractor';
+import { SearchFilterPipe } from '@app/shared/pipes/Search-Filter.pipe';
+
+
 
 @Component({
   selector: 'app-admin-master-info',
@@ -141,7 +142,7 @@ export class AdminMasterInfoComponent implements OnInit {
         'este es el maestro metodologíasc.',
       haveTypeField: true,
     },
-     {
+    {
       name: 'Tecnologia',
       url: 'technology',
       sumary:
@@ -170,13 +171,15 @@ export class AdminMasterInfoComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true, read: MatSort }) sort!: MatSort;
   dataSource: MatTableDataSource<Master> = new MatTableDataSource();
+  dataSource2: any[] = [];
+  filterobject: any = {};
   result!: any;
   types: any[] = [];
   platform: any[] = [];
   domainList: any[] = [];
   technologyList: any[] = [];
   areaList: any[] = [];
-  pruebaData:any[]=[{name:"nombre 1",createdAt:new Date(),updatedAt:new Date(),status:true,imagePath:"ruta//jpg1"},{name:"nombre 2",createdAt:new Date(),updatedAt:new Date(new Date().setDate(24)),status:false,imagePath:"ruta//jpg2"}]
+  pruebaData: any[] = [{ name: "nombre 1", createdAt: new Date(), updatedAt: new Date(), status: true, imagePath: "ruta//jpg1" }, { name: "nombre 2", createdAt: new Date(), updatedAt: new Date(new Date().setDate(24)), status: false, imagePath: "ruta//jpg2" }]
   knowledgeAreaList: any[] = [];
   formationList = [{ name: 'Básica' }, { name: 'Específica' }];
 
@@ -192,16 +195,17 @@ export class AdminMasterInfoComponent implements OnInit {
     private title: Title,
     private masterInfoService: MasterInfoService,
     private notificationService: NotificationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private filterpipe: SearchFilterPipe
   ) {
     this.title.setTitle('Mundo SETI - administrar maestros');
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   getDataMaster() {
     this.dataSource.filter = '';
-    if(this.masterSeleted == "prueba"){
+    if (this.masterSeleted == "prueba") {
       this.dataSource.data = this.pruebaData;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -210,26 +214,27 @@ export class AdminMasterInfoComponent implements OnInit {
       this.fillDomainList();
       this.fillTechnologyList();
       this.fillAreaList();
-    }else{
-    this.masterInfoService.getData(this.masterSeleted).then((res: Master[] | any) => {;
-      res.forEach((element: Master) => {
-        if (element.technology) {
-          return (element.technology[0].technology);
-        }
-        if (element.domain) {
-          return (element.nameDomain = element.domain[0].name);
-        }
+    } else {
+      this.masterInfoService.getData(this.masterSeleted).then((res: Master[] | any) => {
+        res.forEach((element: Master) => {
+          if (element.technology) {
+            return (element.technology[0].technology);
+          }
+          if (element.domain) {
+            return (element.nameDomain = element.domain[0].name);
+          }
+        });
+        this.dataSource.data = res;
+        this.dataSource2 = res;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.subtitle = this.masters.find((el: any) => el.url === this.masterSeleted);
+        this.fillTypeList();
+        this.fillDomainList();
+        this.fillTechnologyList();
+        this.fillAreaList();
       });
-      this.dataSource.data = res;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.subtitle = this.masters.find((el: any) => el.url === this.masterSeleted);
-      this.fillTypeList();
-      this.fillDomainList();
-      this.fillTechnologyList();
-      this.fillAreaList();
-    });
-  }
+    }
   }
 
   getDisplayedColumns(): string[] {
@@ -323,78 +328,78 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'technology' &&
             el !== 'formation'
         );
-        case 'skills':
-          return this.displayedColumns.filter(
-            (el) =>
-              el !== 'version' &&
-              el !== 'idTechnology' &&
-              el !== 'idDomain' &&
-              el !== 'knowledgeArea' &&
-              el !== 'specificKnowledge' &&
-              el !== 'platform' &&
-              el !== 'technology' &&
-              el !== 'formation' &&
-              el !== 'reference' &&
-              el !== 'submenu'
-          );
-        case 'modules':
-          return this.displayedColumns.filter(
-            (el) =>
-              el !== 'version' &&
-              el !== 'idTechnology' &&
-              el !== 'idDomain' &&
-              el !== 'knowledgeArea' &&
-              el !== 'specificKnowledge' &&
-              el !== 'platform' &&
-              el !== 'technology' &&
-              el !== 'formation' &&
-              el !== 'reference' &&
-              el !== 'submenu'
-          );
-          case 'work-tools':
-            return this.displayedColumns.filter(
-              (el) =>
-                el !== 'version' &&
-                el !== 'idTechnology' &&
-                el !== 'idDomain' &&
-                el !== 'knowledgeArea' &&
-                el !== 'specificKnowledge' &&
-                el !== 'platform' &&
-                el !== 'technology' &&
-                el !== 'formation' &&
-                el !== 'reference' &&
-                el !== 'submenu'
-            );
-        case 'functions':
-          return this.displayedColumns.filter(
-            (el) =>
-              el !== 'submenu' &&
-              el !== 'idTechnology' &&
-              el !== 'version' &&
-              el !== 'reference' &&
-              el !== 'type' &&
-              el !== 'knowledgeArea' &&
-              el !== 'specificKnowledge' &&
-              el !== 'platform' &&
-              el !== 'technology' &&
-              el !== 'formation'
-          );
-          case 'optional-tools':
-            return this.displayedColumns.filter(
-              (el) =>
-              el !== 'reference' &&
-              el !== 'submenu' &&
-              el !== 'technology' &&
-              el !== 'knowledgeArea' &&
-              el !== 'specificKnowledge' &&
-              el !== 'platform' &&
-              el !== 'formation' &&
-              el !== 'description' &&
-              el !== 'master'
-            );
-        case 'member-carousel':
-          return this.displayedColumns.filter(
-            (el) =>
+      case 'skills':
+        return this.displayedColumns.filter(
+          (el) =>
+            el !== 'version' &&
+            el !== 'idTechnology' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation' &&
+            el !== 'reference' &&
+            el !== 'submenu'
+        );
+      case 'modules':
+        return this.displayedColumns.filter(
+          (el) =>
+            el !== 'version' &&
+            el !== 'idTechnology' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation' &&
+            el !== 'reference' &&
+            el !== 'submenu'
+        );
+      case 'work-tools':
+        return this.displayedColumns.filter(
+          (el) =>
+            el !== 'version' &&
+            el !== 'idTechnology' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation' &&
+            el !== 'reference' &&
+            el !== 'submenu'
+        );
+      case 'functions':
+        return this.displayedColumns.filter(
+          (el) =>
+            el !== 'submenu' &&
+            el !== 'idTechnology' &&
+            el !== 'version' &&
+            el !== 'reference' &&
+            el !== 'type' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
+        );
+      case 'optional-tools':
+        return this.displayedColumns.filter(
+          (el) =>
+            el !== 'reference' &&
+            el !== 'submenu' &&
+            el !== 'technology' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'formation' &&
+            el !== 'description' &&
+            el !== 'master'
+        );
+      case 'member-carousel':
+        return this.displayedColumns.filter(
+          (el) =>
             el !== 'reference' &&
             el !== 'idTechnology' &&
             el !== 'version' &&
@@ -408,22 +413,22 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'description' &&
             el !== 'type' &&
             el !== 'master'
-          );
-          case 'methodologies':
-            return this.displayedColumns.filter(
-              (el) =>
-              el !== 'reference' &&
-              el !== 'idTechnology' &&
-              el !== 'submenu' &&
-              el !== 'knowledgeArea' &&
-              el !== 'specificKnowledge' &&
-              el !== 'platform' &&
-              el !== 'technology' &&
-              el !== 'formation'
-            );
-          case 'corporate-competencies':
-          return this.displayedColumns.filter(
-            (el) =>
+        );
+      case 'methodologies':
+        return this.displayedColumns.filter(
+          (el) =>
+            el !== 'reference' &&
+            el !== 'idTechnology' &&
+            el !== 'submenu' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation'
+        );
+      case 'corporate-competencies':
+        return this.displayedColumns.filter(
+          (el) =>
             el !== 'reference' &&
             el !== 'idTechnology' &&
             el !== 'version' &&
@@ -434,37 +439,37 @@ export class AdminMasterInfoComponent implements OnInit {
             el !== 'platform' &&
             el !== 'technology' &&
             el !== 'formation'
-          );
-          case 'technology':
-            return this.displayedColumns.filter(
-              (el) =>
-              el !== 'reference' &&
-              el !== 'idTechnology' &&
-              el !== 'submenu' &&
-              el !== 'knowledgeArea' &&
-              el !== 'specificKnowledge' &&
-              el !== 'platform' &&
-              el !== 'type' &&
-              el !== 'formation' &&
-              el !== 'description'&&
-              el !== 'name'
-            );
-            case 'study-center':
-              return this.displayedColumns.filter(
-                (el) =>
-                el !== 'submenu' &&
-                el !== 'idTechnology' &&
-                el !== 'version' &&
-                el !== 'reference' &&
-                el !== 'type' &&
-                el !== 'idDomain' &&
-                el !== 'knowledgeArea' &&
-                el !== 'specificKnowledge' &&
-                el !== 'platform' &&
-                el !== 'technology' &&
-                el !== 'formation' &&
-                el !== 'description'
-              );
+        );
+      case 'technology':
+        return this.displayedColumns.filter(
+          (el) =>
+            el !== 'reference' &&
+            el !== 'idTechnology' &&
+            el !== 'submenu' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'type' &&
+            el !== 'formation' &&
+            el !== 'description' &&
+            el !== 'name'
+        );
+      case 'study-center':
+        return this.displayedColumns.filter(
+          (el) =>
+            el !== 'submenu' &&
+            el !== 'idTechnology' &&
+            el !== 'version' &&
+            el !== 'reference' &&
+            el !== 'type' &&
+            el !== 'idDomain' &&
+            el !== 'knowledgeArea' &&
+            el !== 'specificKnowledge' &&
+            el !== 'platform' &&
+            el !== 'technology' &&
+            el !== 'formation' &&
+            el !== 'description'
+        );
       case 'courses-certifications':
         return this.displayedColumns.filter(
           (el) =>
@@ -564,6 +569,32 @@ export class AdminMasterInfoComponent implements OnInit {
       });
   }
 
+  filterinfo(value: any, type: any) {
+    if (type == 'domain.name') {
+      const arraySource: any = []
+      this.dataSource2.forEach((valuecompare: any) => {
+        if (valuecompare.domain[0].name.includes(value)) {
+          arraySource.push(valuecompare);
+        }
+      });
+      this.dataSource.data = arraySource;
+    } else if (type == 'technology.technology') {
+        const arraySource: any = []
+        this.dataSource2.forEach((valuecompare: any) => {
+        if (valuecompare.technology[0].technology.includes(value)) {
+          arraySource.push(valuecompare);
+        }
+      });
+      this.dataSource.data = arraySource;
+    }
+    else {
+      this.filterobject[type] = value;
+      this.dataSource.data = this.filterpipe.transform(this.dataSource2, this.filterobject);
+    }
+
+  }
+
+
   openDialog(element?: Master) {
     const dialogRef = this.dialog
       .open(MasterInfoComponent, {
@@ -587,6 +618,7 @@ export class AdminMasterInfoComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
   }
 
   applyDirectFilter(filterValue: any) {
