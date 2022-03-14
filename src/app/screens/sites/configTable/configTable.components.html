@@ -54,10 +54,7 @@
             <th mat-header-cell *matHeaderCellDef>Oficinas
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <!-- <input matInput class="filter" (keyup)="applyFilter($event.target.value,'office')" type="text"> -->
-                  <input matInput class="filter" (selectionChange)="applyDirectFilter($event.value)" type="text">
-
-
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value,'office')" type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
