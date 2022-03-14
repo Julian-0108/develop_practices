@@ -1,5 +1,5 @@
 <div class="content" role="main">
-    <button (click)="redirect()" class="button-back " mat-mini-fab aria-label="back button "></button>
+    <button routerLink="/sites" class="button-back " mat-mini-fab aria-label="back button"></button>
     <div class="home-wrapper">
         <mat-card class="box mat-elevation-z7 ">
             <mat-card-header>
@@ -9,91 +9,86 @@
                 </mat-card-subtitle>
             </mat-card-header>
 
-            <form class="form ">
+            <form [formGroup]="general">
                 <div>
                     <mat-card-content>
-
                         <!-- Sede Select -->
-                        <mat-form-field floatLabel="always " appearance="none ">
+                        <mat-form-field floatLabel="always" appearance="none">
                             <mat-label class="label ">Seleccionar sede...</mat-label>
-                            <mat-select [(value)]="selectedVenue " [(ngModel)]="selectedVenue " [ngModelOptions]="{ standalone: true } " (ngModelChange)="onChangeVenue($event) ">
-                                <mat-option *ngFor="let venue of venues " [value]="venue._id ">
-                                    {{ venue.nombre }}
-                                </mat-option>
-                                <mat-option *ngIf="venues?.length==0 " disabled>
-                                    <i>No hay sedes disponibles</i>
-                                </mat-option>
+                            <mat-select formControlName="venue" placeholder="Seleccione una sede" (selectionChange)="getOffices($event.value)">
+                                <mat-option *ngFor="let venue of venues" [value]="venue">{{venue}}</mat-option>
+                                <mat-option *ngIf="venues?.length==0 " disabled value=""><i>No hay sedes disponibles</i></mat-option>
                             </mat-select>
+                            <mat-error *ngIf="fieldsValid('venue')">Campo requerido</mat-error>
                         </mat-form-field>
 
                         <!-- Oficina Select -->
-                        <mat-form-field floatLabel="always " appearance="none ">
+                        <mat-form-field floatLabel="always" appearance="none">
                             <mat-label class="label ">Seleccionar oficina...</mat-label>
-                            <mat-select [(value)]="selectedOffice " [(ngModel)]="selectedOffice " [ngModelOptions]="{ standalone: true } " (ngModelChange)="onChangeOffice($event) ">
-                                <mat-option *ngFor="let office of offices " [value]="office._id ">
-                                    Oficina Piso {{ office.piso }}
-                                </mat-option>
-                                <mat-option *ngIf="offices?.length==0 " disabled>
-                                    <i>No hay oficinas disponibles</i>
-                                </mat-option>
+                            <mat-select formControlName="office" placeholder="Seleccione una oficina" (selectionChange)="getSites($event.value)">
+                                <mat-option *ngFor="let office of offices" [value]="office">{{office}}</mat-option>
+                                <!-- <mat-option *ngIf="offices?.length==0" disabled value=""><i>No hay oficinas disponibles</i></mat-option> -->
                             </mat-select>
+                            <mat-error *ngIf="fieldsValid('office')">Campo requerido</mat-error>
                         </mat-form-field>
 
                         <!-- Sitio Select -->
-                        <mat-form-field floatLabel="always " appearance="none ">
+                        <mat-form-field floatLabel="always" appearance="none">
                             <mat-label class="label ">Seleccionar sitio...</mat-label>
-                            <mat-select [(value)]="selectedSite " [(ngModel)]="selectedSite " [ngModelOptions]="{ standalone: true } " (ngModelChange)="onChangeSite($event) ">
-                                <mat-option *ngFor="let site of sites " [value]="site._id ">
-                                    {{ site.nombre }}
-                                </mat-option>
-                                <mat-option *ngIf="sites?.length==0 " disabled>
-                                    <i>No hay sitios disponibles</i>
-                                </mat-option>
+                            <mat-select placeholder="Seleccione un sitio" (selectionChange)="addIdSite($event.value)">
+                                <mat-select-trigger>{{general.get('site')?.value}}</mat-select-trigger>
+                                <mat-option *ngFor="let site of sites" [value]="site">{{site.name}}</mat-option>
+                                <!-- <mat-option *ngIf="sites?.length==0" disabled value=""><i>No hay sitios disponibles</i></mat-option> -->
                             </mat-select>
+                            <mat-error *ngIf="fieldsValid('site')">Campo requerido</mat-error>
                         </mat-form-field>
-                        <!-- <p><i>You selected: {{selectedSite}}</i></p> -->
                     </mat-card-content>
 
                     <mat-card-actions>
-                        <button [disabled]="!selectedSite " (click)="onSubmit() " mat-flat-button class="btn-block mat-elevation-z6 " style="width: 35%; ">
-              Generar
-            </button>
+                        <button [disabled]="!general.get('site')?.valid" (click)="generateQr()" mat-flat-button class="btn-block mat-elevation-z6 generate">
+                        Generar
+                        </button>
                     </mat-card-actions>
                 </div>
 
-                <div class="qr-container grid-item ">
-                    <div class="qr-info " *ngIf="showQrInfo ">
-                        <img src="../../../assets/images/Logo-seti.png " alt="logo seti " />
-                        <p>{{ resultNameSites }} Entrada</p>
+                <div class="qr-container grid-item">
+
+                    <div fxFlex="50">
+                        <div class="qr-info" *ngIf="qrEntry !== ''">
+                            <img src="../../../assets/images/Logo-seti.png " alt="logo seti " />
+                            <p>{{ general.get('site')?.value }} (Entrada)</p>
+                        </div>
+
+                        <qrcode [scale]="1 " [margin]="1 " [qrdata]="qrEntry" [width]="256 " [errorCorrectionLevel]=" 'M' "></qrcode>
                     </div>
 
-                    <qrcode [scale]="1 " [margin]="1 " [qrdata]="qrHormiguero " [width]="256 " [errorCorrectionLevel]=" 'M' "></qrcode>
+                    <div fxFlex="50">
+                        <div class="qr-info" *ngIf="qrExit !== ''">
+                            <img src="../../../assets/images/Logo-seti.png " alt="logo seti " />
+                            <p>{{ general.get('site')?.value }} (Salida)</p>
+                        </div>
 
-                    <div class="qr-info " *ngIf="showQrInfo ">
-                        <img src="../../../assets/images/Logo-seti.png " alt="logo seti " />
-                        <p>{{ resultNameSites }} Salida</p>
+                        <qrcode [scale]="1 " [margin]="1 " [qrdata]="qrExit" [width]="256 " [errorCorrectionLevel]=" 'M' "></qrcode>
                     </div>
-
-                    <qrcode [scale]="1 " [margin]="1 " [qrdata]="qrHormigueroS " [width]="256 " [errorCorrectionLevel]=" 'M' "></qrcode>
                 </div>
 
                 <span layout="row "><hr flex /></span>
 
                 <mat-card-header class="kit ">
-                    <mat-card-title>Kit</mat-card-title>
+                    <mat-card-title>Generar Kit</mat-card-title>
                     <mat-card-subtitle>
-                        Generar código QR para entrega de kit de salud
+                        Generar código QR para entrega de kit
                     </mat-card-subtitle>
                 </mat-card-header>
 
                 <mat-card-actions>
-                    <button type="button " (click)="onSubmitKit() " mat-flat-button class="btn-block mat-elevation-z6 " style="width: 35%; ">
-            Generar
-          </button>
+                    <button type="button" mat-flat-button class="btn-block mat-elevation-z6 generate" (click)="kitQr()">
+                    Generar
+                    </button>
                 </mat-card-actions>
 
-                <div class="qr-container grid-item ">
-                    <qrcode style="margin: auto; " [scale]="1 " [margin]="1 " [qrdata]="qrKit " [width]="256 " [errorCorrectionLevel]=" 'M' "></qrcode>
+                <div class="qr-container grid-item">
+                    <qrcode class="qrKit" [scale]="1 " [margin]="1 " [qrdata]="qrKit " [width]="256 " [errorCorrectionLevel]=" 'M' "></qrcode>
                 </div>
             </form>
         </mat-card>
