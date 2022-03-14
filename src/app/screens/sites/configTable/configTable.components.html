@@ -51,27 +51,30 @@
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
           <!-- Sites -->
           <ng-container matColumnDef="office">
-            <th mat-header-cell *matHeaderCellDef>Nombre oficina
+            <th mat-header-cell *matHeaderCellDef>Oficinas
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter"(keyup)="applyFilter($event.target.value,'office')" type="text">
+                  <!-- <input matInput class="filter" (keyup)="applyFilter($event.target.value,'office')" type="text"> -->
+                  <input matInput class="filter" (selectionChange)="applyDirectFilter($event.value)" type="text">
+
+
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
             </th>
-            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.idOffices.office}} </td>
+            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.idOffices?.office}} </td>
           </ng-container>
 
           <ng-container matColumnDef="capacity">
             <th mat-header-cell *matHeaderCellDef>Capacidad
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter"(keyup)="applyFilter($event.target.value,'capacity')" type="text">
+                  <input matInput class="filter"(keyup)="applyFilter($event.target.value, 'capacity')" type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
             </th>
-            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.capacity}} </td>
+            <td mat-cell class="centerTable" *matCellDef="let element"> {{element?.capacity}} </td>
           </ng-container>
 
           <ng-container matColumnDef="createdAt">
@@ -96,7 +99,7 @@
             <td mat-cell class="centerTable" *matCellDef="let element"> {{element.updatedAt | date: 'dd/MM/yyyy'}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="status2">
+          <!-- <ng-container matColumnDef="status2">
             <th mat-header-cell *matHeaderCellDef>Estado
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
@@ -115,12 +118,12 @@
                 ? 'Activo' : 'Inactivo'}}</label>
               </div>
             </td>
-          </ng-container>
+          </ng-container> -->
 
           <!-- fin de sites -->
 
           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Nombre {{subtitle}}
+            <th mat-header-cell *matHeaderCellDef>{{subtitle}}
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
                   <input matInput class="filter"(keyup)="applyFilter($event.target.value,'name')" type="text">
@@ -204,7 +207,7 @@
             <td mat-cell *matCellDef="let element">
               <div class="centerTable">
                 <label class="chip__status"
-                [ngClass]="{'chip__status--active':element.status,'chip__status--inactive':!element.status}">{{element.status
+                [ngClass]="{'chip__status--active':element?.status,'chip__status--inactive':!element?.status}">{{element.status
                 ? 'Activo' : 'Inactivo'}}</label>
               </div>
             </td>
