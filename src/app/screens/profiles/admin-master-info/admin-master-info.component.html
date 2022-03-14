@@ -46,7 +46,7 @@
             <th mat-header-cell *matHeaderCellDef> Dominio
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <mat-select class="filter" (selectionChange)="applyDirectFilter($event.value)">
+                  <mat-select class="filter" (selectionChange)="filterinfo($event.value,'domain.name')">
                     <mat-option [value]="''">
                       Ver Todos
                     </mat-option>
@@ -61,13 +61,12 @@
               <ng-container *ngFor="let domain of element.domain">{{domain.name}}</ng-container>
             </td>
           </ng-container>
-
           <!-- Knowledge Area Column -->
           <ng-container matColumnDef="knowledgeArea" sticky>
             <th mat-header-cell *matHeaderCellDef> Área de conocimiento
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <mat-select class="filter" (selectionChange)="applyDirectFilter($event.value)">
+                  <mat-select class="filter" (selectionChange)="filterinfo($event.value,'knowledgeArea')">
                     <mat-option [value]="''">
                       Ver Todos
                     </mat-option>
@@ -89,7 +88,7 @@
             <th mat-header-cell *matHeaderCellDef> Conocimiento Específico
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text">
+                  <input matInput class="filter" (keyup)="filterinfo($event.target.value,'specificKnowledge')" type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -109,7 +108,7 @@
               <div class="filter-inputs" >
                 <mat-form-field floatLabel="always" appearance="none">
                   <mat-select class="filter filter__courses-certifications"
-                    (selectionChange)="applyDirectFilter($event.value)">
+                  (keyup)="filterinfo($event.value,'name')">
                     <mat-option [value]="''">
                       Ver Todos
                     </mat-option>
@@ -132,7 +131,7 @@
             <th mat-header-cell *matHeaderCellDef> Tecnología
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text">
+                  <input matInput class="filter" (keyup)="filterinfo($event.target.value,'technology')" type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -145,7 +144,7 @@
             <th mat-header-cell *matHeaderCellDef> Tecnología
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <mat-select class="filter" (selectionChange)="applyDirectFilter($event.value)">
+                  <mat-select class="filter" (selectionChange)="filterinfo($event.value,'technology.technology')">
                     <mat-option [value]="''">
                       Ver Todos
                     </mat-option>
@@ -174,7 +173,7 @@
           <th mat-header-cell *matHeaderCellDef> Versión
             <div class="filter-inputs">
               <mat-form-field floatLabel="always" appearance="none">
-                <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text"
+                <input matInput class="filter" (keyup)="filterinfo($event.target.value,'version')" type="text"
                   autocomplete="off">
                 <mat-icon
                   [ngClass]="{'icon-search-security' : masterSeleted == 'security-responsabilities', 'icon-search' : masterSeleted != 'security-responsabilities', 'icon-search-carousel': masterSeleted == 'member-carousel'}"
@@ -194,7 +193,7 @@
               <div class="filter-inputs" >
                 <mat-form-field floatLabel="always" appearance="none">
                   <mat-select class="filter filter__courses-certifications"
-                    (selectionChange)="applyDirectFilter($event.value)">
+                    (selectionChange)="filterinfo($event.value,'formation')">
                     <mat-option [value]="''">
                       Ver Todos
                     </mat-option>
@@ -215,7 +214,7 @@
             <th mat-header-cell *matHeaderCellDef> Maestro
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text">
+                  <input matInput class="filter" (keyup)="filterinfo($event.target.value,'masterReference')" type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
@@ -228,7 +227,7 @@
             <th mat-header-cell *matHeaderCellDef> Nombre
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text"
+                  <input matInput class="filter" (keyup)="filterinfo($event.target.value,'name')" type="text"
                     autocomplete="off">
                   <mat-icon
                     [ngClass]="{'icon-search-security' : masterSeleted == 'security-responsabilities', 'icon-search' : masterSeleted != 'security-responsabilities', 'icon-search-carousel': masterSeleted == 'member-carousel'}"
@@ -246,7 +245,7 @@
             <th mat-header-cell *matHeaderCellDef> Descripción
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event.target.value)" type="text"
+                  <input matInput class="filter" (keyup)="filterinfo($event.target.value,'description')" type="text"
                     autocomplete="off">
                   <mat-icon class="icon-description" matSuffix>search</mat-icon>
                 </mat-form-field>
@@ -262,7 +261,7 @@
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
                   <mat-select class="filter filter__courses-certifications"
-                    (selectionChange)="applyDirectFilter($event.value)">
+                    (selectionChange)="filterinfo($event.value,'type')">
                     <mat-option [value]="''">
                       Ver Todos
                     </mat-option>
@@ -282,7 +281,7 @@
             <th mat-header-cell *matHeaderCellDef matSort> Fecha de creación
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (change)="applyFilter($event.target.value)" type="date">
+                  <input matInput class="filter" (change)="filterinfo($event.target.value,'createdAt')" type="date">
                 </mat-form-field>
               </div>
             </th>
@@ -294,7 +293,7 @@
             <th mat-header-cell *matHeaderCellDef matSort>Fecha de actualización
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (change)="applyFilter($event.target.value)" type="date">
+                  <input matInput class="filter" (change)="filterinfo($event.target.value,'updatedAt')" type="date">
                 </mat-form-field>
               </div>
             </th>
@@ -306,7 +305,10 @@
             <th mat-header-cell *matHeaderCellDef> Estado
               <div class="filter-inputs filter-inputs__status">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <mat-select class="filter" (selectionChange)="applyDirectFilter($event.value)">
+                  <mat-select class="filter" (selectionChange)="filterinfo($event.value,'status')">
+                    <mat-option value="">
+                      Ver Todos
+                    </mat-option>
                     <mat-option value="true">Activo</mat-option>
                     <mat-option value="false">Inactivo</mat-option>
                   </mat-select>

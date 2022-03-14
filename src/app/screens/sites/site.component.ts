@@ -14,7 +14,7 @@ export class SiteComponent implements OnInit {
     {
       name: 'Generar QR',
       description: 'Generar QR',
-      url: '/underConstruction',
+      url: '/generate-qr',
       imagePath: 'assets/images/dibujo mundo seti (generar qr).svg'
     },
     {
