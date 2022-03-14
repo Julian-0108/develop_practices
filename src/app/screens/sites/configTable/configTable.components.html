@@ -50,7 +50,7 @@
 
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Nombre
+            <th mat-header-cell *matHeaderCellDef>{{subtitle}}
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
                   <input matInput class="filter"(keyup)="applyFilter($event.target.value,'name')" type="text">
@@ -95,6 +95,18 @@
               </div>
             </th>
             <td mat-cell class="centerTable" *matCellDef="let element"> {{element.office}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="nameOffice">
+            <th mat-header-cell *matHeaderCellDef>Oficinas
+              <div class="filter-inputs">
+                <mat-form-field floatLabel="always" appearance="none">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value,'idOffices.office')" type="text">
+                  <mat-icon class="icon-search" matSuffix>search</mat-icon>
+                </mat-form-field>
+              </div>
+            </th>
+            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.idOffices.office}} </td>
           </ng-container>
 
           <ng-container matColumnDef="floor">
