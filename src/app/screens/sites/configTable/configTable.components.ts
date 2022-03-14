@@ -26,34 +26,30 @@ export class ConfigTableComponents implements OnInit {
     this.informationTables = true;
   }
   otherIcon!: boolean;
-  open: boolean = false;
   help: string = 'help';
   idHistory!: string;
   subtitle: any = '';
   url: any = '';
   urlUpdate: string = '';
   filterListSities: Array<any> = [];
-  filterSities = {
-    name: '',
-    address: '',
-    phoneNumber: '',
-    city: '',
-    status: '',
-    createdAt: '',
-    updatedAt: '',
-  };
+  filterSities:any = {};
   dataSource: MatTableDataSource<Tables | any> = new MatTableDataSource();
   btnAdd = false;
 
   public displayedColumns: string[] = [
     'name',
+    'nameSedes',
     'direction',
     'phone',
     'city',
+    'office',
+    'floor',
+    'capacity',
     'creationDate',
     'actualizationDate',
     'status',
     'actions',
+
   ];
 
   public table = [
@@ -61,48 +57,36 @@ export class ConfigTableComponents implements OnInit {
       name: 'Sedes',
       url: 'venues',
       sumary: 'Aquí puedes configurar las sedes de la empresa',
-      haveTypeField: false,
+      haveTypeField: true,
     },
     {
       name: 'Oficinas',
-      url: 'Offices',
+      url: 'offices',
       sumary: 'Aquí puedes configurar las oficinas',
-      haveTypeField: false,
+      haveTypeField: true,
     },
   ];
 
-  isOpen() {
-    this.open = true;
-  }
 
-  applyFilter(value: any, type: any) {
-    switch (type) {
-      case 'name':
-        this.filterSities.name = value;
-        break;
-      case 'address':
-        this.filterSities.address = value;
-        break;
-      case 'phoneNumber':
-        this.filterSities.phoneNumber = value;
-        break;
-      case 'city':
-        this.filterSities.city = value;
-        break;
-      case 'updatedAt':
-        this.filterSities.updatedAt = value;
-        break;
-      case 'createdAt':
-        this.filterSities.createdAt = value;
-        break;
-      case 'status':
-        this.filterSities.status = value;
-        break;
+
+  applyFilter(value: any, type: string) {
+
+     if (type == 'idVenues.name') {
+      const arraySource: any = []
+      this.filterListSities.forEach((valuecompare: any) => {
+        if (valuecompare.idVenues.name.toLowerCase().includes(value)) {
+          arraySource.push(valuecompare);
+        }
+      });
+      this.dataSource = arraySource;
     }
-    this.dataSource = this.filter.transform(this.filterListSities, this.filterSities);
-    console.log(this.filterSities);
-  }
+    else {
+      this.filterSities[type] = value;
+      this.dataSource = this.filter.transform(this.filterListSities, this.filterSities);
+      console.log(this.filterSities);
 
+    }
+  }
   async getList(url: string) {
     this.table.forEach((tb: any) => {
       if (tb.url == url) {
@@ -128,6 +112,25 @@ export class ConfigTableComponents implements OnInit {
         console.log('error', error);
       });
   }
+  getDisplayedColumns() {
+    switch (this.urlUpdate) {
+      case 'venues':
+        return this.displayedColumns.filter(
+          (el) =>
+          el !== 'nameSedes' &&
+          el !== 'office' &&
+          el !== 'floor' &&
+          el !== 'capacity'
+        );
+        case 'offices':
+          return this.displayedColumns.filter(
+            (el) =>
+            el !== 'name' &&
+            el !== 'direction' &&
+            el !== 'phone'&&
+            el !== 'city'
+          )
+        }}
 
   openEdit(value: any) {
     this.dialog
