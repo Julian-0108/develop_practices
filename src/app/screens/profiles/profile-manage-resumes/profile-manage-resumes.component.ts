@@ -54,7 +54,7 @@ export class ProfileManageResumesComponent implements OnInit {
   dataSource: Search[] = [];
   dataDomain: Array<any>[] = [];
   filteredList: any = [];
-  filterKeys!: { fullName: string; numberIdentification: string; processStatus: string; city: string; };
+  filterKeys:any = {};
 
   constructor(
     private dialog: MatDialog,
@@ -190,25 +190,12 @@ export class ProfileManageResumesComponent implements OnInit {
   }
 
   filterRegister(value:any, type:string) {
-    switch (type) {
-      case 'fullName':
-        this.filterKeys.fullName = value;
-        break;
-      case 'numberIdentification':
-        this.filterKeys.numberIdentification = value;
-        break;
-      case 'processStatus':
-        this.filterKeys.processStatus = value;
-        break;
-      case 'city':
-        this.filterKeys.city = value;
-        break;
-      case 'salario':
-        this.idSalario = value;
-        break;
+    if(type !== 'salario'){
+      this.filterKeys[type] = value;
+      this.dataSource = this.searchFilter.transform(this.filteredList, this.filterKeys);
+    }else{
+      this.idSalario = value;
     }
-
-    this.dataSource = this.searchFilter.transform(this.filteredList, this.filterKeys);
 
     if (this.idSalario !== '') {
       if (this.dataSource.length > 0) {
@@ -228,6 +215,5 @@ export class ProfileManageResumesComponent implements OnInit {
         { title: 'Sin registros', message: 'No se encontraron hojas de vida con estas coincidencias', type: 'info' }
       );
     }
-
   }
 }
