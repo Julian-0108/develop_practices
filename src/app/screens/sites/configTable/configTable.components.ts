@@ -43,6 +43,7 @@ export class ConfigTableComponents implements OnInit {
     'phone',
     'city',
     'office',
+    'nameOffice',
     'floor',
     'capacity',
     'creationDate',
@@ -65,16 +66,29 @@ export class ConfigTableComponents implements OnInit {
       sumary: 'Aquí puedes configurar las oficinas',
       haveTypeField: true,
     },
+    {
+   name: 'Sitios',
+  url: 'sites',
+  sumary: 'Aquí puedes configurar los sitios',
+  haveTypeField: true,
+},
   ];
 
 
 
   applyFilter(value: any, type: string) {
-
      if (type == 'idVenues.name') {
       const arraySource: any = []
       this.filterListSities.forEach((valuecompare: any) => {
         if (valuecompare.idVenues.name.toLowerCase().includes(value)) {
+          arraySource.push(valuecompare);
+        }
+      });
+      this.dataSource = arraySource;
+    }else if(type == 'idOffices.office') {
+      const arraySource: any = []
+      this.filterListSities.forEach((valuecompare: any) => {
+        if (valuecompare.idOffices.office.toLowerCase().includes(value)) {
           arraySource.push(valuecompare);
         }
       });
@@ -120,6 +134,7 @@ export class ConfigTableComponents implements OnInit {
           el !== 'nameSedes' &&
           el !== 'office' &&
           el !== 'floor' &&
+          el !== 'nameOffice'&&
           el !== 'capacity'
         );
         case 'offices':
@@ -128,8 +143,20 @@ export class ConfigTableComponents implements OnInit {
             el !== 'name' &&
             el !== 'direction' &&
             el !== 'phone'&&
+            el !== 'nameOffice'&&
             el !== 'city'
           )
+          case 'sites':
+        return this.displayedColumns.filter(
+          (el)=>
+            el !== 'direction' &&
+            el !== 'phone' &&
+            el !== 'city' &&
+            el !== 'nameSedes'&&
+            el !== 'floor'&&
+            el !== 'office'
+            // col !== 'status'
+        );
         }}
 
   openEdit(value: any) {
