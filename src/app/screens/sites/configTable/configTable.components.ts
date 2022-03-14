@@ -32,35 +32,23 @@ export class ConfigTableComponents implements OnInit {
   subtitle: any = '';
   urlUpdate: string = '';
   filterListSities: Array<any> = [];
-  filterSities = {
-    office: '',
-    capacity: '',
-    status2: '',
-    name: '',
-    address: '',
-    phoneNumber: '',
-    city: '',
-    status: '',
-    createdAt: '',
-    updatedAt: '',
-  };
+  filterSities : any = {};
   dataSource: MatTableDataSource<Tables | any> = new MatTableDataSource();
   btnAdd = false;
 
   public displayedColumns: string[] = [
     'name',
-    'office',
-    'capacity',
-    'createdAt',
-    'updatedAt',
-    'status2',
     'direction',
     'phone',
     'city',
     'creationDate',
     'actualizationDate',
+    'office',
+    'capacity',
+    'createdAt',
+    'updatedAt',
     'status',
-    'actions',
+    'actions'
   ];
 
   getDisplayColumns() {
@@ -74,7 +62,7 @@ export class ConfigTableComponents implements OnInit {
             col !== 'capacity' &&
             col !== 'createdAt' &&
             col !== 'updatedAt' &&
-            col !== 'status2'  
+            col !== 'status2'
         );
       case 'sites':
         return this.displayedColumns.filter(
@@ -83,14 +71,10 @@ export class ConfigTableComponents implements OnInit {
             col !== 'phone' &&
             col !== 'city' &&
             col !== 'creationDate' &&
-            col !== 'actualizationDate' &&
-            col !== 'status' 
+            col !== 'actualizationDate'
+            // col !== 'status'
         );
     }
-  }
-
-  hola(){
-    console.log(this.getDisplayColumns());
   }
 
   public table = [
@@ -119,37 +103,12 @@ export class ConfigTableComponents implements OnInit {
   }
 
   applyFilter(value: any, type: any) {
-    switch (type) {
-      case 'name':
-        this.filterSities.name = value;
-        break;
-      case 'office':
-        this.filterSities.office = value;
-        break
-      case 'address':
-        this.filterSities.address = value;
-        break;
-      case 'phoneNumber':
-        this.filterSities.phoneNumber = value;
-        break;
-      case 'city':
-        this.filterSities.city = value;
-        break;
-      case 'updatedAt':
-        this.filterSities.updatedAt = value;
-        break;
-      case 'createdAt':
-        this.filterSities.createdAt = value;
-        break;
-      case 'status':
-        this.filterSities.status = value;
-        break;
-        case 'capacity':
-          this.filterSities.capacity = value;
-          break;
-    }
+    this.filterSities[type] = value;
     this.dataSource = this.filter.transform(this.filterListSities, this.filterSities);
     console.log(this.filterSities);
+  }
+  applyDirectFilter(filterValue: any) {
+    this.dataSource.filter = filterValue;
   }
 
   async getList(url: string) {
