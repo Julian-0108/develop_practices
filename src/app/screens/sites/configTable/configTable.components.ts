@@ -38,44 +38,20 @@ export class ConfigTableComponents implements OnInit {
 
   public displayedColumns: string[] = [
     'name',
+    'nameSedes',
     'direction',
     'phone',
     'city',
+    'office',
+    'nameOffice',
+    'floor',
+    'capacity',
     'creationDate',
     'actualizationDate',
-    'office',
-    'capacity',
-    'createdAt',
-    'updatedAt',
     'status',
-    'actions'
+    'actions',
+
   ];
-
-  getDisplayColumns() {
-    console.log(this.urlUpdate);
-    switch(this.urlUpdate){
-      case 'venues':
-
-        return this.displayedColumns.filter(
-          (col)=>
-            col !== 'office' &&
-            col !== 'capacity' &&
-            col !== 'createdAt' &&
-            col !== 'updatedAt' &&
-            col !== 'status2'
-        );
-      case 'sites':
-        return this.displayedColumns.filter(
-          (col)=>
-            col !== 'direction' &&
-            col !== 'phone' &&
-            col !== 'city' &&
-            col !== 'creationDate' &&
-            col !== 'actualizationDate'
-            // col !== 'status'
-        );
-    }
-  }
 
   public table = [
     {
@@ -98,17 +74,30 @@ export class ConfigTableComponents implements OnInit {
     },
   ];
 
-  isOpen() {
-    this.open = true;
-  }
 
-  applyFilter(value: any, type: any) {
-    this.filterSities[type] = value;
-    this.dataSource = this.filter.transform(this.filterListSities, this.filterSities);
-    console.log(this.filterSities);
-  }
-  applyDirectFilter(filterValue: any) {
-    this.dataSource.filter = filterValue;
+
+  applyFilter(value: any, type: string) {
+     if (type == 'idVenues.name') {
+      const arraySource: any = []
+      this.filterListSities.forEach((valuecompare: any) => {
+        if (valuecompare.idVenues.name.toLowerCase().includes(value)) {
+          arraySource.push(valuecompare);
+        }
+      });
+      this.dataSource = arraySource;
+      }else if(type == 'idOffices.office') {
+        const arraySource: any = []
+        this.filterListSities.forEach((valuecompare: any) => {
+          if (valuecompare.idOffices.office.toLowerCase().includes(value)) {
+            arraySource.push(valuecompare);
+          }
+        });
+        this.dataSource = arraySource;
+  }else {
+      this.filterSities[type] = value;
+      this.dataSource = this.filter.transform(this.filterListSities, this.filterSities);
+      console.log(this.filterSities);
+    }
   }
 
   async getList(url: string) {
@@ -136,6 +125,38 @@ export class ConfigTableComponents implements OnInit {
         console.log('error', error);
       });
   }
+  getDisplayedColumns() {
+    switch (this.urlUpdate) {
+      case 'venues':
+        return this.displayedColumns.filter(
+          (el) =>
+          el !== 'nameSedes' &&
+          el !== 'office' &&
+          el !== 'floor' &&
+          el !== 'nameOffice'&&
+          el !== 'capacity'
+        );
+        case 'offices':
+          return this.displayedColumns.filter(
+            (el) =>
+            el !== 'name' &&
+            el !== 'direction' &&
+            el !== 'phone'&&
+            el !== 'nameOffice'&&
+            el !== 'city'
+          )
+          case 'sites':
+        return this.displayedColumns.filter(
+          (el)=>
+            el !== 'direction' &&
+            el !== 'phone' &&
+            el !== 'city' &&
+            el !== 'nameSedes'&&
+            el !== 'floor'&&
+            el !== 'office'
+            // col !== 'status'
+        );
+        }}
 
   openEdit(value: any) {
     this.dialog
