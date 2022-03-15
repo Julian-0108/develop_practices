@@ -26,13 +26,13 @@ export class ConfigTableComponents implements OnInit {
     this.informationTables = true;
   }
   otherIcon!: boolean;
+  open: boolean = false;
   help: string = 'help';
   idHistory!: string;
   subtitle: any = '';
-  url: any = '';
   urlUpdate: string = '';
   filterListSities: Array<any> = [];
-  filterSities:any = {};
+  filterSities : any = {};
   dataSource: MatTableDataSource<Tables | any> = new MatTableDataSource();
   btnAdd = false;
 
@@ -64,14 +64,14 @@ export class ConfigTableComponents implements OnInit {
       name: 'Oficinas',
       url: 'offices',
       sumary: 'Aquí puedes configurar las oficinas',
-      haveTypeField: true,
+      haveTypeField: false,
     },
     {
-   name: 'Sitios',
-  url: 'sites',
-  sumary: 'Aquí puedes configurar los sitios',
-  haveTypeField: true,
-},
+      name: 'Sitios',
+      url: 'sites',
+      sumary: 'Aquí puedes configurar los sitios',
+      haveTypeField: true,
+    },
   ];
 
 
@@ -85,22 +85,21 @@ export class ConfigTableComponents implements OnInit {
         }
       });
       this.dataSource = arraySource;
-    }else if(type == 'idOffices.office') {
-      const arraySource: any = []
-      this.filterListSities.forEach((valuecompare: any) => {
-        if (valuecompare.idOffices.office.toLowerCase().includes(value)) {
-          arraySource.push(valuecompare);
-        }
-      });
-      this.dataSource = arraySource;
-    }
-    else {
+      }else if(type == 'idOffices.office') {
+        const arraySource: any = []
+        this.filterListSities.forEach((valuecompare: any) => {
+          if (valuecompare.idOffices.office.toLowerCase().includes(value)) {
+            arraySource.push(valuecompare);
+          }
+        });
+        this.dataSource = arraySource;
+  }else {
       this.filterSities[type] = value;
       this.dataSource = this.filter.transform(this.filterListSities, this.filterSities);
       console.log(this.filterSities);
-
     }
   }
+
   async getList(url: string) {
     this.table.forEach((tb: any) => {
       if (tb.url == url) {
