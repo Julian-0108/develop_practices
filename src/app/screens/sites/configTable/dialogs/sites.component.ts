@@ -3,9 +3,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ConfigTableServices } from '../services/configTable.services';
 import { NotificationService } from '@app/shared/components/notification/services/notification.service';
-import { AnyRecord } from 'dns';
-import { filter } from 'rxjs/operators';
-import { url } from 'inspector';
 
 @Component({
   selector: 'sites-app',
@@ -56,9 +53,17 @@ export class SitesComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data.add == false) {
+      if(this.subtitle=='Oficinas'){
+        console.log("🚀 ~ file: sites.component.ts ~ line 61 ~ SitesComponent ~ ngOnInit ~ this.data.dataSite.idVenues.name", this.data.dataSite.idVenues.name)
+        this.formSities.get('nameSedes')?.setValue(this.data.dataSite.idVenues.name);
+        console.log(this.formSities.value);
+      }
+      console.log("🚀 ~ file: sites.component.ts ~ line 59 ~ SitesComponent ~ ngOnInit ~ data", this.data)
       this.formSities.patchValue(this.data.dataSite);
       this.sites = this.data.dataSite.status;
     }
+
+
   }
 
   updateSites() {
@@ -74,8 +79,8 @@ export class SitesComponent implements OnInit {
         this.dialog.close(true);
       })
       .catch();
-      // console.log(url)
-  }
+
+    }
 
   addRegister() {
     this.service
