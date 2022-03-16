@@ -1,9 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ConfigTableServices } from '../services/configTable.services';
 import { NotificationService } from '@app/shared/components/notification/services/notification.service';
 import { AnyRecord } from 'dns';
+import { filter } from 'rxjs/operators';
+import { url } from 'inspector';
 
 @Component({
   selector: 'sites-app',
@@ -21,12 +23,17 @@ export class SitesComponent implements OnInit {
   // formUp!: FormGroup;
   formSities = this.fg.group({
     name: ['', Validators.required],
+    nameSedes:['',Validators.required],
     address: ['', Validators.required],
     phoneNumber: [
       '',
       [Validators.required,Validators.min(1000000000), Validators.max(9999999999)],
 
     ],
+    office:['',Validators.required],
+    floor:['',Validators.required],
+
+    capacity:['',Validators.required],
     city: ['', Validators.required],
     status: [false, Validators.required],
   });
@@ -56,8 +63,8 @@ export class SitesComponent implements OnInit {
 
   updateSites() {
     this.id_Site = this.data.dataSite._id;
-    this.service
-      .updateDataSites(this.id_Site, this.formSities.value)
+      this.service
+      .updateDataSites(this.id_Site,this.data?.url, this.formSities.value)
       .then(() => {
         this.notificationService.openSimpleSnackBar({
           title: 'Sedes',
@@ -67,6 +74,7 @@ export class SitesComponent implements OnInit {
         this.dialog.close(true);
       })
       .catch();
+      // console.log(url)
   }
 
   addRegister() {
