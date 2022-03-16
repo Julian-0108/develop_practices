@@ -17,9 +17,9 @@ export class ConfigTableServices {
       .toPromise();
   }
 
-  async updateDataSites(_id: any, dataUp: any): Promise<any> {
+  async updateDataSites(_id: any,url:string, dataUp: any): Promise<any> {
     return await this.http
-      .put(`${environment.API_SITESAPP}/venues/${_id}`, dataUp)
+      .put(`${environment.API_SITESAPP}/${_id}/${url}`, dataUp)
        .toPromise();
   }
 
