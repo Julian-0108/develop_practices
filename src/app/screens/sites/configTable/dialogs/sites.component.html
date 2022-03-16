@@ -9,10 +9,10 @@
           <app-validator [form]="formSities" name="name"></app-validator>
         </mat-form-field>
       </div>
-      <div class="content"*ngIf="subtitle !== 'Sedes'">
+      <div class="content" *ngIf="subtitle !== 'Sedes'">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Sede</mat-label>
-          <input matInput type="text" step="1" formControlName="idVenues.name" />
+          <input class="disabled" matInput type="text" step="1" formControlName="nameSedes" readonly />
           <app-validator [form]="formSities" name="nameSedes"></app-validator>
         </mat-form-field>
       </div>
@@ -26,29 +26,29 @@
       <div class="content" *ngIf="subtitle !== 'Oficinas'">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Teléfono</mat-label>
-          <input matInput type="number" step="1" formControlName="phoneNumber" />
+          <input matInput type="text" step="1" formControlName="phoneNumber" />
           <app-validator [form]="formSities" name="phoneNumber"></app-validator>
         </mat-form-field>
       </div>
-      <div class="content"*ngIf="subtitle !== 'Sedes'">
+      <div class="content" *ngIf="subtitle !== 'Sedes'">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Oficina</mat-label>
           <input matInput type="text" step="1" formControlName="office" />
           <app-validator [form]="formSities" name="office"></app-validator>
         </mat-form-field>
       </div>
-      <div class="content" *ngIf="subtitle !== 'Sedes'">
+      <div class="content"*ngIf="subtitle !== 'Sedes'">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Piso</mat-label>
-          <input matInput type="number" step="1" formControlName="floor" />
+          <input matInput type="text" step="1" formControlName="floor" />
           <app-validator [form]="formSities" name="floor"></app-validator>
         </mat-form-field>
       </div>
-      <div class="content" *ngIf="subtitle !== 'Sedes'">
+      <div class="content"*ngIf="subtitle !== 'Sedes'">
         <p></p>
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Capacidad</mat-label>
-          <input matInput type="number" step="1" formControlName="capacity" />
+          <input matInput type="text" step="1" formControlName="capacity" />
           <app-validator [form]="formSities" name="capacity"></app-validator>
         </mat-form-field>
       </div>
