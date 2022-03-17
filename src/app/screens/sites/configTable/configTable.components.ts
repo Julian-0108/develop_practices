@@ -167,6 +167,7 @@ export class ConfigTableComponents implements OnInit {
           dataSite: value,
           subtitle: this.subtitle,
           add: false,
+          url: this.urlUpdate,
         },
       })
       .afterClosed()
