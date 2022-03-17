@@ -1,4 +1,4 @@
-<form [formGroup]="formSities" novalidate autocomplete="off">
+<form [formGroup]="formGroup2" novalidate autocomplete="off">
   <h1 class="dialog-title">{{ data?.title }}{{ subtitle }}</h1>
   <div class="formUp">
     <div class="item">
@@ -6,57 +6,63 @@
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Nombre</mat-label>
           <input matInput type="text" formControlName="name" />
-          <app-validator [form]="formSities" name="name"></app-validator>
+          <app-validator [form]="formGroup2" name="name"></app-validator>
         </mat-form-field>
       </div>
-      <div class="content" *ngIf="subtitle !== 'Sedes'">
+      <div class="content" *ngIf="subtitle !== 'Sedes' && subtitle !== 'Sitios'">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Sede</mat-label>
           <input class="disabled" matInput type="text" step="1" formControlName="nameSedes" readonly />
-          <app-validator [form]="formSities" name="nameSedes"></app-validator>
+          <app-validator [form]="formGroup2" name="nameSedes"></app-validator>
         </mat-form-field>
       </div>
-      <div class="content" *ngIf="subtitle !== 'Oficinas'">
+      <div class="content" *ngIf="subtitle !== 'Oficinas' && subtitle !== 'Sitios'">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Dirección</mat-label>
           <input matInput type="text" formControlName="address" />
-          <app-validator [form]="formSities" name="address"></app-validator>
+          <app-validator [form]="formGroup2" name="address"></app-validator>
         </mat-form-field>
       </div>
-      <div class="content" *ngIf="subtitle !== 'Oficinas'">
+      <div class="content" *ngIf="subtitle !== 'Oficinas' && subtitle !== 'Sitios'">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Teléfono</mat-label>
           <input matInput type="text" step="1" formControlName="phoneNumber" />
-          <app-validator [form]="formSities" name="phoneNumber"></app-validator>
+          <app-validator [form]="formGroup2" name="phoneNumber"></app-validator>
         </mat-form-field>
       </div>
-      <div class="content" *ngIf="subtitle !== 'Sedes'">
+      <div class="content" *ngIf="subtitle !== 'Sedes' && subtitle !== 'Sitios'">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Oficina</mat-label>
           <input matInput type="text" step="1" formControlName="office" />
-          <app-validator [form]="formSities" name="office"></app-validator>
+          <app-validator [form]="formGroup2" name="office"></app-validator>
         </mat-form-field>
       </div>
-      <div class="content"*ngIf="subtitle !== 'Sedes'">
+      <div class="content" *ngIf="subtitle !== 'Sedes' && subtitle !== 'Oficinas'">
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label class="label">Oficina</mat-label>
+          <input class="disabled" matInput type="text" step="1" formControlName="nameOffice" readonly />
+          <app-validator [form]="formGroup2" name="nameOffice"></app-validator>
+        </mat-form-field>
+      </div>
+      <div class="content"*ngIf="subtitle !== 'Sedes' && subtitle !== 'Sitios'">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Piso</mat-label>
-          <input matInput type="text" step="1" formControlName="floor" />
-          <app-validator [form]="formSities" name="floor"></app-validator>
+          <input matInput type="number" step="1" formControlName="floor" />
+          <app-validator [form]="formGroup2" name="floor"></app-validator>
         </mat-form-field>
       </div>
       <div class="content"*ngIf="subtitle !== 'Sedes'">
-        <p></p>
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Capacidad</mat-label>
-          <input matInput type="text" step="1" formControlName="capacity" />
-          <app-validator [form]="formSities" name="capacity"></app-validator>
+          <input matInput type="number" step="1" formControlName="capacity" />
+          <app-validator [form]="formGroup2" name="capacity"></app-validator>
         </mat-form-field>
       </div>
-      <div class="content" *ngIf="subtitle !== 'Oficinas'">
+      <div class="content" *ngIf="subtitle !== 'Oficinas' && subtitle !== 'Sitios'">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Ciudad</mat-label>
           <input matInput type="text" formControlName="city" />
-          <app-validator [form]="formSities" name="city"></app-validator>
+          <app-validator [form]="formGroup2" name="city"></app-validator>
         </mat-form-field>
       </div>
     </div>
@@ -75,8 +81,8 @@
   </div>
   <div class="buttonAction">
     <button mat-button class="button button--accept" (click)="onSubmit()"
-    [ngClass]="{'button--accept': this.formSities.valid, 'button--disabled': this.formSities.invalid}"
-    [disabled]="formSities.invalid">Guardar</button>
+    [ngClass]="{'button--accept': this.formGroup2.valid, 'button--disabled': this.formGroup2.invalid}"
+    [disabled]="formGroup2.invalid">Guardar</button>
     <button mat-button class="button button--cancel" type="button" [mat-dialog-close]="true">
       Cancelar
     </button>
