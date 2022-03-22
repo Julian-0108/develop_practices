@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ConfigTableServices } from '../services/configTable.services';
 import { NotificationService } from '@app/shared/components/notification/services/notification.service';
+import { url } from 'inspector';
 
 @Component({
   selector: 'sites-app',
@@ -22,7 +23,7 @@ export class SitesComponent implements OnInit {
     address: ['', Validators.required],
     phoneNumber: [
       '',
-      [Validators.required,Validators.min(1000000000), Validators.max(9999999999)],
+      [Validators.required, Validators.min(1000000000), Validators.max(9999999999)],
     ],
     city: ['', Validators.required],
     status: [false, Validators.required],
@@ -31,22 +32,21 @@ export class SitesComponent implements OnInit {
   formSites = this.fg.group({
     idOffices: [''],
     name: ['', Validators.required],
-    nameOffice:['',Validators.required],
-    capacity:['',Validators.required],
+    nameOffice: ['', Validators.required],
+    capacity: ['', Validators.required],
     status: [false, Validators.required],
   });
 
   formOffices = this.fg.group({
     idVenues: [''],
-    nameSedes:['',Validators.required],
-    office:['',Validators.required],
-    floor:['',Validators.required],
-    capacity:['',Validators.required],
+    nameVenues: [''],
+    office: ['', Validators.required],
+    floor: ['', Validators.required],
+    capacity: ['', Validators.required],
     status: [false, Validators.required],
-  })
-
-  formGroup2: any;
+  });
   dataRegister: any;
+  venues: any[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -64,119 +64,118 @@ export class SitesComponent implements OnInit {
     private notificationService: NotificationService
   ) {}
 
-
-
   ngOnInit(): void {
-    switch(this.subtitle){
+    this.activateForm();
+    this.formValue();
+  }
+
+  formValue() {
+    if (this.data.add == false) {
+      console.log(
+        '🚀 ~ file: sites.component.ts ~ line 74 ~ SitesComponent ~ ngOnInit ~ this.data.dataSite',
+        this.data.dataSite
+      );
+      switch (this.subtitle) {
+        case 'Oficinas':
+          this.formOffices.patchValue(this.data.dataSite);
+          this.formOffices.get('idVenues')?.setValue(this.data.dataSite.idVenues._id);
+          break;
+        case 'Sitios':
+          this.formSites.patchValue(this.data.dataSite);
+          this.formSites.get('idOffices')?.setValue(this.data.dataSite.offices._id);
+          break;
+        case 'Sedes':
+          this.formVenues.patchValue(this.data.dataSite);
+          break;
+      }
+      this.sites = this.data.dataSite.status;
+
+      this.formOffices.removeControl('listSites');
+      if (this.subtitle == 'Oficinas') {
+        this.formOffices.get('nameVenues')?.setValue(this.data.dataSite.idVenues.name);
+      } else if (this.subtitle == 'Sitios') {
+        this.formSites.get('nameOffice')?.setValue(this.data.dataSite.offices.office);
+      }
+    } else {
+      this.getVenues('venues');
+    }
+  }
+  activateForm() {
+    switch (this.subtitle) {
       case 'Oficinas':
-        this.formGroup2  = this.formOffices;
-        this.formGroup2.patchValue(this.data.dataSite);
-        this.formGroup2.get('idVenues').setValue(this.data.dataSite.idVenues._id)
-        this.sites = this.data.dataSite.status;
+        this.formSites.disable({ onlySelf: true });
+        this.formVenues.disable({ onlySelf: true });
         break;
       case 'Sitios':
-        // console.log(this.formGroup2.value)
-        this.formGroup2 = this.formSites;
-        this.formGroup2.patchValue(this.data.dataSite);
-        this.formGroup2.get('idOffices').setValue(this.data.dataSite.idOffices._id)
-        this.sites = this.data.dataSite.status;
-        break
+        this.formOffices.disable({ onlySelf: true });
+        this.formVenues.disable({ onlySelf: true });
+        break;
       case 'Sedes':
-        this.formGroup2 = this.formVenues;
-        this.formGroup2.patchValue(this.data.dataSite);
-        this.sites = this.data.dataSite.status;
-        break
-    }
-
-    if (this.data.add == false) {
-      this.formOffices.removeControl('listSites')
-      if(this.subtitle=='Oficinas'){
-        this.formOffices.get('nameSedes')?.setValue(this.data.dataSite.idVenues.name);
-      } else if (this.subtitle == 'Sitios'){
-          this.formSites.get('nameOffice')?.setValue(this.data.dataSite.idOffices.office);
-      }
+        this.formOffices.disable({ onlySelf: true });
+        this.formSites.disable({ onlySelf: true });
+        break;
     }
   }
+  getVenues(url: string) {
+    console.log('entro aqui');
+    this.service.getListSites(url).then((dataValue) => {
+      if (dataValue.length > 0) {
+        this.venues = dataValue;
+        console.log(
+          '🚀 ~ file: sites.component.ts ~ line 122 ~ SitesComponent ~ .then ~ venues',
+          this.venues
+        );
+      }
+    });
+  }
+  getList(value: any) {
+    this.formOffices.get('idVenues')?.setValue(value._id);
+  }
 
-  updateSites() {
-    this.formGroup2.removeControl('nameSedes');
-    this.formGroup2.removeControl('nameOffice');
+  updateSites(form: FormGroup) {
+    this.formOffices.removeControl('nameVenues');
+    this.formSites.removeControl('nameOffice');
+    console.log(
+      '🚀 ~ file: sites.component.ts ~ line 121 ~ SitesComponent ~ updateSites ~ form',
+      form.value
+    );
 
-    console.log(this.formGroup2.value)
     this.id_Site = this.data.dataSite._id;
-      this.service
-      .updateDataSites(this.data?.url, this.id_Site, this.formGroup2.value )
-      .then(() => {
-        switch(this.subtitle){
-          case 'Sedes':
-            this.notificationService.openSimpleSnackBar({
-              title: 'Sedes',
-              message: 'Sede Actualizado Correctamente',
-              type: 'success',
-            });
-            this.dialog.close(true);
-            break
-          case 'Oficinas':
-            this.notificationService.openSimpleSnackBar({
-              title: 'Oficinas',
-              message: 'Oficina Actualizada Correctamente',
-              type: 'success',
-            });
-            this.dialog.close(true);
-            break
-          case 'Sitios':
-            this.notificationService.openSimpleSnackBar({
-              title: 'Sitios',
-              message: 'Sitio Actualizado Correctamente',
-              type: 'success',
-            });
-            this.dialog.close(true);
-            break
-        }
-      })
-    }
+    this.service.updateDataSites(this.data?.url, this.id_Site, form.value).then(() => {
+      this.notificationService.openSimpleSnackBar({
+        title: `${this.subtitle}`,
+        message: `${this.subtitle.slice(0, -1)} Actualizado Correctamente`,
+        type: 'success',
+      });
+      this.dialog.close(true);
+    });
+  }
 
-  addRegister() {
-    this.service
-      .addDataSites(this.data?.url, this.formGroup2)
-
-      .then(() => {
-        switch(this.subtitle){
-          case 'Sedes':
-            this.notificationService.openSimpleSnackBar({
-              title: 'Sedes',
-              message: 'Sede Creada Correctamente',
-              type: 'success',
-            });
-            this.dialog.close(true);
-            break
-          case 'Oficinas':
-            this.notificationService.openSimpleSnackBar({
-              title: 'Oficinas',
-              message: 'Oficina Creada Correctamente',
-              type: 'success',
-            });
-            this.dialog.close(true);
-            break
-          case 'Sitios':
-            this.notificationService.openSimpleSnackBar({
-              title: 'Sitios',
-              message: 'Sitio Creado Correctamente',
-              type: 'success',
-            });
-            this.dialog.close(true);
-            break
-        }
-      })
+  addRegister(form: FormGroup) {
+    console.log(form.value);
+    this.service.addDataSites(this.data?.url, form.value).then(() => {
+      this.notificationService.openSimpleSnackBar({
+        title: `${this.subtitle}`,
+        message: `${this.subtitle.slice(0, -1)} Creado Correctamente`,
+        type: 'success',
+      });
+      this.dialog.close(true);
+    });
   }
   onSubmit() {
-    this.formVenues.controls['phoneNumber']?.patchValue(
-      this.formVenues.controls['phoneNumber']?.value.toString()
-    );
-    if (this.data?.add) {
-      this.addRegister();
-      return;
+    switch (this.subtitle) {
+      case 'Oficinas':
+        this.data.add ? this.addRegister(this.formOffices) : this.updateSites(this.formOffices);
+        break;
+      case 'Sitios':
+        this.data.add ? this.addRegister(this.formSites) : this.updateSites(this.formSites);
+        break;
+      case 'Sedes':
+        this.data.add ? this.addRegister(this.formVenues) : this.updateSites(this.formVenues);
+        this.formVenues.controls['phoneNumber']?.patchValue(
+          this.formVenues.controls['phoneNumber']?.value.toString()
+        );
+        break;
     }
-    this.updateSites();
   }
 }
