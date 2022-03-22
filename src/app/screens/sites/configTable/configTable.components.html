@@ -61,7 +61,7 @@
             <td mat-cell class="centerTable" *matCellDef="let element"> {{element.name}} </td>
           </ng-container>
 
-            <ng-container matColumnDef="nameSedes">
+            <ng-container matColumnDef="nameVenues">
             <th mat-header-cell *matHeaderCellDef>Sede
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
@@ -101,12 +101,12 @@
             <th mat-header-cell *matHeaderCellDef>Oficinas
               <div class="filter-inputs">
                 <mat-form-field floatLabel="always" appearance="none">
-                  <input matInput class="filter" (keyup)="applyFilter($event.target.value,'idOffices.office')" type="text">
+                  <input matInput class="filter" (keyup)="applyFilter($event.target.value,'offices.office')" type="text">
                   <mat-icon class="icon-search" matSuffix>search</mat-icon>
                 </mat-form-field>
               </div>
             </th>
-            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.idOffices.office}} </td>
+            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.offices.office}} </td>
           </ng-container>
 
           <ng-container matColumnDef="floor">
