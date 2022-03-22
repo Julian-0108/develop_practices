@@ -76,6 +76,9 @@ table {
   border-radius: 100%;
   padding: 3px;
 }
+mat-icon-button {
+  width: 100% !important;
+}
 .button-back {
   top: 1em;
 }
@@ -123,3 +126,7 @@ table {
 .buttonAdd{
   margin-right: 43px !important;
 }
+.main-subtitle2 {
+  font-size: 15px !important;
+}
+
