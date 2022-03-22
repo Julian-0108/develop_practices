@@ -1,4 +1,4 @@
-<!-- fomulario sedes -->
+<!-- formulario sedes -->
 <form [formGroup]="formVenues" novalidate autocomplete="off" *ngIf="subtitle=='Sedes'">
   <h1 class="dialog-title">{{ data?.title }}{{ subtitle }}</h1>
   <div class="formUp">
@@ -127,7 +127,7 @@
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label>Seleccionar oficina</mat-label>
           <mat-select
-          (selectionChange)="getListOffices($event.value)">
+          (selectionChange)="getList($event.value)">
             <mat-option *ngFor="let office of offices " [value]="office">
               {{office.office}}
               </mat-option>
@@ -168,7 +168,7 @@
     <button mat-button class="button button--accept" (click)="onSubmit()"
     [ngClass]="{'button--accept': this.formVenues.valid || this.formOffices.valid|| this.formSites.valid ,
     'button--disabled': this.formVenues.invalid || this.formOffices.invalid|| this.formSites.invalid }"
-    [disabled]="">Guardar</button>
+    [disabled]="this.formVenues.invalid || this.formOffices.invalid|| this.formSites.invalid">Guardar</button>
     <button mat-button class="button button--cancel" type="button" [mat-dialog-close]="true">
       Cancelar
     </button>

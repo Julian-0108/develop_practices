@@ -33,7 +33,7 @@ export class SitesComponent implements OnInit {
     idOffices: [''],
     name: ['', Validators.required],
     nameOffice: [''],
-    capacity: ['', Validators.required],
+    capacity: ['', [Validators.required, Validators.min(1), Validators.max(999)]],
     status: [false, Validators.required],
   });
 
@@ -41,13 +41,13 @@ export class SitesComponent implements OnInit {
     idVenues: [''],
     nameVenues: [''],
     office: ['', Validators.required],
-    floor: ['', Validators.required],
-    capacity: ['', Validators.required],
+    floor: ['', [Validators.required, Validators.min(1), Validators.max(999)]],
+    capacity: ['', [Validators.required, Validators.min(1), Validators.max(999)]],
     status: [false, Validators.required],
   });
   dataRegister: any;
   venues: any[] = [];
-  offices: any[] = []
+  offices: any[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -72,10 +72,6 @@ export class SitesComponent implements OnInit {
 
   formValue() {
     if (this.data.add == false) {
-      console.log(
-        '🚀 ~ file: sites.component.ts ~ line 74 ~ SitesComponent ~ ngOnInit ~ this.data.dataSite',
-        this.data.dataSite
-      );
       switch (this.subtitle) {
         case 'Oficinas':
           this.formOffices.patchValue(this.data.dataSite);
@@ -99,7 +95,7 @@ export class SitesComponent implements OnInit {
       }
     } else {
       this.getVenues('venues');
-      this.getOffices('offices')
+      this.getVenues('offices');
     }
   }
   activateForm() {
@@ -119,43 +115,21 @@ export class SitesComponent implements OnInit {
     }
   }
   getVenues(url: string) {
-    console.log('entro aqui');
     this.service.getListSites(url).then((dataValue) => {
       if (dataValue.length > 0) {
         this.venues = dataValue;
-        console.log(
-          '🚀 ~ file: sites.component.ts ~ line 122 ~ SitesComponent ~ .then ~ venues',
-          this.venues
-        );
+        this.offices = dataValue;
       }
     });
   }
   getList(value: any) {
     this.formOffices.get('idVenues')?.setValue(value._id);
-  }
-  getOffices(url: string) {
-    console.log('entro aqui offices');
-    this.service.getListSites(url).then((dataValue) => {
-      if (dataValue.length > 0) {
-        this.offices = dataValue;
-        console.log(
-          '🚀 ~ file: sites.component.ts ~ line 122 ~ SitesComponent ~ .then ~ offices',
-          this.offices
-        );
-      }
-    });
-  }
-  getListOffices(value: any) {
     this.formSites.get('idOffices')?.setValue(value._id);
   }
 
   updateSites(form: FormGroup) {
     this.formOffices.removeControl('nameVenues');
     this.formSites.removeControl('nameOffice');
-    console.log(
-      '🚀 ~ file: sites.component.ts ~ line 121 ~ SitesComponent ~ updateSites ~ form',
-      form.value
-    );
 
     this.id_Site = this.data.dataSite._id;
     this.service.updateDataSites(this.data?.url, this.id_Site, form.value).then(() => {
@@ -169,7 +143,6 @@ export class SitesComponent implements OnInit {
   }
 
   addRegister(form: FormGroup) {
-    console.log(form.value);
     this.service.addDataSites(this.data?.url, form.value).then(() => {
       this.notificationService.openSimpleSnackBar({
         title: `${this.subtitle}`,
@@ -183,9 +156,18 @@ export class SitesComponent implements OnInit {
     switch (this.subtitle) {
       case 'Oficinas':
         this.data.add ? this.addRegister(this.formOffices) : this.updateSites(this.formOffices);
+        this.formOffices.controls['capacity']?.patchValue(
+          this.formOffices.controls['capacity']?.value.toString()
+        );
+        this.formOffices.controls['floor']?.patchValue(
+          this.formOffices.controls['floor']?.value.toString()
+        );
         break;
       case 'Sitios':
         this.data.add ? this.addRegister(this.formSites) : this.updateSites(this.formSites);
+        this.formSites.controls['capacity']?.patchValue(
+          this.formSites.controls['capacity']?.value.toString()
+        );
         break;
       case 'Sedes':
         this.data.add ? this.addRegister(this.formVenues) : this.updateSites(this.formVenues);
