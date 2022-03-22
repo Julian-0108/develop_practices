@@ -32,7 +32,7 @@ export class SitesComponent implements OnInit {
   formSites = this.fg.group({
     idOffices: [''],
     name: ['', Validators.required],
-    nameOffice: ['', Validators.required],
+    nameOffice: [''],
     capacity: ['', Validators.required],
     status: [false, Validators.required],
   });
@@ -47,6 +47,7 @@ export class SitesComponent implements OnInit {
   });
   dataRegister: any;
   venues: any[] = [];
+  offices: any[] = []
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -98,6 +99,7 @@ export class SitesComponent implements OnInit {
       }
     } else {
       this.getVenues('venues');
+      this.getOffices('offices')
     }
   }
   activateForm() {
@@ -130,6 +132,21 @@ export class SitesComponent implements OnInit {
   }
   getList(value: any) {
     this.formOffices.get('idVenues')?.setValue(value._id);
+  }
+  getOffices(url: string) {
+    console.log('entro aqui offices');
+    this.service.getListSites(url).then((dataValue) => {
+      if (dataValue.length > 0) {
+        this.offices = dataValue;
+        console.log(
+          '🚀 ~ file: sites.component.ts ~ line 122 ~ SitesComponent ~ .then ~ offices',
+          this.offices
+        );
+      }
+    });
+  }
+  getListOffices(value: any) {
+    this.formSites.get('idOffices')?.setValue(value._id);
   }
 
   updateSites(form: FormGroup) {
