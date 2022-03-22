@@ -70,7 +70,7 @@
                 </mat-form-field>
               </div>
             </th>
-            <td mat-cell class="centerTable" *matCellDef="let element"> {{element?.idVenues.name}} </td>
+            <td mat-cell class="centerTable" *matCellDef="let element"> {{element?.idVenues?.name}} </td>
           </ng-container>
 
           <ng-container matColumnDef="direction">
@@ -106,7 +106,7 @@
                 </mat-form-field>
               </div>
             </th>
-            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.offices.office}} </td>
+            <td mat-cell class="centerTable" *matCellDef="let element"> {{element?.offices?.office}} </td>
           </ng-container>
 
           <ng-container matColumnDef="floor">
