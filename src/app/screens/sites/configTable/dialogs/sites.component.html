@@ -123,25 +123,18 @@
           <app-validator [form]="formSites" name="name"></app-validator>
         </mat-form-field>
       </div>
-      <div class="content" *ngIf="subtitle !== 'Sedes' && subtitle !== 'Sitios' && !data.add">
-        <mat-form-field floatLabel="always" appearance="none">
-          <mat-label class="label">Sede</mat-label>
-          <input class="disabled" matInput type="text" step="1" formControlName="nameVenues" readonly />
-          <app-validator [form]="formSites" name="nameVenues"></app-validator>
-        </mat-form-field>
-      </div>
-      <!-- <div class="content" *ngIf="data.add">
+      <div class="content" *ngIf="data.add">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label>Seleccionar oficina</mat-label>
           <mat-select
-          (selectionChange)="getList($event.value)">
-            <mat-option *ngFor="let venue of venues " [value]="venue">
-              {{venue.name}}
+          (selectionChange)="getListOffices($event.value)">
+            <mat-option *ngFor="let office of offices " [value]="office">
+              {{office.office}}
               </mat-option>
             </mat-select>
         </mat-form-field>
-      </div> -->
-      <div class="content" >
+      </div>
+      <div class="content" *ngIf="!data.add">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Oficina</mat-label>
           <input class="disabled" matInput type="text" step="1" formControlName="nameOffice" readonly />
