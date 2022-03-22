@@ -38,7 +38,7 @@ export class ConfigTableComponents implements OnInit {
 
   public displayedColumns: string[] = [
     'name',
-    'nameSedes',
+    'nameVenues',
     'direction',
     'phone',
     'city',
@@ -85,10 +85,10 @@ export class ConfigTableComponents implements OnInit {
         }
       });
       this.dataSource = arraySource;
-      }else if(type == 'idOffices.office') {
+      }else if(type == 'offices.office') {
         const arraySource: any = []
         this.filterListSities.forEach((valuecompare: any) => {
-          if (valuecompare.idOffices.office.toLowerCase().includes(value)) {
+          if (valuecompare.offices.office.toLowerCase().includes(value)) {
             arraySource.push(valuecompare);
           }
         });
@@ -130,7 +130,7 @@ export class ConfigTableComponents implements OnInit {
       case 'venues':
         return this.displayedColumns.filter(
           (el) =>
-          el !== 'nameSedes' &&
+          el !== 'nameVenues' &&
           el !== 'office' &&
           el !== 'floor' &&
           el !== 'nameOffice'&&
@@ -151,7 +151,7 @@ export class ConfigTableComponents implements OnInit {
             el !== 'direction' &&
             el !== 'phone' &&
             el !== 'city' &&
-            el !== 'nameSedes'&&
+            el !== 'nameVenues'&&
             el !== 'floor'&&
             el !== 'office'
             // col !== 'status'
