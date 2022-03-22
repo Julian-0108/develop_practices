@@ -70,7 +70,7 @@ export class SitesComponent implements OnInit {
     this.formValue();
   }
 
-  formValue() {
+  async formValue() {
     if (this.data.add == false) {
       switch (this.subtitle) {
         case 'Oficinas':
@@ -94,8 +94,8 @@ export class SitesComponent implements OnInit {
         this.formSites.get('nameOffice')?.setValue(this.data.dataSite.offices.office);
       }
     } else {
-      this.getVenues('venues');
-      this.getVenues('offices');
+      await this.getVenuesOffice('venues');
+      await this.getVenuesOffice('offices');
     }
   }
   activateForm() {
@@ -114,16 +114,22 @@ export class SitesComponent implements OnInit {
         break;
     }
   }
-  getVenues(url: string) {
+  getVenuesOffice(url: string) {
     this.service.getListSites(url).then((dataValue) => {
       if (dataValue.length > 0) {
-        this.venues = dataValue;
-        this.offices = dataValue;
+        if (url === 'offices') {
+          this.offices = dataValue;
+        } else {
+          this.venues = dataValue;
+        }
       }
     });
   }
-  getList(value: any) {
+
+  getListVenues(value: any) {
     this.formOffices.get('idVenues')?.setValue(value._id);
+  }
+  getListOffice(value: any) {
     this.formSites.get('idOffices')?.setValue(value._id);
   }
 
