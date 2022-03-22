@@ -96,7 +96,6 @@ export class ConfigTableComponents implements OnInit {
   }else {
       this.filterSities[type] = value;
       this.dataSource = this.filter.transform(this.filterListSities, this.filterSities);
-      console.log(this.filterSities);
     }
   }
 
@@ -122,7 +121,6 @@ export class ConfigTableComponents implements OnInit {
         this.dataSource = new MatTableDataSource();
         this.informationSites = true;
         this.informationTables = false;
-        console.log('error', error);
       });
   }
   getDisplayedColumns() {
