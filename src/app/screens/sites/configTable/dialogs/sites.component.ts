@@ -3,7 +3,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ConfigTableServices } from '../services/configTable.services';
 import { NotificationService } from '@app/shared/components/notification/services/notification.service';
-import { url } from 'inspector';
 
 @Component({
   selector: 'sites-app',
@@ -86,8 +85,6 @@ export class SitesComponent implements OnInit {
           break;
       }
       this.sites = this.data.dataSite.status;
-
-      this.formOffices.removeControl('listSites');
       if (this.subtitle == 'Oficinas') {
         this.formOffices.get('nameVenues')?.setValue(this.data.dataSite.idVenues.name);
       } else if (this.subtitle == 'Sitios') {
