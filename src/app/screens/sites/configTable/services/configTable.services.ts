@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { pluck } from 'rxjs/operators';
 import { environment } from '@environments/environment';
-import { Tables } from '../../../../shared/interfaces/profile-competences.interface';
-
 @Injectable({
   providedIn: 'root',
 })
