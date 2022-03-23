@@ -68,8 +68,8 @@ export class GenerateqrComponent implements OnInit {
       this.sites = [];
       this.qrEntry= '';
       this.qrExit= '';
-      sitesInfo.forEach((element: { idOffices: { office: string; }; _id: any; name: any; }) => {
-        if(element.idOffices.office === office){
+      sitesInfo.forEach((element: { offices: { office: string; }; _id: any; name: any; }) => {
+        if(element.offices.office === office){
           this.sites.push({id:element._id,name:element.name});
         }
       });
