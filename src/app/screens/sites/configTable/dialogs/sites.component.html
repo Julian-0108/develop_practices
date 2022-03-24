@@ -20,8 +20,8 @@
       <div class="content">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Teléfono</mat-label>
-          <input matInput type="text" step="1" formControlName="phoneNumber" />
-          <app-validator [form]="formVenues" name="phoneNumber"></app-validator>
+          <input matInput type="number" step="1" formControlName="phoneNumber" />
+          <app-validator [form]="formVenues" name="phoneNumber" otherIcon="true"></app-validator>
         </mat-form-field>
       </div>
       <div class="content">
@@ -58,7 +58,7 @@
       <div class="content" *ngIf="subtitle !== 'Sedes' && subtitle !== 'Sitios' && !data.add">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Sede</mat-label>
-          <input class="disabled" matInput type="text" step="1" formControlName="nameVenues" readonly />
+          <input class="disabled" matInput type="text" step="1" formControlName="nameVenues" readonly/>
           <app-validator [form]="formOffices" name="nameVenues"></app-validator>
         </mat-form-field>
       </div>
@@ -84,14 +84,14 @@
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Piso</mat-label>
           <input matInput type="number" step="1" formControlName="floor" />
-          <app-validator [form]="formOffices" name="floor"></app-validator>
+          <app-validator [form]="formOffices" name="floor" otherIcon="true"></app-validator>
         </mat-form-field>
       </div>
       <div class="content"*ngIf="subtitle !== 'Sedes'">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Capacidad</mat-label>
           <input matInput type="number" step="1" formControlName="capacity" />
-          <app-validator [form]="formOffices" name="capacity"></app-validator>
+          <app-validator [form]="formOffices" name="capacity" otherIcon="true"></app-validator>
         </mat-form-field>
       </div>
     </div>
@@ -112,7 +112,7 @@
 
 
 <!-- formulario sitios -->
-<form [formGroup]="formSites " novalidate autocomplete="off"*ngIf="subtitle=='Sitios'">
+<form [formGroup]="formSites" novalidate autocomplete="off"*ngIf="subtitle=='Sitios'">
   <h1 class="dialog-title">{{ data?.title }}{{ subtitle }}</h1>
   <div class="formUp">
     <div class="item">
@@ -145,7 +145,7 @@
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Capacidad</mat-label>
           <input matInput type="number" step="1" formControlName="capacity" />
-          <app-validator [form]="formSites" name="capacity"></app-validator>
+          <app-validator [form]="formSites" name="capacity" otherIcon="true"></app-validator>
         </mat-form-field>
       </div>
 
@@ -166,9 +166,9 @@
 </form>
   <div class="buttonAction">
     <button mat-button class="button button--accept" (click)="onSubmit()"
-    [ngClass]="{'button--accept': this.formVenues.valid || this.formOffices.valid|| this.formSites.valid ,
-    'button--disabled': this.formVenues.invalid || this.formOffices.invalid|| this.formSites.invalid }"
-    [disabled]="this.formVenues.invalid || this.formOffices.invalid|| this.formSites.invalid">Guardar</button>
+    [ngClass]="{'button--accept': this.formVenues?.valid || this.formOffices?.valid|| this.formSites?.valid ,
+    'button--disabled': this.formVenues?.invalid || this.formOffices?.invalid|| this.formSites?.invalid }"
+    [disabled]="this.formVenues?.invalid || this.formOffices?.invalid|| this.formSites?.invalid">Guardar</button>
     <button mat-button class="button button--cancel" type="button" [mat-dialog-close]="true">
       Cancelar
     </button>
