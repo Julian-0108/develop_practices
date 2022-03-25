@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { pluck } from 'rxjs/operators';
 import { environment } from '@environments/environment';
-import { Tables } from '../../../../shared/interfaces/profile-competences.interface';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -17,9 +15,9 @@ export class ConfigTableServices {
       .toPromise();
   }
 
-  async updateDataSites(_id: any, dataUp: any): Promise<any> {
+  async updateDataSites(url: string, _id:any, dataUp: any): Promise<any> {
     return await this.http
-      .put(`${environment.API_SITESAPP}/venues/${_id}`, dataUp)
+      .put(`${environment.API_SITESAPP}/${url}/${_id}`, dataUp)
        .toPromise();
   }
 

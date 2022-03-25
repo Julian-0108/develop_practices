@@ -1,33 +1,34 @@
-<form [formGroup]="formSities" novalidate autocomplete="off">
-  <h1 class="dialog-title">{{ data?.title }} {{ subtitle }}</h1>
+<!-- formulario sedes -->
+<form [formGroup]="formVenues" novalidate autocomplete="off" *ngIf="subtitle=='Sedes'">
+  <h1 class="dialog-title">{{ data?.title }}{{ subtitle }}</h1>
   <div class="formUp">
     <div class="item">
       <div class="content">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Nombre</mat-label>
           <input matInput type="text" formControlName="name" />
-          <app-validator [form]="formSities" name="name"></app-validator>
+          <app-validator [form]="formVenues" name="name"></app-validator>
         </mat-form-field>
       </div>
-      <div class="content">
+      <div class="content" >
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Dirección</mat-label>
           <input matInput type="text" formControlName="address" />
-          <app-validator [form]="formSities" name="address"></app-validator>
+          <app-validator [form]="formVenues" name="address"></app-validator>
         </mat-form-field>
       </div>
       <div class="content">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Teléfono</mat-label>
           <input matInput type="number" step="1" formControlName="phoneNumber" />
-          <app-validator [form]="formSities" name="phoneNumber"></app-validator>
+          <app-validator [form]="formVenues" name="phoneNumber" otherIcon="true"></app-validator>
         </mat-form-field>
       </div>
       <div class="content">
         <mat-form-field floatLabel="always" appearance="none">
           <mat-label class="label">Ciudad</mat-label>
           <input matInput type="text" formControlName="city" />
-          <app-validator [form]="formSities" name="city"></app-validator>
+          <app-validator [form]="formVenues" name="city"></app-validator>
         </mat-form-field>
       </div>
     </div>
@@ -44,12 +45,134 @@
       </mat-button-toggle-group>
     </div>
   </div>
+</form>
+
+
+
+<!-- formulario oficinas -->
+<form [formGroup]="formOffices" novalidate autocomplete="off"*ngIf="subtitle=='Oficinas'">
+  <h1 class="dialog-title">{{ data?.title }}{{ subtitle }}</h1>
+  <div class="formUp">
+    <div class="item">
+
+      <div class="content" *ngIf="subtitle !== 'Sedes' && subtitle !== 'Sitios' && !data.add">
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label class="label">Sede</mat-label>
+          <input class="disabled" matInput type="text" step="1" formControlName="nameVenues" readonly/>
+          <app-validator [form]="formOffices" name="nameVenues"></app-validator>
+        </mat-form-field>
+      </div>
+      <div class="content" *ngIf="data.add ">
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label>Seleccionar sede</mat-label>
+          <mat-select
+          (selectionChange)="getListVenues($event.value)">
+            <mat-option *ngFor="let venue of venues " [value]="venue">
+              {{venue.name}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="content" *ngIf="subtitle !== 'Sedes' && subtitle !== 'Sitios'">
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label class="label">Oficina</mat-label>
+          <input matInput type="text" step="1" formControlName="office" />
+          <app-validator [form]="formOffices" name="office"></app-validator>
+        </mat-form-field>
+      </div>
+      <div class="content"*ngIf="subtitle !== 'Sedes' && subtitle !== 'Sitios'">
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label class="label">Piso</mat-label>
+          <input matInput type="number" step="1" formControlName="floor" />
+          <app-validator [form]="formOffices" name="floor" otherIcon="true"></app-validator>
+        </mat-form-field>
+      </div>
+      <div class="content"*ngIf="subtitle !== 'Sedes'">
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label class="label">Capacidad</mat-label>
+          <input matInput type="number" step="1" formControlName="capacity" />
+          <app-validator [form]="formOffices" name="capacity" otherIcon="true"></app-validator>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="contentStatus">
+      <mat-label class="label">Estado</mat-label>
+      <mat-button-toggle-group
+        #statusToggleButton
+        mat
+        Tooltip="Indica si el registro esta activo o inactivo"
+        formControlName="status"
+      >
+        <mat-button-toggle [value]="true" checked="{{ sites }}">Activo</mat-button-toggle>
+        <mat-button-toggle [value]="false" checked="{{ !sites }}">Inactivo</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+</form>
+
+
+<!-- formulario sitios -->
+<form [formGroup]="formSites" novalidate autocomplete="off"*ngIf="subtitle=='Sitios'">
+  <h1 class="dialog-title">{{ data?.title }}{{ subtitle }}</h1>
+  <div class="formUp">
+    <div class="item">
+      <div class="content" *ngIf="data.add">
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label>Seleccionar oficina</mat-label>
+          <mat-select
+          (selectionChange)="getListOffice($event.value)">
+            <mat-option *ngFor="let office of offices " [value]="office">
+              {{office.office}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="content">
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label class="label">Nombre</mat-label>
+          <input matInput type="text" formControlName="name" />
+          <app-validator [form]="formSites" name="name"></app-validator>
+        </mat-form-field>
+      </div>
+      <div class="content" *ngIf="!data.add">
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label class="label">Oficina</mat-label>
+          <input class="disabled" matInput type="text" step="1" formControlName="nameOffice" readonly />
+          <app-validator [form]="formSites" name="nameOffice"></app-validator>
+        </mat-form-field>
+      </div>
+      <div class="content">
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label class="label">Capacidad</mat-label>
+          <input matInput type="number" step="1" formControlName="capacity" />
+          <app-validator [form]="formSites" name="capacity" otherIcon="true"></app-validator>
+        </mat-form-field>
+      </div>
+
+    </div>
+    <div class="contentStatus">
+      <mat-label class="label">Estado</mat-label>
+      <mat-button-toggle-group
+        #statusToggleButton
+        mat
+        Tooltip="Indica si el registro esta activo o inactivo"
+        formControlName="status"
+      >
+        <mat-button-toggle [value]="true" checked="{{ sites }}">Activo</mat-button-toggle>
+        <mat-button-toggle [value]="false" checked="{{ !sites }}">Inactivo</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+</form>
   <div class="buttonAction">
-    <button mat-button class="button button--accept" (click)="onSubmit()" 
-    [ngClass]="{'button--accept': this.formSities.valid, 'button--disabled': this.formSities.invalid}"  
-    [disabled]="formSities.invalid">Guardar</button>
+    <button mat-button class="button button--accept" (click)="onSubmit()"
+    [ngClass]="{'button--accept': this.formVenues?.valid || this.formOffices?.valid|| this.formSites?.valid ,
+    'button--disabled': this.formVenues?.invalid || this.formOffices?.invalid|| this.formSites?.invalid }"
+    [disabled]="this.formVenues?.invalid || this.formOffices?.invalid|| this.formSites?.invalid">Guardar</button>
     <button mat-button class="button button--cancel" type="button" [mat-dialog-close]="true">
       Cancelar
     </button>
   </div>
-</form>
+
+
+
