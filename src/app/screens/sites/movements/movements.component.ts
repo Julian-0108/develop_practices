@@ -4,9 +4,13 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table'
 import { MovementsModels } from './models/movements.models';
 import { MovementsService } from './services/movements.service';
+import { ConfigTableServices } from '../configTable/services/configTable.services';
 import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
-import { Location} from '@angular/common';
+import { FormGroup, FormControl } from '@angular/forms';
+import moment from 'moment';
+import { Type } from '../../profiles/admin-master-info/master-info/interfaces.interface';
+import { SearchFilterPipe } from '@app/shared/pipes/Search-Filter.pipe';
 
 @Component({
   selector: 'app-movements',
@@ -15,6 +19,15 @@ import { Location} from '@angular/common';
 })
 
 export class MovementsComponent implements OnInit {
+
+  title = 'Movimientos';
+  subtitle = 'Reporte de movimientos';
+
+  tipos = ['Entrada','Salida'];
+  filterKeys:any={};
+  infoData:any=[];
+  venues:any[]=[];
+
 
   isLoadingResults = true;
   displayedColumns: string[] = [
@@ -26,9 +39,19 @@ export class MovementsComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator
   @ViewChild(MatSort, { static: true, read: MatSort }) sort!: MatSort
 
+  maxDate:Date=new Date();
+  minDate!:Date;
+
+  formFilterHistory = new FormGroup({
+    startDate: new FormControl(),
+    endDate: new FormControl(),
+  });
+  // dataFilter: any[] = [];
+
   constructor(
     private _movementsService: MovementsService,
-    private loc: Location
+    private searchFilter: SearchFilterPipe,
+    private configTable: ConfigTableServices
   ) { }
 
   ngOnInit(): void {
@@ -37,39 +60,88 @@ export class MovementsComponent implements OnInit {
     .pipe(
       map((res: any) => {
         return res.map((item: any) => {
-          let filtered = {
-            'nombre': item.user_info[0].nombre,
-            'tipo': item.idTipo,
-            'micrositio': item.objOficina.nombre,
-            'sede': item.info_sede[0].nombre,
-            'fecha': new Date(item.fecha),
+          const filtered = {
+            nombre: item.user_info[0].nombre,
+            tipo: item.idTipo,
+            micrositio: item.objOficina.nombre,
+            sede: item.info_sede[0].nombre,
+            fecha: new Date(item.fecha),
           };
           return filtered;
         })
       })
     ).subscribe((data: Array<any>) => {
       this.dataSource = new MatTableDataSource(data.reverse());
+      this.infoData = data.reverse();
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.isLoadingResults = false;
       this.dataSource.filterPredicate = (data: any, filter: string): boolean => {
-        return data.nombre.trim().toLowerCase().indexOf(filter) != -1 || data.tipo.trim().toLowerCase().indexOf(filter) != -1 || data.micrositio.trim().toLowerCase().indexOf(filter) != -1 || data.sede.trim().toLowerCase().indexOf(filter) != -1 || this.datePipe.transform(data.fecha, 'dd/MM/yyyy HH:mm', 'UTC')?.indexOf(filter) != -1;
+        return data.nombre.trim().toLowerCase().indexOf(filter) !== -1 || data.tipo.trim().toLowerCase().indexOf(filter) !== -1
+        || data.micrositio.trim().toLowerCase().indexOf(filter) !== -1 || data.sede.trim().toLowerCase().indexOf(filter) !== -1
+        || this.datePipe.transform(data.fecha, 'dd/MM/yyyy HH:mm', 'UTC')?.indexOf(filter) !== -1;
       }
     });
 
+    this.getVenues();
   }
 
-  applyFilter(event: Event) {
-    const filterValue: String = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  async getVenues(){
+    await this.configTable.getListSites('venues')
+    .then(dataValue => {
+      if(dataValue.length > 0){
+        this.venues = dataValue;
+      }
+    })
+  }
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+  filterData(value:any,type:string){
+    this.filterKeys[type] = value;
+    this.dataSource = this.searchFilter.transform(this.infoData,this.filterKeys);
+  }
+
+
+  async filterDateStart(event:any){
+    this.minDate=new Date(event.value);
+    this.dataSource=new MatTableDataSource(await this.onSelectStartDate(event));
+
+  }
+
+  async filterDateEnd(event:any){
+    this.dataSource=new MatTableDataSource(await this.onSelectEndDate(event));
+  }
+
+  onSelectStartDate(event: any) {
+    const startDate = moment(event.value).format('YYYY-MM-DD');
+    const endDate =
+      this.formFilterHistory.value.endDate === null
+        ? moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+        : moment(this.formFilterHistory.value.endDate).format('YYYY-MM-DD HH:mm:ss');
+    return this.infoData.filter(
+      (item: any) =>
+        moment(item.fecha).isSameOrAfter(startDate) &&
+        moment(item.fecha).isSameOrBefore(endDate)
+    );
+  }
+
+  onSelectEndDate(event: any) {
+    const endDate = moment(event.value).add('hour',23).add('minutes',59).add('seconds',59).format('YYYY-MM-DD HH:mm:ss');
+    const startDate = moment(this.formFilterHistory.value.startDate).format('YYYY-MM-DD HH:mm:ss');
+    return this.infoData.filter(
+      (item: any) =>
+        moment(item.fecha).isSameOrAfter(startDate) &&
+        moment(item.fecha).isSameOrBefore(endDate)
+    );
+  }
+
+  nameFile():string{
+    const date = new Date();
+    const format = {
+      dd: date.getDate(),
+      mm: date.getMonth() + 1,
+      yyyy: date.getFullYear()
     }
-  }
-
-  redirect(){
-    this.loc.back();
+    return (`Movimientos ${format.dd}/${format.mm}/${format.yyyy}`)
   }
 
 }
