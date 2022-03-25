@@ -670,3 +670,9 @@ mat-dialog-actions {
     display: flex;
     align-items: center;
 }
+
+.actions_filter_input {
+    visibility: hidden;
+    width: 10em;
+    height: 51px;
+}
