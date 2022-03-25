@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {ConfigTableServices} from '../configTable/services/configTable.services';
 import {FormBuilder,Validators} from '@angular/forms';
 import { formatDate } from '@angular/common';
+import { SitesService } from './services/sites/sites.service';
+import { OfficeService } from './services/office/office.service';
+import { VenuesService } from './services/venues/venues.service';
 
 @Component({
   selector: 'app-generateqr',
@@ -24,7 +26,9 @@ export class GenerateqrComponent implements OnInit {
 
 
   constructor(
-    private configService:ConfigTableServices,
+    private serviceSites:SitesService,
+    private serviceOffices:OfficeService,
+    private serviceVenues:VenuesService,
     private fb:FormBuilder
   ) {}
 
@@ -40,7 +44,7 @@ export class GenerateqrComponent implements OnInit {
 
 
   getVenues() {
-    this.configService.getListSites('venues').then((venuesInfo:any) => {
+    this.serviceVenues.getListVenues().then((venuesInfo:any) => {
       venuesInfo.forEach((element: { name: any; }) => {
         this.venues.push(element.name);
       });
@@ -48,7 +52,7 @@ export class GenerateqrComponent implements OnInit {
   }
 
   getOffices(venue:string){
-    this.configService.getListSites('Offices').then((officesInfo:any) => {
+    this.serviceOffices.getListOffices().then((officesInfo:any) => {
       this.offices = [];
       this.sites = [];
       this.qrEntry= '';
@@ -64,7 +68,7 @@ export class GenerateqrComponent implements OnInit {
   }
 
   getSites(office:string){
-    this.configService.getListSites('sites').then((sitesInfo:any) => {
+    this.serviceSites.getListSites().then((sitesInfo:any) => {
       this.sites = [];
       this.qrEntry= '';
       this.qrExit= '';
