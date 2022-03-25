@@ -14,6 +14,12 @@ export class ConfigTableServices {
       .pipe(pluck('payload'))
       .toPromise();
   }
+  async getList(url: string): Promise<any> {
+    return await this.http
+      .get(`${environment.API_SITESAPP}/${url}?status=true`)
+      .pipe(pluck('payload'))
+      .toPromise();
+  }
 
   async updateDataSites(url: string, _id:any, dataUp: any): Promise<any> {
     return await this.http
