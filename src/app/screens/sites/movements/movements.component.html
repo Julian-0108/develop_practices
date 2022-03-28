@@ -105,6 +105,10 @@
     </div>
 
     <div align="end" class="botton_export">
+        <!-- <button mat-fab color="warn" mat-button (click)="dat()">
+            <mat-icon>download</mat-icon>
+        </button> -->
+
         <button mat-fab color="warn" mat-button (click)="exporter.exportTable('xlsx',{fileName: nameFile()})">
             <mat-icon>download</mat-icon>
         </button>
