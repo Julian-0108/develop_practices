@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, QueryList } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ConfigTableServices } from '../services/configTable.services';
@@ -112,7 +112,7 @@ export class SitesComponent implements OnInit {
     }
   }
   getVenuesOffice(url: string) {
-    this.service.getListSites(url).then((dataValue) => {
+    this.service.getList(url).then((dataValue) => {
       if (dataValue.length > 0) {
         if (url === 'offices') {
           this.offices = dataValue;
@@ -173,10 +173,10 @@ export class SitesComponent implements OnInit {
         );
         break;
       case 'Sedes':
-        this.data.add ? this.addRegister(this.formVenues) : this.updateSites(this.formVenues);
-        this.formVenues.controls['phoneNumber']?.patchValue(
-          this.formVenues.controls['phoneNumber']?.value.toString()
+        this.formVenues.get('phoneNumber')?.patchValue(
+          this.formVenues.get('phoneNumber')?.value.toString()
         );
+        this.data.add ? this.addRegister(this.formVenues) : this.updateSites(this.formVenues);
         break;
     }
   }
