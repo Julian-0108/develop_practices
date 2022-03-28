@@ -57,18 +57,18 @@
                         <div class="qr-info" *ngIf="qrEntry !== ''">
                             <img src="assets/images/Logo-seti.png " alt="logo seti " />
                             <p>{{ general.get('site')?.value }} (Entrada)</p>
+                            <qrcode [scale]="1 " [margin]="1 " [qrdata]="qrEntry" [width]="256 " [errorCorrectionLevel]=" 'M' "></qrcode>
                         </div>
 
-                        <qrcode [scale]="1 " [margin]="1 " [qrdata]="qrEntry" [width]="256 " [errorCorrectionLevel]=" 'M' "></qrcode>
                     </div>
 
                     <div fxFlex="50">
                         <div class="qr-info" *ngIf="qrExit !== ''">
                             <img src="assets/images/Logo-seti.png " alt="logo seti " />
                             <p>{{ general.get('site')?.value }} (Salida)</p>
+                            <qrcode [scale]="1 " [margin]="1 " [qrdata]="qrExit" [width]="256 " [errorCorrectionLevel]=" 'M' "></qrcode>
                         </div>
 
-                        <qrcode [scale]="1 " [margin]="1 " [qrdata]="qrExit" [width]="256 " [errorCorrectionLevel]=" 'M' "></qrcode>
                     </div>
                 </div>
 
