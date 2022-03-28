@@ -152,7 +152,6 @@ export class ConfigTableComponents implements OnInit {
             el !== 'nameVenues'&&
             el !== 'floor'&&
             el !== 'office'
-            // col !== 'status'
         );
         }}
 
