@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { map } from "rxjs/operators";
+import { map, pluck } from 'rxjs/operators';
 import { API_URL } from 'src/environments/environment';
 import { environment } from '@environments/environment';
 
@@ -12,9 +12,11 @@ import { environment } from '@environments/environment';
 export class OfficeService {
   constructor(private http: HttpClient) { }
 
-  async getListOffices(){
+  async getListOffices():Promise<any>{
     return await this.http
     .get(`${environment.API_SITESAPP}/offices?status=true`)
+    .pipe(pluck('payload'))
+    .toPromise();
   }
 
 }
