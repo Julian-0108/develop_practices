@@ -95,16 +95,23 @@ export class MovementsComponent implements OnInit {
     })
   }
 
-  filterData(value:any,type:string){
-    this.filterKeys[type] = value;
-    this.dataSource = this.searchFilter.transform(this.infoData,this.filterKeys);
+  filterData(value?:any,type?:string){
+    if(value !== undefined && type !== undefined){
+      this.filterKeys[type] = value;
+    }
+
+    if(this.minDate === undefined){
+      this.dataSource = this.searchFilter.transform(this.infoData,this.filterKeys);
+    }else{
+      this.dataSource = this.searchFilter.transform(this.dataSource.data,this.filterKeys);
+    }
   }
 
 
   async filterDateStart(event:any){
     this.minDate=new Date(event.value);
     this.dataSource=new MatTableDataSource(await this.onSelectStartDate(event));
-
+    this.filterData();
   }
 
   async filterDateEnd(event:any){
@@ -117,21 +124,37 @@ export class MovementsComponent implements OnInit {
       this.formFilterHistory.value.endDate === null
         ? moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
         : moment(this.formFilterHistory.value.endDate).format('YYYY-MM-DD HH:mm:ss');
-    return this.infoData.filter(
-      (item: any) =>
-        moment(item.fecha).isSameOrAfter(startDate) &&
-        moment(item.fecha).isSameOrBefore(endDate)
-    );
+    // if(this.filterKeys !== {}){
+    //   return this.dataSource.data.filter(
+    //     (item: any) =>
+    //       moment(item.fecha).isSameOrAfter(startDate) &&
+    //       moment(item.fecha).isSameOrBefore(endDate)
+    //   );
+    // }else{
+      return this.infoData.filter(
+        (item: any) =>
+          moment(item.fecha).isSameOrAfter(startDate) &&
+          moment(item.fecha).isSameOrBefore(endDate)
+      );
+    // }
   }
 
   onSelectEndDate(event: any) {
     const endDate = moment(event.value).add('hour',23).add('minutes',59).add('seconds',59).format('YYYY-MM-DD HH:mm:ss');
     const startDate = moment(this.formFilterHistory.value.startDate).format('YYYY-MM-DD HH:mm:ss');
-    return this.infoData.filter(
-      (item: any) =>
-        moment(item.fecha).isSameOrAfter(startDate) &&
-        moment(item.fecha).isSameOrBefore(endDate)
-    );
+    if(this.filterKeys !== {}){
+      return this.dataSource.data.filter(
+        (item: any) =>
+          moment(item.fecha).isSameOrAfter(startDate) &&
+          moment(item.fecha).isSameOrBefore(endDate)
+      );
+    }else{
+      return this.infoData.filter(
+        (item: any) =>
+          moment(item.fecha).isSameOrAfter(startDate) &&
+          moment(item.fecha).isSameOrBefore(endDate)
+      );
+    }
   }
 
   nameFile():string{
@@ -142,6 +165,11 @@ export class MovementsComponent implements OnInit {
       yyyy: date.getFullYear()
     }
     return (`Movimientos ${format.dd}/${format.mm}/${format.yyyy}`)
+  }
+
+  dat(){
+    console.log('minDate',this.minDate);
+    console.log('maxDate',this.maxDate);
   }
 
 }
