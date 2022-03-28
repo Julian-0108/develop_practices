@@ -12,7 +12,7 @@ export class SitesService {
 
   async getListSites(): Promise<any>{
     return await this.http
-    .get(`${environment.API_SITESAPP}/venues?status=true`)
+    .get(`${environment.API_SITESAPP}/sites?status=true`)
     .pipe(pluck('payload'))
     .toPromise();
   }
