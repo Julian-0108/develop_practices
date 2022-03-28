@@ -4,6 +4,7 @@ import { formatDate } from '@angular/common';
 import { SitesService } from './services/sites/sites.service';
 import { OfficeService } from './services/office/office.service';
 import { VenuesService } from './services/venues/venues.service';
+import { NotificationService } from '@app/shared/components/notification/services/notification.service';
 
 @Component({
   selector: 'app-generateqr',
@@ -29,6 +30,7 @@ export class GenerateqrComponent implements OnInit {
     private serviceSites:SitesService,
     private serviceOffices:OfficeService,
     private serviceVenues:VenuesService,
+    private notificationService: NotificationService,
     private fb:FormBuilder
   ) {}
 
@@ -48,15 +50,20 @@ export class GenerateqrComponent implements OnInit {
       venuesInfo.forEach((element: { name: any; }) => {
         this.venues.push(element.name);
       });
+      if(this.venues.length === 0){
+        this.notificationService.openSimpleSnackBar(
+          {title: 'Sin registros', message: 'No se encontraron sedes', type: 'info'}
+        );
+      }
     }).catch((error:any) => console.log(error))
   }
 
   getOffices(venue:string){
+    this.qrEntry = '';
+    this.qrExit = '';
     this.serviceOffices.getListOffices().then((officesInfo:any) => {
       this.offices = [];
       this.sites = [];
-      this.qrEntry= '';
-      this.qrExit= '';
       this.general.get('office')?.setValue('');
       this.general.get('site')?.setValue('');
       officesInfo.forEach((element: { idVenues: { name: string; }; office: any; }) => {
@@ -64,20 +71,31 @@ export class GenerateqrComponent implements OnInit {
           this.offices.push(element.office);
         }
       });
+      if(this.offices.length === 0){
+        this.notificationService.openSimpleSnackBar(
+          {title: 'Sin registros', message: `No se encontraron oficinas segun la sede ${venue}`, type: 'info'}
+        );
+      }
     }).catch((error:any) => console.log(error))
+
   }
 
   getSites(office:string){
+    this.qrEntry= '';
+    this.qrExit= '';
     this.serviceSites.getListSites().then((sitesInfo:any) => {
       this.sites = [];
-      this.qrEntry= '';
-      this.qrExit= '';
       sitesInfo.forEach((element: { offices: { office: string; }; _id: any; name: any; }) => {
         if(element.offices.office === office){
           this.sites.push({id:element._id,name:element.name});
         }
       });
-    });
+      if(this.sites.length === 0){
+        this.notificationService.openSimpleSnackBar(
+          {title: 'Sin registros', message: `No se encontraron sitios segun la oficina ${office}`, type: 'info'}
+        );
+      }
+    }).catch((error:any) => console.log(error));
   }
 
   fieldsValid(field:string){
