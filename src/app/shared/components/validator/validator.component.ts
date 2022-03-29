@@ -16,7 +16,7 @@ export class ValidatorComponent implements OnInit {
 
   getErrors() {
     const errors: any = [];
-    const formErrors: any = this.form.get(this.name)!.errors;
+    const formErrors: any = this.form.get(this.name)?.errors;
     for (const error of Object.entries<any>(formErrors)) {
       let staticMsg = null;
       staticMsg = this.getMessage(error);
