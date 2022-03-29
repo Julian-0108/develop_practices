@@ -12,7 +12,7 @@
             <div class="item" fxFlex="25">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label>Fecha Inicial</mat-label>
-                    <input placeholder="dd/mm/yyyy" (dateInput)="filterDateStart($event)" matInput [max]="maxDate" [matDatepicker]="pickerStart" formControlName="startDate" (click)="pickerStart.open()">
+                    <input placeholder="dd/mm/yyyy" (dateInput)="filterDateStart($event,'filterDate')" matInput [max]="maxDate" [matDatepicker]="pickerStart" formControlName="startDate" (click)="pickerStart.open()">
                     <mat-datepicker-toggle matSuffix [for]="pickerStart" class="datePicker__icon"></mat-datepicker-toggle>
                     <mat-datepicker #pickerStart></mat-datepicker>
                 </mat-form-field>
@@ -20,7 +20,7 @@
             <div class="item" fxFlex="25">
                 <mat-form-field floatLabel="always" appearance="none">
                     <mat-label>Fecha Final</mat-label>
-                    <input placeholder="dd/mm/yyyy" (dateInput)="filterDateEnd($event)" matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerEnd" formControlName="endDate" (click)="pickerEnd.open()">
+                    <input placeholder="dd/mm/yyyy" (dateInput)="filterDateEnd($event,'filterDate')" matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerEnd" formControlName="endDate" (click)="pickerEnd.open()">
                     <mat-datepicker-toggle matSuffix [for]="pickerEnd" class="datePicker__icon"></mat-datepicker-toggle>
                     <mat-datepicker #pickerEnd></mat-datepicker>
                 </mat-form-field>
@@ -35,7 +35,7 @@
                     <div class="filter-inputs">
                         <mat-form-field floatLabel="always" appearance="none">
                             <input matInput type="text"
-                            autocomplete="off" (blur)="filterData($event.target.value,'nombre')">
+                            autocomplete="off" [formControl]="name" (blur)="filterData($event.target.value,'nombre')">
                         </mat-form-field>
                     </div>
                 </th>
@@ -47,7 +47,7 @@
                 <th mat-header-cell *matHeaderCellDef> Tipo
                     <div class="filter-inputs">
                         <mat-form-field floatLabel="always" appearance="none">
-                            <mat-select (selectionChange)="filterData($event.value,'tipo')">
+                            <mat-select [formControl]="type" (selectionChange)="filterData($event.value,'tipo')">
                                 <mat-option value="">Ver Todos</mat-option>
                                 <mat-option *ngFor="let tipo of tipos" [value]="tipo">{{tipo}}</mat-option>
                             </mat-select>
@@ -63,7 +63,7 @@
                     <div class="filter-inputs">
                         <mat-form-field floatLabel="always" appearance="none">
                             <input matInput type="text"
-                            autocomplete="off" (keyup)="filterData($event.target.value,'micrositio')">
+                            autocomplete="off" [formControl]="microsite" (keyup)="filterData($event.target.value,'micrositio')">
                         </mat-form-field>
                     </div>
                 </th>
@@ -75,7 +75,7 @@
                 <th mat-header-cell *matHeaderCellDef> Sede
                     <div class="filter-inputs">
                         <mat-form-field floatLabel="always" appearance="none">
-                            <mat-select (selectionChange)="filterData($event.value,'sede')">
+                            <mat-select [formControl]="campus" (selectionChange)="filterData($event.value,'sede')">
                                 <mat-option value="">Ver Todos</mat-option>
                                 <mat-option *ngFor="let venue of venues" [value]="venue.name">{{venue.name}}</mat-option>
                             </mat-select>
