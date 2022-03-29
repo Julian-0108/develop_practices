@@ -46,6 +46,12 @@ export class MovementsComponent implements OnInit {
     startDate: new FormControl(),
     endDate: new FormControl(),
   });
+
+  type= new FormControl(null);
+  name= new FormControl(null);
+  microsite= new FormControl(null);
+  campus= new FormControl(null);
+
   // dataFilter: any[] = [];
 
   constructor(
@@ -95,30 +101,49 @@ export class MovementsComponent implements OnInit {
     })
   }
 
-  filterData(value?:any,type?:string){
-    if(value !== undefined && type !== undefined){
+  resetInputs(){
+    this.type.setValue(null);
+    this.name.setValue(null);
+    this.microsite.setValue(null);
+    this.campus.setValue(null);
+  }
+
+  async filterData(value?:any,type?:string){
+
+    console.log(this.formFilterHistory.value)
+
+    if(value != null && type != null){
       this.filterKeys[type] = value;
     }
 
-    if(this.minDate === undefined){
-      this.dataSource = this.searchFilter.transform(this.infoData,this.filterKeys);
-    }else{
-      this.dataSource = this.searchFilter.transform(this.dataSource.data,this.filterKeys);
+    if(this.formFilterHistory.get('startDate')?.value === null && this.formFilterHistory.get('endDate')?.value === null ){
+      this.dataSource = new MatTableDataSource(await this.searchFilter.transform(this.infoData,this.filterKeys));
+    }else if(this.formFilterHistory.get('startDate')?.value != null && this.formFilterHistory.get('endDate')?.value === null){
+      await this.filterDateStart({value:this.formFilterHistory.get('startDate')?.value});
+      console.log('estos son los datos con el rango filtrado',this.dataSource.data)
+      this.dataSource= new MatTableDataSource(await this.searchFilter.transform(this.dataSource.data,this.filterKeys));
+      console.log('filtro',this.searchFilter.transform(this.dataSource.data,this.filterKeys))
+    }else if(this.formFilterHistory.get('startDate')?.value != null && this.formFilterHistory.get('endDate')?.value != null){
+      await this.filterDateEnd({value:this.formFilterHistory.get('endDate')?.value});
+      console.log('estos son los datos con el rango filtrado fecha fin',this.dataSource.data)
+      this.dataSource= new MatTableDataSource(await this.searchFilter.transform(this.dataSource.data,this.filterKeys));
+      console.log('filtro endDate',this.searchFilter.transform(this.dataSource.data,this.filterKeys))
     }
   }
 
 
-  async filterDateStart(event:any){
+  async filterDateStart(event:any,type:any=null){
     this.minDate=new Date(event.value);
     this.dataSource=new MatTableDataSource(await this.onSelectStartDate(event));
-    this.filterData();
+    // this.filterData();
   }
 
-  async filterDateEnd(event:any){
+  async filterDateEnd(event:any,type:any=null){
     this.dataSource=new MatTableDataSource(await this.onSelectEndDate(event));
   }
 
   onSelectStartDate(event: any) {
+    console.log("entreeeeeeeeeeeee",this.infoData)
     const startDate = moment(event.value).format('YYYY-MM-DD');
     const endDate =
       this.formFilterHistory.value.endDate === null
@@ -142,19 +167,11 @@ export class MovementsComponent implements OnInit {
   onSelectEndDate(event: any) {
     const endDate = moment(event.value).add('hour',23).add('minutes',59).add('seconds',59).format('YYYY-MM-DD HH:mm:ss');
     const startDate = moment(this.formFilterHistory.value.startDate).format('YYYY-MM-DD HH:mm:ss');
-    if(this.filterKeys !== {}){
-      return this.dataSource.data.filter(
-        (item: any) =>
-          moment(item.fecha).isSameOrAfter(startDate) &&
-          moment(item.fecha).isSameOrBefore(endDate)
-      );
-    }else{
-      return this.infoData.filter(
-        (item: any) =>
-          moment(item.fecha).isSameOrAfter(startDate) &&
-          moment(item.fecha).isSameOrBefore(endDate)
-      );
-    }
+    return this.infoData.filter(
+      (item: any) =>
+        moment(item.fecha).isSameOrAfter(startDate) &&
+        moment(item.fecha).isSameOrBefore(endDate)
+    );
   }
 
   nameFile():string{
