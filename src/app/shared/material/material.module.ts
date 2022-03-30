@@ -38,6 +38,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CustomPaginator } from './custom-paginator';
 
+import { MatTableExporterModule } from 'mat-table-exporter';
+
 
 const materialComponents = [
   MatPaginatorModule,
@@ -76,6 +78,7 @@ const materialComponents = [
   MatTabsModule,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatTableExporterModule
 ];
 
 @NgModule({

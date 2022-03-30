@@ -104,7 +104,7 @@ export class GenerateqrComponent implements OnInit {
 
   addIdSite(valueSite:any){
     this.general.get('site')?.setValue(valueSite.name);
-    this.idSites = valueSite._id;
+    this.idSites = valueSite.id;
   }
 
   generateQr(){
