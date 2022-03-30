@@ -32,7 +32,7 @@ export class SiteComponent implements OnInit {
     {
       name: 'Movimientos',
       description: 'Movimientos',
-      url: '/underConstruction',
+      url: '/movements',
       imagePath: 'assets/images/Movimientos.svg'
     }
   ];
