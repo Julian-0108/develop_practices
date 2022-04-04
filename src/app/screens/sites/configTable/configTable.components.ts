@@ -164,7 +164,7 @@ export class ConfigTableComponents implements OnInit {
           subtitle: this.subtitle,
           add: false,
           url: this.urlUpdate,
-          title: 'Editar ',
+          title: `Editar ${this.subtitle}`,
         },
       })
       .afterClosed()
@@ -184,7 +184,7 @@ export class ConfigTableComponents implements OnInit {
           subtitle: this.subtitle,
           add: true,
           url: this.urlUpdate,
-          title: 'Agregar ',
+          title: `Agregar ${this.subtitle}`,
         },
       })
       .afterClosed()
