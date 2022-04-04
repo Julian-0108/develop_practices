@@ -157,7 +157,7 @@ export class ConfigTableComponents implements OnInit {
   openEdit(value: any) {
     this.dialog
       .open(SitesComponent, {
-        height: '350px',
+        height: '365px',
         width: '55%',
         data: {
           dataSite: value,
@@ -178,7 +178,7 @@ export class ConfigTableComponents implements OnInit {
   openCreate() {
     this.dialog
       .open(SitesComponent, {
-        height: '350px',
+        height: '365px',
         width: '55%',
         data: {
           subtitle: this.subtitle,
