@@ -5,6 +5,7 @@ import { Tables } from './interfaces/configTable.interface';
 import { ConfigTableServices } from './services/configTable.services';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchFilterPipe } from '@app/shared/pipes/Search-Filter.pipe';
+import { AutofillMonitor } from '@angular/cdk/text-field';
 
 @Component({
   selector: 'app-config-table',
@@ -32,7 +33,7 @@ export class ConfigTableComponents implements OnInit {
   subtitle: any = '';
   urlUpdate: string = '';
   filterListSities: Array<any> = [];
-  filterSities : any = {};
+  filterSities: any = {};
   dataSource: MatTableDataSource<Tables | any> = new MatTableDataSource();
   btnAdd = false;
 
@@ -50,7 +51,6 @@ export class ConfigTableComponents implements OnInit {
     'actualizationDate',
     'status',
     'actions',
-
   ];
 
   public table = [
@@ -74,26 +74,24 @@ export class ConfigTableComponents implements OnInit {
     },
   ];
 
-
-
   applyFilter(value: any, type: string) {
-     if (type == 'idVenues.name') {
-      const arraySource: any = []
+    if (type == 'idVenues.name') {
+      const arraySource: any = [];
       this.filterListSities.forEach((valuecompare: any) => {
         if (valuecompare.idVenues.name.toLowerCase().includes(value)) {
           arraySource.push(valuecompare);
         }
       });
       this.dataSource = arraySource;
-      }else if(type == 'offices.office') {
-        const arraySource: any = []
-        this.filterListSities.forEach((valuecompare: any) => {
-          if (valuecompare.offices.office.toLowerCase().includes(value)) {
-            arraySource.push(valuecompare);
-          }
-        });
-        this.dataSource = arraySource;
-  }else {
+    } else if (type == 'offices.office') {
+      const arraySource: any = [];
+      this.filterListSities.forEach((valuecompare: any) => {
+        if (valuecompare.offices.office.toLowerCase().includes(value)) {
+          arraySource.push(valuecompare);
+        }
+      });
+      this.dataSource = arraySource;
+    } else {
       this.filterSities[type] = value;
       this.dataSource = this.filter.transform(this.filterListSities, this.filterSities);
     }
@@ -128,43 +126,45 @@ export class ConfigTableComponents implements OnInit {
       case 'venues':
         return this.displayedColumns.filter(
           (el) =>
-          el !== 'nameVenues' &&
-          el !== 'office' &&
-          el !== 'floor' &&
-          el !== 'nameOffice'&&
-          el !== 'capacity'
+            el !== 'nameVenues' &&
+            el !== 'office' &&
+            el !== 'floor' &&
+            el !== 'nameOffice' &&
+            el !== 'capacity'
         );
-        case 'offices':
-          return this.displayedColumns.filter(
-            (el) =>
+      case 'offices':
+        return this.displayedColumns.filter(
+          (el) =>
             el !== 'name' &&
             el !== 'direction' &&
-            el !== 'phone'&&
-            el !== 'nameOffice'&&
+            el !== 'phone' &&
+            el !== 'nameOffice' &&
             el !== 'city'
-          )
-          case 'sites':
+        );
+      case 'sites':
         return this.displayedColumns.filter(
-          (el)=>
+          (el) =>
             el !== 'direction' &&
             el !== 'phone' &&
             el !== 'city' &&
-            el !== 'nameVenues'&&
-            el !== 'floor'&&
+            el !== 'nameVenues' &&
+            el !== 'floor' &&
             el !== 'office'
         );
-        }}
+    }
+  }
 
   openEdit(value: any) {
     this.dialog
       .open(SitesComponent, {
-        width: '60%',
-        height: '60%',
+        height: '365px',
+        width: '55%',
         data: {
           dataSite: value,
           subtitle: this.subtitle,
           add: false,
           url: this.urlUpdate,
+          title: `Editar ${this.subtitle}`,
         },
       })
       .afterClosed()
@@ -178,12 +178,13 @@ export class ConfigTableComponents implements OnInit {
   openCreate() {
     this.dialog
       .open(SitesComponent, {
-        width: '60%',
-        height: '60%',
+        height: '365px',
+        width: '55%',
         data: {
           subtitle: this.subtitle,
           add: true,
           url: this.urlUpdate,
+          title: `Agregar ${this.subtitle}`,
         },
       })
       .afterClosed()

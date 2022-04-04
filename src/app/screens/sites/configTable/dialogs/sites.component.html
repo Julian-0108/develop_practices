@@ -1,6 +1,6 @@
 <!-- formulario sedes -->
 <form [formGroup]="formVenues" novalidate autocomplete="off" *ngIf="subtitle=='Sedes'">
-  <h1 class="dialog-title">{{ data?.title }}{{ subtitle }}</h1>
+  <h1 class="dialog-title">{{data?.title}}</h1>
   <div class="formUp">
     <div class="item">
       <div class="content">
@@ -51,7 +51,7 @@
 
 <!-- formulario oficinas -->
 <form [formGroup]="formOffices" novalidate autocomplete="off"*ngIf="subtitle=='Oficinas'">
-  <h1 class="dialog-title">{{ data?.title }}{{ subtitle }}</h1>
+  <h1 class="dialog-title">{{ data?.title }}</h1>
   <div class="formUp">
     <div class="item">
 
@@ -113,7 +113,7 @@
 
 <!-- formulario sitios -->
 <form [formGroup]="formSites" novalidate autocomplete="off"*ngIf="subtitle=='Sitios'">
-  <h1 class="dialog-title">{{ data?.title }}{{ subtitle }}</h1>
+  <h1 class="dialog-title">{{ data?.title }}</h1>
   <div class="formUp">
     <div class="item">
       <div class="content" *ngIf="data.add">
