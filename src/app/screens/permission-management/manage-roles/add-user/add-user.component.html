@@ -6,21 +6,21 @@
     <div fxLayout="row">
       <div class="item" fxFlex="100">
         <mat-form-field floatLabel="always" appearance="none">
-          <mat-label class="label">Correo</mat-label>
-          <input matInput type="text" formControlName="correo" placeholder="Correo del usuario"
+          <mat-label class="label">Nombre de usuario</mat-label>
+          <input matInput type="text" formControlName="name" placeholder="nombre del usuario"
             [matAutocomplete]="auto">
           <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-              {{option}}
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
+              {{option.name}}
             </mat-option>
           </mat-autocomplete>
-          <app-validator [form]="form" name="correo"></app-validator>
+          <app-validator [form]="form" name="correo">nombre de usuario requerido</app-validator>
         </mat-form-field>
       </div>
     </div>
   </form>
   <div class="dialog__options">
-    <button mat-button class="button button--accept" (click)="onSubmit()">Guardar</button>
+    <button mat-button class="button button--accept" (click)="console()">Guardar</button>
     <button mat-button class="button button--cancel" [mat-dialog-close]="true">Cancelar</button>
   </div>
 </mat-dialog-content>
