@@ -1,8 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, FormControl, Validators, EmailValidator } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, EmailValidator, FormArray } from '@angular/forms';
 import { NotificationService } from '../../../../shared/components/notification/services/notification.service';
 import { ManageRolesService } from '../services/manage-roles.service';
+import { AddResumeService } from '../../../profiles/profile-manage-resumes/add-resume/service/add-resume.service';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
@@ -23,21 +24,33 @@ export class AddUserComponent implements OnInit {
     private dialogRef: MatDialogRef<AddUserComponent>,
     private notificationService: NotificationService,
     private rolesService: ManageRolesService,
+    private addResumeService: AddResumeService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit(): void {
-    this.getUsers();
+    // this.getUsers();
+    this.getPersonal();
     this.form = this.createForm();
-    this.filteredOptions = this.form.controls.correo.valueChanges.pipe(
+    // this.filteredOptions = this.form.controls.name.valueChanges.pipe(
+    //   startWith(''),
+    //   map(value => this._filter(value))
+    // );
+
+    this.filteredOptions = this.form.controls.name.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value))
+      map(value => (typeof value === 'string' ? value : value.name)),
+      map(name => (name ? this._filter(name) : this.options.slice())),
     );
   }
 
   createForm(): FormGroup {
     return this.fb.group({
-      correo: new FormControl('', [Validators.required, Validators.email]),
+      name: ['',Validators.required],
+      area: ['',Validators.required],
+      email:['',[Validators.email,Validators.required]],
+      dni:['',Validators.required],
+      roles: new FormArray([])
     });
   }
 
@@ -84,12 +97,25 @@ export class AddUserComponent implements OnInit {
   }
 
   private _filter(value: string): string[] {
+    console.log('🚀 ~ file: add-user.component.ts ~ line 90 ~ AddUserComponent ~ _filter ~ value', value)
     const filterValue = value.toLowerCase();
-    return this.options.filter(option => {
-      if (option !== undefined) {
-        return option.indexOf(filterValue) === 0
+    return this.options.filter((option:any) => {
+      if (option.name !== undefined) {
+        return option.name.indexOf(filterValue) === 0
       }
     });
   }
 
+// obtener personal
+  async getPersonal(){
+  await this.addResumeService.getDataUsers()
+  .then((reg:any) => this.options = reg
+  )
+  console.log('🚀 ~ file: add-user.component.ts ~ line 108 ~ AddUserComponent ~ getPersonal ~ this.options', this.options);
+  }
+
+
+  console(){
+    console.log('🚀 ~ file: add-user.component.ts ~ line 39 ~ AddUserComponent ~ ngOnInit ~ this.filteredOptions', this.filteredOptions)
+  }
 }
