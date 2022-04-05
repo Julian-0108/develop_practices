@@ -20,7 +20,7 @@ export class SiteComponent implements OnInit {
     {
       name: 'Kit de salud',
       description: 'Kit de salud',
-      url: '/underConstruction',
+      url: '/kits',
       imagePath: 'assets/images/Kit de salud.svg'
     },
     {
