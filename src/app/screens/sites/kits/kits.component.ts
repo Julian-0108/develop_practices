@@ -17,7 +17,7 @@ export class KitsComponent implements OnInit {
 
   isLoadingResults = true;
   displayedColumns: string[] = [
-    'nombre','identificacion', 'recibido','fecha'
+    'nombre','identificacion', 'tipo','fecha'
   ];
 
   dataSource!: MatTableDataSource<KitsModels>;
