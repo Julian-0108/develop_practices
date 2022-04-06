@@ -72,6 +72,12 @@ export class ConfigTableComponents implements OnInit {
       sumary: 'Aquí puedes configurar los sitios',
       haveTypeField: true,
     },
+    {
+      name: 'Kits',
+      url: 'kits',
+      sumary: 'Aquí puedes configurar los kits de la empresa',
+      haveTypeField: true,
+    },
   ];
 
   applyFilter(value: any, type: string) {
@@ -151,6 +157,18 @@ export class ConfigTableComponents implements OnInit {
             el !== 'floor' &&
             el !== 'office'
         );
+        case 'kits':
+          return this.displayedColumns.filter(
+            (el) =>
+              el !== 'direction' &&
+              el !== 'phone' &&
+              el !== 'city' &&
+              el !== 'nameVenues' &&
+              el !== 'floor' &&
+              el !== 'capacity'&&
+              el !== 'nameOffice' &&
+              el !== 'office'
+          );
     }
   }
 
@@ -194,5 +212,7 @@ export class ConfigTableComponents implements OnInit {
           this.getList(this.urlUpdate);
         }
       });
+
   }
+
 }
