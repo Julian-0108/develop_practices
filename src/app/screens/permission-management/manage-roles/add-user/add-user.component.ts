@@ -53,21 +53,24 @@ export class AddUserComponent implements OnInit {
 
   // onSubmit() {
   //   if (this.form.invalid) {
-  //     this.notificationService.openSimpleSnackBar({type: 'error', title: 'Error en el formulario', message: 'Revisa la información del formulario'});
+  //     this.notificationService.openSimpleSnackBar(
+  // {type: 'error', title: 'Error en el formulario', message: 'Revisa la información del formulario'});
   //     this.form.markAllAsTouched();
   //     return;
   //   }
 
   //   const validateEmail = this.options.some(correo => correo === this.form.get('correo')?.value);
   //   if (!validateEmail) {
-  //     this.notificationService.openSimpleSnackBar({type: 'error', title: 'Error en el formulario', message: 'El correo electronico no se encuentra registrado'});
+  //     this.notificationService.openSimpleSnackBar(
+  // {type: 'error', title: 'Error en el formulario', message: 'El correo electronico no se encuentra registrado'});
   //     this.form.markAllAsTouched();
   //     return;
   //   }
 
   //   const isRegistered = this.data.dataSourceUsers.some((user: any) => user.correo === this.form.get('correo')?.value);
   //   if (isRegistered) {
-  //     this.notificationService.openSimpleSnackBar({type: 'error', title: 'Error en el formulario', message: 'El correo ya se encuentra registrado en el rol'});
+  //     this.notificationService.openSimpleSnackBar(
+  // {type: 'error', title: 'Error en el formulario', message: 'El correo ya se encuentra registrado en el rol'});
   //     this.form.markAllAsTouched();
   //     return;
   //   }
@@ -77,7 +80,8 @@ export class AddUserComponent implements OnInit {
 
   //   this.rolesService.updateUserRoles(user.correo, user.roles)
   //   .then(() => {
-  //     this.notificationService.openSimpleSnackBar({type: 'success', title: 'Operación exitosa', message: 'Rol agregado al usuario correctamente'});
+  //     this.notificationService.openSimpleSnackBar(
+  // {type: 'success', title: 'Operación exitosa', message: 'Rol agregado al usuario correctamente'});
   //     this.dialogRef.close({ success: true });
   //   })
   //   .catch()
