@@ -18,6 +18,7 @@ export class AddUserComponent implements OnInit {
   options: string[] = [];
   users: string[] = [];
   filteredOptions!: Observable<string[]>;
+  dataInfo = new FormControl();
 
   constructor(
     private fb: FormBuilder,
@@ -25,6 +26,7 @@ export class AddUserComponent implements OnInit {
     private notificationService: NotificationService,
     private rolesService: ManageRolesService,
     private addResumeService: AddResumeService,
+    private dialogref: MatDialogRef<AddUserComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
@@ -32,12 +34,7 @@ export class AddUserComponent implements OnInit {
     // this.getUsers();
     this.getPersonal();
     this.form = this.createForm();
-    // this.filteredOptions = this.form.controls.name.valueChanges.pipe(
-    //   startWith(''),
-    //   map(value => this._filter(value))
-    // );
-
-    this.filteredOptions = this.form.controls.name.valueChanges.pipe(
+    this.filteredOptions = this.dataInfo.valueChanges.pipe(
       startWith(''),
       map(value => (typeof value === 'string' ? value : value.name)),
       map(name => (name ? this._filter(name) : this.options.slice())),
@@ -50,60 +47,54 @@ export class AddUserComponent implements OnInit {
       area: ['',Validators.required],
       email:['',[Validators.email,Validators.required]],
       dni:['',Validators.required],
-      roles: new FormArray([])
+      roles: ['',Validators.required]
     });
   }
 
-  onSubmit() {
-    if (this.form.invalid) {
-      this.notificationService.openSimpleSnackBar({type: 'error', title: 'Error en el formulario', message: 'Revisa la información del formulario'});
-      this.form.markAllAsTouched();
-      return;
-    }
+  // onSubmit() {
+  //   if (this.form.invalid) {
+  //     this.notificationService.openSimpleSnackBar({type: 'error', title: 'Error en el formulario', message: 'Revisa la información del formulario'});
+  //     this.form.markAllAsTouched();
+  //     return;
+  //   }
 
-    const validateEmail = this.options.some(correo => correo === this.form.get('correo')?.value);
-    if (!validateEmail) {
-      this.notificationService.openSimpleSnackBar({type: 'error', title: 'Error en el formulario', message: 'El correo electronico no se encuentra registrado'});
-      this.form.markAllAsTouched();
-      return;
-    }
+  //   const validateEmail = this.options.some(correo => correo === this.form.get('correo')?.value);
+  //   if (!validateEmail) {
+  //     this.notificationService.openSimpleSnackBar({type: 'error', title: 'Error en el formulario', message: 'El correo electronico no se encuentra registrado'});
+  //     this.form.markAllAsTouched();
+  //     return;
+  //   }
 
-    const isRegistered = this.data.dataSourceUsers.some((user: any) => user.correo === this.form.get('correo')?.value);
-    if (isRegistered) {
-      this.notificationService.openSimpleSnackBar({type: 'error', title: 'Error en el formulario', message: 'El correo ya se encuentra registrado en el rol'});
-      this.form.markAllAsTouched();
-      return;
-    }
+  //   const isRegistered = this.data.dataSourceUsers.some((user: any) => user.correo === this.form.get('correo')?.value);
+  //   if (isRegistered) {
+  //     this.notificationService.openSimpleSnackBar({type: 'error', title: 'Error en el formulario', message: 'El correo ya se encuentra registrado en el rol'});
+  //     this.form.markAllAsTouched();
+  //     return;
+  //   }
 
+  //   const user: any = this.users.find((user: any) => user.correo === this.form.get('correo')?.value);
+  //   user.roles.push(this.data.rolSelected._id);
 
-    const user: any = this.users.find((user: any) => user.correo === this.form.get('correo')?.value);
-    user.roles.push(this.data.rolSelected._id);
+  //   this.rolesService.updateUserRoles(user.correo, user.roles)
+  //   .then(() => {
+  //     this.notificationService.openSimpleSnackBar({type: 'success', title: 'Operación exitosa', message: 'Rol agregado al usuario correctamente'});
+  //     this.dialogRef.close({ success: true });
+  //   })
+  //   .catch()
+  // }
 
-    this.rolesService.updateUserRoles(user.correo, user.roles)
-    .then(() => {
-      this.notificationService.openSimpleSnackBar({type: 'success', title: 'Operación exitosa', message: 'Rol agregado al usuario correctamente'});
-      this.dialogRef.close({ success: true });
-    })
-    .catch()
-  }
+  // getUsers() {
+  //   this.rolesService.getUsers()
+  //   .then(response => {
+  //     this.options = response.payload.map((user: any) => user.correo);
+  //     this.users = response.payload;
+  //   })
+  //   .catch();
+  // }
 
-  getUsers() {
-    this.rolesService.getUsers()
-    .then(response => {
-      this.options = response.payload.map((user: any) => user.correo);
-      this.users = response.payload;
-    })
-    .catch();
-  }
-
-  private _filter(value: string): string[] {
-    console.log('🚀 ~ file: add-user.component.ts ~ line 90 ~ AddUserComponent ~ _filter ~ value', value)
+  private _filter(value: string) {
     const filterValue = value.toLowerCase();
-    return this.options.filter((option:any) => {
-      if (option.name !== undefined) {
-        return option.name.indexOf(filterValue) === 0
-      }
-    });
+    return this.options.filter((option:any) => option.name.toLowerCase().includes(filterValue));
   }
 
 // obtener personal
@@ -111,11 +102,36 @@ export class AddUserComponent implements OnInit {
   await this.addResumeService.getDataUsers()
   .then((reg:any) => this.options = reg
   )
-  console.log('🚀 ~ file: add-user.component.ts ~ line 108 ~ AddUserComponent ~ getPersonal ~ this.options', this.options);
+  }
+
+  getValue(value?:any){
+    return value?value.name:undefined;
   }
 
 
-  console(){
-    console.log('🚀 ~ file: add-user.component.ts ~ line 39 ~ AddUserComponent ~ ngOnInit ~ this.filteredOptions', this.filteredOptions)
+  saveInfo(){
+    if(this.dataInfo.value !== null){
+      this.form.patchValue(this.dataInfo.value);
+      this.form.get('roles')?.setValue([this.data.rolSelected._id]);
+      if(this.form.valid){
+        this.addResumeService.postUser(this.form.value).then((val:any) => {
+          if(val.successful === true && val.payload !== []){
+            this.notificationService.openSimpleSnackBar(
+              {title: 'Usuario añadido', message: `${val.message}`, type: 'success'}
+            );
+          }else{
+            this.notificationService.openSimpleSnackBar(
+              {title: 'Usuario no añadido', message: `${val.message}`, type: 'error'}
+            );
+          }
+          this.dialogref.close(true);
+        }
+        ).catch(error => console.log(error));
+      }
+    }else{
+      this.notificationService.openSimpleSnackBar(
+        {title: 'Nombre no seleccionado', message: 'Por favor selecciona un persona', type: 'info'}
+      );
+    }
   }
 }
