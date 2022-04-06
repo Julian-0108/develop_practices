@@ -61,4 +61,11 @@ async updateRegister(id:string,data:any):Promise<any>{
   .toPromise();
 }
 
+// post add user
+
+async postUser(dataUser:any){
+  return await this.http
+  .post(`${environment.API_LOCAL}/users-permission`,dataUser).toPromise();
+}
+
 }
