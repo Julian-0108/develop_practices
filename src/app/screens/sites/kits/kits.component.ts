@@ -17,7 +17,7 @@ export class KitsComponent implements OnInit {
 
   isLoadingResults = true;
   displayedColumns: string[] = [
-    'nombre', 'cedula', 'entregado', 'fecha'
+    'nombre','identificacion', 'recibido','fecha'
   ];
 
   dataSource!: MatTableDataSource<KitsModels>;
@@ -33,28 +33,28 @@ export class KitsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.kitService.getKitsList()
-    .pipe(
-      map((res: any) => {
-        return res.map((item: any) => {
-          let filtered = {
-            'nombre': item.nombre,
-            'cedula': item.cedula,
-            'entregado': item.entregado,
-            'fecha': new Date(item.fecha),
-          };
-          return filtered;
-        })
-      })
-    ).subscribe((data: Array<any>) => {
-      this.dataSource = new MatTableDataSource(data.reverse());
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.isLoadingResults = false;
-      this.dataSource.filterPredicate = (data: any, filter: string): boolean => {
-        return data.nombre.trim().toLowerCase().indexOf(filter) != -1 || data.cedula.trim().toLowerCase().indexOf(filter) != -1 || data.entregado.trim().toLowerCase().indexOf(filter) != -1 ||this.datePipe.transform(data.fecha, 'dd/MM/yyyy HH:mm', 'UTC')?.indexOf(filter) != -1;
-      }
-    });
+    // this.kitService.getKitsList()
+    // .pipe(
+    //   map((res: any) => {
+    //     return res.map((item: any) => {
+    //       let filtered = {
+    //         'nombre': item.nombre,
+    //         'cedula': item.cedula,
+    //         'entregado': item.entregado,
+    //         'fecha': new Date(item.fecha),
+    //       };
+    //       return filtered;
+    //     })
+    //   })
+    // ).subscribe((data: Array<any>) => {
+    //   this.dataSource = new MatTableDataSource(data.reverse());
+    //   this.dataSource.paginator = this.paginator;
+    //   this.dataSource.sort = this.sort;
+    //   this.isLoadingResults = false;
+    //   this.dataSource.filterPredicate = (data: any, filter: string): boolean => {
+    //     return data.nombre.trim().toLowerCase().indexOf(filter) != -1 || data.cedula.trim().toLowerCase().indexOf(filter) != -1 || data.entregado.trim().toLowerCase().indexOf(filter) != -1 ||this.datePipe.transform(data.fecha, 'dd/MM/yyyy HH:mm', 'UTC')?.indexOf(filter) != -1;
+    //   }
+    // });
 
   }
 
