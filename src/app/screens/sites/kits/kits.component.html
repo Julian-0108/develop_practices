@@ -1,50 +1,71 @@
-<button (click)="redirect()" class="button-back" mat-mini-fab aria-label="back button"></button>
-<div class="container">
+<body class="background">
+  <button routerLink="/sites" class="button-back" mat-mini-fab aria-label="back button"></button>
+<div  fxLayout="column">
+  <div class="title__container">
+      <h1 class="title">Kits</h1>
+      <h2>Reporte general de kit</h2>
+  </div>
 
-    <div class="filter" fxLayoutAlign="center center">
-        <mat-form-field floatLabel="always" appearance="none" style="margin-bottom: 20px;">
-            <mat-label class="label">Filtrar</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar por nombre, cedula...">
-        </mat-form-field>
-    </div>
+  <div class="container mat-elevation-z7">
+      <table mat-table matTableExporter [dataSource]="dataSource" matSort #exporter="matTableExporter">
 
-    <div class="mat-elevation-z7">
+          <!-- Nombre Column -->
+          <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef> Nombre
+                  <div class="filter-inputs">
+                      <!-- <mat-form-field floatLabel="always" appearance="none">
+                          <input matInput type="text"
+                          autocomplete="off" [formControl]="name" (blur)="filterData($event.target.value,'nombre')">
+                      </mat-form-field> -->
+                  </div>
+              </th>
+              <td mat-cell *matCellDef="let row"> {{ row.nombre | titlecase }} </td>
+          </ng-container>
 
-        <!-- <div class="loading-shade" *ngIf="isLoadingResults">
-            <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-        </div> -->
+          <!-- identificacion Column -->
+          <ng-container matColumnDef="identificacion">
+              <th mat-header-cell *matHeaderCellDef>Identificacion
+                  <div class="filter-inputs">
+                      <!-- <mat-form-field floatLabel="always" appearance="none">
+                          <mat-select [formControl]="type" (selectionChange)="filterData($event.value,'tipo')">
+                              <mat-option value="">Ver Todos</mat-option>
+                              <mat-option *ngFor="let tipo of tipos" [value]="tipo">{{tipo}}</mat-option>
+                          </mat-select>
+                      </mat-form-field> -->
+                  </div>
+              </th>
+              <td mat-cell *matCellDef="let row"> {{ row.tipo | titlecase }} </td>
+          </ng-container>
 
-        <table mat-table [dataSource]="dataSource" matSort>
+          <!-- Recibido Column -->
+          <ng-container matColumnDef="recibido">
+              <th mat-header-cell *matHeaderCellDef> Recibido
+                  <div class="filter-inputs">
+                      <!-- <mat-form-field floatLabel="always" appearance="none">
+                          <input matInput type="text"
+                          autocomplete="off" [formControl]="microsite" (keyup)="filterData($event.target.value,'micrositio')">
+                      </mat-form-field> -->
+                  </div>
+              </th>
+              <td mat-cell *matCellDef="let row"> {{ row.micrositio }} </td>
+          </ng-container>
+          <!-- Fecha Column -->
+          <ng-container matColumnDef="fecha">
+              <th mat-header-cell *matHeaderCellDef> Fecha
+                  <!-- <div class="filter-inputs actions_filter_input">
+                      <mat-form-field floatLabel="always">
+                        <input matInput class="filter" type="text" autocomplete="off">
+                      </mat-form-field>
+                    </div> -->
+              </th>
+              <td mat-cell *matCellDef="let row"> {{ row.fecha | date: 'dd/MM/yyyy HH:mm': 'UTC' }} </td>
+          </ng-container>
 
-            <!-- ID Column -->
-            <ng-container matColumnDef="cedula">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Identificación </th>
-                <td mat-cell *matCellDef="let row"> {{ row.cedula }} </td>
-            </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
 
-            <!-- Nombre Column -->
-            <ng-container matColumnDef="nombre">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-                <td mat-cell *matCellDef="let row"> {{ row.nombre | titlecase }} </td>
-            </ng-container>
-
-            <!-- Recibido Column -->
-            <ng-container matColumnDef="entregado">
-                <th mat-header-cell *matHeaderCellDef> Recibido </th>
-                <td mat-cell *matCellDef="let row"> {{ row.entregado | titlecase }} </td>
-            </ng-container>
-
-            <!-- Fecha Column -->
-            <ng-container matColumnDef="fecha">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
-                <td mat-cell *matCellDef="let row"> {{ row.fecha | date: 'dd/MM/yyyy HH:mm': 'UTC' }} </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-            </tr>
-        </table>
-
-        <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50, 100]"></mat-paginator>
-    </div>
+      <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+  </div>
 </div>
+</body>
