@@ -66,7 +66,7 @@ export class ManageRolesComponent implements OnInit {
       .getUsersByRol(this.rolSelected._id)
       .then((response) => {
         if (response.payload.length > 0) {
-          this.dataSourceUsers = new MatTableDataSource(response.payload[0].users);
+          this.dataSourceUsers = new MatTableDataSource(response.payload[0].usersPermission);
           this.dataSourceUsers.paginator = this.paginator;
         }
       })
@@ -88,9 +88,9 @@ export class ManageRolesComponent implements OnInit {
   }
 
   deleteUser(user: any) {
-    const roles = user.roles.filter((rol: string) => rol !== this.rolSelected._id);
+    user.roles = user.roles.filter((rol: string) => rol !== this.rolSelected._id);
     this.rolesService
-      .updateUserRoles(user.correo, roles)
+      .updateUserRoles(user.email, user)
       .then(() => {
         this.notificationService.openSimpleSnackBar({
           type: 'success',
