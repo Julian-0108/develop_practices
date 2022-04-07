@@ -15,10 +15,7 @@ import { KitService } from './services/kit/kit.service';
 export class GenerateqrComponent implements OnInit {
   qrEntry: string = '';
   qrExit: string = '';
-  qrKit: string = '';
-
   myDate!: string;
-
   idSites: any;
   idKit: any;
   sites: any[] = [];
@@ -42,7 +39,6 @@ export class GenerateqrComponent implements OnInit {
   });
   generalkit=this.fb.group({
     kits: ['', Validators.required],
-
   })
 
   ngOnInit() {
@@ -51,6 +47,7 @@ export class GenerateqrComponent implements OnInit {
   }
 
   getVenues() {
+    this.idKit = ''
     this.serviceVenues
       .getListVenues()
       .then((venuesInfo: any) => {
@@ -117,9 +114,11 @@ export class GenerateqrComponent implements OnInit {
       .catch((error: any) => console.log(error));
   }
   getKit() {
-    this.qrKit='';
     this.serviceKit
       .getListKit()
+      .then((kitInfo:any) =>{
+        this.kit = kitInfo;
+        console.log("dataaaa",this.kit)
         if (this.kit.length === 0) {
           this.notificationService.openSimpleSnackBar({
             title: 'Sin registros',
@@ -127,7 +126,8 @@ export class GenerateqrComponent implements OnInit {
             type: 'info',
           });
         }
-      }
+      })
+  }
 
 
   fieldsValid(field: string) {
@@ -141,10 +141,6 @@ export class GenerateqrComponent implements OnInit {
     this.general.get('site')?.setValue(valueSite.name);
     this.idSites = valueSite.id;
   }
-  addIdKit(valueKit:any){
-    this.generalkit.get('kits')?.setValue(valueKit._id);
-    this.idKit=valueKit._id;
-  }
 
   generateQr() {
     if (this.general.valid) {
@@ -157,7 +153,8 @@ export class GenerateqrComponent implements OnInit {
 
   kitQr() {
   if(this.generalkit.valid){
-    this.qrKit = `${this.idKit}`+':kit generado';
+    this.idKit = `${this.generalkit.get('kits')?.value}`+':kit generado';
+    console.log('eeeeeee'+ this.idKit)
 
   }
   }
