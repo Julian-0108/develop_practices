@@ -2,10 +2,18 @@
   background-color: #fff !important;
   background: url(../../../../assets/images/baseTeams_backgorund.svg);
   background-size: cover;
-  // background-repeat: no-repeat;
+  background-repeat: no-repeat;
   background-position: center;
   min-height: calc(100vh - (45px + 30px));
   background-attachment: fixed;
+}
+
+.botton_export{
+  float: right;
+  padding-right: 25px;
+  padding-bottom: 10px;
+  position: sticky;
+  bottom: 25px;
 }
 
 .container {
