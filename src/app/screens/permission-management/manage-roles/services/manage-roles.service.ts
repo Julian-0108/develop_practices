@@ -21,16 +21,21 @@ export class ManageRolesService {
     return this.http.put<Response>(`${environment.API_SECURITY}/roles/${id}`, { access: roles }).toPromise();
   }
 
-  getUsersByRol(id: string) {
-    return this.http.get<Response>(`${environment.API_SECURITY}/roles/${id}`).toPromise();
-  }
 
-
-  updateUserRoles(email: string, roles: string[]) {
-    return this.http.put<Response>(`${environment.API_SECURITY}/users/${email}`, { roles }).toPromise();
-  }
-
+  
+  //eliminar
   getUsers() {
     return this.http.get<Response>(`${environment.API_SECURITY}/users/all`).toPromise();
+  }
+
+
+
+
+  updateUserRoles(email: string, roles:object) {
+    return this.http.put<Response>(`${environment.API_LOCAL}/users-permission/${email}`,roles).toPromise();
+  }
+
+  getUsersByRol(id: string) {
+    return this.http.get<Response>(`${environment.API_LOCAL}/roles/${id}`).toPromise();
   }
 }
