@@ -74,7 +74,7 @@ export class ConfigTableComponents implements OnInit {
     },
     {
       name: 'Kits',
-      url: 'kits',
+      url: 'kit',
       sumary: 'Aquí puedes configurar los kits de la empresa',
       haveTypeField: true,
     },
@@ -157,7 +157,7 @@ export class ConfigTableComponents implements OnInit {
             el !== 'floor' &&
             el !== 'office'
         );
-        case 'kits':
+        case 'kit':
           return this.displayedColumns.filter(
             (el) =>
               el !== 'direction' &&
