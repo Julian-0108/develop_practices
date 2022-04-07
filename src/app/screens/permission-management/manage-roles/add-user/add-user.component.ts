@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, FormControl, Validators, EmailValidator, FormAr
 import { NotificationService } from '../../../../shared/components/notification/services/notification.service';
 import { ManageRolesService } from '../services/manage-roles.service';
 import { AddResumeService } from '../../../profiles/profile-manage-resumes/add-resume/service/add-resume.service';
+import { AddUserService } from './services/add-user.service';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
@@ -22,10 +23,10 @@ export class AddUserComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<AddUserComponent>,
     private notificationService: NotificationService,
     private rolesService: ManageRolesService,
     private addResumeService: AddResumeService,
+    private addUserService: AddUserService,
     private dialogref: MatDialogRef<AddUserComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
@@ -118,7 +119,7 @@ export class AddUserComponent implements OnInit {
       this.form.patchValue(this.dataInfo.value);
       this.form.get('roles')?.setValue([this.data.rolSelected._id]);
       if(this.form.valid){
-        this.addResumeService.postUser(this.form.value).then((val:any) => {
+        this.addUserService.postUser(this.form.value).then((val:any) => {
           if(val.successful === true && val.payload !== []){
             this.notificationService.openSimpleSnackBar(
               {title: 'Usuario añadido', message: `${val.message}`, type: 'success'}
@@ -130,7 +131,7 @@ export class AddUserComponent implements OnInit {
           }
           this.dialogref.close(true);
         }
-        ).catch(error => console.log(error));
+        ).catch((error: any) => console.log(error));
       }
     }else{
       this.notificationService.openSimpleSnackBar(
