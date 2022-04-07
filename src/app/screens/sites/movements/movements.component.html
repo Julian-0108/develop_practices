@@ -42,6 +42,19 @@
                 <td mat-cell *matCellDef="let row"> {{ row.nombre | titlecase }} </td>
             </ng-container>
 
+            <!-- IDENTIFICACION Column -->
+            <ng-container matColumnDef="identificacion">
+              <th mat-header-cell *matHeaderCellDef> Identificación
+                  <div class="filter-inputs">
+                      <mat-form-field floatLabel="always" appearance="none">
+                          <input matInput type="text"
+                          autocomplete="off" [formControl]="name" (blur)="filterData($event.target.value,'nombre')">
+                      </mat-form-field>
+                  </div>
+              </th>
+              <td mat-cell *matCellDef="let row"> {{ row.identificacion | titlecase }} </td>
+          </ng-container>
+
             <!-- Tipo Column -->
             <ng-container matColumnDef="tipo">
                 <th mat-header-cell *matHeaderCellDef> Tipo

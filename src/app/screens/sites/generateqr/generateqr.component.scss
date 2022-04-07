@@ -118,12 +118,6 @@ mat-card-actions {
 mat-card {
     margin-bottom: 30px;
 }
-
-.qr-container {
-    display: flex;
-    text-align: center;
-}
-
 mat-form-field{
     margin-bottom: 10px;
 }
@@ -139,4 +133,9 @@ mat-error{
 .qrKit{
     margin: auto;
     margin-bottom: 30px !important;
+}
+.qr-container {
+  display: flex;
+  justify-content: center !important;
+  text-align: center;
 }

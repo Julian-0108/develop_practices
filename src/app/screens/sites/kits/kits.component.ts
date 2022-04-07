@@ -3,8 +3,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { KitsService } from './services/kits.service';
-import { map } from 'rxjs/operators';
-import { KitsModels } from './models/kits.models';
 import { DatePipe } from '@angular/common';
 import { Location} from '@angular/common';
 import { SearchFilterPipe } from '@app/shared/pipes/Search-Filter.pipe';

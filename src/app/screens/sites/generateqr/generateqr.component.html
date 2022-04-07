@@ -86,26 +86,27 @@
               <form [formGroup]="generalkit">
                 <mat-form-field floatLabel="always" appearance="none">
                   <mat-label class="label ">Seleccionar tipo de kit...</mat-label>
-                  <mat-select formControlName="kits" placeholder="Seleccione un kit" (selectionChange)="getKit()">
-                      <mat-option *ngFor="let kits of kit" [value]="kits.name">{{kits.name}}</mat-option>
+                  <mat-select formControlName="kits" placeholder="Seleccione un kit">
+                      <mat-option *ngFor="let kits of kit" [value]="kits._id">{{kits.name}}</mat-option>
                       <mat-option *ngIf="kit?.length==0 " disabled value=""><i>No hay kits disponibles</i></mat-option>
                   </mat-select>
                   <mat-error *ngIf=" fieldsValidKit('kits')">Campo requerido</mat-error>
               </mat-form-field>
 
                 <mat-card-actions>
-                    <button [disabled]="!generalkit.get('kits')?.valid" type="button" mat-flat-button class="btn-block mat-elevation-z6 generate" (click)="kitQr()">
+                    <button [disabled]="generalkit.get('kits')?.invalid" type="button" mat-flat-button class="btn-block mat-elevation-z6 generate" (click)="kitQr()">
                     Generar
                     </button>
                 </mat-card-actions>
 
                 <div class="qr-container grid-item">
-                  <div class="qr-info" *ngIf="qrKit !== ''">
+                  <div class="qr-info" *ngIf="idKit !== ''">
                     <img src="assets/images/Logo-seti.png " alt="logo seti " />
                     <p>Kit</p>
+                    <qrcode class="qrKit" [scale]="1 " [margin]="1 " [qrdata]="idKit" [width]="256 " [errorCorrectionLevel]=" 'M' "></qrcode>
+                  </div>
                 </div>
-                    <qrcode class="qrKit" [scale]="1 " [margin]="1 " [qrdata]="qrKit " [width]="256 " [errorCorrectionLevel]=" 'M' "></qrcode>
-                </div>
+
               </form>
 
 
