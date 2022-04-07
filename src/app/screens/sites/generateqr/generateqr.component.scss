@@ -122,6 +122,7 @@ mat-card {
 .qr-container {
     display: flex;
     text-align: center;
+    justify-content: center !important;
 }
 
 mat-form-field{
