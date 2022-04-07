@@ -44,6 +44,10 @@ export class SitesComponent implements OnInit {
     capacity: ['', [Validators.required, Validators.min(1), Validators.max(999)]],
     status: [false, Validators.required],
   });
+  formKits = this.fg.group({
+    name: ['', Validators.required],
+    status: [false, Validators.required],
+  });
   dataRegister: any;
   venues: any[] = [];
   offices: any[] = [];
@@ -83,6 +87,9 @@ export class SitesComponent implements OnInit {
         case 'Sedes':
           this.formVenues.patchValue(this.data.dataSite);
           break;
+        case 'Kits':
+          this.formKits.patchValue(this.data.dataSite);
+          break;
       }
       this.sites = this.data.dataSite.status;
       if (this.subtitle == 'Oficinas') {
@@ -100,14 +107,22 @@ export class SitesComponent implements OnInit {
       case 'Oficinas':
         this.formSites.disable({ onlySelf: true });
         this.formVenues.disable({ onlySelf: true });
+        this.formKits.disable({ onlySelf: true });
         break;
       case 'Sitios':
         this.formOffices.disable({ onlySelf: true });
         this.formVenues.disable({ onlySelf: true });
+        this.formKits.disable({ onlySelf: true });
         break;
       case 'Sedes':
         this.formOffices.disable({ onlySelf: true });
         this.formSites.disable({ onlySelf: true });
+        this.formKits.disable({ onlySelf: true });
+        break;
+      case 'Kits':
+        this.formOffices.disable({ onlySelf: true });
+        this.formSites.disable({ onlySelf: true });
+        this.formVenues.disable({ onlySelf: true });
         break;
     }
   }
@@ -173,10 +188,13 @@ export class SitesComponent implements OnInit {
         );
         break;
       case 'Sedes':
-        this.formVenues.get('phoneNumber')?.patchValue(
-          this.formVenues.get('phoneNumber')?.value.toString()
-        );
+        this.formVenues
+          .get('phoneNumber')
+          ?.patchValue(this.formVenues.get('phoneNumber')?.value.toString());
         this.data.add ? this.addRegister(this.formVenues) : this.updateSites(this.formVenues);
+        break;
+      case 'Kits':
+        this.data.add ? this.addRegister(this.formKits) : this.updateSites(this.formKits);
         break;
     }
   }

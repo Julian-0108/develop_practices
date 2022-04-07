@@ -164,11 +164,40 @@
     </div>
   </div>
 </form>
+
+<!-- formulario Kits -->
+<form [formGroup]="formKits" novalidate autocomplete="off" *ngIf="subtitle=='Kits'">
+  <h1 class="dialog-title">{{data?.title}}</h1>
+  <div class="formUp">
+    <div class="item">
+      <div class="content">
+        <mat-form-field floatLabel="always" appearance="none">
+          <mat-label class="label">Nombre</mat-label>
+          <input matInput type="text" formControlName="name" />
+          <app-validator [form]="formVenues" name="name"></app-validator>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="contentStatus">
+      <mat-label class="label">Estado</mat-label>
+      <mat-button-toggle-group
+        #statusToggleButton
+        mat
+        Tooltip="Indica si el registro esta activo o inactivo"
+        formControlName="status"
+      >
+        <mat-button-toggle [value]="true" checked="{{ sites }}">Activo</mat-button-toggle>
+        <mat-button-toggle [value]="false" checked="{{ !sites }}">Inactivo</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+</form>
+
   <div class="buttonAction">
     <button mat-button class="button button--accept" (click)="onSubmit()"
-    [ngClass]="{'button--accept': this.formVenues?.valid || this.formOffices?.valid|| this.formSites?.valid ,
-    'button--disabled': this.formVenues?.invalid || this.formOffices?.invalid|| this.formSites?.invalid }"
-    [disabled]="this.formVenues?.invalid || this.formOffices?.invalid|| this.formSites?.invalid">Guardar</button>
+    [ngClass]="{'button--accept': this.formVenues?.valid || this.formOffices?.valid|| this.formSites?.valid ||this.formKits?.valid,
+    'button--disabled': this.formVenues?.invalid || this.formOffices?.invalid|| this.formSites?.invalid ||this.formKits?.invalid }"
+    [disabled]="this.formVenues?.invalid || this.formOffices?.invalid|| this.formSites?.invalid ||this.formKits?.invalid">Guardar</button>
     <button mat-button class="button button--cancel" type="button" [mat-dialog-close]="true">
       Cancelar
     </button>

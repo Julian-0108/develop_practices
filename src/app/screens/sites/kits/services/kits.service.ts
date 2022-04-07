@@ -11,7 +11,7 @@ export class KitsService {
 
   // GET kits list from DB
   getKitsList() {
-    let url = API_URL + '/kit/getKits';
+     let url = API_URL + '/kit/getKits';
     return this.http.get(url);
   }
 
