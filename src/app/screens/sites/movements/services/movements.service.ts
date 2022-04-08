@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { API_URL } from 'src/environments/environment';
+import { Injectable} from '@angular/core';
+import { HttpClient} from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { pluck } from 'rxjs/operators';
 
 
 @Injectable({
@@ -10,10 +11,10 @@ export class MovementsService {
 
   constructor(private http: HttpClient) { }
 
-  // GET movements list from DB
-  getMovementsList() {
-    let url = API_URL + '/movements/getAll';
-    return this.http.get(url);
+  async getMovementsList() {
+    return await this.http.get(`${environment.API_SITESAPP}/movements`)
+    .pipe(pluck('payload'))
+    .toPromise();
   }
 
 }
