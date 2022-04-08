@@ -148,7 +148,7 @@ export class GenerateqrComponent implements OnInit {
 
   kitQr() {
     if (this.generalkit.valid) {
-      this.idKit = `${this.generalkit.get('kits')?.value}` + ':kit generado';
+      this.idKit = `${this.generalkit.get('kits')?.value}` + ':kit';
     }
   }
 }
