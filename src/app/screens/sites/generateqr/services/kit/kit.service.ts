@@ -8,12 +8,12 @@ import { environment } from '@environments/environment';
   providedIn: "root",
 })
 
-export class OfficeService {
+export class KitService {
   constructor(private http: HttpClient) { }
 
-  async getListOffices():Promise<any>{
+  async getListKit():Promise<any>{
     return await this.http
-    .get(`${environment.API_SITESAPP}/offices?status=true`)
+    .get(`${environment.API_SITESAPP}/kit?status=true`)
     .pipe(pluck('payload'))
     .toPromise();
   }

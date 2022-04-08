@@ -5,7 +5,6 @@ import { Tables } from './interfaces/configTable.interface';
 import { ConfigTableServices } from './services/configTable.services';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchFilterPipe } from '@app/shared/pipes/Search-Filter.pipe';
-import { AutofillMonitor } from '@angular/cdk/text-field';
 
 @Component({
   selector: 'app-config-table',
