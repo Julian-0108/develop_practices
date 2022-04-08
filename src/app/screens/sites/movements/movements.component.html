@@ -47,7 +47,7 @@
                   <div class="filter-inputs">
                       <mat-form-field floatLabel="always" appearance="none">
                           <input matInput type="text"
-                          autocomplete="off" [formControl]="name" (blur)="filterData($event.target.value,'nombre')">
+                          autocomplete="off" [formControl]="dni" (blur)="filterData($event.target.value,'dni')">
                       </mat-form-field>
                   </div>
               </th>
@@ -85,7 +85,7 @@
             <!-- Sede Column -->
             <ng-container matColumnDef="sede">
                 <th mat-header-cell *matHeaderCellDef> Sede
-                    <div class="filter-inputs">
+                    <div class="filter-inputs d_site">
                         <mat-form-field floatLabel="always" appearance="none">
                             <mat-select [formControl]="campus" (selectionChange)="filterData($event.value,'venues.name')">
                                 <mat-option value="">Ver Todos</mat-option>
