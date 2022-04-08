@@ -1,50 +1,98 @@
-<button (click)="redirect()" class="button-back" mat-mini-fab aria-label="back button"></button>
-<div class="container">
+<body class="background">
+  <button routerLink="/sites" class="button-back" mat-mini-fab aria-label="back button"></button>
+<div  fxLayout="column">
+  <div class="title__container">
+      <h1 class="title">Kits</h1>
+      <h2>Reporte general de kit</h2>
+  </div>
 
-    <div class="filter" fxLayoutAlign="center center">
-        <mat-form-field floatLabel="always" appearance="none" style="margin-bottom: 20px;">
-            <mat-label class="label">Filtrar</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar por nombre, cedula...">
-        </mat-form-field>
-    </div>
+  <div class="container mat-elevation-z7">
 
-    <div class="mat-elevation-z7">
+    <form [formGroup]="formFilterHistory" novalidate autocomplete="off" fxLayout="row" class="filter_dates">
+      <div class="item" fxFlex="25">
+          <mat-form-field floatLabel="always" appearance="none">
+              <mat-label>Fecha Inicial</mat-label>
+              <input placeholder="dd/mm/yyyy" (dateInput)="filterDateStart($event,'filterDate')" matInput [max]="maxDate" [matDatepicker]="pickerStart" formControlName="startDate" (click)="pickerStart.open()">
+              <mat-datepicker-toggle matSuffix [for]="pickerStart" class="datePicker__icon"></mat-datepicker-toggle>
+              <mat-datepicker #pickerStart></mat-datepicker>
+          </mat-form-field>
+      </div>
+      <div class="item" fxFlex="25">
+          <mat-form-field floatLabel="always" appearance="none">
+              <mat-label>Fecha Final</mat-label>
+              <input placeholder="dd/mm/yyyy" (dateInput)="filterDateEnd($event,'filterDate')" matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerEnd" formControlName="endDate" (click)="pickerEnd.open()">
+              <mat-datepicker-toggle matSuffix [for]="pickerEnd" class="datePicker__icon"></mat-datepicker-toggle>
+              <mat-datepicker #pickerEnd></mat-datepicker>
+          </mat-form-field>
+      </div>
+  </form>
 
-        <!-- <div class="loading-shade" *ngIf="isLoadingResults">
-            <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-        </div> -->
+      <table mat-table matTableExporter [dataSource]="dataSource" matSort #exporter="matTableExporter">
 
-        <table mat-table [dataSource]="dataSource" matSort>
+          <!-- Nombre Column -->
+          <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Nombre
+                    <div class="filter-inputs">
+                        <mat-form-field floatLabel="always" appearance="none">
+                            <input matInput type="text"
+                            autocomplete="off" (blur)="filterData($event.target.value,'name')">
+                        </mat-form-field>
+                    </div>
+              </th>
+              <td mat-cell *matCellDef="let row"> {{ row.name | titlecase }} </td>
+          </ng-container>
 
-            <!-- ID Column -->
-            <ng-container matColumnDef="cedula">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Identificación </th>
-                <td mat-cell *matCellDef="let row"> {{ row.cedula }} </td>
-            </ng-container>
+          <!-- identificacion Column -->
+          <ng-container matColumnDef="idCard">
+              <th mat-header-cell *matHeaderCellDef>Identificacion
+                <div class="filter-inputs">
+                  <mat-form-field floatLabel="always" appearance="none">
+                      <input matInput type="text"
+                      autocomplete="off" (blur)="filterData($event.target.value,'idCard')">
+                  </mat-form-field>
+              </div>
+              </th>
+              <td mat-cell *matCellDef="let row"> {{ row.idCard | titlecase }} </td>
+          </ng-container>
 
-            <!-- Nombre Column -->
-            <ng-container matColumnDef="nombre">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-                <td mat-cell *matCellDef="let row"> {{ row.nombre | titlecase }} </td>
-            </ng-container>
+          <!-- Recibido Column -->
+          <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef> Tipo
+                <div class="filter-inputs">
+                  <mat-form-field floatLabel="always" appearance="none">
+                      <input matInput type="text"
+                      autocomplete="off" (blur)="filterData($event.target.value,'name')">
+                  </mat-form-field>
+              </div>
+              </th>
+              <td mat-cell *matCellDef="let row"> {{ row.type }} </td>
+          </ng-container>
+          <!-- Fecha Column -->
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>Fecha
+              <div class="filter-inputs actions_filter_input">
+                <mat-form-field floatLabel="always">
+                  <input matInput class="filter" type="text" autocomplete="off">
+                </mat-form-field>
+              </div>
+            </th>
+            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.date | date: 'dd/MM/yyyy'}} </td>
+          </ng-container>
 
-            <!-- Recibido Column -->
-            <ng-container matColumnDef="entregado">
-                <th mat-header-cell *matHeaderCellDef> Recibido </th>
-                <td mat-cell *matCellDef="let row"> {{ row.entregado | titlecase }} </td>
-            </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
 
-            <!-- Fecha Column -->
-            <ng-container matColumnDef="fecha">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
-                <td mat-cell *matCellDef="let row"> {{ row.fecha | date: 'dd/MM/yyyy HH:mm': 'UTC' }} </td>
-            </ng-container>
+      <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+  </div>
+  <div align="end" class="botton_export">
+    <!-- <button mat-fab color="warn" mat-button (click)="dat()">
+        <mat-icon>download</mat-icon>
+    </button> -->
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-            </tr>
-        </table>
-
-        <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50, 100]"></mat-paginator>
-    </div>
+    <button mat-fab color="warn" mat-button (click)="exporter.exportTable('xlsx',{fileName: nameFile()})">
+        <mat-icon>download</mat-icon>
+    </button>
 </div>
+</div>
+</body>

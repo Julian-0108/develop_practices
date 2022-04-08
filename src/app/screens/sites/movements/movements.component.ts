@@ -31,7 +31,7 @@ export class MovementsComponent implements OnInit {
 
   isLoadingResults = true;
   displayedColumns: string[] = [
-    'nombre', 'tipo', 'micrositio', 'sede', 'fecha'
+    'nombre','identificacion', 'tipo', 'micrositio', 'sede', 'fecha'
   ];
   dataSource!: MatTableDataSource<Object>;
   datePipe = new DatePipe('es-CO');
