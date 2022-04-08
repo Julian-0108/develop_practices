@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { formatDate } from '@angular/common';
 import { SitesService } from './services/sites/sites.service';
 import { OfficeService } from './services/office/office.service';
 import { VenuesService } from './services/venues/venues.service';
@@ -37,9 +36,9 @@ export class GenerateqrComponent implements OnInit {
     office: ['', Validators.required],
     site: ['', Validators.required],
   });
-  generalkit=this.fb.group({
+  generalkit = this.fb.group({
     kits: ['', Validators.required],
-  })
+  });
 
   ngOnInit() {
     this.getVenues();
@@ -47,7 +46,7 @@ export class GenerateqrComponent implements OnInit {
   }
 
   getVenues() {
-    this.idKit = ''
+    this.idKit = '';
     this.serviceVenues
       .getListVenues()
       .then((venuesInfo: any) => {
@@ -114,26 +113,22 @@ export class GenerateqrComponent implements OnInit {
       .catch((error: any) => console.log(error));
   }
   getKit() {
-    this.serviceKit
-      .getListKit()
-      .then((kitInfo:any) =>{
-        this.kit = kitInfo;
-        console.log("dataaaa",this.kit)
-        if (this.kit.length === 0) {
-          this.notificationService.openSimpleSnackBar({
-            title: 'Sin registros',
-            message: 'No se encontraron kits',
-            type: 'info',
-          });
-        }
-      })
+    this.serviceKit.getListKit().then((kitInfo: any) => {
+      this.kit = kitInfo;
+      if (this.kit.length === 0) {
+        this.notificationService.openSimpleSnackBar({
+          title: 'Sin registros',
+          message: 'No se encontraron kits',
+          type: 'info',
+        });
+      }
+    });
   }
-
 
   fieldsValid(field: string) {
     return !this.general.get(field)?.valid && this.general.get(field)?.touched;
   }
-  fieldsValidKit(field:string){
+  fieldsValidKit(field: string) {
     return !this.generalkit.get(field)?.valid && this.generalkit.get(field)?.touched;
   }
 
@@ -152,10 +147,8 @@ export class GenerateqrComponent implements OnInit {
   }
 
   kitQr() {
-  if(this.generalkit.valid){
-    this.idKit = `${this.generalkit.get('kits')?.value}`+':kit generado';
-    console.log('eeeeeee'+ this.idKit)
-
-  }
+    if (this.generalkit.valid) {
+      this.idKit = `${this.generalkit.get('kits')?.value}` + ':kit generado';
+    }
   }
 }
