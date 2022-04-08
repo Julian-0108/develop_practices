@@ -142,8 +142,6 @@ export class GenerateqrComponent implements OnInit {
       this.qrEntry = `${this.idSites}` + ':entrada';
       this.qrExit = `${this.idSites}` + ':salida';
     }
-    // this.qrEntry = `5ec7e1e79b2edecdbf525e8f` + ':entrada'
-    // this.qrExit = `5ec7e1e79b2edecdbf525e8f` + ':salida'
   }
 
   kitQr() {
