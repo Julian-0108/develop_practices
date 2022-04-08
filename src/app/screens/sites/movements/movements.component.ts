@@ -47,8 +47,9 @@ export class MovementsComponent implements OnInit {
     endDate: new FormControl(),
   });
 
-  type= new FormControl(null);
   name= new FormControl(null);
+  dni = new FormControl(null)
+  type= new FormControl(null);
   microsite= new FormControl(null);
   campus= new FormControl(null);
 
