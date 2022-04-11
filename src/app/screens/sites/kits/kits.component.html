@@ -76,7 +76,7 @@
                 </mat-form-field>
               </div>
             </th>
-            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.date | date: 'dd/MM/yyyy'}} </td>
+            <td mat-cell class="centerTable" *matCellDef="let element"> {{element.date | date: 'dd/MM/yyyy h:mm:ss a'}} </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
