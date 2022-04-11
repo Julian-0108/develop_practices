@@ -35,24 +35,23 @@
                     <div class="filter-inputs">
                         <mat-form-field floatLabel="always" appearance="none">
                             <input matInput type="text"
-                            autocomplete="off" [formControl]="name" (blur)="filterData($event.target.value,'nombre')">
+                            autocomplete="off" [formControl]="name" (blur)="filterData($event.target.value,'name')">
                         </mat-form-field>
                     </div>
                 </th>
-                <td mat-cell *matCellDef="let row"> {{ row.nombre | titlecase }} </td>
+                <td mat-cell *matCellDef="let row"> {{ row.name | titlecase }} </td>
             </ng-container>
 
-            <!-- IDENTIFICACION Column -->
             <ng-container matColumnDef="identificacion">
               <th mat-header-cell *matHeaderCellDef> Identificación
                   <div class="filter-inputs">
                       <mat-form-field floatLabel="always" appearance="none">
                           <input matInput type="text"
-                          autocomplete="off" [formControl]="name" (blur)="filterData($event.target.value,'nombre')">
+                          autocomplete="off" [formControl]="dni" (blur)="filterData($event.target.value,'dni')">
                       </mat-form-field>
                   </div>
               </th>
-              <td mat-cell *matCellDef="let row"> {{ row.identificacion | titlecase }} </td>
+              <td mat-cell *matCellDef="let row"> {{ row.dni | titlecase }} </td>
           </ng-container>
 
             <!-- Tipo Column -->
@@ -60,14 +59,14 @@
                 <th mat-header-cell *matHeaderCellDef> Tipo
                     <div class="filter-inputs">
                         <mat-form-field floatLabel="always" appearance="none">
-                            <mat-select [formControl]="type" (selectionChange)="filterData($event.value,'tipo')">
+                            <mat-select [formControl]="type" (selectionChange)="filterData($event.value,'type')">
                                 <mat-option value="">Ver Todos</mat-option>
                                 <mat-option *ngFor="let tipo of tipos" [value]="tipo">{{tipo}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
                 </th>
-                <td mat-cell *matCellDef="let row"> {{ row.tipo | titlecase }} </td>
+                <td mat-cell *matCellDef="let row"> {{ row.type | titlecase }} </td>
             </ng-container>
 
             <!-- Micrositio Column -->
@@ -76,38 +75,38 @@
                     <div class="filter-inputs">
                         <mat-form-field floatLabel="always" appearance="none">
                             <input matInput type="text"
-                            autocomplete="off" [formControl]="microsite" (keyup)="filterData($event.target.value,'micrositio')">
+                            autocomplete="off" [formControl]="microsite" (keyup)="filterData($event.target.value,'site.name')">
                         </mat-form-field>
                     </div>
                 </th>
-                <td mat-cell *matCellDef="let row"> {{ row.micrositio }} </td>
+                <td mat-cell *matCellDef="let row"> {{ row?.sites?.name }} </td>
             </ng-container>
 
             <!-- Sede Column -->
             <ng-container matColumnDef="sede">
                 <th mat-header-cell *matHeaderCellDef> Sede
-                    <div class="filter-inputs">
+                    <div class="filter-inputs d_site">
                         <mat-form-field floatLabel="always" appearance="none">
-                            <mat-select [formControl]="campus" (selectionChange)="filterData($event.value,'sede')">
+                            <mat-select [formControl]="campus" (selectionChange)="filterData($event.value,'venues.name')">
                                 <mat-option value="">Ver Todos</mat-option>
                                 <mat-option *ngFor="let venue of venues" [value]="venue.name">{{venue.name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
                 </th>
-                <td mat-cell *matCellDef="let row"> {{ row.sede }} </td>
+                <td mat-cell *matCellDef="let row"> {{ row?.venues?.name }} </td>
             </ng-container>
 
             <!-- Fecha Column -->
             <ng-container matColumnDef="fecha">
                 <th mat-header-cell *matHeaderCellDef> Fecha
-                    <div class="filter-inputs actions_filter_input">
+                    <div class="filter-inputs actions_filter_input d_site">
                         <mat-form-field floatLabel="always">
                           <input matInput class="filter" type="text" autocomplete="off">
                         </mat-form-field>
                       </div>
                 </th>
-                <td mat-cell *matCellDef="let row"> {{ row.fecha | date: 'dd/MM/yyyy HH:mm': 'UTC' }} </td>
+                <td mat-cell *matCellDef="let row"> {{ row.createdAt | date: 'dd/MM/yyyy h:mm:ss a' }} </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -118,10 +117,6 @@
     </div>
 
     <div align="end" class="botton_export">
-        <!-- <button mat-fab color="warn" mat-button (click)="dat()">
-            <mat-icon>download</mat-icon>
-        </button> -->
-
         <button mat-fab color="warn" mat-button (click)="exporter.exportTable('xlsx',{fileName: nameFile()})">
             <mat-icon>download</mat-icon>
         </button>
