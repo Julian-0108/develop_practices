@@ -32,7 +32,6 @@ export class AddUserComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.getUsers();
     this.getPersonal();
     this.form = this.createForm();
     this.filteredOptions = this.dataInfo.valueChanges.pipe(
