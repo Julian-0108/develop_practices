@@ -9,8 +9,7 @@ export const environment = {
   API_REQUISITIONS: 'http://mundoseti-dllo.setiad.com.co:31030',
   API_BASE_PROFILES : 'http://mundoseti-dllo.setiad.com.co:31024',
   API_SECURITY: 'http://mundoseti-dllo.setiad.com.co:31022',
-  API_SITESAPP: 'http://mundoseti-dllo.setiad.com.co:31031',
-  API_LOCAL:'http://localhost:80'
+  API_SITESAPP: 'http://mundoseti-dllo.setiad.com.co:31031'
 };
 
 export const API_URL = 'https://sitios.setiaws.com';
