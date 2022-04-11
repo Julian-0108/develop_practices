@@ -15,12 +15,14 @@ export class GenerateqrComponent implements OnInit {
   qrEntry: string = '';
   qrExit: string = '';
   myDate!: string;
-  idSites: any;
   idKit: any;
   sites: any[] = [];
   venues: any[] = [];
   offices: any[] = [];
   kit: any[] = [];
+  kitName:string="";
+  siteInfo: any;
+  site:string="";
 
   constructor(
     private serviceSites: SitesService,
@@ -133,20 +135,26 @@ export class GenerateqrComponent implements OnInit {
   }
 
   addIdSite(valueSite: any) {
+    this.siteInfo = valueSite;
     this.general.get('site')?.setValue(valueSite.name);
-    this.idSites = valueSite.id;
+  }
+
+  getNameKit(){
+    return this.kit.filter((kit:any)=>kit._id===this.generalkit.get('kits')?.value)[0]?.name
   }
 
   generateQr() {
     if (this.general.valid) {
-      this.qrEntry = `${this.idSites}` + ':entrada';
-      this.qrExit = `${this.idSites}` + ':salida';
+      this.site = this.general.get('site')?.value;
+      this.qrEntry = `${this.siteInfo.id}:entrada`;
+      this.qrExit = `${this.siteInfo.id}:salida`;
     }
   }
 
   kitQr() {
     if (this.generalkit.valid) {
-      this.idKit = `${this.generalkit.get('kits')?.value}` + ':kit';
+      this.idKit = `${this.generalkit.get('kits')?.value}:kit`;
+      this.kitName=this.getNameKit();
     }
   }
 }
