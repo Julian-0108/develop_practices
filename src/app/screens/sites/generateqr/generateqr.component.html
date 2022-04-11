@@ -36,7 +36,7 @@
                       <mat-form-field floatLabel="always" appearance="none">
                           <mat-label class="label ">Seleccionar sitio...</mat-label>
                           <mat-select placeholder="Seleccione un sitio" (selectionChange)="addIdSite($event.value)">
-                              <mat-select-trigger>{{general.get('site')?.value}}</mat-select-trigger>
+                              <mat-select-trigger>{{siteInfo?.name}}</mat-select-trigger>
                               <mat-option *ngFor="let site of sites" [value]="site">{{site.name}}</mat-option>
                               <!-- <mat-option *ngIf="sites?.length==0" disabled value=""><i>No hay sitios disponibles</i></mat-option> -->
                           </mat-select>
@@ -45,7 +45,7 @@
                   </mat-card-content>
 
                   <mat-card-actions>
-                      <button [disabled]="!general.get('site')?.valid" (click)="generateQr()" mat-flat-button class="btn-block mat-elevation-z6 generate">
+                      <button [disabled]="general.get('site')?.invalid" (click)="generateQr()" mat-flat-button class="btn-block mat-elevation-z6 generate">
                       Generar
                       </button>
                   </mat-card-actions>
@@ -56,7 +56,7 @@
                   <div fxFlex="50">
                       <div class="qr-info" *ngIf="qrEntry !== ''">
                           <img src="assets/images/Logo-seti.png " alt="logo seti " />
-                          <p>{{ general.get('site')?.value }} (Entrada)</p>
+                          <p>{{ site }} (Entrada)</p>
                           <qrcode [scale]="1 " [margin]="1 " [qrdata]="qrEntry" [width]="256 " [errorCorrectionLevel]=" 'M' "></qrcode>
                       </div>
 
@@ -65,7 +65,7 @@
                   <div fxFlex="50">
                       <div class="qr-info" *ngIf="qrExit !== ''">
                           <img src="assets/images/Logo-seti.png " alt="logo seti " />
-                          <p>{{ general.get('site')?.value }} (Salida)</p>
+                          <p>{{ site }} (Salida)</p>
                           <qrcode [scale]="1 " [margin]="1 " [qrdata]="qrExit" [width]="256 " [errorCorrectionLevel]=" 'M' "></qrcode>
                       </div>
 
@@ -102,7 +102,7 @@
                 <div class="qr-container grid-item">
                   <div class="qr-info" *ngIf="idKit !== ''">
                     <img src="assets/images/Logo-seti.png " alt="logo seti " />
-                    <p>Kit</p>
+                    <p *ngIf="this.kitName.length > 0">{{ kitName }}</p>
                     <qrcode class="qrKit" [scale]="1 " [margin]="1 " [qrdata]="idKit" [width]="256 " [errorCorrectionLevel]=" 'M' "></qrcode>
                   </div>
                 </div>
