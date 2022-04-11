@@ -12,11 +12,11 @@ export class AddUserService {
 
 
   async postUser(value:any): Promise<any>{
-   return await this.http.post(`${environment.API_LOCAL}/users-permission`,value).toPromise();
+   return await this.http.post(`${environment.API_SECURITY}/users-permission`,value).toPromise();
   }
 
   async getUser(dni:number):Promise<any>{
-    return await this.http.get(`${environment.API_LOCAL}/users-permission/all?dni=${dni}`)
+    return await this.http.get(`${environment.API_SECURITY}/users-permission/all?dni=${dni}`)
     .pipe(pluck('payload'))
     .toPromise();
   }
