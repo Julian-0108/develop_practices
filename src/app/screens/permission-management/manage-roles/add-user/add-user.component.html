@@ -17,7 +17,7 @@
       </div>
     </div>
   <div class="dialog__options">
-    <button mat-button class="button button--accept" (click)="saveInfo()">Guardar</button>
+    <button mat-button [ngClass]="{'button--accept': this.dataInfo.value !== null || this.dataInfo.value !== '' ,'button--disabled': this.dataInfo.value == null || this.dataInfo.value == ''}" [disabled]="this.dataInfo.value == null || this.dataInfo.value == ''" (click)="saveInfo()">Guardar</button>
     <button mat-button class="button button--cancel" [mat-dialog-close]="true">Cancelar</button>
   </div>
 </mat-dialog-content>
