@@ -115,7 +115,7 @@ export class MovementsComponent implements OnInit {
     const endDate =
       this.formFilterHistory.value.endDate === null
         ? moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
-        : moment(this.formFilterHistory.value.endDate).format('YYYY-MM-DD HH:mm:ss');
+        : moment(this.formFilterHistory.value.endDate).add('hour', 23).add('minutes', 59).add('seconds', 59).format('YYYY-MM-DD HH:mm:ss');
       return this.infoData.filter(
         (item: any) =>
           moment(item.createdAt).isSameOrAfter(startDate) &&
@@ -141,7 +141,7 @@ export class MovementsComponent implements OnInit {
       mm: date.getMonth() + 1,
       yyyy: date.getFullYear()
     }
-    return (`Movimientos ${format.dd}/${format.mm}/${format.yyyy}`)
+    return (`Movimientos ${format.dd}-${format.mm}-${format.yyyy}`)
   }
 
 }
