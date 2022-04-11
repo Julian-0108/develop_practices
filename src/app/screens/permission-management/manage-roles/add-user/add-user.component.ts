@@ -48,54 +48,9 @@ export class AddUserComponent implements OnInit {
       area: ['',Validators.required],
       email:['',[Validators.email,Validators.required]],
       dni:['',Validators.required],
-      roles: ['',Validators.required]
+      roles: ['']
     });
   }
-
-  // onSubmit() {
-  //   if (this.form.invalid) {
-  //     this.notificationService.openSimpleSnackBar(
-  // {type: 'error', title: 'Error en el formulario', message: 'Revisa la información del formulario'});
-  //     this.form.markAllAsTouched();
-  //     return;
-  //   }
-
-  //   const validateEmail = this.options.some(correo => correo === this.form.get('correo')?.value);
-  //   if (!validateEmail) {
-  //     this.notificationService.openSimpleSnackBar(
-  // {type: 'error', title: 'Error en el formulario', message: 'El correo electronico no se encuentra registrado'});
-  //     this.form.markAllAsTouched();
-  //     return;
-  //   }
-
-  //   const isRegistered = this.data.dataSourceUsers.some((user: any) => user.correo === this.form.get('correo')?.value);
-  //   if (isRegistered) {
-  //     this.notificationService.openSimpleSnackBar(
-  // {type: 'error', title: 'Error en el formulario', message: 'El correo ya se encuentra registrado en el rol'});
-  //     this.form.markAllAsTouched();
-  //     return;
-  //   }
-
-  //   const user: any = this.users.find((user: any) => user.correo === this.form.get('correo')?.value);
-  //   user.roles.push(this.data.rolSelected._id);
-
-  //   this.rolesService.updateUserRoles(user.correo, user.roles)
-  //   .then(() => {
-  //     this.notificationService.openSimpleSnackBar(
-  // {type: 'success', title: 'Operación exitosa', message: 'Rol agregado al usuario correctamente'});
-  //     this.dialogRef.close({ success: true });
-  //   })
-  //   .catch()
-  // }
-
-  // getUsers() {
-  //   this.rolesService.getUsers()
-  //   .then(response => {
-  //     this.options = response.payload.map((user: any) => user.correo);
-  //     this.users = response.payload;
-  //   })
-  //   .catch();
-  // }
 
   private _filter(value: string) {
     const filterValue = value.toLowerCase();
@@ -113,30 +68,58 @@ export class AddUserComponent implements OnInit {
     return value?value.name:undefined;
   }
 
-
-  saveInfo(){
-    if(this.dataInfo.value !== null){
-      this.form.patchValue(this.dataInfo.value);
-      this.form.get('roles')?.setValue([this.data.rolSelected._id]);
-      if(this.form.valid){
-        this.addUserService.postUser(this.form.value).then((val:any) => {
-          if(val.successful === true && val.payload !== []){
-            this.notificationService.openSimpleSnackBar(
-              {title: 'Usuario añadido', message: `${val.message}`, type: 'success'}
-            );
-          }else{
-            this.notificationService.openSimpleSnackBar(
-              {title: 'Usuario no añadido', message: `${val.message}`, type: 'error'}
-            );
-          }
-          this.dialogref.close(true);
-        }
-        ).catch((error: any) => console.log(error));
-      }
-    }else{
-      this.notificationService.openSimpleSnackBar(
-        {title: 'Nombre no seleccionado', message: 'Por favor selecciona un persona', type: 'info'}
-      );
+  alert(type:string,message?:string){
+    switch(type){
+      case 'success':
+        this.notificationService.openSimpleSnackBar(
+          {title: 'Usuario añadido', message: `${message}`, type: 'success'}
+        );
+        break;
+      case 'error':
+        this.notificationService.openSimpleSnackBar(
+          {title: 'Usuario no añadido', message: `${message}`, type: 'error'}
+        );
+        break;
+      case 'info':
+        this.notificationService.openSimpleSnackBar(
+          {title: 'Rol existente', message: 'el usuario ya posee el tipo de rol', type: 'info'}
+        );
+        break;
     }
   }
+
+
+  async saveInfo(){
+      this.form.patchValue(this.dataInfo.value);
+      if(this.form.valid){
+        await this.addUserService.getUser(+this.form.get('dni')?.value)
+        .then((resp:any) => {
+          if(resp.length > 0){
+            const roles = resp[0].roles.includes(this.data.rolSelected._id)
+            if(!roles){
+              resp[0].roles.push(this.data.rolSelected._id);
+              this.rolesService.updateUserRoles(resp[0].email,resp[0])
+              .then(() => {
+                this.alert('success','Rol asignado correctamente');
+                this.dialogref.close(true);
+              })
+            }else{
+              this.alert('info');
+            }
+          }else{
+            this.form.get('roles')?.setValue([this.data.rolSelected._id]);
+
+            this.addUserService.postUser(this.form.value).then((val:any) => {
+              if(val.successful === true && val.payload !== []){
+                this.alert('success',val.message);
+              }else{
+                this.alert('error',val.message);
+              }
+              this.dialogref.close(true);
+            }
+            )
+          }
+        }
+        )
+  }}
 }
