@@ -136,8 +136,8 @@ export class ManageRolesComponent implements OnInit {
       })
       .afterClosed()
       .toPromise()
-      .then((response: any) => {
-      if (response?.success) {
+      .then((response: boolean) => {
+      if (response) {
         this.getUsersByRol();
       }
     });
