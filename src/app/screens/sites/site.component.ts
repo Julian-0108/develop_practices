@@ -18,9 +18,9 @@ export class SiteComponent implements OnInit {
       imagePath: 'assets/images/dibujo mundo seti (generar qr).svg'
     },
     {
-      name: 'Kit de salud',
-      description: 'Kit de salud',
-      url: '/underConstruction',
+      name: 'Kits',
+      description: 'Reportes de Kits',
+      url: '/kits',
       imagePath: 'assets/images/Kit de salud.svg'
     },
     {

@@ -31,8 +31,13 @@ h1 {
   flex-direction: column;
   width: 37%;
 }
+.contentStatusKit{
+  margin-left: 13%;
+  display: flex;
+  flex-direction: column;
+  width: 37%;
+}
 input {
-  /* margin-top: 10px; */
   background-color: #ffffff !important;
   color: #707070 !important;
   padding: 3px;
@@ -61,9 +66,16 @@ input {
 }
 
 .buttonAction {
-  width: 88%;
+  width: 87%;
   display: flex;
   justify-content: flex-end;
+  margin-bottom: 10px;
+}
+.buttonActionKit {
+  width: 92%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
 }
 .buttonAcept {
   margin: 0px 5px;
@@ -83,4 +95,7 @@ input {
 }
 .disabled{
   background-color:  #e1e2e4 !important ;
+}
+.label2{
+  font-size: 12px;
 }
