@@ -21,7 +21,7 @@ export class SiteComponent implements OnInit {
       name: 'Kits',
       description: 'Reportes de Kits',
       url: '/kits',
-      imagePath: 'assets/images/Kit de salud.svg'
+      imagePath: 'assets/images/reporte movimientos kit.svg'
     },
     {
       name: 'Configuración de tablas',
