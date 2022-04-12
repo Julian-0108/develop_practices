@@ -14,7 +14,7 @@ export class ProfileSelectionComponent implements OnInit {
       name: 'Gestión HV',
       description: 'Repositorio de hojas de vida',
       url: '/manage-resumes',
-      imagePath: 'assets/images/Gestion_HV.svg'
+      imagePath: 'assets/images/hojaDeVida.svg'
     },
     {
       name: 'Estado procesos',
