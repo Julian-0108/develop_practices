@@ -566,7 +566,7 @@ mat-dialog-actions {
         font-size: 2.3em !important;
     }
     .main-subtitle {
-        font-size: 1.8em !important;
+        font-size: 1.8em;
     }
 }
 
@@ -583,7 +583,7 @@ mat-dialog-actions {
         font-size: 2.3em !important;
     }
     .main-subtitle {
-        font-size: 1.8em !important;
+        font-size: 1.8em;
     }
 }
 
@@ -669,4 +669,10 @@ mat-dialog-actions {
 .vertical-align{
     display: flex;
     align-items: center;
+}
+
+.actions_filter_input {
+    visibility: hidden;
+    width: 10em;
+    height: 51px;
 }

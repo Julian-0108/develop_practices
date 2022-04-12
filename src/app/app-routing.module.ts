@@ -47,9 +47,11 @@ const routes: Routes = [
       canActivate: [AuthGuard]
   },
   {
-    path: 'generateqr',
+    path: 'generate-qr',
     loadChildren: () =>
-      import('./screens/sites/generateqr/generateqr.module').then((m) => m.GenerateqrModule),
+      import('./screens/sites/generateqr/generateqr.module').then(
+        (m) => m.GenerateqrModule
+      ),
       canActivate: [AuthGuard]
   },
   {

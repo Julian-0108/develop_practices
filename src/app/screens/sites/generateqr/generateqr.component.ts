@@ -1,126 +1,160 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { SitesService } from './services/sites/sites.service';
-import { VenuesService } from './services/venues/venues.service';
 import { OfficeService } from './services/office/office.service';
-import { formatDate } from '@angular/common';
-import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
-
-const TOAST = Swal.mixin({
-  toast: true,
-  position: 'top-end',
-  showConfirmButton: false,
-  timer: 1500,
-  showCloseButton: true,
-  onOpen: (TOAST) => {
-    TOAST.addEventListener('mouseenter', Swal.stopTimer)
-    TOAST.addEventListener('mouseleave', Swal.resumeTimer)
-  }
-});
+import { VenuesService } from './services/venues/venues.service';
+import { NotificationService } from '@app/shared/components/notification/services/notification.service';
+import { KitService } from './services/kit/kit.service';
 
 @Component({
   selector: 'app-generateqr',
   templateUrl: './generateqr.component.html',
-  styleUrls: ['./generateqr.component.scss']
+  styleUrls: ['./generateqr.component.scss'],
 })
-
 export class GenerateqrComponent implements OnInit {
-
-  disabled: boolean = true
-  loading: boolean = false
-  showQrInfo: boolean = false;
-
-  selectedVenue: string = '';
-  selectedOffice: string = '';
-  selectedSite: string = '';
-
-  qrHormiguero: string = '';
-  qrHormigueroS: string = '';
-  qrKit: string = '';
-  myDate: any;
-
+  qrEntry: string = '';
+  qrExit: string = '';
+  myDate!: string;
+  idKit: any;
+  sites: any[] = [];
   venues: any[] = [];
   offices: any[] = [];
-  sites: any[] = [];
-
-  resultVenues: any[] = [];
-  resultOffices: any[] = [];
-  resultSites: any[] = [];
-  resultNameSites: any[] = [];
-
-  idSites: any;
+  kit: any[] = [];
+  kitName:string="";
+  siteInfo: any;
+  site:string="";
 
   constructor(
-    private _venuesService: VenuesService,
-    private _officeService: OfficeService,
-    private _sitesService: SitesService,
-    private router: Router,
+    private serviceSites: SitesService,
+    private serviceOffices: OfficeService,
+    private serviceVenues: VenuesService,
+    private serviceKit: KitService,
+    private notificationService: NotificationService,
+    private fb: FormBuilder
   ) {}
+
+  general = this.fb.group({
+    venue: ['', Validators.required],
+    office: ['', Validators.required],
+    site: ['', Validators.required],
+  });
+  generalkit = this.fb.group({
+    kits: ['', Validators.required],
+  });
 
   ngOnInit() {
     this.getVenues();
-  }
-
-  onSubmit() {
-    this.showQrInfo = true;
-    this.loading = false;
-    this.resultNameSites = this.sites
-      .find(sites => sites['_id'] == this.idSites).nombre;
-    this.qrHormiguero = `${this.idSites}` + ':entrada'
-    this.qrHormigueroS = `${this.idSites}` + ':salida'
+    this.getKit();
   }
 
   getVenues() {
-    this._venuesService.getVenueList().subscribe((data: any) => {
-      this.venues = data;
-      this.resultVenues = this.venues
-        .map(
-          (venues) => (venues['_id'])
-        );
+    this.idKit = '';
+    this.serviceVenues
+      .getListVenues()
+      .then((venuesInfo: any) => {
+        venuesInfo.forEach((element: { name: any }) => {
+          this.venues.push(element.name);
+        });
+        if (this.venues.length === 0) {
+          this.notificationService.openSimpleSnackBar({
+            title: 'Sin registros',
+            message: 'No se encontraron sedes',
+            type: 'info',
+          });
+        }
+      })
+      .catch((error: any) => console.log(error));
+  }
+
+  getOffices(venue: string) {
+    this.qrEntry = '';
+    this.qrExit = '';
+    this.serviceOffices
+      .getListOffices()
+      .then((officesInfo: any) => {
+        this.offices = [];
+        this.sites = [];
+        this.general.get('office')?.setValue('');
+        this.general.get('site')?.setValue('');
+        officesInfo.forEach((element: { idVenues: { name: string }; office: any }) => {
+          if (element.idVenues.name === venue) {
+            this.offices.push(element.office);
+          }
+        });
+        if (this.offices.length === 0) {
+          this.notificationService.openSimpleSnackBar({
+            title: 'Sin registros',
+            message: `No se encontraron oficinas segun la sede ${venue}`,
+            type: 'info',
+          });
+        }
+      })
+      .catch((error: any) => console.log(error));
+  }
+
+  getSites(office: string) {
+    this.qrEntry = '';
+    this.qrExit = '';
+    this.serviceSites
+      .getListSites()
+      .then((sitesInfo: any) => {
+        this.sites = [];
+        sitesInfo.forEach((element: { offices: { office: string }; _id: any; name: any }) => {
+          if (element.offices.office === office) {
+            this.sites.push({ id: element._id, name: element.name });
+          }
+        });
+        if (this.sites.length === 0) {
+          this.notificationService.openSimpleSnackBar({
+            title: 'Sin registros',
+            message: `No se encontraron sitios segun la oficina ${office}`,
+            type: 'info',
+          });
+        }
+      })
+      .catch((error: any) => console.log(error));
+  }
+  getKit() {
+    this.serviceKit.getListKit().then((kitInfo: any) => {
+      this.kit = kitInfo;
+      if (this.kit.length === 0) {
+        this.notificationService.openSimpleSnackBar({
+          title: 'Sin registros',
+          message: 'No se encontraron kits',
+          type: 'info',
+        });
+      }
     });
   }
 
-  onChangeVenue(value: string) {
-    this._officeService.getOfficeByVenueId(value).subscribe(
-      (data: any) => {
-        this.offices = data;
-
-        this.resultOffices = this.offices
-          .map(
-            (offices) => (offices['_id'])
-          );
-      }
-    )
+  fieldsValid(field: string) {
+    return !this.general.get(field)?.valid && this.general.get(field)?.touched;
+  }
+  fieldsValidKit(field: string) {
+    return !this.generalkit.get(field)?.valid && this.generalkit.get(field)?.touched;
   }
 
-  onChangeOffice(value: any) {
-    this._sitesService.getSitesByOfficeId(value).subscribe(
-      (data: any) => {
-        this.sites = data;
-
-        this.resultSites = this.sites
-          .map(
-            (sites) => (sites['_id'])
-          );
-      }
-    )
+  addIdSite(valueSite: any) {
+    this.siteInfo = valueSite;
+    this.general.get('site')?.setValue(valueSite.name);
   }
 
-  onChangeSite(value: any) {
-    this.idSites = value;
+  getNameKit(){
+    return this.kit.filter((kit:any)=>kit._id===this.generalkit.get('kits')?.value)[0]?.name
   }
 
-  onSubmitKit() {
-    this.myDate = formatDate(new Date(), 'yyyy-MM-dd-h:mm-a', 'en')
-    this.qrKit = `${this.myDate}` + ':kit';
+  generateQr() {
+    if (this.general.valid) {
+      this.site = this.general.get('site')?.value;
+      this.qrEntry = `${this.siteInfo.id}:entrada`;
+      this.qrExit = `${this.siteInfo.id}:salida`;
+    }
   }
 
-  redirect(){
-    this.router.navigate(['/sites']).then(
-      (res) => {
-        window.scrollTo(0, 10000)
-      }
-    );
+  kitQr() {
+    if (this.generalkit.valid) {
+      this.idKit = `${this.generalkit.get('kits')?.value}:kit`;
+      this.kitName=this.getNameKit();
+    }
   }
-
 }

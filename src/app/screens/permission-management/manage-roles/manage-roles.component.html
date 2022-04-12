@@ -52,25 +52,25 @@
                   <!-- Nombre Column -->
                   <ng-container matColumnDef="nombre">
                     <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                    <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                   </ng-container>
-  
+
                   <!-- Correo Column -->
                   <ng-container matColumnDef="correo">
                     <th mat-header-cell *matHeaderCellDef> Correo </th>
-                    <td mat-cell *matCellDef="let element"> {{element.correo}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
                   </ng-container>
-  
+
                   <!-- Area Column -->
                   <ng-container matColumnDef="area">
                     <th mat-header-cell *matHeaderCellDef> Área </th>
                     <td mat-cell *matCellDef="let element"> {{element.area}} </td>
                   </ng-container>
-  
+
                   <!-- Opciones Column -->
                   <ng-container matColumnDef="opciones">
                     <th mat-header-cell *matHeaderCellDef> </th>
-                    <td mat-cell *matCellDef="let element"> 
+                    <td mat-cell *matCellDef="let element">
                       <button mat-icon-button (click)="onDeleteUser(element)">
                         <mat-icon class="delete">delete</mat-icon>
                       </button>

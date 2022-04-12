@@ -30,26 +30,22 @@ export class ConfigTableComponents implements OnInit {
   help: string = 'help';
   idHistory!: string;
   subtitle: any = '';
-  url: any = '';
   urlUpdate: string = '';
   filterListSities: Array<any> = [];
-  filterSities = {
-    name: '',
-    address: '',
-    phoneNumber: '',
-    city: '',
-    status: '',
-    createdAt: '',
-    updatedAt: '',
-  };
+  filterSities: any = {};
   dataSource: MatTableDataSource<Tables | any> = new MatTableDataSource();
   btnAdd = false;
 
   public displayedColumns: string[] = [
     'name',
+    'nameVenues',
     'direction',
     'phone',
     'city',
+    'office',
+    'nameOffice',
+    'floor',
+    'capacity',
     'creationDate',
     'actualizationDate',
     'status',
@@ -61,46 +57,49 @@ export class ConfigTableComponents implements OnInit {
       name: 'Sedes',
       url: 'venues',
       sumary: 'Aquí puedes configurar las sedes de la empresa',
-      haveTypeField: false,
+      haveTypeField: true,
     },
     {
       name: 'Oficinas',
-      url: 'Offices',
+      url: 'offices',
       sumary: 'Aquí puedes configurar las oficinas',
       haveTypeField: false,
     },
+    {
+      name: 'Sitios',
+      url: 'sites',
+      sumary: 'Aquí puedes configurar los sitios',
+      haveTypeField: true,
+    },
+    {
+      name: 'Kits',
+      url: 'kit',
+      sumary: 'Aquí puedes configurar los kits de la empresa',
+      haveTypeField: true,
+    },
   ];
 
-  isOpen() {
-    this.open = true;
-  }
-
-  applyFilter(value: any, type: any) {
-    switch (type) {
-      case 'name':
-        this.filterSities.name = value;
-        break;
-      case 'address':
-        this.filterSities.address = value;
-        break;
-      case 'phoneNumber':
-        this.filterSities.phoneNumber = value;
-        break;
-      case 'city':
-        this.filterSities.city = value;
-        break;
-      case 'updatedAt':
-        this.filterSities.updatedAt = value;
-        break;
-      case 'createdAt':
-        this.filterSities.createdAt = value;
-        break;
-      case 'status':
-        this.filterSities.status = value;
-        break;
+  applyFilter(value: any, type: string) {
+    if (type == 'idVenues.name') {
+      const arraySource: any = [];
+      this.filterListSities.forEach((valuecompare: any) => {
+        if (valuecompare.idVenues.name.toLowerCase().includes(value)) {
+          arraySource.push(valuecompare);
+        }
+      });
+      this.dataSource = arraySource;
+    } else if (type == 'offices.office') {
+      const arraySource: any = [];
+      this.filterListSities.forEach((valuecompare: any) => {
+        if (valuecompare.offices.office.toLowerCase().includes(value)) {
+          arraySource.push(valuecompare);
+        }
+      });
+      this.dataSource = arraySource;
+    } else {
+      this.filterSities[type] = value;
+      this.dataSource = this.filter.transform(this.filterListSities, this.filterSities);
     }
-    this.dataSource = this.filter.transform(this.filterListSities, this.filterSities);
-    console.log(this.filterSities);
   }
 
   async getList(url: string) {
@@ -125,19 +124,63 @@ export class ConfigTableComponents implements OnInit {
         this.dataSource = new MatTableDataSource();
         this.informationSites = true;
         this.informationTables = false;
-        console.log('error', error);
       });
+  }
+  getDisplayedColumns() {
+    switch (this.urlUpdate) {
+      case 'venues':
+        return this.displayedColumns.filter(
+          (el) =>
+            el !== 'nameVenues' &&
+            el !== 'office' &&
+            el !== 'floor' &&
+            el !== 'nameOffice' &&
+            el !== 'capacity'
+        );
+      case 'offices':
+        return this.displayedColumns.filter(
+          (el) =>
+            el !== 'name' &&
+            el !== 'direction' &&
+            el !== 'phone' &&
+            el !== 'nameOffice' &&
+            el !== 'city'
+        );
+      case 'sites':
+        return this.displayedColumns.filter(
+          (el) =>
+            el !== 'direction' &&
+            el !== 'phone' &&
+            el !== 'city' &&
+            el !== 'nameVenues' &&
+            el !== 'floor' &&
+            el !== 'office'
+        );
+        case 'kit':
+          return this.displayedColumns.filter(
+            (el) =>
+              el !== 'direction' &&
+              el !== 'phone' &&
+              el !== 'city' &&
+              el !== 'nameVenues' &&
+              el !== 'floor' &&
+              el !== 'capacity'&&
+              el !== 'nameOffice' &&
+              el !== 'office'
+          );
+    }
   }
 
   openEdit(value: any) {
     this.dialog
       .open(SitesComponent, {
-        width: '60%',
-        height: '60%',
+        width: '55%',
         data: {
           dataSite: value,
           subtitle: this.subtitle,
           add: false,
+          url: this.urlUpdate,
+          title: `Editar ${this.subtitle}`,
         },
       })
       .afterClosed()
@@ -151,12 +194,12 @@ export class ConfigTableComponents implements OnInit {
   openCreate() {
     this.dialog
       .open(SitesComponent, {
-        width: '60%',
-        height: '60%',
+        width: '55%',
         data: {
           subtitle: this.subtitle,
           add: true,
           url: this.urlUpdate,
+          title: `Agregar ${this.subtitle}`,
         },
       })
       .afterClosed()
@@ -166,5 +209,7 @@ export class ConfigTableComponents implements OnInit {
           this.getList(this.urlUpdate);
         }
       });
+
   }
+
 }
