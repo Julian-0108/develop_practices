@@ -61,11 +61,13 @@ th {
 }
 
 .botton_export{
-    float: right;
-    padding-right: 25px;
-    padding-bottom: 10px;
-    position: sticky;
-    bottom: 25px;
+  float: right;
+  padding-right: 25px;
+  padding-bottom: 10px;
+  position: sticky;
+  bottom: 25px;
+  display: flex;
+  justify-content: end;
 }
 
 .d_site{
