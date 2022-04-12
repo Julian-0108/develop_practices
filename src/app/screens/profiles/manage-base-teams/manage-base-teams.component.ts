@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
 import { Title } from '@angular/platform-browser';
@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ManageBaseTeamsService } from './service/manage-base-teams.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { NotificationService } from '@shared/components/notification/services/notification.service';
+import { SearchFilterPipe } from '@app/shared/pipes/Search-Filter.pipe';
 
 @Component({
   selector: 'app-manage-base-teams',
@@ -26,6 +27,8 @@ export class ManageBaseTeamsComponent implements OnInit {
     'actions',
   ];
   dataSource!: MatTableDataSource<any>;
+  dataSource2: any[] = [];
+  filterObject: any = {};
 
   constructor(
     public dialog: MatDialog,
@@ -34,6 +37,7 @@ export class ManageBaseTeamsComponent implements OnInit {
     private rout: Router,
     private manageBaseTeamsService: ManageBaseTeamsService,
     private notificationService: NotificationService,
+    private filterpipe: SearchFilterPipe
   ) {
     this.title.setTitle('Mundo SETI - gestionar equipos base');
   }
@@ -43,7 +47,7 @@ export class ManageBaseTeamsComponent implements OnInit {
   }
 
   setIdHistory(el: any) {
-    this.idHistory = el
+    this.idHistory = el;
   }
   getBaseTeams() {
     this.manageBaseTeamsService
@@ -59,6 +63,7 @@ export class ManageBaseTeamsComponent implements OnInit {
         }
         this.name = response[0].name;
         this.dataSource = new MatTableDataSource(this.sort(response[0].profiles));
+        this.dataSource2 = response[0].profiles;
       })
       .catch((error: any) => {
         if (error.error?.statusCode !== 400) {
@@ -73,7 +78,7 @@ export class ManageBaseTeamsComponent implements OnInit {
 
   // Dialog
   openDialog(element?: any) {
-    const dialogRef = this.dialog
+    this.dialog
       .open(DialogComponent, {
         width: '60%',
         data: {
@@ -106,16 +111,15 @@ export class ManageBaseTeamsComponent implements OnInit {
       } else {
         return 1;
       }
-      return 0;
     });
   }
 
-  applyFilter(event: Event) {
-    const filterValue: string = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(value: any, type: string) {
+    this.filterObject[type] = value;
+    this.dataSource.data = this.filterpipe.transform(this.dataSource2, this.filterObject);
   }
+
   applyDirectFilter(e: any) {
     this.dataSource.filter = e.value;
   }
-
 }
