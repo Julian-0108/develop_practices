@@ -9,11 +9,13 @@
 }
 
 .botton_export{
-  float: right;
+  float: right !important;
   padding-right: 25px;
   padding-bottom: 10px;
-  position: sticky;
+  position: sticky !important;
   bottom: 25px;
+  display: flex;
+  justify-content: end;
 }
 
 .container {
