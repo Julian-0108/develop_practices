@@ -7,37 +7,6 @@
         <mat-icon class="user__icon">account_circle</mat-icon>
         <span class="user__name">{{userName}}</span>
     </div>
-    <div *ngIf="hideMenuSites()">
-
-        <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Reportes">
-      <mat-icon>event_note</mat-icon>
-    </button>
-
-        <mat-menu #menu="matMenu">
-
-            <!-- movements button -->
-            <button mat-menu-item [routerLink]="['/movements']">
-        <mat-icon>directions_run</mat-icon>
-        <span>Movimientos</span>
-      </button>
-
-            <!-- temp button -->
-            <button mat-menu-item [routerLink]="['/temperature']">
-        <mat-icon class="temp-icon" matSuffix fontSet="fas" fontIcon="fa-thermometer-three-quarters">
-        </mat-icon>
-        <span>Temperatura</span>
-      </button>
-
-            <!-- kit button -->
-            <button mat-menu-item [routerLink]="['/kits']">
-        <mat-icon class="kit-icon" matSuffix fontSet="fas" fontIcon="fa-medkit">
-        </mat-icon>
-        <span>Kit de salud</span>
-      </button>
-
-        </mat-menu>
-
-    </div>
     <div *ngIf="hideOptions()">
         <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Menú">
       <mat-icon>more_vert</mat-icon>
