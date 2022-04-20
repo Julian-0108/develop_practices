@@ -8,24 +8,15 @@ import { AuthService } from '@app/screens/login/services/auth/auth.service';
   styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent implements OnInit {
-  private readonly SITES_SETI = ['/movements', '/temperature', '/kits', '/generateqr'];
 
   constructor(private authService: AuthService, private router: Router) {}
   adminRol: any;
   userName: any;
   ngOnInit() {
-
   }
 
   logout() {
     this.authService.logout();
-  }
-
-  hideMenuSites() {
-    if (!this.authService.isLoggedIn()) {
-      return false;
-    }
-    return this.SITES_SETI.includes(this.router.url);
   }
 
   hideOptions() {
