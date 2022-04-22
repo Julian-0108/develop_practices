@@ -13,7 +13,7 @@ export class ProfileManageResumesService {
 
   async getDataHvs():Promise<any>{
     return await this.http
-    .get(`${environment.API_LIFE_HISTORY}/life-story`)
+    .get(`${environment.API_MEMBERPROFILE}/life-story`)
     .pipe(pluck('payload'))
     .toPromise();
   }
