@@ -275,32 +275,28 @@ export class AddResumeComponent implements OnInit {
   }
 
   addOrRemoveLanguage(status: boolean, value: string) {
-    if (status === true) {
-      const valor = {name: value,writing: '',reading: '',speaking: ''}
-      this.addLanguages(valor);
-    } else {
-      this.deleteLanguages(value);
-    }
+    status?this.addLanguages({name: value,writing: '',reading: '',speaking: ''}):this.deleteLanguages(value);
+
+    // if (status === true) {
+    //   const valor = {name: value,writing: '',reading: '',speaking: ''}
+    //   this.addLanguages(valor);
+    // } else {
+    //   this.deleteLanguages(value);
+    // }
   }
 
   addOrRemoveSkill(status: boolean, value: string) {
-    if (status === true) {
-      this.getDataSyllabi(value,'Nuevo');
-    } else {
-      this.deleteSkills(value);
-    }
+    status?this.getDataSyllabi(value,'Nuevo'):this.deleteSkills(value);
   }
 
-  addValidationReferred(status:boolean,tipe:string){
-    if(status === true && tipe === 'S'){
+  addValidationReferred(status:boolean,type:string){
+    if(status === true && type === 'S' || status === false && type === 'N'){
       this.addResumeForm.get('nameReferred')?.setValidators(Validators.required);
       this.addResumeForm.get('referred')?.setValue(true);
-    }else if(status === false && tipe === 'N'){
-      this.addResumeForm.get('referred')?.setValue(true);
     }else{
+      this.addResumeForm.get('referred')?.setValue(false);
       this.addResumeForm.get('nameReferred')?.clearValidators();
-      this.addResumeForm.get('nameReferred')?.reset();
-      this.addResumeForm.get('referred')?.reset();
+      this.addResumeForm.get('nameReferred')?.setValue('');
     }
   }
 
@@ -449,7 +445,6 @@ export class AddResumeComponent implements OnInit {
 
   // Post (añadir Hojja de vida)
   saveForm() {
-    console.log('data de addResumeForm', this.addResumeForm.value);
     if(this.addResumeForm.valid){
       if(this.update === false){
         this.addResumeService.addResume(this.addResumeForm.value)
@@ -458,20 +453,19 @@ export class AddResumeComponent implements OnInit {
           this.notificationService.openSimpleSnackBar(
             {title: 'Hoja de vida', message: 'Hoja de vida insertada correctamente', type: 'success'}
           );
+          this.dialogref.close(true);
         })
         .catch(value => console.log(value));
-        this.dialogref.close(true);
       }else if(this.update === true){
-        console.log(this.addResumeForm.value);
         this.addResumeService.updateRegister(this.id_registro,this.addResumeForm.value)
           .then(value => {
             console.log('registro actulizado con exito', value);
             this.notificationService.openSimpleSnackBar(
               {title: 'Hoja de vida', message: 'Hoja de vida actulizada correctamente', type: 'success'}
             );
+            this.dialogref.close(true);
           })
           .catch(value => console.log(value));
-        this.dialogref.close(true);
       }
     }else{
       this.notificationService.openSimpleSnackBar(
