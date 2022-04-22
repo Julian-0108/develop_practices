@@ -12,7 +12,7 @@ export class AddResumeService {
 constructor(private http: HttpClient, private authService: AuthService) {}
 
 addResume(register: any) {
-  return this.http.post(`${environment.API_LIFE_HISTORY}/life-story`, register).toPromise();
+  return this.http.post(`${environment.API_MEMBERPROFILE}/life-story`, register).toPromise();
 }
 
 async getDataStudies(): Promise<any>{
@@ -38,14 +38,14 @@ async getDataSyllabi():Promise<any>{
 
 async getDataUsers():Promise<any>{
   return await this.http
-  .get(`${environment.API_LIFE_HISTORY}/users`)
+  .get(`${environment.API_MEMBERPROFILE}/users`)
   .pipe(pluck('payload'))
   .toPromise();
 }
 
 async getDataExist(id:number):Promise<any>{
   return await this.http
-  .get(`${environment.API_LIFE_HISTORY}/life-story?numberIdentification=${id}`)
+  .get(`${environment.API_MEMBERPROFILE}/life-story?numberIdentification=${id}`)
   .pipe(pluck('payload'))
   .toPromise();
 }
@@ -57,7 +57,7 @@ async getDataEducationArea():Promise<any>{
 
 async updateRegister(id:string,data:any):Promise<any>{
   return await  this.http
-  .put(`${environment.API_LIFE_HISTORY}/life-story/${id}`,data)
+  .put(`${environment.API_MEMBERPROFILE}/life-story/${id}`,data)
   .toPromise();
 }
 
