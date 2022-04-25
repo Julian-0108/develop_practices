@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { ManageBaseTeamsService } from './service/manage-base-teams.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { NotificationService } from '@shared/components/notification/services/notification.service';
@@ -33,8 +33,8 @@ export class ManageBaseTeamsComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private title: Title,
-    private router: ActivatedRoute,
-    private rout: Router,
+    private routerParams: ActivatedRoute,
+    private router: Router,
     private manageBaseTeamsService: ManageBaseTeamsService,
     private notificationService: NotificationService,
     private filterpipe: SearchFilterPipe
@@ -51,7 +51,7 @@ export class ManageBaseTeamsComponent implements OnInit {
   }
   getBaseTeams() {
     this.manageBaseTeamsService
-      .getBaseTeams(this.router.snapshot.params['id'])
+      .getBaseTeams(this.routerParams.snapshot.params['id'])
       .then((response: any) => {
         if (response.length === 0) {
           this.notificationService.openSimpleSnackBar({
@@ -83,7 +83,7 @@ export class ManageBaseTeamsComponent implements OnInit {
         width: '60%',
         data: {
           element,
-          idBaseTeams: this.router.snapshot.params['id'],
+          idBaseTeams: this.routerParams.snapshot.params['id'],
           title: element ? 'Editar' : 'Agregar',
           profiles: this.dataSource.data,
         },
@@ -97,9 +97,10 @@ export class ManageBaseTeamsComponent implements OnInit {
       });
   }
 
-  redirectToProfileTemplate(id: any) {
-    const url = this.rout.createUrlTree([`/profile-template/${id}`]);
-    window.open(url.toString(), '_blank');
+  async redirect(id: string) {
+    //const url = this.rout.createUrlTree([`/profile-template/${id}`]);
+    //window.open(url.toString(), '_blank');
+   this.router.navigate([`/profile-template/${id}`]);
   }
 
   sort(value: any[]) {
