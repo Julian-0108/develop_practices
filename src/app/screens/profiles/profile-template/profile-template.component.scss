@@ -109,14 +109,14 @@ table {
   border-radius: 0 100px 100px 0;
 }
 
-::ng-deep.mat-expansion-panel-body {
+:host ::ng-deep.mat-expansion-panel-body {
   padding: 0 !important;
 }
 
 // ::ng-deep.mat-slider-track-fill {
 //   background-color: #de1920 !important;
 // }
-::ng-deep.mat-slider-horizontal {
+:host ::ng-deep.mat-slider-horizontal {
   min-width: 8em !important;
   margin: 0 5px 0 0 !important;
 }
@@ -139,11 +139,11 @@ table {
   margin: 0 5px;
 }
 
-::ng-deep.mat-tab-labels {
+:host ::ng-deep.mat-tab-labels {
   display: none !important;
 }
 
-::ng-deep.mat-tab-header {
+:host ::ng-deep.mat-tab-header {
   display: none !important;
 }
 
@@ -181,7 +181,7 @@ table {
   padding: 5px;
 }
 
-::ng-deep.mat-form-field-infix {
+:host ::ng-deep.mat-form-field-infix {
   padding: 0;
   border-top: 0;
 }
@@ -196,12 +196,12 @@ table {
 
 /* History Styles */
 
-::ng-deep .mat-step-header .mat-step-icon {
+:host ::ng-deep .mat-step-header .mat-step-icon {
   background-color: #fff;
   border: 1px solid #de1920;
 }
 
-::ng-deep .mat-step-header .mat-step-icon-selected {
+:host ::ng-deep .mat-step-header .mat-step-icon-selected {
   background-color: #de1920;
   border-style: none;
   background-image: url(../../../../assets/images/marca-de-verificacion.svg);
@@ -210,7 +210,7 @@ table {
   background-repeat: no-repeat;
 }
 
-::ng-deep .mat-step-header .mat-step-icon-state-edit {
+:host ::ng-deep .mat-step-header .mat-step-icon-state-edit {
   background-color: #fff;
   border: 1px solid #de1920;
 }
@@ -247,18 +247,18 @@ table {
   color: #959595;
 }
 
-::ng-deep .mat-step-label {
+:host ::ng-deep .mat-step-label {
   color: #b7b7b7 !important;
   font-weight: 500;
   font-size: 15px;
 }
 
-::ng-deep .mat-step-label-selected {
+:host ::ng-deep .mat-step-label-selected {
   color: #707070 !important;
   font-weight: 600;
 }
 
-::ng-deep .mat-step-header:hover {
+:host ::ng-deep .mat-step-header:hover {
   background-color: transparent;
 }
 
@@ -332,7 +332,7 @@ mat-datepicker-toggle {
   color: #de1920 !important;
 }
 
-::ng-deep.mat-calendar-body-selected {
+:host ::ng-deep .mat-calendar-body-selected {
   background-color: #de1920 !important;
   color: #fff;
 }
@@ -400,7 +400,7 @@ td {
   text-align: center;
 }
 
-::ng-deep.mat-option.mat-selected:not(.mat-option-disabled) {
+ ::ng-deep .mat-option.mat-selected:not(.mat-option-disabled) {
   color: #000000de !important;
 }
 
