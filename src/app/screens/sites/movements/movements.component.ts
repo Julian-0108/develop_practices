@@ -21,7 +21,7 @@ import { SearchFilterPipe } from '@app/shared/pipes/Search-Filter.pipe';
 export class MovementsComponent implements OnInit {
 
   title = 'Movimientos';
-  subtitle = 'Reporte de movimientos';
+  subtitle = 'Reporte de Movimientos';
 
   tipos = ['Entrada','Salida'];
   filterKeys:any={};

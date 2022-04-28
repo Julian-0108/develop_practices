@@ -66,7 +66,7 @@ export class SitesComponent implements OnInit {
     private service: ConfigTableServices,
     private dialog: MatDialogRef<SitesComponent>,
     private notificationService: NotificationService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.activateForm();
@@ -97,10 +97,9 @@ export class SitesComponent implements OnInit {
       } else if (this.subtitle == 'Sitios') {
         this.formSites.get('nameOffice')?.setValue(this.data.dataSite.offices.office);
       }
-    } else {
-      await this.getVenuesOffice('venues');
-      await this.getVenuesOffice('offices');
     }
+    await this.getVenuesOffice('venues');
+    await this.getVenuesOffice('offices');
   }
   activateForm() {
     switch (this.subtitle) {
@@ -136,6 +135,12 @@ export class SitesComponent implements OnInit {
         }
       }
     });
+  }
+
+  changeName(_id: string, type: string) {
+    type === "oficce" ? this.formOffices.get('nameVenues')?.setValue(this.venues?.filter((element => element._id === _id))[0]?.name) :
+      this.formSites.get('nameOffice')?.setValue(this.offices?.filter((element => element._id === _id))[0]?.office);
+      console.log(this.formOffices.get('nameVenues')?.value,this.formSites.get('nameOffice')?.value)
   }
 
   getListVenues(value: any) {
