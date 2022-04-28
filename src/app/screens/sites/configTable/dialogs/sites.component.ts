@@ -179,18 +179,9 @@ export class SitesComponent implements OnInit {
     switch (this.subtitle) {
       case 'Oficinas':
         this.data.add ? this.addRegister(this.formOffices) : this.updateSites(this.formOffices);
-        this.formOffices.controls['capacity']?.patchValue(
-          this.formOffices.controls['capacity']?.value.toString()
-        );
-        this.formOffices.controls['floor']?.patchValue(
-          this.formOffices.controls['floor']?.value.toString()
-        );
         break;
       case 'Sitios':
         this.data.add ? this.addRegister(this.formSites) : this.updateSites(this.formSites);
-        this.formSites.controls['capacity']?.patchValue(
-          this.formSites.controls['capacity']?.value.toString()
-        );
         break;
       case 'Sedes':
         this.formVenues
