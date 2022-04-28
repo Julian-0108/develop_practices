@@ -18,7 +18,7 @@
           <mat-select placeholder="Click para activar la configuración de tablas"
           (selectionChange)="getList($event.value)">
            <mat-select-trigger class="main-subtitle2 main-subtitle">{{subtitle}}</mat-select-trigger>
-            <mat-option *ngFor="let tables of table | orderAlphabetically:'name'" [value]="tables.url">
+            <mat-option *ngFor="let tables of table" [value]="tables.url">
               {{tables.name}}
                 <mat-icon matTooltipClass="custom-tooltip"[matTooltip]="tables.sumary" class="content__icon"  >help</mat-icon>
               </mat-option>
