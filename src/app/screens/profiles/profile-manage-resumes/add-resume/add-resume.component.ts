@@ -55,17 +55,17 @@ export class AddResumeComponent implements OnInit {
      }
 
   addResumeForm = this.fb.group({
-    maxAspiration: ['', Validators.required],
-    minAspiration: ['', Validators.required],
+    maxAspiration: ['',Validators.required],
+    minAspiration: ['',Validators.required],
     observations: [''],
     processStatus: 'En proceso',
     source: ['', Validators.required],
     referred: [false],
     nameReferred: [''],
-    professionalCard: ['No', Validators.required],
-    email: ['', Validators.email],
-    city: ['', Validators.required],
-    country: ['', Validators.required],
+    professionalCard: ['No'],
+    email: ['', [Validators.email,Validators.required]],
+    city: [''],
+    country: [''],
     numberIdentification: ['', Validators.required],
     typeIdentification: ['', Validators.required],
     fullName: ['',Validators.required],
