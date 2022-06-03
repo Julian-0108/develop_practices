@@ -42,7 +42,8 @@ export class MasterInfoComponent implements OnInit {
     {value: '/selection-profiles', viewValue: 'Selección'},
     {value: '/manage-resumes', viewValue: 'Gestión Hv'},
     {value:'/sites',viewValue:'Sitios SETI'},
-    {value:'/config-table',viewValue:'Configuracion de tablas'}
+    {value:'/config-table',viewValue:'Configuracion de tablas'},
+    {value:'/reports',viewValue:'Reportes'}
   ];
 
 

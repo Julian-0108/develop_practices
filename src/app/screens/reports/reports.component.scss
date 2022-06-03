@@ -1,0 +1,74 @@
+body {
+    height: calc(100vh - 75px);
+    background-color: #fff !important;
+}
+mat-drawer-container {
+    background-color: #fff !important;
+}
+.button-back {
+    top: 1em;
+}
+.background {
+    background-image: url("../../../assets/images/background_adminMasters.svg");
+    background-size: cover;
+}
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 100px;
+}
+.main-subtitle2 {
+    font-size: 15px !important;
+}
+.content__icon {
+    font-size: 15px;
+    color: #83afe2;
+    top: 5px;
+}
+table[mat-table] {
+    padding: 0px 50px;
+}
+
+table {
+    width: 100%;
+    // background: url(../../../../assets/images/baseTeams_backgorund.svg);
+    // background-attachment: fixed;
+}
+
+.mat-form-field {
+    font-size: 14px;
+}
+
+td,
+th {
+    width: 25%;
+    text-align: center;
+}
+
+.mat-row:nth-child(even) {
+    background-color: rgb(247, 247, 247);
+}
+
+.mat-header-cell {
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.mat-cell {
+    color: rgb(88, 88, 88);
+}
+
+.mat-column-name,.mat-column-boss,.mat-column-fullName{
+    min-width: 130px;
+}
+
+.mat-column-dni,.mat-column-gender,.mat-column-kinship{
+    min-width: 120px;
+}
+
+.mat-column-others, .mat-column-arts,
+.mat-column-cinemaTheater, .mat-column-readingWriting,
+.mat-column-sports, .mat-column-music{
+    min-width: 110px;
+}

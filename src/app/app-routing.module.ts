@@ -95,6 +95,14 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'reports',
+    loadChildren: () =>
+    import('./screens/reports/reports.module').then(
+      (m) => m.ReportsModule
+    ),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'manage-resumes',
     loadChildren: () =>
     import('./screens/profiles/profile-manage-resumes/profile-manage-resumes.module').then(
