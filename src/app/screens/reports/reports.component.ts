@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { SearchFilterPipe } from '@app/shared/pipes/Search-Filter.pipe';
 import { ReportsService } from './reports.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-reports',
@@ -8,7 +10,27 @@ import { ReportsService } from './reports.service';
 })
 export class ReportsComponent implements OnInit {
 
-  public listOptions = [
+  /*public listOptions = [
+    {
+      name: 'Plataformas',
+      type: 'Platforms',
+      sumary: 'Aquí puedes consultar el reporte de las plataformas'
+    },
+    {
+      name: 'Herramientas/Opciones',
+      type: 'ToolsOptions',
+      sumary: 'Aquí puedes consultar el reporte de las herramientas u opciones'
+    },
+    {
+      name: 'Metodologías',
+      type: 'Methodologies',
+      sumary: 'Aquí puedes consultar el reporte de las metodologías'
+    },
+    {
+      name: 'Conocimientos Específicos',
+      type: 'SpecificKnowledge',
+      sumary: 'Aquí puedes consultar el reporte de los conocimientos específicos'
+    },
     {
       name: 'Hobbies',
       type: 'Hobbies',
@@ -50,6 +72,13 @@ export class ReportsComponent implements OnInit {
       sumary: 'Aquí puedes consultar el reporte de las tarjetas profesionales'
     },
     {
+      name: 'Idiomas',
+      type: 'Languages',
+      sumary: 'Aquí puedes consultar el reporte de los idiomas'
+    }
+  ];*/
+  public listOptions = [
+    {
       name: 'Plataformas',
       type: 'Platforms',
       sumary: 'Aquí puedes consultar el reporte de las plataformas'
@@ -58,38 +87,19 @@ export class ReportsComponent implements OnInit {
       name: 'Herramientas/Opciones',
       type: 'ToolsOptions',
       sumary: 'Aquí puedes consultar el reporte de las herramientas u opciones'
-    },
-    {
-      name: 'Metodologías',
-      type: 'Methodologies',
-      sumary: 'Aquí puedes consultar el reporte de las metodologías'
-    },
-    {
-      name: 'Conocimientos Específicos',
-      type: 'SpecificKnowledge',
-      sumary: 'Aquí puedes consultar el reporte de los conocimientos específicos'
-    },
-    {
-      name: 'Idiomas',
-      type: 'Languages',
-      sumary: 'Aquí puedes consultar el reporte de los idiomas'
     }
   ];
   subtitle: string = '';
   type: string = '';
-  dataSource: any[] = [];
-  displayedColumnsHobbies: any[] = ['name', 'dni', 'boss', 'others', 'arts', 'cinemaTheater', 'readingWriting', 'sports', 'music']
-  displayedColumnsFamilyNucleus: any[] = ['name', 'dni', 'boss', 'fullName', 'gender', 'kinship']
-  data: any[] = [
-    [{
-      name: 'juan', dni: '1026666666', boss: 'no tengo jefe', others: '--', arts: 'x',
-      cinemaTheater: '--', readingWriting: 'x', sports: 'x', music: '--'
-    }],
-    [{
-      name: 'juan', dni: '1026666666', boss: 'no tengo jefe', fullName: 'Julio Julian Arango Rodriguez', gender: 'Masculino', kinship: 'Padre'
-    }]
-  ]
-
+  dataSource!: MatTableDataSource<any[]>;
+  displayedColumnsHobbies: any[] = ['name', 'dni','mail', 'boss', 'others', 'arts', 'cinemaTheater', 'readingWriting', 'sports', 'music'];
+  displayedColumnsFamilyNucleus: any[] = ['name', 'dni', 'mail', 'boss', 'fullName', 'gender', 'kinship'];
+  displayedColumnsEmergencyContact: any[] = ['name', 'dni', 'mail', 'boss', 'fullName', 'kinship', 'contactNumber'];
+  displayedColumnsPets: any[] = ['name', 'dni', 'mail', 'boss', 'namePet', 'type'];
+  displayedColumnsOptionalsTools:any[]=['name','dni','charge','mail','area','boss','domain','technology','nameToolOption','versions'];
+  displayedColumnsPlatforms:any[]=['name','dni','charge','mail','area','boss','domain','technology','versions'];
+  displayedColumnsMethodologies:any[]=['name','dni','charge','mail','boss','type','nameMethodologies','versions','knowledgeLevel','experience'];
+  displayedColumnsSpecificKnowledge:any[]=['name','dni','charge','mail','boss','domain','knowledgeArea','specificKnowledges','knowledgeLevel','experience'];
   constructor(private reportsService: ReportsService) { }
 
   ngOnInit(): void {
@@ -98,15 +108,18 @@ export class ReportsComponent implements OnInit {
   getList(data: any) {
     this.subtitle = data.name;
     this.type = data.type;
-    if (this.type == "Hobbies") {
-      this.dataSource = this.data[0];
-    } else if (this.type == "FamilyNucleus") {
-      this.dataSource = this.data[1];
-    }
-    this.reportsService.loadReport(this.type);
+    this.reportsService.loadReport(this.type).then((data:any)=>{
+      this.dataSource = new MatTableDataSource(data);
+    });
   }
 
-  filterData(value: string, key: string) {
-
+  getName(type:string){
+    const date = new Date();
+        const format = {
+            dd: date.getDate(),
+            mm: date.getMonth() + 1,
+            yyyy: date.getFullYear()
+        }
+        return (`${type}_${format.dd}-${format.mm}-${format.yyyy}`)
   }
 }

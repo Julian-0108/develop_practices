@@ -8,6 +8,30 @@ mat-drawer-container {
 .button-back {
     top: 1em;
 }
+.not-found-data__image {
+    margin: auto;
+    display: block;
+    width: 30%;
+  }
+  .list{
+      margin-left: 10px;
+  }
+  .not-found-data__message {
+    color: #a9a9a9;
+    font-style: italic;
+    font-size: 30px;
+    margin-top: 10px;
+    text-align: center;
+  }
+.download {
+    float: right !important;
+    padding-right: 25px;
+    padding-bottom: 10px;
+    margin-top: -50px;
+    position: sticky !important;
+    display: flex;
+    justify-content: flex-end;
+}
 .background {
     background-image: url("../../../assets/images/background_adminMasters.svg");
     background-size: cover;
@@ -59,16 +83,25 @@ th {
     color: rgb(88, 88, 88);
 }
 
-.mat-column-name,.mat-column-boss,.mat-column-fullName{
+.mat-column-name,
+.mat-column-boss,
+.mat-column-fullName,
+.mat-column-namePet {
     min-width: 130px;
 }
 
-.mat-column-dni,.mat-column-gender,.mat-column-kinship{
+.mat-column-dni,
+.mat-column-gender,
+.mat-column-kinship {
     min-width: 120px;
 }
 
-.mat-column-others, .mat-column-arts,
-.mat-column-cinemaTheater, .mat-column-readingWriting,
-.mat-column-sports, .mat-column-music{
+.mat-column-others,
+.mat-column-arts,
+.mat-column-cinemaTheater,
+.mat-column-readingWriting,
+.mat-column-sports,
+.mat-column-music,
+.mat-column-type {
     min-width: 110px;
 }
