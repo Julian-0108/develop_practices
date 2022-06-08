@@ -270,6 +270,16 @@
                     </th>
                     <td mat-cell *matCellDef="let row"> {{ row.versions }} </td>
                 </ng-container>
+                <ng-container matColumnDef="knowledgeLevel">
+                    <th mat-header-cell *matHeaderCellDef> Nivel(s) de Conocimiento
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.knowledgeLevel }} </td>
+                </ng-container>
+                <ng-container matColumnDef="experience">
+                    <th mat-header-cell *matHeaderCellDef> Experiencia(s)
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.experience }} </td>
+                </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumnsOptionalsTools"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumnsOptionalsTools;"></tr>
             </table>
@@ -456,6 +466,281 @@
             </table>
             <div class="download">
             <button  mat-fab color="warn" mat-button (click)="exporterSpecificKnowledge.exportTable('xlsx',{fileName: getName('Conocimientos-Especificos')})">
+                <mat-icon>download</mat-icon>
+            </button>
+        </div>
+        </ng-template>
+
+        <ng-template [ngSwitchCase]="'Title'">
+            <table hidden mat-table matTableExporter [dataSource]="dataSource" matSort #exporterTitle="matTableExporter">
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Nombre
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.name | titlecase }} </td>
+                </ng-container>
+                <ng-container matColumnDef="dni">
+                    <th mat-header-cell *matHeaderCellDef>Identificación
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.dni}} </td>
+                </ng-container>
+                <ng-container matColumnDef="charge">
+                    <th mat-header-cell *matHeaderCellDef> Cargo
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.charge}} </td>
+                </ng-container>
+                <ng-container matColumnDef="mail">
+                    <th mat-header-cell *matHeaderCellDef> Correo
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.mail}} </td>
+                </ng-container>
+                <ng-container matColumnDef="boss">
+                    <th mat-header-cell *matHeaderCellDef> Líder
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.boss }} </td>
+                </ng-container>
+                <ng-container matColumnDef="academicEducation">
+                    <th mat-header-cell *matHeaderCellDef> Formación Académica
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.academicEducation }} </td>
+                </ng-container>
+                <ng-container matColumnDef="educationArea">
+                    <th mat-header-cell *matHeaderCellDef> Área de Formación
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.educationArea }} </td>
+                </ng-container>
+                <ng-container matColumnDef="obtainedTitle">
+                    <th mat-header-cell *matHeaderCellDef> Título Obtenido
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.obtainedTitle }} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsTitle"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsTitle;"></tr>
+            </table>
+            <div class="download">
+            <button  mat-fab color="warn" mat-button (click)="exporterTitle.exportTable('xlsx',{fileName: getName('Titulos')})">
+                <mat-icon>download</mat-icon>
+            </button>
+        </div>
+        </ng-template>
+
+        <ng-template [ngSwitchCase]="'Courses'">
+            <table hidden mat-table matTableExporter [dataSource]="dataSource" matSort #exporterCourses="matTableExporter">
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Nombre
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.name | titlecase }} </td>
+                </ng-container>
+                <ng-container matColumnDef="dni">
+                    <th mat-header-cell *matHeaderCellDef> Identificación
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.dni}} </td>
+                </ng-container>
+                <ng-container matColumnDef="charge">
+                    <th mat-header-cell *matHeaderCellDef> Cargo
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.charge}} </td>
+                </ng-container>
+                <ng-container matColumnDef="mail">
+                    <th mat-header-cell *matHeaderCellDef> Correo
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.mail}} </td>
+                </ng-container>
+                <ng-container matColumnDef="boss">
+                    <th mat-header-cell *matHeaderCellDef> Líder
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.boss }} </td>
+                </ng-container>
+                <ng-container matColumnDef="domain">
+                    <th mat-header-cell *matHeaderCellDef> Dominio
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.domain }} </td>
+                </ng-container>
+                <ng-container matColumnDef="technology">
+                    <th mat-header-cell *matHeaderCellDef> Tecnología
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.technology }} </td>
+                </ng-container>
+                <ng-container matColumnDef="nameCourse">
+                    <th mat-header-cell *matHeaderCellDef> Nombre del Curso
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.nameCourse }} </td>
+                </ng-container>
+                <ng-container matColumnDef="version">
+                    <th mat-header-cell *matHeaderCellDef> Version(s)
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.version }} </td>
+                </ng-container>
+                <ng-container matColumnDef="year">
+                    <th mat-header-cell *matHeaderCellDef> Año de Finalización
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.year }} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsCourses"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsCourses;"></tr>
+            </table>
+            <div class="download">
+                <button  mat-fab color="warn" mat-button (click)="exporterCourses.exportTable('xlsx',{fileName: getName('Cursos')})">
+                    <mat-icon>download</mat-icon>
+                </button>
+            </div>
+        </ng-template>
+
+        <ng-template [ngSwitchCase]="'Certifications'">
+            <table hidden mat-table matTableExporter [dataSource]="dataSource" matSort #exporterCertifications="matTableExporter">
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Nombre
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.name | titlecase }} </td>
+                </ng-container>
+                <ng-container matColumnDef="dni">
+                    <th mat-header-cell *matHeaderCellDef> Identificación
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.dni}} </td>
+                </ng-container>
+                <ng-container matColumnDef="charge">
+                    <th mat-header-cell *matHeaderCellDef> Cargo
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.charge}} </td>
+                </ng-container>
+                <ng-container matColumnDef="mail">
+                    <th mat-header-cell *matHeaderCellDef> Correo
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.mail}} </td>
+                </ng-container>
+                <ng-container matColumnDef="boss">
+                    <th mat-header-cell *matHeaderCellDef> Líder
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.boss }} </td>
+                </ng-container>
+                <ng-container matColumnDef="domain">
+                    <th mat-header-cell *matHeaderCellDef> Dominio
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.domain }} </td>
+                </ng-container>
+                <ng-container matColumnDef="technology">
+                    <th mat-header-cell *matHeaderCellDef> Tecnología
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.technology }} </td>
+                </ng-container>
+                <ng-container matColumnDef="nameCertification">
+                    <th mat-header-cell *matHeaderCellDef> Nombre de la Certificación
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.nameCertification }} </td>
+                </ng-container>
+                <ng-container matColumnDef="version">
+                    <th mat-header-cell *matHeaderCellDef> Version(s)
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.version }} </td>
+                </ng-container>
+                <ng-container matColumnDef="year">
+                    <th mat-header-cell *matHeaderCellDef> Año de Finalización
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.year }} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsCertifications"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsCertifications;"></tr>
+            </table>
+            <div class="download">
+                <button  mat-fab color="warn" mat-button (click)="exporterCertifications.exportTable('xlsx',{fileName: getName('Certificaciones')})">
+                    <mat-icon>download</mat-icon>
+                </button>
+            </div>
+        </ng-template>
+
+        <ng-template [ngSwitchCase]="'ProfessionalCard'">
+            <table hidden mat-table matTableExporter [dataSource]="dataSource" matSort #exporterProfessionalCard="matTableExporter">
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Nombre
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.name | titlecase }} </td>
+                </ng-container>
+                <ng-container matColumnDef="dni">
+                    <th mat-header-cell *matHeaderCellDef> Identificación
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.dni}} </td>
+                </ng-container>
+                <ng-container matColumnDef="charge">
+                    <th mat-header-cell *matHeaderCellDef> Cargo
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.charge}} </td>
+                </ng-container>
+                <ng-container matColumnDef="mail">
+                    <th mat-header-cell *matHeaderCellDef> Correo
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.mail}} </td>
+                </ng-container>
+                <ng-container matColumnDef="boss">
+                    <th mat-header-cell *matHeaderCellDef> Líder
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.boss }} </td>
+                </ng-container>
+                <ng-container matColumnDef="professionalCard">
+                    <th mat-header-cell *matHeaderCellDef> Tarjeta Profesional
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.professionalCard }} </td>
+                </ng-container>
+                <ng-container matColumnDef="professionalCardNumber">
+                    <th mat-header-cell *matHeaderCellDef> Número
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.professionalCardNumber }} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsProfessionalCard"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsProfessionalCard;"></tr>
+            </table>
+            <div class="download">
+                <button  mat-fab color="warn" mat-button (click)="exporterProfessionalCard.exportTable('xlsx',{fileName: getName('Tarjetas-Profesionales')})">
+                    <mat-icon>download</mat-icon>
+                </button>
+            </div>
+        </ng-template>
+
+        <ng-template [ngSwitchCase]="'Languages'">
+            <table hidden mat-table matTableExporter [dataSource]="dataSource" matSort #exporterLanguages="matTableExporter">
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Nombre
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.name | titlecase }} </td>
+                </ng-container>
+                <ng-container matColumnDef="dni">
+                    <th mat-header-cell *matHeaderCellDef>Identificación
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.dni}} </td>
+                </ng-container>
+                <ng-container matColumnDef="mail">
+                    <th mat-header-cell *matHeaderCellDef>Correo
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.mail}} </td>
+                </ng-container>
+                <ng-container matColumnDef="boss">
+                    <th mat-header-cell *matHeaderCellDef> Líder
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.boss }} </td>
+                </ng-container>
+                <ng-container matColumnDef="language">
+                    <th mat-header-cell *matHeaderCellDef> Lenguaje
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.language }} </td>
+                </ng-container>
+                <ng-container matColumnDef="writing">
+                    <th mat-header-cell *matHeaderCellDef> Escritura
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.writing }} </td>
+                </ng-container>
+                <ng-container matColumnDef="reading">
+                    <th mat-header-cell *matHeaderCellDef> Lectura
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.reading }} </td>
+                </ng-container>
+                <ng-container matColumnDef="speaking">
+                    <th mat-header-cell *matHeaderCellDef> Habla
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.speaking }} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsLanguages"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsLanguages;"></tr>
+            </table>
+            <div class="download">
+            <button  mat-fab color="warn" mat-button (click)="exporterLanguages.exportTable('xlsx',{fileName: getName('Idiomas')})">
                 <mat-icon>download</mat-icon>
             </button>
         </div>

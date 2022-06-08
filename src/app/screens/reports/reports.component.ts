@@ -96,10 +96,15 @@ export class ReportsComponent implements OnInit {
   displayedColumnsFamilyNucleus: any[] = ['name', 'dni', 'mail', 'boss', 'fullName', 'gender', 'kinship'];
   displayedColumnsEmergencyContact: any[] = ['name', 'dni', 'mail', 'boss', 'fullName', 'kinship', 'contactNumber'];
   displayedColumnsPets: any[] = ['name', 'dni', 'mail', 'boss', 'namePet', 'type'];
-  displayedColumnsOptionalsTools:any[]=['name','dni','charge','mail','area','boss','domain','technology','nameToolOption','versions'];
+  displayedColumnsOptionalsTools:any[]=['name','dni','charge','mail','area','boss','domain','technology','nameToolOption','versions','knowledgeLevel','experience'];
   displayedColumnsPlatforms:any[]=['name','dni','charge','mail','area','boss','domain','technology','versions'];
   displayedColumnsMethodologies:any[]=['name','dni','charge','mail','boss','type','nameMethodologies','versions','knowledgeLevel','experience'];
   displayedColumnsSpecificKnowledge:any[]=['name','dni','charge','mail','boss','domain','knowledgeArea','specificKnowledges','knowledgeLevel','experience'];
+  displayedColumnsTitle:any[]=['name','dni','charge','mail','boss','academicEducation','educationArea','obtainedTitle'];
+  displayedColumnsCourses:any[]=['name','dni','charge','mail','boss','domain','technology','nameCourse','version','year'];
+  displayedColumnsCertifications:any[]=['name','dni','charge','mail','boss','domain','technology','nameCertification','version','year'];
+  displayedColumnsProfessionalCard:any[]=['name','dni','charge','mail','boss','professionalCard','professionalCardNumber'];
+  displayedColumnsLanguages:any[]=['name','dni','mail','boss','language','writing','reading','speaking'];
   constructor(private reportsService: ReportsService) { }
 
   ngOnInit(): void {
