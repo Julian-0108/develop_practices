@@ -87,6 +87,16 @@ export class ReportsComponent implements OnInit {
       name: 'Herramientas/Opciones',
       type: 'ToolsOptions',
       sumary: 'Aquí puedes consultar el reporte de las herramientas u opciones'
+    },
+    {
+      name: 'Metodologías',
+      type: 'Methodologies',
+      sumary: 'Aquí puedes consultar el reporte de las metodologías'
+    },
+    {
+      name: 'Conocimientos Específicos',
+      type: 'SpecificKnowledge',
+      sumary: 'Aquí puedes consultar el reporte de los conocimientos específicos'
     }
   ];
   subtitle: string = '';
