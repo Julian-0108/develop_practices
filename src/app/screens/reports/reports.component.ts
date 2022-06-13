@@ -97,7 +97,26 @@ export class ReportsComponent implements OnInit {
       name: 'Conocimientos Específicos',
       type: 'SpecificKnowledge',
       sumary: 'Aquí puedes consultar el reporte de los conocimientos específicos'
-    }
+    },{
+    name: 'Hobbies',
+    type: 'Hobbies',
+    sumary: 'Aquí puedes consultar el reporte de los hobbies'
+  },
+  {
+    name: 'Núcleo Familiar',
+    type: 'FamilyNucleus',
+    sumary: 'Aquí puedes consultar el reporte del núcleo familiar'
+  },
+  {
+    name: 'Mascotas',
+    type: 'Pets',
+    sumary: 'Aquí puedes consultar el reporte de las mascotas'
+  },
+  {
+    name: 'Contactos de Emergencia',
+    type: 'EmergencyContact',
+    sumary: 'Aquí puedes consultar el reporte de los contactos de emergencia'
+  }
   ];
   subtitle: string = '';
   type: string = '';
