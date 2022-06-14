@@ -10,7 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class ReportsComponent implements OnInit {
 
-  /*public listOptions = [
+  public listOptions = [
     {
       name: 'Plataformas',
       type: 'Platforms',
@@ -76,47 +76,6 @@ export class ReportsComponent implements OnInit {
       type: 'Languages',
       sumary: 'Aquí puedes consultar el reporte de los idiomas'
     }
-  ];*/
-  public listOptions = [
-    {
-      name: 'Plataformas',
-      type: 'Platforms',
-      sumary: 'Aquí puedes consultar el reporte de las plataformas'
-    },
-    {
-      name: 'Herramientas/Opciones',
-      type: 'ToolsOptions',
-      sumary: 'Aquí puedes consultar el reporte de las herramientas u opciones'
-    },
-    {
-      name: 'Metodologías',
-      type: 'Methodologies',
-      sumary: 'Aquí puedes consultar el reporte de las metodologías'
-    },
-    {
-      name: 'Conocimientos Específicos',
-      type: 'SpecificKnowledge',
-      sumary: 'Aquí puedes consultar el reporte de los conocimientos específicos'
-    },{
-    name: 'Hobbies',
-    type: 'Hobbies',
-    sumary: 'Aquí puedes consultar el reporte de los hobbies'
-  },
-  {
-    name: 'Núcleo Familiar',
-    type: 'FamilyNucleus',
-    sumary: 'Aquí puedes consultar el reporte del núcleo familiar'
-  },
-  {
-    name: 'Mascotas',
-    type: 'Pets',
-    sumary: 'Aquí puedes consultar el reporte de las mascotas'
-  },
-  {
-    name: 'Contactos de Emergencia',
-    type: 'EmergencyContact',
-    sumary: 'Aquí puedes consultar el reporte de los contactos de emergencia'
-  }
   ];
   subtitle: string = '';
   type: string = '';
