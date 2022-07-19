@@ -4,6 +4,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogAvailabilityComponent } from '../dialog-availability/dialog-availability.component';
 import { DialogKnowledgeComponent } from '../dialog-knowledge/dialog-knowledge.component';
+import { DialogViewComponent } from '../dialog-view/dialog-view.component';
 import { ICheckAvailability, ILeaderList } from '../interfaces/ICheckAvailability';
 
 @Component({
@@ -122,11 +123,25 @@ export class CheckAvailabilityComponent implements OnInit {
     }
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(DialogKnowledgeComponent, {
-      width: '600px',
-      height: '400px'
-    });
+  openDialog(direction: string,id:string): void {
+    switch (direction){
+      case 'add':{
+      const dialogRef = this.dialog.open(DialogKnowledgeComponent, {
+        width: '600px',
+        height: '400px'
+      });
+      break;
+      }
+      case 'view':{
+        console.log(id);
+        
+        const dialogRef = this.dialog.open(DialogViewComponent, {
+          width: '600px',
+          height: '400px'
+        });
+        break;
+      }
+    }
   }
 
   selectedLeaderChangedHandler() {
