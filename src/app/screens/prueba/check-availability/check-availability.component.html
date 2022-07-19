@@ -1,33 +1,33 @@
 <div class="container mat-elevation-z7" style="margin-top: 20px;">
-  <div class="container_check_available" fxLayout="row" fxLayoutAlign="space-around center">
-    <mat-form-field appearance="legacy" class="select-leaders" fxFlex="20">
-      <mat-label>Lideres</mat-label>
-      <mat-select [formControl]="leaderToppings" style="border-style: none" (selectionChange)="selectedLeaderChangedHandler()" multiple>
-        <mat-option *ngFor="let leaderItem of leaderList" [value]="leaderItem._id">{{ leaderItem.name }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field appearance="legacy" fxFlex="20">
-      <mat-label>Fecha Inicio</mat-label>
-      <input matInput [matDatepicker]="pickerStart" style="border-style: none" />
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
-      <mat-datepicker #pickerStart></mat-datepicker>
-    </mat-form-field>
-
-    <mat-form-field appearance="legacy" fxFlex="20">
-      <mat-label>Fecha Final</mat-label>
-      <input matInput [matDatepicker]="pickerEnd" style="border-style: none" />
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
-      <mat-datepicker #pickerEnd></mat-datepicker>
-    </mat-form-field>
-
-    <mat-form-field appearance="legacy" fxFlex="20">
-      <mat-label>Buscar Conocimientos</mat-label>
-      <input matInput style="border-style: none" />
-    </mat-form-field>
-  </div>
+  <form class="container_check_available" fxLayout="row" fxLayoutAlign="space-around center" [formGroup]="formGroupFilter" novalidate autocomplete="off">
+      <mat-form-field appearance="legacy" class="select-leaders" fxFlex="20">
+        <mat-label>Lideres</mat-label>
+        <mat-select formControlName="leaderToppings" style="border-style: none" (selectionChange)="selectedLeaderChangedHandler()" multiple>
+          <mat-option *ngFor="let leaderItem of leaderList" [value]="leaderItem._id">{{ leaderItem.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <mat-form-field appearance="legacy" fxFlex="20">
+        <mat-label>Fecha Inicio</mat-label>
+        <input matInput (dateInput)="dateStartHandler($event)" [matDatepicker]="pickerStart" style="border-style: none" [max]="maxDate" (click)="pickerStart.open()" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+        <mat-datepicker #pickerStart></mat-datepicker>
+      </mat-form-field>
+  
+      <mat-form-field appearance="legacy" fxFlex="20">
+        <mat-label>Fecha Final</mat-label>
+        <input matInput [matDatepicker]="pickerEnd" style="border-style: none" [min]="minDate" [max]="maxDate" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <mat-datepicker #pickerEnd></mat-datepicker>
+      </mat-form-field>
+  
+      <mat-form-field appearance="legacy" fxFlex="20">
+        <mat-label>Buscar Conocimientos</mat-label>
+        <input matInput style="border-style: none" />
+      </mat-form-field>
+  </form>
 
   <!-- Table of Contents -->
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

@@ -44,7 +44,25 @@ export interface ICheckAvailability {
 }
 
 export interface ILeaderList {
-    _id: number;
+    _id: string;
     name: string;
     active: boolean;
+}
+
+// Interface correspondiente al filtro "principal" correspondiendo a los input "Lideres", "Fecha Inicio" y "Fecha Final"
+export interface IMainFilter {
+    leader: string[] | null;
+    dateStart: Date | null;
+    dateEnd: Date | null;
+}
+
+// Interface correspondiente al filtro "principal" correspondiendo al input "Buscar Conocimientos"
+export interface IKnowledgeFilter {
+    value: string;
+}
+
+// Recopilacion de todas las Interfaces
+export interface IFliterCheckAvailability {
+    mainFilter: IMainFilter;
+    knowledgeFilter: IKnowledgeFilter | null;
 }
