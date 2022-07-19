@@ -14,14 +14,7 @@ import { ICheckAvailability, IFliterCheckAvailability, ILeaderList } from '../in
 export class CheckAvailabilityComponent implements OnInit {
   dataSource!: MatTableDataSource<any>;
 
-  filterAll: IFliterCheckAvailability = {
-    mainFilter: {
-      leader: [],
-      dateStart: null,
-      dateEnd: null,
-    },
-    knowledgeFilter: null
-  };
+  filterAll = new Map<string, string>();
 
   // Información y/o configuracion de los inputs de daet
   formGroupFilter = new FormGroup({
@@ -209,9 +202,24 @@ export class CheckAvailabilityComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.dataCheckAvailable);
 
     this.dataSource.filterPredicate = (record, filter) => {
-      console.log(this.filterAll);
-      /*
+      if (filter.length == 0) return true;
       const filterObj = JSON.parse(filter);
+      let filterDataVerify = {
+        leader: false,
+        dateInit: false,
+        dateEnd: false,
+      };
+
+      for (let itemFilter of filterObj) {
+        if (itemFilter[0] === "_id_leader" && itemFilter[1].length > 0) {
+          for (let itemFilterLeader of itemFilter[1]) {
+            console.log(itemFilterLeader == record._id_leader)
+            if (itemFilterLeader == record._id_leader) return true;
+          }
+        }
+      }
+
+      /*
       if (filterObj.length === 0) return true;
       for (let item of filterObj) {
         if (item.type === 'leadersId') {
@@ -220,7 +228,7 @@ export class CheckAvailabilityComponent implements OnInit {
       }
       return false;
       */
-     return true;
+     return false;
     }
   }
 
@@ -233,10 +241,11 @@ export class CheckAvailabilityComponent implements OnInit {
 
   selectedLeaderChangedHandler() {
     const idSelecteds = this.formGroupFilter.get('leaderToppings')?.value;
-    if (idSelecteds.length > 0) {
-      idSelecteds.map((id: number) => this.filterAll.mainFilter.leader?.push(idSelecteds));
-    }
-    this.dataSource.filter;
+
+    let filter = "";
+
+    if (idSelecteds.length > 0) filter = this.applyFilterHandler('_id_leader', idSelecteds);
+    this.dataSource.filter = filter;
     /*
     const idSelecteds = this.formGroupFilter.get('leaderToppings')?.value;
     let filter: any[] = [];
@@ -245,6 +254,11 @@ export class CheckAvailabilityComponent implements OnInit {
     }
     this.dataSource.filter = JSON.stringify(filter);
     */
+  }
+
+  applyFilterHandler(ob: string, value: any): string {
+    this.filterAll.set(ob, value)
+    return JSON.stringify(Array.from(this.filterAll.entries()));
   }
 
   dateStartHandler(event: HTMLInputElement) {
