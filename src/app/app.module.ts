@@ -22,7 +22,7 @@ registerLocaleData(localeEsCo, 'es-CO');
 
 @NgModule({
   declarations: [
-    AppComponent,    
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,8 +30,6 @@ registerLocaleData(localeEsCo, 'es-CO');
     BrowserAnimationsModule,
     CoreModule,
     SharedModule,
-    
-    
   ],
   providers: [
     {

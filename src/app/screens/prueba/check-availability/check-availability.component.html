@@ -1,0 +1,108 @@
+<div class="container mat-elevation-z7" style="margin-top: 20px;">
+  <div class="container_check_available" fxLayout="row" fxLayoutAlign="space-around center">
+    <mat-form-field appearance="legacy" class="select-leaders" fxFlex="20">
+      <mat-label>Lideres</mat-label>
+      <mat-select [formControl]="leaderToppings" style="border-style: none" (selectionChange)="selectedLeaderChangedHandler()" multiple>
+        <mat-option *ngFor="let leaderItem of leaderList" [value]="leaderItem._id">{{ leaderItem.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="legacy" fxFlex="20">
+      <mat-label>Fecha Inicio</mat-label>
+      <input matInput [matDatepicker]="pickerStart" style="border-style: none" />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+      <mat-datepicker #pickerStart></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="legacy" fxFlex="20">
+      <mat-label>Fecha Final</mat-label>
+      <input matInput [matDatepicker]="pickerEnd" style="border-style: none" />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+      <mat-datepicker #pickerEnd></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="legacy" fxFlex="20">
+      <mat-label>Buscar Conocimientos</mat-label>
+      <input matInput style="border-style: none" />
+    </mat-form-field>
+  </div>
+
+  <!-- Table of Contents -->
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="i">
+      <th mat-header-cell *matHeaderCellDef>No</th>
+      <td mat-cell *matCellDef="let i = index">{{ i + 1 }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="identifation">
+      <th mat-header-cell *matHeaderCellDef>Cedula</th>
+      <td mat-cell *matCellDef="let element">{{ element.identifation }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name_team">
+      <th mat-header-cell *matHeaderCellDef>Equipo Base</th>
+      <td mat-cell *matCellDef="let element">{{ element.name_team }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="cargo">
+      <th mat-header-cell *matHeaderCellDef>Cargo</th>
+      <td mat-cell *matCellDef="let element">{{ element.cargo }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="leader">
+      <th mat-header-cell *matHeaderCellDef>Lider</th>
+      <td mat-cell *matCellDef="let element">{{ element.leader_name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="date_start">
+      <th mat-header-cell *matHeaderCellDef>Fecha Inicial</th>
+      <td mat-cell *matCellDef="let element">{{ element.date_start }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="date_end">
+      <th mat-header-cell *matHeaderCellDef>Fecha Final</th>
+      <td mat-cell *matCellDef="let element">{{ element.date_end }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="hoursD">
+      <th mat-header-cell *matHeaderCellDef>Horas D</th>
+      <td mat-cell *matCellDef="let element">{{ element.hoursD }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="total_hoursD">
+      <th mat-header-cell *matHeaderCellDef>Total Horas D</th>
+      <td mat-cell *matCellDef="let element">{{ element.total_hoursD }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Estado</th>
+      <td mat-cell *matCellDef="let element">{{ element.status_name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="knowledge">
+      <th mat-header-cell *matHeaderCellDef>Conocimientos</th>
+      <td mat-cell *matCellDef="let element"><button>Mostrar</button></td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button (click)="openDialog()">
+          <span class="material-symbols-outlined">
+          add_circle
+          </span>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
+  </table>
+</div>
