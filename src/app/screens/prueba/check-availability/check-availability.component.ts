@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogAvailabilityComponent } from '../dialog-availability/dialog-availability.component';
 import { DialogKnowledgeComponent } from '../dialog-knowledge/dialog-knowledge.component';
-import { ICheckAvailability, ILeaderList } from '../interfaces/ICheckAvailability';
+import { ICheckAvailability, IFliterCheckAvailability, ILeaderList } from '../interfaces/ICheckAvailability';
 
 @Component({
   selector: 'app-check-availability',
@@ -13,7 +13,22 @@ import { ICheckAvailability, ILeaderList } from '../interfaces/ICheckAvailabilit
 })
 export class CheckAvailabilityComponent implements OnInit {
   dataSource!: MatTableDataSource<any>;
-  filterDictionarity = new Map<string,string>();
+
+  filterAll: IFliterCheckAvailability = {
+    mainFilter: {
+      leader: [],
+      dateStart: null,
+      dateEnd: null,
+    },
+    knowledgeFilter: null
+  };
+
+  // Información y/o configuracion de los inputs de daet
+  formGroupFilter = new FormGroup({
+    leaderToppings: new FormControl(),
+  });
+  maxDate: Date = new Date();
+  minDate!: Date;
 
   dataCheckAvailable: ICheckAvailability[] = [
     {
@@ -92,6 +107,84 @@ export class CheckAvailabilityComponent implements OnInit {
         ]
       }
     },
+    {
+      _id: "102",
+      name: "Juan",
+      identifation: 1072744263,
+      name_team: "Capa 8",
+      cargo: "Development",
+      _id_leader: "2",
+      leader_name: "Lina Jaramillo",
+      date_start: "10/07/2022",
+      date_end: "13/07/2022",
+      hoursD: 9,
+      total_hoursD: 27,
+      id_status: 1,
+      status_name: "Activo",
+      knowledge: {
+        platforms: [
+          {
+            domains: "Hight",
+            tecnology: "ExpoGo",
+            version: "3.5"
+          }
+        ],
+        tools: [
+          {
+            domains: "Hight",
+            tecnology: "Postman",
+            tool_option: "Postman",
+            version: "15.5",
+            levelKnowledge: 8,
+            exp: 10,
+          }
+        ],
+        knowledgesSpecify: [
+          "ReactJS",
+          "PostgressSql",
+          "MySql",
+        ]
+      }
+    },
+    {
+      _id: "103",
+      name: "Dilan",
+      identifation: 1072744263,
+      name_team: "Capa 8",
+      cargo: "Development",
+      _id_leader: "4",
+      leader_name: "Kevin Tangarife",
+      date_start: "10/07/2022",
+      date_end: "13/07/2022",
+      hoursD: 9,
+      total_hoursD: 27,
+      id_status: 1,
+      status_name: "Activo",
+      knowledge: {
+        platforms: [
+          {
+            domains: "Hight",
+            tecnology: "ExpoGo",
+            version: "3.5"
+          }
+        ],
+        tools: [
+          {
+            domains: "Hight",
+            tecnology: "Postman",
+            tool_option: "Postman",
+            version: "15.5",
+            levelKnowledge: 8,
+            exp: 10,
+          }
+        ],
+        knowledgesSpecify: [
+          "ReactJS",
+          "PostgressSql",
+          "MySql",
+        ]
+      }
+    },
   ];
 
   displayedColumns: string[] = [
@@ -116,9 +209,18 @@ export class CheckAvailabilityComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.dataCheckAvailable);
 
     this.dataSource.filterPredicate = (record, filter) => {
+      console.log(this.filterAll);
+      /*
       const filterObj = JSON.parse(filter);
-      console.log(filterObj.filter((id: number) => id === record._id))
-      return true;
+      if (filterObj.length === 0) return true;
+      for (let item of filterObj) {
+        if (item.type === 'leadersId') {
+          if (item.value === record._id_leader) return true;
+        }
+      }
+      return false;
+      */
+     return true;
     }
   }
 
@@ -130,37 +232,54 @@ export class CheckAvailabilityComponent implements OnInit {
   }
 
   selectedLeaderChangedHandler() {
-    const idSelecteds = this.leaderToppings.value;
-    let filterDicTest: number[] = [];
+    const idSelecteds = this.formGroupFilter.get('leaderToppings')?.value;
     if (idSelecteds.length > 0) {
-      idSelecteds.map((id: number) => filterDicTest.push(id));
+      idSelecteds.map((id: number) => this.filterAll.mainFilter.leader?.push(idSelecteds));
     }
-    this.dataSource.filter = JSON.stringify(filterDicTest);
+    this.dataSource.filter;
+    /*
+    const idSelecteds = this.formGroupFilter.get('leaderToppings')?.value;
+    let filter: any[] = [];
+    if (idSelecteds.length > 0) {
+      idSelecteds.map((id: number) => filter.push({ type: 'leadersId', value: id, }));
+    }
+    this.dataSource.filter = JSON.stringify(filter);
+    */
+  }
+
+  dateStartHandler(event: HTMLInputElement) {
+    const dateStat = new Date(event.value);
+    if (!dateStat) return;
+    // this.minDate = ;
+
+    let filter: any[] = [];
+
+
   }
 
 
   leaderList: ILeaderList[] = [
     {
-      _id: 1,
+      _id: "1",
       name: 'Doncey Velasquez',
       active: false,
     },
     {
-      _id: 2,
+      _id: "2",
       name: 'Lina Jaramillo',
       active: false,
     },
     {
-      _id: 3,
+      _id: "3",
       name: 'Julio Cifuentes',
       active: false,
     },
     {
-      _id: 4,
+      _id: "4",
       name: 'Kevin Tangarife',
       active: false,
     },
   ];
 
-  leaderToppings = new FormControl('');
+  // leaderToppings = new FormControl('');
 }
