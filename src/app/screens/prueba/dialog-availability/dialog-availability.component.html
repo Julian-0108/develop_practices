@@ -2,44 +2,47 @@
   <h1 mat-dialog-title>Asignamiento de disponibilidad</h1>
   <div mat-dialog-content>
     <div class="container">
-      <div class="fechas" fxLayout="row" fxLayoutAlign="space-around center">
-        <mat-form-field appearance="legacy" fxFlex="45">
-          <mat-label>Fecha Inicio</mat-label>
-          <input matInput [matDatepicker]="pickerStart" [matDatepickerFilter]="myFilter" style="border-style: none" />
-          <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
-          <mat-datepicker #pickerStart></mat-datepicker>
-        </mat-form-field>
+      <form [formGroup]="formAssign">
+        <div class="fechas" fxLayout="row" fxLayoutAlign="space-around center">
+          <mat-form-field appearance="legacy" fxFlex="45">
+            <mat-label>Fecha Inicio</mat-label>
+            <input formControlName="dateStart" matInput [matDatepicker]="pickerStart" [matDatepickerFilter]="myFilterData1" style="border-style: none" />
+            <mat-hint>{{formAssign.get('dateStart')?.value}}</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+            <mat-datepicker #pickerStart></mat-datepicker>
+          </mat-form-field>
 
-        <mat-form-field appearance="legacy" fxFlex="45">
-          <mat-label>Fecha Final</mat-label>
-          <input matInput [matDatepicker]="pickerEnd" style="border-style: none" />
-          <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
-          <mat-datepicker #pickerEnd></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <br>
-      <div class="fechas" fxLayout="row" fxLayoutAlign="space-around center">
-        <mat-form-field appearance="legacy" fxFlex="45">
-          <mat-label>Horas Disponibles</mat-label>
-          <input matInput placeholder="Placeholder" style="border-style: none;" type="number">
-          <mat-icon matSuffix>1</mat-icon>
-        </mat-form-field>
+          <mat-form-field appearance="legacy" fxFlex="45">
+            <mat-label>Fecha Final</mat-label>
+            <input formControlName="dateEnd" matInput [matDatepicker]="pickerEnd" [matDatepickerFilter]="myFilterData2" style="border-style: none" />
+            <mat-hint>{{formAssign.get('dateEnd')?.value}}</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+            <mat-datepicker #pickerEnd></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <br>
+        <div class="fechas" fxLayout="row" fxLayoutAlign="space-around center">
+          <mat-form-field appearance="legacy" fxFlex="45">
+            <mat-label>Horas Disponibles</mat-label>
+            <input formControlName="hours" matInput placeholder="Placeholder" style="border-style: none;" type="number">
+            <mat-icon matSuffix>{{formAssign.get('hours')?.value}}</mat-icon>
+          </mat-form-field>
 
-        <mat-form-field appearance="legacy" fxFlex="45">
-          <mat-label>Estado</mat-label>
-          <mat-select style="border-style: none;">
-            <mat-option value="1">Disponible</mat-option>
-            <mat-option value="two">Asignado</mat-option>
-            <mat-option value="two">Inactivo</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+          <mat-form-field appearance="legacy" fxFlex="45">
+            <mat-label>Estado</mat-label>
+            <mat-select formControlName="state" style="border-style: none;">
+              <mat-option value="1">Disponible</mat-option>
+              <mat-option value="2">Asignado</mat-option>
+              <mat-option value="3">Inactivo</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </form>
     </div>
   </div>
   <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button (click)="onNoClick()" cdkFocusInitial>Aceptar</button>
+    <button *ngIf="!update" mat-button (click)="onSubmit('save')" cdkFocusInitial>Aceptar</button>
+    <button *ngIf="update" mat-button (click)="onSubmit('update')" cdkFocusInitial>Actualizar</button>
   </div>
 </div>
