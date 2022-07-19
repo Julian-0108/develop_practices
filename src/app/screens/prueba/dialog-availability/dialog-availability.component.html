@@ -6,7 +6,7 @@
         <div class="fechas" fxLayout="row" fxLayoutAlign="space-around center">
           <mat-form-field appearance="legacy" fxFlex="45">
             <mat-label>Fecha Inicio</mat-label>
-            <input formControlName="dateStart" matInput [matDatepicker]="pickerStart" [matDatepickerFilter]="myFilter" style="border-style: none" />
+            <input formControlName="dateStart" matInput [matDatepicker]="pickerStart" [matDatepickerFilter]="myFilterData1" style="border-style: none" />
             <mat-hint>{{formAssign.get('dateStart')?.value}}</mat-hint>
             <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
             <mat-datepicker #pickerStart></mat-datepicker>
@@ -14,7 +14,7 @@
 
           <mat-form-field appearance="legacy" fxFlex="45">
             <mat-label>Fecha Final</mat-label>
-            <input formControlName="dateEnd" matInput [matDatepicker]="pickerEnd" style="border-style: none" />
+            <input formControlName="dateEnd" matInput [matDatepicker]="pickerEnd" [matDatepickerFilter]="myFilterData2" style="border-style: none" />
             <mat-hint>{{formAssign.get('dateEnd')?.value}}</mat-hint>
             <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
             <mat-datepicker #pickerEnd></mat-datepicker>
@@ -42,7 +42,7 @@
   </div>
   <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button *ngIf="!update" mat-button (click)="onNoClick()" cdkFocusInitial>Aceptar</button>
-    <button *ngIf="update" mat-button (click)="onNoClick()" cdkFocusInitial>Actualizar</button>
+    <button *ngIf="!update" mat-button (click)="onSubmit('save')" cdkFocusInitial>Aceptar</button>
+    <button *ngIf="update" mat-button (click)="onSubmit('update')" cdkFocusInitial>Actualizar</button>
   </div>
 </div>

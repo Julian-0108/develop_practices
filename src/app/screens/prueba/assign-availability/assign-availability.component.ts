@@ -73,7 +73,7 @@ export class AssignAvailabilityComponent implements OnInit {
     
     const dialogRef = this.dialog.open(DialogAvailabilityComponent, {
       width: '600px',
-      data: { integrante: getIntegrante, update: update},
+      data: { integrante: getIntegrante, update: update, integrantesAssign: update == false ? this.data2 : false},
     });
 
     dialogRef.afterClosed().subscribe((result) => {
