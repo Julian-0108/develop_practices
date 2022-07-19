@@ -17,7 +17,7 @@
 
         <ng-container matColumnDef="cc">
           <th mat-header-cell *matHeaderCellDef>Cedula</th>
-          <td mat-cell *matCellDef="let element">{{ element.cc }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.identifation }}</td>
         </ng-container>
 
         <ng-container matColumnDef="name_team">
@@ -32,13 +32,13 @@
 
         <ng-container matColumnDef="lider">
           <th mat-header-cell *matHeaderCellDef>Lider</th>
-          <td mat-cell *matCellDef="let element">{{ element.lider }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.leader.leader_name }}</td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>Acciones</th>
           <td mat-cell *matCellDef="let element">
-            <button mat-raised-button (click)="openDialog()"><span class="material-symbols-outlined">
+            <button mat-raised-button (click)="openDialog(element._id)"><span class="material-symbols-outlined">
               add_circle
               </span></button>
           </td>
@@ -69,7 +69,7 @@
 
         <ng-container matColumnDef="cc">
           <th mat-header-cell *matHeaderCellDef>Cedula</th>
-          <td mat-cell *matCellDef="let element">{{ element.cc }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.identifation }}</td>
         </ng-container>
 
         <ng-container matColumnDef="name_team">
@@ -84,12 +84,12 @@
 
         <ng-container matColumnDef="lider">
           <th mat-header-cell *matHeaderCellDef>Lider</th>
-          <td mat-cell *matCellDef="let element">{{ element.lider }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.leader.leader_name }}</td>
         </ng-container>
 
         <ng-container matColumnDef="date_init">
           <th mat-header-cell *matHeaderCellDef>Fecha Inicio</th>
-          <td mat-cell *matCellDef="let element">{{ element.date_init }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.date_start }}</td>
         </ng-container>
 
         <ng-container matColumnDef="date_end">
@@ -99,18 +99,18 @@
 
         <ng-container matColumnDef="hours">
           <th mat-header-cell *matHeaderCellDef>Horas</th>
-          <td mat-cell *matCellDef="let element">{{ element.hours }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.hoursD }}</td>
         </ng-container>
 
         <ng-container matColumnDef="state">
           <th mat-header-cell *matHeaderCellDef>Estado</th>
-          <td mat-cell *matCellDef="let element">{{ element.state }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.status.status_name }}</td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>Acciones</th>
           <td mat-cell *matCellDef="let element">
-            <button mat-raised-button (click)="openDialog()"><span class="material-symbols-outlined">
+            <button *ngIf="element.status.id_status == 1" mat-raised-button (click)="openDialog(element._id, true)"><span class="material-symbols-outlined">
               edit
               </span></button>
           </td>
