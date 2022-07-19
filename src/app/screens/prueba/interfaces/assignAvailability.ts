@@ -31,4 +31,5 @@ export interface integranteAssign {
 export interface getDataAlertAssign {
     integrante: integrante | integranteAssign;
     update: boolean;
+    integrantesAssign: any;
 }
